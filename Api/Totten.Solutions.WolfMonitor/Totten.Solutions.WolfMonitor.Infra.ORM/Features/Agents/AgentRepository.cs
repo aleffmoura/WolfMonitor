@@ -19,19 +19,34 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> CreateAsync(Agent agent)
         {
-            var newAgent = _context.Agents.Add(agent);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Agent> newAgent = _context.Agents.Add(agent);
 
             await _context.SaveChangesAsync();
 
             return newAgent.Entity;
         }
-        public Task<Result<Exception, Agent>> GetByIdAsync(Guid id)
+        public async Task<Result<Exception, Agent>> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
+
+            if (agent == null)
+                return new NotFoundException();
+
+            return agent;
+        }
+        public async Task<Result<Exception, Agent>> GetByLogin(Guid companyId, string login)
+        {
+            Agent agent = await _context.Agents
+                                        .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase));
+
+            if (agent == null)
+                return new NotFoundException();
+
+            return agent;
         }
         public async Task<Result<Exception, Agent>> GetByIdAsync(Guid id, Guid companyId)
         {
-            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed && a.CompanyId == companyId);
+            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed && a.CompanyId == companyId);
 
             if (agent == null)
                 return new NotFoundException();
@@ -50,7 +65,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         public async Task<Result<Exception, Unit>> UpdateAsync(Agent agent)
         {
             _context.Agents.Update(agent);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return Unit.Successful;
         }

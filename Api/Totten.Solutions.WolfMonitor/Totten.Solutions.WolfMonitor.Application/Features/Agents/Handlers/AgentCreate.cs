@@ -14,8 +14,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
-            public string CompanyId { get; set; }
-            public string UserName { get; set; }
+            public Guid CompanyId { get; set; }
+            public Guid UserWhoCreated { get; set; }
+            public string Login { get; set; }
             public string Password { get; set; }
 
             public ValidationResult Validate() => new Validator().Validate(this);
@@ -24,8 +25,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(a => a.CompanyId).NotEmpty().Length(38);
-                    RuleFor(a => a.UserName).NotEmpty().Length(4, 100);
+                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador da empresa é invalido");
+                    RuleFor(a => a.UserWhoCreated).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador do usuario ao qual esta criando o agente é invalido");
+                    RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Password).NotEmpty().Length(4, 100);
                 }
             }
@@ -41,6 +45,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
+
+                var agentVerify = await _repository.GetByLogin(request.CompanyId, request.Login);
+
+                if (agentVerify.IsSuccess)
+                    return new Exception("Já existe um agente com esse login cadastrado.");
+
+
                 Agent agent = Mapper.Map<Command, Agent>(request);
 
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);

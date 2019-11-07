@@ -18,7 +18,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         public BsonDateTime ReadingDateUTC { get; set; }
         public BsonDocument RawData { get; private set; }
 
-        public Items(string agentId, Dictionary<string, object> rawData)
+        public Items(Guid agentId, Dictionary<string, object> rawData)
         {
             AgentId = agentId;
             RawData = new BsonDocument(rawData);

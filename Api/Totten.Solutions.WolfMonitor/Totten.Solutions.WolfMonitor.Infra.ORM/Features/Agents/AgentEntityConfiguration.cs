@@ -14,9 +14,14 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         {
             builder.ToTable("Agents");
 
-            builder.HasKey(a => a.Id);
+            builder.HasKey(agent => agent.Id);
 
-            //builder.Property(y => y.Name).IsRequired().HasMaxLength(100);
+            builder.Property(agent => agent.CompanyId).IsRequired();
+            builder.Property(agent => agent.UserWhoCreated).IsRequired();
+            builder.Property(agent => agent.Login).IsRequired().HasMaxLength(100);
+            builder.Property(agent => agent.Password).IsRequired().HasMaxLength(100);
+
+
             //builder.Property(y => y.CustomerName).IsRequired().HasMaxLength(255);
             //builder.Property(y => y.Token).IsRequired().HasMaxLength(100);
             //builder.Property(y => y.Version).IsRequired(false).HasMaxLength(20);
@@ -33,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             //builder.OwnsOne(x => x.Host).Property(h => h.MacAddress).IsRequired(false).HasMaxLength(50).HasColumnName("HostMacAddress");
             //builder.OwnsOne(x => x.Host).Property(h => h.OS).IsRequired(false).HasMaxLength(255).HasColumnName("HostOS");
             //builder.OwnsOne(x => x.Host).Property(h => h.Type).IsRequired().HasColumnName("HostType");
-            
+
             //builder.HasOne(c => c.LoggingConfig).WithMany().HasForeignKey(c => c.LoggingConfigId);
         }
     }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29324.140
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Gateway", "Totten.Solutions.WolfMonitor.Gateway\Totten.Solutions.WolfMonitor.Gateway.csproj", "{F3B3157B-9479-4157-A85B-63A2744AB069}"
 EndProject
@@ -53,11 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Infra.NoSql", "Totten.Solutions.WolfMonitor.Infra.NoSql\Totten.Solutions.WolfMonitor.Infra.NoSql.csproj", "{BCE62591-DA3E-472F-9B13-080F5BBABE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.WinApp", "Totten.Solutions.WolfMonitor.WinApp\Totten.Solutions.WolfMonitor.WinApp.csproj", "{1CB4825A-ABBA-4C64-B0B7-0572C3450D80}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.WpfApp", "Totten.Solutions.WolfMonitor.WpfApp\Totten.Solutions.WolfMonitor.WpfApp.csproj", "{BB80B710-CEAE-440A-A55A-CCCD1B8111A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.App.Application", "Totten.Solutions.WolfMonitor.App.Application\Totten.Solutions.WolfMonitor.App.Application.csproj", "{9793C767-BA16-4158-9301-C762392F6926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.App.Application", "Totten.Solutions.WolfMonitor.App.Application\Totten.Solutions.WolfMonitor.App.Application.csproj", "{9793C767-BA16-4158-9301-C762392F6926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,14 +117,6 @@ Global
 		{BCE62591-DA3E-472F-9B13-080F5BBABE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCE62591-DA3E-472F-9B13-080F5BBABE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCE62591-DA3E-472F-9B13-080F5BBABE91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CB4825A-ABBA-4C64-B0B7-0572C3450D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CB4825A-ABBA-4C64-B0B7-0572C3450D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CB4825A-ABBA-4C64-B0B7-0572C3450D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CB4825A-ABBA-4C64-B0B7-0572C3450D80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB80B710-CEAE-440A-A55A-CCCD1B8111A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB80B710-CEAE-440A-A55A-CCCD1B8111A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB80B710-CEAE-440A-A55A-CCCD1B8111A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB80B710-CEAE-440A-A55A-CCCD1B8111A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9793C767-BA16-4158-9301-C762392F6926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9793C767-BA16-4158-9301-C762392F6926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9793C767-BA16-4158-9301-C762392F6926}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -156,8 +144,6 @@ Global
 		{26EEB51B-621B-48D7-A29A-1D351DD05D7A} = {EDBA4988-661B-48D3-B258-90DE7CBB91EF}
 		{0D3BDA07-A9B2-4425-B959-9807FB231BB8} = {EDBA4988-661B-48D3-B258-90DE7CBB91EF}
 		{BCE62591-DA3E-472F-9B13-080F5BBABE91} = {448E9029-D00D-42AA-BDE2-B2F645911C04}
-		{1CB4825A-ABBA-4C64-B0B7-0572C3450D80} = {C4B3C6D3-8742-405A-B9D8-778C38E8ACD5}
-		{BB80B710-CEAE-440A-A55A-CCCD1B8111A0} = {C4B3C6D3-8742-405A-B9D8-778C38E8ACD5}
 		{9793C767-BA16-4158-9301-C762392F6926} = {BE527CE8-F1CA-43CC-8B01-587EFA4F8371}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
 {
@@ -15,11 +13,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new PatientEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AgentEntityConfiguration());
+
             //modelBuilder.ApplyConfiguration(new AttendanceEntityConfiguration());
             //modelBuilder.ApplyConfiguration(new ExamResultEntityConfiguration());
             //modelBuilder.ApplyConfiguration(new SymptomAttendanceEntityConfiguration());
-
             //modelBuilder.ApplyConfiguration(new ExamEntityConfiguration());
             //modelBuilder.ApplyConfiguration(new SymptomEntityConfiguration());
             //modelBuilder.ApplyConfiguration(new TreatmentEntityConfiguration());

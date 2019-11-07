@@ -11,11 +11,11 @@ using Unit = Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs.Unit;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 {
-    public class ClientUpdate
+    public class AgentUpdate
     {
         public class Command : IRequest<Result<Exception, Unit>>
         {
-            public string Id { get; set; }
+            public Guid Id { get; set; }
             public string Name { get; set; }
             public string LocalIp { get; set; }
             public string HostName { get; set; }
@@ -30,7 +30,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Id).NotEmpty().Length(36);
+                    RuleFor(a => a.Id).NotEqual(Guid.Empty);
+                    RuleFor(a => a.Name).NotEmpty().Length(4, 100);
+                    RuleFor(a => a.LocalIp).NotEmpty();
+                    RuleFor(a => a.HostName).NotEmpty().Length(4, 100);
+                    RuleFor(a => a.HostAddress).NotEmpty().Length(4, 100);
                 }
             }
         }
@@ -46,10 +50,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var id = Guid.Parse(request.Id);
-                var doctorId = Guid.Parse(request.Id);
-
-                var agentCallback = await _repository.GetByIdAsync(id);
+                var agentCallback = await _repository.GetByIdAsync(request.Id);
 
 
                 if (agentCallback.IsFailure)

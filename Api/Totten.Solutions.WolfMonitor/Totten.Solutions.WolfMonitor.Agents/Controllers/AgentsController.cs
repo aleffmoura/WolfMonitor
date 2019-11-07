@@ -16,34 +16,47 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
     {
         private IMediator _mediator;
 
-        public AgentsController(IMediator mediator) => _mediator = mediator;
+        public AgentsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         #region HTTP POST
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AgentCreate.Command command)
-            => HandleCommand(await _mediator.Send(command));
+        {
+            return HandleCommand(await _mediator.Send(command));
+        }
         #endregion
 
         #region HTTP PATCH
         [HttpPatch]
-        public async Task<IActionResult> PatchClient([FromBody]ClientUpdate.Command command)
-            => HandleCommand(await _mediator.Send(command));
+        public async Task<IActionResult> PatchClient([FromBody]AgentUpdate.Command command)
+        {
+            return HandleCommand(await _mediator.Send(command));
+        }
         #endregion
 
         #region HTTP GET
         [HttpGet("{companyId}")]
         [ODataQueryOptionsValidate]
         public async Task<IActionResult> Get([FromRoute]string companyId, ODataQueryOptions<Agent> queryOptions)
-            => await HandleQueryable<Agent, Agent>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
+        {
+            return await HandleQueryable<Agent, AgentViewModel>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
+        }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> ReadById([FromRoute]string id)
-            => HandleQuery<Agent, AgentConfigViewModel>(await _mediator.Send(new AgentResume.Query(id)));
+        [HttpGet("{companyId}/{agentId}")]
+        public async Task<IActionResult> ReadById([FromRoute]string companyId, [FromRoute]string agentId)
+        {
+            return HandleQuery<Agent, AgentConfigViewModel>(await _mediator.Send(new AgentResume.Query(agentId)));
+        }
 
-        [HttpGet("{agentId}/items")]
+        [HttpGet("{companyId}/{agentId}/items")]
         [ODataQueryOptionsValidate]
         public async Task<IActionResult> GetItems([FromRoute]string agentId, ODataQueryOptions<Agent> queryOptions)
-            => await HandleQueryable<Agent, Item>(await _mediator.Send(new AgentCollection.Query(agentId)), queryOptions);
+        {
+            return await HandleQueryable<Agent, Item>(await _mediator.Send(new AgentCollection.Query(agentId)), queryOptions);
+        }
 
         #endregion
     }
