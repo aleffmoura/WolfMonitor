@@ -23,4 +23,3 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
 
     }
 }
-ta 
