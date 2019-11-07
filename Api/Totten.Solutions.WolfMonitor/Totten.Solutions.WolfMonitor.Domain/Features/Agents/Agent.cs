@@ -24,6 +24,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
 
 
         public DateTime CreatedIn { get; set; }
+        public DateTime UpdatedIn { get; set; }
         public DateTime? FirstConnection { get; set; }
         public DateTime? LastConnection { get; set; }
         public DateTime? LastUpload { get; set; }

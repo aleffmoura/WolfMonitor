@@ -9,7 +9,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
     public interface IAgentRepository : IRepository<Agent>
     {
         Result<Exception, IQueryable<Agent>> GetAll(Guid companyId);
-        Task<Result<Exception, Agent>> GetByIdAsync(Guid id, Guid companyId);
-        Task<Result<Exception, Agent>> GetByLogin(Guid companyId,string login);
+        Task<Result<Exception, Agent>> GetByIdAsync(Guid companyId, Guid id);
+        Task<Result<Exception, Agent>> GetByLogin(Guid companyId, string login);
     }
 }

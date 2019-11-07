@@ -14,11 +14,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
         public class Query : IRequest<Result<Exception, Agent>>
         {
-            public string Id { get; set; }
+            public Guid Id { get; set; }
+            public Guid CompanyId { get; set; }
 
-            public Query(string id)
+            public Query(Guid companyId, Guid id)
             {
                 Id = id;
+                CompanyId = companyId;
             }
 
             public ValidationResult Validate()
@@ -30,7 +32,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(d => d.Id).NotEmpty().Length(36);
+                    RuleFor(d => d.Id).NotEqual(Guid.Empty);
+                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty);
                 }
             }
         }
@@ -46,9 +49,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Agent>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var id = Guid.Parse(request.Id);
-
-                return await _repository.GetByIdAsync(id);
+                return await _repository.GetByIdAsync(request.CompanyId, request.Id);
             }
         }
     }

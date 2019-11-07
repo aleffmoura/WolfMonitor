@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
@@ -40,15 +41,15 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         #region HTTP GET
         [HttpGet("{companyId}")]
         [ODataQueryOptionsValidate]
-        public async Task<IActionResult> Get([FromRoute]string companyId, ODataQueryOptions<Agent> queryOptions)
+        public async Task<IActionResult> ReadAll([FromRoute]string companyId, ODataQueryOptions<Agent> queryOptions)
         {
-            return await HandleQueryable<Agent, AgentViewModel>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
+            return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
         }
 
         [HttpGet("{companyId}/{agentId}")]
-        public async Task<IActionResult> ReadById([FromRoute]string companyId, [FromRoute]string agentId)
+        public async Task<IActionResult> ReadById([FromRoute]Guid companyId, [FromRoute]Guid agentId)
         {
-            return HandleQuery<Agent, AgentConfigViewModel>(await _mediator.Send(new AgentResume.Query(agentId)));
+            return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId, agentId)));
         }
 
         [HttpGet("{companyId}/{agentId}/items")]

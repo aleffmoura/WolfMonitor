@@ -30,7 +30,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             Agent agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
 
             if (agent == null)
+            {
                 return new NotFoundException();
+            }
 
             return agent;
         }
@@ -40,16 +42,20 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
                                         .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase));
 
             if (agent == null)
+            {
                 return new NotFoundException();
+            }
 
             return agent;
         }
-        public async Task<Result<Exception, Agent>> GetByIdAsync(Guid id, Guid companyId)
+        public async Task<Result<Exception, Agent>> GetByIdAsync(Guid companyId, Guid id)
         {
-            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed && a.CompanyId == companyId);
+            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => !a.Removed && a.Id == id && a.CompanyId == companyId);
 
             if (agent == null)
+            {
                 return new NotFoundException();
+            }
 
             return agent;
         }
@@ -64,6 +70,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Agent agent)
         {
+            agent.Configured = true;
+            agent.UpdatedIn = DateTime.Now;
+            agent.FirstConnection = agent.FirstConnection ?? DateTime.Now;
             _context.Agents.Update(agent);
             await _context.SaveChangesAsync();
 
