@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Totten.Solutions.WolfMonitor.Domain.Base;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
@@ -19,8 +20,6 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         public string Password { get; set; }
 
         public bool Configured { get; set; }
-        public bool Removed { get; set; }
-
 
 
         public DateTime CreatedIn { get; set; }
@@ -30,6 +29,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         public DateTime? LastUpload { get; set; }
         //public List<Item> Items { get; set; }
 
+        public Company Company { get; set; }
         public override void Validate(){ }
     }
 }

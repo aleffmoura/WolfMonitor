@@ -45,20 +45,11 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         {
             return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
         }
-
         [HttpGet("{companyId}/{agentId}")]
         public async Task<IActionResult> ReadById([FromRoute]Guid companyId, [FromRoute]Guid agentId)
         {
             return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId, agentId)));
         }
-
-        [HttpGet("{companyId}/{agentId}/items")]
-        [ODataQueryOptionsValidate]
-        public async Task<IActionResult> GetItems([FromRoute]string agentId, ODataQueryOptions<Agent> queryOptions)
-        {
-            return await HandleQueryable<Agent, Item>(await _mediator.Send(new AgentCollection.Query(agentId)), queryOptions);
-        }
-
         #endregion
     }
 }

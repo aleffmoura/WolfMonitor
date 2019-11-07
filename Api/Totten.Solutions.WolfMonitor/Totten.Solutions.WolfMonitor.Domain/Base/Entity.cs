@@ -5,6 +5,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Base
     public abstract class Entity
     {
         public virtual Guid Id { get; set; }
+        public bool Removed { get; set; }
 
         public override bool Equals(object obj)
         {

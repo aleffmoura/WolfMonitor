@@ -8,10 +8,12 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System.Net.Http;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Infra.NoSql.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.NoSql.Events;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
 {
@@ -49,6 +51,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
         private static void RegisterFeatures(Container container)
         {
             container.Register<IAgentRepository, AgentRepository>();
+            container.Register<ICompanyRepository, CompanyRepository>();
         }
 
         private static IMongoDatabase CreateMongoDatabase(string serverConnection, string databaseName)

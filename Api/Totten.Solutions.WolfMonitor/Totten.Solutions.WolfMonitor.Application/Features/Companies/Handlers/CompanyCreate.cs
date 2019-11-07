@@ -3,8 +3,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
@@ -17,7 +15,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
         public class Command : IRequest<Result<Exception, Guid>>
         {
             public string Name { get; set; }
-            public string Nick { get; set; }
+            public string FantasyName { get; set; }
+            public string Cnpj { get; set; }
 
             public ValidationResult Validate()
             {
@@ -28,8 +27,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Nick).NotEmpty().Length(2, 50);
+                    RuleFor(a => a.Name).NotEmpty().Length(4, 200);
+                    RuleFor(a => a.FantasyName).NotEmpty().Length(2, 150);
+                    RuleFor(a => a.FantasyName).NotEmpty().Length(2, 150);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var company = Mapper.Map<Command, Company>(request);
+                Company company = Mapper.Map<Command, Company>(request);
 
                 Result<Exception, Company> callback = await _repository.CreateAsync(company);
 

@@ -6,7 +6,7 @@ using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 
 namespace Totten.Solutions.WolfMonitor.Register.Controllers
 {
-    [Route("company")]
+    [Route("companies")]
     public class CompanyRegisterController : ApiControllerBase
     {
         private IMediator _mediator;
@@ -23,3 +23,4 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
 
     }
 }
+ta 

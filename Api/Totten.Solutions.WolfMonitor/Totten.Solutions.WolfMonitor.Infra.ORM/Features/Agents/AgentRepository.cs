@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> CreateAsync(Agent agent)
         {
-            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Agent> newAgent = _context.Agents.Add(agent);
+            EntityEntry<Agent> newAgent = _context.Agents.Add(agent);
 
             await _context.SaveChangesAsync();
 

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Companies
 {
@@ -6,6 +8,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies
     {
         public MappingProfile()
         {
+            CreateMap<CompanyCreate.Command, Company>()
+                .ForMember(dest => dest.Removed, opt => opt.MapFrom(src => false));
         }
     }
 }
