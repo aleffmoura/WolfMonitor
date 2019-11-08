@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Totten.Solutions.WolfMonitor.Domain.Base;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.Companies
 {
@@ -12,7 +13,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Companies
 
 
         public List<Agent> Agents { get; set; }
-        //public List<User> Users { get; set; }
+        public List<User> Users { get; set; }
+
         public override void Validate() { }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Extensions;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
 {
@@ -17,8 +15,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
-            //modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
 
             modelBuilder.SeedAuth();
 

@@ -15,7 +15,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
             builder.Property(company => company.Name).IsRequired();
             builder.Property(company => company.FantasyName).IsRequired();
             builder.Property(company => company.Cnpj).IsRequired();
+
             builder.HasMany(company => company.Agents).WithOne(agent => agent.Company);
+            builder.HasMany(company => company.Users).WithOne(user => user.Company);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
@@ -20,6 +17,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             builder.Property(agent => agent.UserWhoCreatedId).IsRequired();
             builder.Property(agent => agent.Login).IsRequired().HasMaxLength(100);
             builder.Property(agent => agent.Password).IsRequired().HasMaxLength(100);
+            builder.Property(agent => agent.CreatedIn).IsRequired();
         }
     }
 }

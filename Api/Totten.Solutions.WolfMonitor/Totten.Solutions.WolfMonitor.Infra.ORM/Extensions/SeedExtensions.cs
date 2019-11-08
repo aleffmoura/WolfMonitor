@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
 {
@@ -6,24 +9,58 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
     {
         public static void SeedAuth(this ModelBuilder builder)
         {
-            //string password = "123";
-            //Guid id1 = Guid.NewGuid();
+            Guid idSystem = Guid.NewGuid();
 
-            //builder.Entity<Role>().HasData(new Role()
-            //{
-            //    Id = id1,
-            //    Name = "Admin"
-            //});
+            #region Create Roles
+            builder.Entity<Role>().HasData(new Role()
+            {
+                Name = "Agent",
+                CreatedIn = DateTime.Now,
+                UpdatedIn = DateTime.Now,
+                Level = RoleLevelEnum.Agent,
+                Removed = false,
+                Id = Guid.NewGuid()
+            });
+            builder.Entity<Role>().HasData(new Role()
+            {
+                Name = "User",
+                CreatedIn = DateTime.Now,
+                UpdatedIn = DateTime.Now,
+                Level = RoleLevelEnum.User,
+                Removed = false,
+                Id = Guid.NewGuid()
+            });
+            builder.Entity<Role>().HasData(new Role()
+            {
+                Name = "Administrador",
+                CreatedIn = DateTime.Now,
+                UpdatedIn = DateTime.Now,
+                Level = RoleLevelEnum.Admin,
+                Removed = false,
+                Id = Guid.NewGuid()
+            });
+            builder.Entity<Role>().HasData(new Role()
+            {
+                Name = "System",
+                CreatedIn = DateTime.Now,
+                UpdatedIn = DateTime.Now,
+                Level = RoleLevelEnum.Admin,
+                Removed = false,
+                Id = idSystem
+            });
+            #endregion
 
-            //builder.Entity<User>().HasData(new User()
-            //{
-            //    Id = Guid.NewGuid(),
-            //    Username = "admin",
-            //    Email = "admin@admin.com",
-            //    Cpf = "11122233344",
-            //    Password = password.GenerateHash(),
-            //    RoleId = id1
-            //});
+            #region Create User
+            builder.Entity<User>().HasData(new User()
+            {
+                Id = Guid.NewGuid(),
+                Login = "alefmoura",
+                Email = "aleffmds@gmail.com",
+                Cpf = "10685805425",
+                Password = "88633251".GenerateHash(),
+                RoleId = idSystem
+            });
+            #endregion
         }
     }
 }

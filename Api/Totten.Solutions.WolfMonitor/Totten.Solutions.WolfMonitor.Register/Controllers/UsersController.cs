@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 
 namespace Totten.Solutions.WolfMonitor.Register.Controllers
@@ -20,9 +18,8 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
 
         #region HTTP POST
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]AgentCreate.Command command)
+        public async Task<IActionResult> Create([FromBody]UserCreate.Command command)
         {
-            command.UserWhoCreated = UserId;
             return HandleCommand(await _mediator.Send(command));
         }
         #endregion

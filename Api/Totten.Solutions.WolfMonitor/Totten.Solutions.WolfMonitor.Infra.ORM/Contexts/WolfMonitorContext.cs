@@ -19,10 +19,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
             modelBuilder.ApplyConfiguration(new AgentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
 
-
-
             //modelBuilder.Seed();
-
             base.OnModelCreating(modelBuilder);
         }
 

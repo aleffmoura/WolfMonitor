@@ -9,8 +9,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
         public AuthContext CreateDbContext(string[] args)
         {
             DbContextOptionsBuilder<AuthContext> optionsBuilder = new DbContextOptionsBuilder<AuthContext>();
-
-            optionsBuilder.UseNpgsql("Host=10.0.75.1;Port=5434;Database=auth;Username=postgres;Password=Ud5#B4tP4Y!",
+            optionsBuilder.UseNpgsql("Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True; Integrated Security=True;",
                 opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
 
             return new AuthContext(optionsBuilder.Options);
