@@ -58,7 +58,14 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Email = "aleffmds@gmail.com",
                 Cpf = "10685805425",
                 Password = "88633251".GenerateHash(),
-                RoleId = idSystem
+                RoleId = idSystem,
+                FirstName = "Aleff",
+                LastName = "Moura da Silva",
+                Language = "pt-BR",
+                CreatedIn = DateTime.Now,
+                Removed = false,
+                UpdatedIn = DateTime.Now,
+                CompanyId = Guid.Parse("c576cf93-370c-4464-21f9-08d763d27d75")
             });
             #endregion
         }

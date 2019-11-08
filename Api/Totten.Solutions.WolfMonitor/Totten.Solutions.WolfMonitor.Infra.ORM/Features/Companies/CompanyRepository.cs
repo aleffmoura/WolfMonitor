@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
@@ -33,7 +35,13 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
 
         public async Task<Result<Exception, Company>> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.Id == id);
+
+            if (company == null)
+            {
+                return new NotFoundException("Company not found");
+            }
+            return company;
         }
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Company entity)

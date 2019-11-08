@@ -17,7 +17,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
             builder.Property(role => role.UpdatedIn).IsRequired();
             builder.Property(role => role.Removed).IsRequired();
 
-            builder.HasMany(role => role.Users).WithOne();
+            builder.HasMany(role => role.Users).WithOne(user => user.Role).HasForeignKey(user => user.RoleId);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         {
             builder.ToTable("Users");
             builder.HasKey(user => user.Id);
+            builder.Property(user => user.CompanyId).IsRequired();
 
             builder.Property(user => user.Login).IsRequired();
             builder.Property(user => user.Password).IsRequired();
@@ -20,7 +21,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
             builder.Property(user => user.UpdatedIn).IsRequired();
             builder.Property(user => user.Removed).IsRequired();
 
-            builder.HasMany(user => user.Agents).WithOne();
+            builder.Ignore(user => user.Agents);
+            builder.Ignore(role => role.Company);
         }
     }
 }
