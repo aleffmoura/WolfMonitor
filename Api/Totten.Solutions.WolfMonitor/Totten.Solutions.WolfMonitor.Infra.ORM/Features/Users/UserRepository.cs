@@ -31,7 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
 
         public async Task<Result<Exception, User>> GetByCredentials(string login, string password)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => (u.Username.Equals(login) || u.Email.Equals(login) || u.Cpf.Equals(login))
+            User user = await _context.Users.FirstOrDefaultAsync(u => (u.Login.Equals(login) || u.Email.Equals(login) || u.Cpf.Equals(login))
                                                                         && u.Password == password);
             if (user == null)
             {

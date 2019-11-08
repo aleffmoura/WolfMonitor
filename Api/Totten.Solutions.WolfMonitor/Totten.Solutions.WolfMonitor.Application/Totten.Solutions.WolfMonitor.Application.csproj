@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Users\ViewModels\" />
+  </ItemGroup>
+
 </Project>

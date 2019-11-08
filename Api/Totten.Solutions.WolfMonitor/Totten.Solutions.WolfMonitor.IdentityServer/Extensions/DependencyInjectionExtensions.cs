@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Extensions
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AuthContext>(opt => opt.UseNpgsql(configuration["connectionString"]));
+            services.AddDbContext<AuthContext>(opt => opt.UseSqlServer(configuration["connectionString"]));
             services.AddTransient<IUserRepository, UserRepository>();
         }
     }

@@ -54,7 +54,6 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
             app.UseMetrics();
             app.UseIdentityServer();
             app.UseMvc();
-            app.ApplyMigrations();
         }
     }
 }

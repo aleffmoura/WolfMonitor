@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using Totten.Solutions.WolfMonitor.Domain.Base;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
-using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
 {
     public class Agent : Entity
     {
         public Guid CompanyId { get; set; }
-        public Guid UserWhoCreated { get; set; }
+        public Guid UserWhoCreatedId { get; set; }
 
         public string Name { get; set; }
         public string LocalIp { get; set; }
@@ -26,6 +25,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         //public List<Item> Items { get; set; }
 
         public Company Company { get; set; }
-        public override void Validate(){ }
+        public User UserWhoCreated { get; set; }
+
+        public override void Validate() { }
     }
 }
