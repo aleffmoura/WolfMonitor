@@ -41,6 +41,12 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
 
             container.Register(() =>
             {
+                var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["AuthConnectionString"]).Options;
+                return new AuthContext(options);
+            }, Lifestyle.Scoped);
+
+            container.Register(() =>
+            {
                 return CreateMongoDatabase(configuration["mongoConnection"], configuration["mongoDb"]);
             }, Lifestyle.Scoped);
             container.Register<MonitoringContext>(Lifestyle.Scoped);

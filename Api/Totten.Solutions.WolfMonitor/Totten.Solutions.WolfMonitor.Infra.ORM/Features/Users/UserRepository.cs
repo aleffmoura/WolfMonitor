@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Users;
@@ -22,21 +23,44 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         {
             user.Validate();
 
-            var newPatient = _context.Users.Add(user);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<User> newPatient = _context.Users.Add(user);
 
             await _context.SaveChangesAsync();
 
             return newPatient.Entity;
         }
 
-        public async Task<Result<Exception, User>> GetByCredentials(string login, string password)
+        public Result<Exception, IQueryable<User>> GetAll(Guid companyId)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => (u.Login.Equals(login) || u.Email.Equals(login) || u.Cpf.Equals(login))
-                                                                        && u.Password == password);
+            return Result.Run(() => _context.Users.Where(a => a.CompanyId == companyId && !a.Removed));
+        }
+
+        public Result<Exception, IQueryable<User>> GetAll()
+        {
+            return Result.Run(() => _context.Users.Where(a => !a.Removed));
+        }
+
+        public async Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.CompanyId == companyId &&
+                                                                    (u.Login.Equals(login) || u.Email.Equals(login) || u.Cpf.Equals(login)) &&
+                                                                    u.Password == password && !u.Removed);
             if (user == null)
             {
                 return new InvalidCredentialsException();
             }
+            return user;
+        }
+
+        public async Task<Result<Exception, User>> GetByIdAsync(Guid id)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
+
+            if (user == null)
+            {
+                return new NotFoundException();
+            }
+
             return user;
         }
 

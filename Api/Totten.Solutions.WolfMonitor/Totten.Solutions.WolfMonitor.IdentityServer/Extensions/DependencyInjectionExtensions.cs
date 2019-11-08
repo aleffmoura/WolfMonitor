@@ -14,6 +14,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Extensions
         {
             services.AddDbContext<AuthContext>(opt => opt.UseSqlServer(configuration["connectionString"]));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
         }
     }
 }

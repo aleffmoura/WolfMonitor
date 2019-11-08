@@ -7,9 +7,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
 {
     public class AuthContext : DbContext
     {
-        public DbSet<User> Users;
-        public DbSet<Role> Roles;
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        
         public AuthContext(DbContextOptions<AuthContext> options) : base(options) { }
 
 

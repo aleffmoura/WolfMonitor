@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            Result<Exception, User> userCallback = await _repository.GetByCredentials(context.UserName, context.Password);
+            Result<Exception, User> userCallback = await _repository.GetByCredentials(Guid.Empty, context.UserName, context.Password);
 
             if (userCallback.IsSuccess)
             {
