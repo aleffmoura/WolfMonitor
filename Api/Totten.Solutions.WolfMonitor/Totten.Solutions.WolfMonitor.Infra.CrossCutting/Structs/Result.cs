@@ -45,6 +45,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs
 
         public static implicit operator Result<TFailure, TSuccess>(TFailure failure)
             => new Result<TFailure, TSuccess>(failure);
+
         public static implicit operator Result<TFailure, TSuccess>(TSuccess success)
             => new Result<TFailure, TSuccess>(success);
 

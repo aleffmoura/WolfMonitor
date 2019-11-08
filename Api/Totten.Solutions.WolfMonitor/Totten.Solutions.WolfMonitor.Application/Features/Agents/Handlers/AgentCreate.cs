@@ -19,7 +19,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string Login { get; set; }
             public string Password { get; set; }
 
-            public ValidationResult Validate() => new Validator().Validate(this);
+            public ValidationResult Validate()
+            {
+                return new Validator().Validate(this);
+            }
 
             private class Validator : AbstractValidator<Command>
             {
@@ -34,6 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 }
             }
         }
+
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
             private readonly IAgentRepository _repository;
@@ -45,19 +49,20 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-
-                var agentVerify = await _repository.GetByLogin(request.CompanyId, request.Login);
+                Result<Exception, Agent> agentVerify = await _repository.GetByLogin(request.CompanyId, request.Login);
 
                 if (agentVerify.IsSuccess)
+                {
                     return new Exception("Já existe um agente com esse login cadastrado.");
-
+                }
 
                 Agent agent = Mapper.Map<Command, Agent>(request);
-
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);
 
                 if (callback.IsFailure)
+                {
                     return callback.Failure;
+                }
 
                 return callback.Success.Id;
             }

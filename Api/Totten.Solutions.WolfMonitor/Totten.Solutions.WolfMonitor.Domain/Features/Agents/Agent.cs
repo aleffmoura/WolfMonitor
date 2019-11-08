@@ -18,12 +18,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
 
         public string Login { get; set; }
         public string Password { get; set; }
-
         public bool Configured { get; set; }
 
-
-        public DateTime CreatedIn { get; set; }
-        public DateTime UpdatedIn { get; set; }
         public DateTime? FirstConnection { get; set; }
         public DateTime? LastConnection { get; set; }
         public DateTime? LastUpload { get; set; }

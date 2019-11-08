@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.App.Application", "Totten.Solutions.WolfMonitor.App.Application\Totten.Solutions.WolfMonitor.App.Application.csproj", "{9793C767-BA16-4158-9301-C762392F6926}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.Companies", "Totten.Solutions.WolfMonitor.Companies\Totten.Solutions.WolfMonitor.Companies.csproj", "{E4189600-9A2B-48B2-968D-67A38079A54F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{9793C767-BA16-4158-9301-C762392F6926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9793C767-BA16-4158-9301-C762392F6926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9793C767-BA16-4158-9301-C762392F6926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4189600-9A2B-48B2-968D-67A38079A54F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4189600-9A2B-48B2-968D-67A38079A54F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4189600-9A2B-48B2-968D-67A38079A54F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4189600-9A2B-48B2-968D-67A38079A54F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{0D3BDA07-A9B2-4425-B959-9807FB231BB8} = {EDBA4988-661B-48D3-B258-90DE7CBB91EF}
 		{BCE62591-DA3E-472F-9B13-080F5BBABE91} = {448E9029-D00D-42AA-BDE2-B2F645911C04}
 		{9793C767-BA16-4158-9301-C762392F6926} = {BE527CE8-F1CA-43CC-8B01-587EFA4F8371}
+		{E4189600-9A2B-48B2-968D-67A38079A54F} = {EDBA4988-661B-48D3-B258-90DE7CBB91EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60DC18A4-6686-4004-A7FA-847148085E0E}

@@ -6,6 +6,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Base
     {
         public virtual Guid Id { get; set; }
         public bool Removed { get; set; }
+        public DateTime CreatedIn { get; set; }
+        public DateTime UpdatedIn { get; set; }
 
         public override bool Equals(object obj)
         {

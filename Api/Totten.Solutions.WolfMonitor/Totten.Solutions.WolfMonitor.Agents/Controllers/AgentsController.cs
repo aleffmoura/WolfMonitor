@@ -8,11 +8,10 @@ using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
-using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 {
-    [Route("clients")]
+    [Route("")]
     public class AgentsController : ApiControllerBase
     {
         private IMediator _mediator;
@@ -26,6 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AgentCreate.Command command)
         {
+            command.UserWhoCreated = UserId;
             return HandleCommand(await _mediator.Send(command));
         }
         #endregion

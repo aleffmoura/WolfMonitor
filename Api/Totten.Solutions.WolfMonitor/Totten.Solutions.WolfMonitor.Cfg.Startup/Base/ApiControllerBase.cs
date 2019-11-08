@@ -23,7 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
     //[Authorize]
     public class ApiControllerBase : ControllerBase
     {
-        protected int UserId => Convert.ToInt32(GetClaimValue("UserId"));
+        protected Guid UserId => Guid.Parse(GetClaimValue("UserId"));
         #region Handlers    
         protected IActionResult HandleCommand<TFailure, TSuccess>(Result<TFailure, TSuccess> result) where TFailure : Exception
                             => result.IsFailure ? HandleFailure(result.Failure) : Ok(result.Success);

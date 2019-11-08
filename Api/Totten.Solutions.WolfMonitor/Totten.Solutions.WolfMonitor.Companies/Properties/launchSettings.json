@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:60033",
+      "applicationUrl": "http://localhost:53273",
       "sslPort": 0
     }
   },
@@ -15,20 +15,18 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Totten.Solutions.WolfMonitor.Gateway": {
+    "Totten.Solutions.WolfMonitor.Companies": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "PORT": "15999"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "httpPort": 60034
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
     }
   }
 }

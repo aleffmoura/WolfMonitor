@@ -57,7 +57,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             {
                 return new NotFoundException();
             }
-
             return agent;
         }
         public Result<Exception, IQueryable<Agent>> GetAll()

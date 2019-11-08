@@ -28,7 +28,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
 
         public Result<Exception, IQueryable<Company>> GetAll()
         {
-            throw new NotImplementedException();
+            return Result.Run(() => _context.Companies.Where(a => !a.Removed));
         }
 
         public async Task<Result<Exception, Company>> GetByIdAsync(Guid id)
