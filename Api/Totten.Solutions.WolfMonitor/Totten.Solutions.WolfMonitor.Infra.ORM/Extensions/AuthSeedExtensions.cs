@@ -5,7 +5,7 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
 {
-    public static class SeedExtensions
+    public static class AuthSeedExtensions
     {
         public static void SeedAuth(this ModelBuilder builder)
         {

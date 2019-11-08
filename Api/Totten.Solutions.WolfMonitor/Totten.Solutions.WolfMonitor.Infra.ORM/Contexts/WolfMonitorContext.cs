@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
 
@@ -19,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
             modelBuilder.ApplyConfiguration(new AgentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
 
-            //modelBuilder.Seed();
+            modelBuilder.SeedWolf();
             base.OnModelCreating(modelBuilder);
         }
 

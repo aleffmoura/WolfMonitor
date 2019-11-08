@@ -13,11 +13,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
 
             builder.HasKey(agent => agent.Id);
 
-            builder.Property(agent => agent.CompanyId).IsRequired();
-            builder.Property(agent => agent.UserWhoCreatedId).IsRequired();
+            builder.HasIndex(agent => agent.UserWhoCreatedId);
             builder.Property(agent => agent.Login).IsRequired().HasMaxLength(100);
             builder.Property(agent => agent.Password).IsRequired().HasMaxLength(100);
             builder.Property(agent => agent.CreatedIn).IsRequired();
+
+            builder.Ignore(agent => agent.UserWhoCreated);
         }
     }
 }
