@@ -44,7 +44,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Name = "System",
                 CreatedIn = DateTime.Now,
                 UpdatedIn = DateTime.Now,
-                Level = RoleLevelEnum.Admin,
+                Level = RoleLevelEnum.System,
                 Removed = false,
                 Id = idSystem
             });

@@ -7,7 +7,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Users
     {
         Agent,
         User,
-        Admin
+        Admin,
+        System
     }
     public class Role : Entity
     {
