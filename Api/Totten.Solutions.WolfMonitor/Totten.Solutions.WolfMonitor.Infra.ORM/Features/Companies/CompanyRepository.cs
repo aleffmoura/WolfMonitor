@@ -46,7 +46,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Company entity)
         {
-            throw new NotImplementedException();
+            entity.UpdatedIn = DateTime.Now;
+            _context.Companies.Update(entity);
+            await _context.SaveChangesAsync();
+
+            return Unit.Successful;
         }
     }
 }

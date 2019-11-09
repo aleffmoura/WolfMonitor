@@ -14,13 +14,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Exceptions;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
 {
     [ApiController]
-    //[Authorize]
     public class ApiControllerBase : ControllerBase
     {
         protected Guid UserId => Guid.Parse(GetClaimValue("UserId"));

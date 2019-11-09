@@ -12,7 +12,6 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 namespace Totten.Solutions.WolfMonitor.Users.Controllers
 {
     [Route("")]
-    [AuthorizeRoles(RoleLevelEnum.Admin, RoleLevelEnum.System)]
     public class UsersController : ApiControllerBase
     {
         private IMediator _mediator;

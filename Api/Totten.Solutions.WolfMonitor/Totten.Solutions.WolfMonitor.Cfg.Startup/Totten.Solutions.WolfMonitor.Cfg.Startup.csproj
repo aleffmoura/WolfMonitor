@@ -44,4 +44,8 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.ORM\Totten.Solutions.WolfMonitor.Infra.ORM.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\Auth\" />
+  </ItemGroup>
+
 </Project>

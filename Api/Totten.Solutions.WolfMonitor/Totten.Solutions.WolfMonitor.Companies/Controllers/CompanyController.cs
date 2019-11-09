@@ -7,10 +7,12 @@ using Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
+using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 
 namespace Totten.Solutions.WolfMonitor.Companies.Controllers
 {
     [Route("")]
+    [CustomAuthorizeAttributte(RoleLevelEnum.User, RoleLevelEnum.Admin, RoleLevelEnum.System)]
     public class CompanyController : ApiControllerBase
     {
         private IMediator _mediator;
@@ -21,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
 
         #region HTTP POST
         [HttpPost]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System)]
         public async Task<IActionResult> Create([FromBody]CompanyCreate.Command command)
             => HandleCommand(await _mediator.Send(command));
         #endregion
@@ -36,14 +39,15 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
         #region HTTP GET
         [HttpGet]
         [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System)]
         public async Task<IActionResult> ReadAll(ODataQueryOptions<Company> queryOptions)
         {
             return await HandleQueryable<Company, CompanyResumeViewModel>(await _mediator.Send(new CompaniesCollection.Query()), queryOptions);
         }
-        //[HttpGet("{companyId}/{agentId}")]
-        //public async Task<IActionResult> ReadById([FromRoute]Guid companyId, [FromRoute]Guid agentId)
+        //[HttpGet("mycompany")]
+        //public async Task<IActionResult> ReadById([FromRoute]Guid companyId)
         //{
-        //    return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId, agentId)));
+        //    return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId)));
         //}
         #endregion
 
