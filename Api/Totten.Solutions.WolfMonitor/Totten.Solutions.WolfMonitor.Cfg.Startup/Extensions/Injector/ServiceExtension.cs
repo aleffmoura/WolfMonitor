@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
@@ -10,8 +9,6 @@ using System.Net.Http;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.Users;
-using Totten.Solutions.WolfMonitor.Infra.NoSql.Contexts;
-using Totten.Solutions.WolfMonitor.Infra.NoSql.Events;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
@@ -44,12 +41,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
                 var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["AuthConnectionString"]).Options;
                 return new AuthContext(options);
             }, Lifestyle.Scoped);
-
-            container.Register(() =>
-            {
-                return CreateMongoDatabase(configuration["mongoConnection"], configuration["mongoDb"]);
-            }, Lifestyle.Scoped);
-            container.Register<MonitoringContext>(Lifestyle.Scoped);
+            
 
             RegisterFeatures(container);
 
@@ -63,21 +55,6 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             container.Register<IUserRepository, UserRepository>();
             container.Register<IRoleRepository, RoleRepository>();
         }
-
-        private static IMongoDatabase CreateMongoDatabase(string serverConnection, string databaseName)
-        {
-            var mongoUrl = new MongoUrl(serverConnection);
-
-            var mongoClientSettings = MongoClientSettings.FromUrl(mongoUrl);
-
-            mongoClientSettings.ClusterConfigurator = cb => cb.Subscribe(new ApplicationInsightsMongoEvents());
-
-            var client = new MongoClient(mongoClientSettings);
-
-            if (client != null)
-                return client.GetDatabase(databaseName);
-
-            return null;
-        }
+        
     }
 }

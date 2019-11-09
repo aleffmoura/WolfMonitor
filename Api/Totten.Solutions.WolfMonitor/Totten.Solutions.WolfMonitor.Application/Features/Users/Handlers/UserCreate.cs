@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers
@@ -74,7 +75,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers
                 {
                     return role.Failure;
                 }
-
+                request.Password = request.Password.GenerateHash();
                 User user = Mapper.Map<Command, User>(request);
                 user.RoleId = role.Success.Id;
 

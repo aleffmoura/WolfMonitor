@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNet.OData.Query;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Users;
 namespace Totten.Solutions.WolfMonitor.Users.Controllers
 {
     [Route("")]
-    [Authorize()]
+    [AuthorizeRoles(RoleLevelEnum.Admin, RoleLevelEnum.System)]
     public class UsersController : ApiControllerBase
     {
         private IMediator _mediator;

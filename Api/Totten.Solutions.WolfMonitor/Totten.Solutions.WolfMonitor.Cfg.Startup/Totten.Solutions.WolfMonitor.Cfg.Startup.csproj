@@ -41,7 +41,6 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Application\Totten.Solutions.WolfMonitor.Application.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Domain\Totten.Solutions.WolfMonitor.Domain.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
-    <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.NoSql\Totten.Solutions.WolfMonitor.Infra.NoSql.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.ORM\Totten.Solutions.WolfMonitor.Infra.ORM.csproj" />
   </ItemGroup>
 
