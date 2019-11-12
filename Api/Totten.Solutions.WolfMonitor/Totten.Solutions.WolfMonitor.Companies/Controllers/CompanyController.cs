@@ -7,7 +7,7 @@ using Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Companies.Controllers
 {

@@ -3,11 +3,11 @@ using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers;
-using Totten.Solutions.WolfMonitor.Application.Features.Users.ViewModels;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Users.Controllers
 {

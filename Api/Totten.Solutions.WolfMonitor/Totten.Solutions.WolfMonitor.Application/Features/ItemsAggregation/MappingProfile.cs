@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Items
+namespace Totten.Solutions.WolfMonitor.Application.Features.ItemsAggregation
 {
     public class MappingProfile : Profile
     {

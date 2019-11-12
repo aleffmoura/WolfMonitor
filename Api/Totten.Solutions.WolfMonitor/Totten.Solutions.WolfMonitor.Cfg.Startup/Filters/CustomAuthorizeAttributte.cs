@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Filters
 {

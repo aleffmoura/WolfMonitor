@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users;
 

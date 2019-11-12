@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Totten.Solutions.WolfMonitor.Domain.Base;
 
-namespace Totten.Solutions.WolfMonitor.Domain.Features.Users
+namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
 {
     public enum RoleLevelEnum
     {

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Totten.Solutions.WolfMonitor.Cfg.Startup;
 
 namespace Totten.Solutions.WolfMonitor.IdentityServer
 {
@@ -7,11 +6,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Run.Main<Startup>(args);
         }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
     }
 }

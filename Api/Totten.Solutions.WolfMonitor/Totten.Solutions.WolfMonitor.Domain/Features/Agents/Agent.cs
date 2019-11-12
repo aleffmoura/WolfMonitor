@@ -1,7 +1,7 @@
 ﻿using System;
 using Totten.Solutions.WolfMonitor.Domain.Base;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
 {

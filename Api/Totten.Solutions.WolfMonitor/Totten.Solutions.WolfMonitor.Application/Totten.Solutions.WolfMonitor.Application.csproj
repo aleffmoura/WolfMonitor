@@ -15,4 +15,12 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ItemsAggregation\Handlers\Configs\" />
+    <Folder Include="Features\ItemsAggregation\Handlers\Tables\" />
+    <Folder Include="Features\ItemsAggregation\ViewModels\Configs\" />
+    <Folder Include="Features\ItemsAggregation\ViewModels\Tables\" />
+    <Folder Include="Features\ItemsAggregation\ViewModels\Services\" />
+  </ItemGroup>
+
 </Project>

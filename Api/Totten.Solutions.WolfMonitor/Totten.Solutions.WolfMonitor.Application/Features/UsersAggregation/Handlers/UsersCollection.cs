@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using System;
 using System.Linq;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers
+namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers
 {
     public class UsersCollection
     {

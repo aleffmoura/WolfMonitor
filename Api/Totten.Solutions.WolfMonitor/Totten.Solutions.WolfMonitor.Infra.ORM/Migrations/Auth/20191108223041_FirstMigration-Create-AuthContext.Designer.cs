@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.Auth
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.Users.Role", b =>
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -80,7 +80,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.Auth
                         });
                 });
 
-            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.Users.User", b =>
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -141,9 +141,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.Auth
                         });
                 });
 
-            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.Users.User", b =>
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation.User", b =>
                 {
-                    b.HasOne("Totten.Solutions.WolfMonitor.Domain.Features.Users.Role", "Role")
+                    b.HasOne("Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);

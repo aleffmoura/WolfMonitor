@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
             return new List<ApiResource>
             {
                 new ApiResource("Totten.Solutions.PCDoctor.Services", "Service API Totten PCDoctor"),
+                new ApiResource("postman_api", "Postman Test Resource")
             };
         }
 
@@ -33,18 +35,25 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                 clients.Add(new Client
                 {
                     ClientId = c.Id,
-                    ClientName = c.Id,
-                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientName = "Postman Test Client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
                     RedirectUris = { "https://www.getpostman.com/oauth2/callback" },
                     PostLogoutRedirectUris = { "https://www.getpostman.com" },
                     AllowedCorsOrigins = { "https://www.getpostman.com" },
+                    EnableLocalLogin = true,
+                    Enabled = true,
+                    LogoUri = null,
+                    AllowedScopes = { " postman_api ",
+                                        IdentityServerConstants.StandardScopes.OpenId,
+                                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                                        IdentityServerConstants.StandardScopes.Profile,
+                                        IdentityServerConstants.StandardScopes.Email },
                     ClientSecrets =
                     {
-                        new Secret(c.Secret.Sha256())
+                        new Secret(c.Secret)
                     },
-                    AllowedScopes = { " postman_api " },
-                    RequireConsent = false
                 });
             });
 

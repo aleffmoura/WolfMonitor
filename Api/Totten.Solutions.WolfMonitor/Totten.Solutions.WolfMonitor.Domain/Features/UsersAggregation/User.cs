@@ -4,7 +4,7 @@ using Totten.Solutions.WolfMonitor.Domain.Base;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 
-namespace Totten.Solutions.WolfMonitor.Domain.Features.Users
+namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
 {
     public class User : Entity
     {

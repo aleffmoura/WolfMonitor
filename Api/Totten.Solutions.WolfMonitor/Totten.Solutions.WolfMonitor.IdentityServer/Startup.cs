@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Consul;
-using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.DbContexts;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Logging;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Metrics;
 using Totten.Solutions.WolfMonitor.IdentityServer.Configs;
@@ -32,12 +31,13 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
             var conf = new Config(configOnConsul);
             services.AddDependencies(configOnConsul);
 
-            services.AddIdentityServer(opt => {
+            services.AddIdentityServer(opt =>
+            {
                 opt.IssuerUri = configOnConsul["issuerUri"];
             })
-                    .AddDeveloperSigningCredential()
-                    .AddInMemoryApiResources(conf.GetApiResources())
-                    .AddInMemoryClients(conf.GetClients());
+              .AddDeveloperSigningCredential()
+              .AddInMemoryApiResources(conf.GetApiResources())
+              .AddInMemoryClients(conf.GetClients());
         }
 
         public void Configure(IApplicationBuilder app,

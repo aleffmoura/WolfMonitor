@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 
 namespace Totten.Solutions.WolfMonitor.Register.Controllers

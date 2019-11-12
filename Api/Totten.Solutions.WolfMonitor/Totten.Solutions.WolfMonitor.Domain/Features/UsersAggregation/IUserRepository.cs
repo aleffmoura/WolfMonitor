@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Base;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
-namespace Totten.Solutions.WolfMonitor.Domain.Features.Users
+namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
 {
     public interface IUserRepository : IRepository<User>
     {

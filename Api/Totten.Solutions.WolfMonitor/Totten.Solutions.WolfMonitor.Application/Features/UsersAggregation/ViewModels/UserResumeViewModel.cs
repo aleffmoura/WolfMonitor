@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Users.ViewModels
+namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels
 {
     public class UserResumeViewModel
     {

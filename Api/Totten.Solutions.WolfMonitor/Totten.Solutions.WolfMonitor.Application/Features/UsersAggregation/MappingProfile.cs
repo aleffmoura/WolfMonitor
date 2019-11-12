@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using System;
-using Totten.Solutions.WolfMonitor.Application.Features.Users.Handlers;
-using Totten.Solutions.WolfMonitor.Application.Features.Users.ViewModels;
-using Totten.Solutions.WolfMonitor.Domain.Features.Users;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Users
+namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation
 {
     public class MappingProfile : Profile
     {

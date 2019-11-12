@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Items.Handlers
+namespace Totten.Solutions.WolfMonitor.Application.Features.ItemsAggregation.Handlers.Services
 {
-    public class ItemResume
+    public class ServicesResume
     {
         public class Query : IRequest<Result<Exception, Item>>
         {
