@@ -32,7 +32,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
             });
             builder.Entity<Role>().HasData(new Role()
             {
-                Name = "Administrador",
+                Name = "Admin",
                 CreatedIn = DateTime.Now,
                 UpdatedIn = DateTime.Now,
                 Level = RoleLevelEnum.Admin,
@@ -54,7 +54,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
             builder.Entity<User>().HasData(new User()
             {
                 Id = Guid.NewGuid(),
-                Login = "alefmoura",
+                Login = "aleffmoura",
                 Email = "aleffmds@gmail.com",
                 Cpf = "10685805425",
                 Password = "88633251".GenerateHash(),

@@ -24,20 +24,18 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
             services.AddMetric();
             services.AddSingleton<IHelper, Helper>();
             services.AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
-            services.AddEntityFrameworkNpgsql();
             services.AddMvcCore().AddJsonFormatters();
 
-            var configOnConsul = services.BuildServiceProvider().GetService<IConfigurationRoot>();
-            var conf = new Config(configOnConsul);
+            IConfigurationRoot configOnConsul = services.BuildServiceProvider().GetService<IConfigurationRoot>();
+            Config conf = new Config(configOnConsul);
             services.AddDependencies(configOnConsul);
 
-            services.AddIdentityServer(opt =>
-            {
-                opt.IssuerUri = configOnConsul["issuerUri"];
-            })
-              .AddDeveloperSigningCredential()
-              .AddInMemoryApiResources(conf.GetApiResources())
-              .AddInMemoryClients(conf.GetClients());
+            services.AddIdentityServer()
+                    .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+                    .AddDeveloperSigningCredential()
+                    .AddInMemoryIdentityResources(conf.GetIdentityResources())
+                    .AddInMemoryApiResources(conf.GetApiResources())
+                    .AddInMemoryClients(conf.GetClients());
         }
 
         public void Configure(IApplicationBuilder app,
@@ -46,7 +44,9 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
                              IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+            }
 
             IdentityModelEventSource.ShowPII = true;
             app.UseConsul(lifetime);

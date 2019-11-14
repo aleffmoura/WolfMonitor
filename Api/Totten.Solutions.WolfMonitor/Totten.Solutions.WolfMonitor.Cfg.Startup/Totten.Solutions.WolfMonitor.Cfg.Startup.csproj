@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="3.2.0" />
@@ -42,10 +46,6 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Domain\Totten.Solutions.WolfMonitor.Domain.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.ORM\Totten.Solutions.WolfMonitor.Infra.ORM.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\Auth\" />
   </ItemGroup>
 
 </Project>

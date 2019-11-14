@@ -18,13 +18,14 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
                                                     IHostingEnvironment env,
                                                     Container container)
         {
+            app.UseAuthentication();
+
             //app.UseSwaggerCustom();
             app.UseCorsCustom();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseAuthentication();
             app.UseConsul(lifetime);
             app.UseLogging(loggerFactory);
             app.UseMetrics();
@@ -32,7 +33,6 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             app.UseOData();
             container.RegisterMvcControllers(app);
             app.LogErrorResponses();
-            //app.ApplyMigrations(container, env);
         }
 
         private static void UseCorsCustom(this IApplicationBuilder app)

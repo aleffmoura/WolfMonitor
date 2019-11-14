@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SimpleInjector;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Auth;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Consul;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Filters;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector;
@@ -39,7 +40,6 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             services.AddLog();
             services.AddMetric();
             //services.AddRabbitMQ();
-            //services.AddIdentityServerAuthentication();
             services.AddMvc().AddMetrics().AddJsonOptions(options =>
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -47,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
             });
-
+            services.AddAuth(configuration);
             services.BuildServiceProvider();
         }
 

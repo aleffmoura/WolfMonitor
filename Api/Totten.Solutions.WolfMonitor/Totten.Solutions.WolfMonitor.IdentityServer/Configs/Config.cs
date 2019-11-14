@@ -12,48 +12,55 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
 
         public Config(IConfigurationRoot configuration)
         {
-            this._configuration = configuration;
+            _configuration = configuration;
         }
 
         public IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("Totten.Solutions.PCDoctor.Services", "Service API Totten PCDoctor"),
+                new ApiResource("Gateway", "Gateway Service Wolf Monitor"),
+                new ApiResource("Agents", "Agents Service"),
+                new ApiResource("Companies", "Gateway Service Wolf Monitor"),
+                new ApiResource("Itens", "Gateway Service Wolf Monitor"),
+                new ApiResource("Register", "Register Service"),
+                new ApiResource("users", "Users Service"),
                 new ApiResource("postman_api", "Postman Test Resource")
             };
         }
 
+        public IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                    new IdentityResources.OpenId(),
+                    new IdentityResources.Profile(),
+                    new IdentityResources.Email(),
+            };
+        }
         public IEnumerable<Client> GetClients()
         {
-            var clients = new List<Client>();
+            List<Client> clients = new List<Client>();
 
-            var cli = _configuration.GetSection("clients").Get<Models.ServerClient[]>();
+            Models.ServerClient[] cli = _configuration.GetSection("clients").Get<Models.ServerClient[]>();
 
             cli.ToList().ForEach(c =>
             {
                 clients.Add(new Client
                 {
                     ClientId = c.Id,
-                    ClientName = "Postman Test Client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowAccessTokensViaBrowser = true,
-                    RequireConsent = false,
-                    RedirectUris = { "https://www.getpostman.com/oauth2/callback" },
-                    PostLogoutRedirectUris = { "https://www.getpostman.com" },
-                    AllowedCorsOrigins = { "https://www.getpostman.com" },
-                    EnableLocalLogin = true,
-                    Enabled = true,
-                    LogoUri = null,
-                    AllowedScopes = { " postman_api ",
-                                        IdentityServerConstants.StandardScopes.OpenId,
-                                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                                        IdentityServerConstants.StandardScopes.Profile,
-                                        IdentityServerConstants.StandardScopes.Email },
+                    ClientName = c.Name,
                     ClientSecrets =
                     {
-                        new Secret(c.Secret)
+                        new Secret(c.Secret.Sha256())
                     },
+                    AllowedScopes = c.Scopes,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AlwaysSendClientClaims = true,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    Enabled = true,
+                    LogoUri = null
                 });
             });
 

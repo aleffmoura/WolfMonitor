@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 
@@ -42,14 +43,15 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
 
         public async Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.CompanyId == companyId &&
-                                                                    (u.Login.Equals(login) || u.Email.Equals(login) || u.Cpf.Equals(login)) &&
-                                                                    u.Password == password && !u.Removed);
-            if (user == null)
+            User userCallBack = await _context.Users.Include(x => x.Role).FirstOrDefaultAsync(user => user.CompanyId == companyId &&
+                                                                          (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)) &&
+                                                                          user.Password == password.GenerateHash() &&
+                                                                          !user.Removed);
+            if (userCallBack == null)
             {
                 return new InvalidCredentialsException();
             }
-            return user;
+            return userCallBack;
         }
 
         public async Task<Result<Exception, User>> GetByIdAsync(Guid id)

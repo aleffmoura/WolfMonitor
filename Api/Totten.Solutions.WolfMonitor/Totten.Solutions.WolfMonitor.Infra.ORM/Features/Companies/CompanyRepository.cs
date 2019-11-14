@@ -44,6 +44,17 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
             return company;
         }
 
+        public async Task<Result<Exception, Company>> GetByNameAsync(string name)
+        {
+            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (company == null)
+            {
+                return new NotFoundException("Company not found");
+            }
+            return company;
+        }
+
         public async Task<Result<Exception, Unit>> UpdateAsync(Company entity)
         {
             entity.UpdatedIn = DateTime.Now;
