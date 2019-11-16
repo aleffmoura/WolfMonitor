@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Client.Domain", "Totten.Solutions.WolfMonitor.Client.Domain\Totten.Solutions.WolfMonitor.Client.Domain.csproj", "{55CF0C53-35A0-4D02-9E1C-B7E95D4D9541}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. InfraLayer", "3. InfraLayer", "{99A6FEC9-B920-49D9-89B0-26EF0695FA94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infra Layer", "3. Infra Layer", "{99A6FEC9-B920-49D9-89B0-26EF0695FA94}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Client.Infra.Data.Https", "Totten.Solutions.WolfMonitor.Client.Infra.Data.Https\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.csproj", "{969AD34D-0660-4C88-92E7-D44450FEAA0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Infra.CrossCutting", "Totten.Solutions.WolfMonitor.Client.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj", "{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Infra.CrossCutting", "..\..\Api\Totten.Solutions.WolfMonitor\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj", "{144FCC2B-BD16-40C1-BEB4-16BAB1C66362}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infra Layer - Api", "4. Infra Layer - Api", "{CD1991D3-8627-49CB-8BEF-6662EC2274FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +45,10 @@ Global
 		{969AD34D-0660-4C88-92E7-D44450FEAA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{969AD34D-0660-4C88-92E7-D44450FEAA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{969AD34D-0660-4C88-92E7-D44450FEAA0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144FCC2B-BD16-40C1-BEB4-16BAB1C66362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144FCC2B-BD16-40C1-BEB4-16BAB1C66362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144FCC2B-BD16-40C1-BEB4-16BAB1C66362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144FCC2B-BD16-40C1-BEB4-16BAB1C66362}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +58,7 @@ Global
 		{1EFFACC5-418D-412B-9E14-813291BF2B0A} = {1CF27162-6611-4151-AD0A-20F3EEC1E793}
 		{55CF0C53-35A0-4D02-9E1C-B7E95D4D9541} = {3B4BDCAE-15C6-4C9F-9D42-8FA7D0DB0EFB}
 		{969AD34D-0660-4C88-92E7-D44450FEAA0F} = {99A6FEC9-B920-49D9-89B0-26EF0695FA94}
-		{F1CA9375-68CD-4CE1-B6D8-9EEF2597E7D6} = {99A6FEC9-B920-49D9-89B0-26EF0695FA94}
+		{144FCC2B-BD16-40C1-BEB4-16BAB1C66362} = {CD1991D3-8627-49CB-8BEF-6662EC2274FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB00A1DC-426A-48FB-AD90-8299ECB39B04}
