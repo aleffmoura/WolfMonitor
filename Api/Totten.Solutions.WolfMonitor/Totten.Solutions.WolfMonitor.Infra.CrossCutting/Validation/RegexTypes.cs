@@ -6,9 +6,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Validation
 {
     public static class RegexTypes
     {
-        public const string AgentVersion = @"^[a-zA-Z0-9.-]*$";
-
-        public const string AgentToken = @"^[a-zA-Z0-9\-]{1,100}$";
 
         public const string MacAddress = @"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
 
