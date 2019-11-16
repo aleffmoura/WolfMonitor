@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Filters
             RoleLevelEnum? roleEnum;
             try
             {
-                string roleLevel = GetClaimValue(context.HttpContext, "RoleLevel");
+                string roleLevel = GetClaimValue(context.HttpContext, "Role");
 
                 roleEnum = Enum.Parse<RoleLevelEnum>(roleLevel);
             }

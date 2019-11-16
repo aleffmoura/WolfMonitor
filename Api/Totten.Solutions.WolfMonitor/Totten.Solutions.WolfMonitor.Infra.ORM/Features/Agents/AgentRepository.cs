@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 
@@ -41,6 +42,18 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         {
             Agent agent = await _context.Agents
                                         .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase));
+
+            if (agent == null)
+            {
+                return new NotFoundException();
+            }
+
+            return agent;
+        }
+        public async Task<Result<Exception, Agent>> Authentication(Guid companyId, string login, string password)
+        {
+            Agent agent = await _context.Agents
+                                        .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) && a.Password == password.GenerateHash());
 
             if (agent == null)
             {
