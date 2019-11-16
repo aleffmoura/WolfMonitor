@@ -1,0 +1,186 @@
+version: '3.7'
+
+
+###### Rede compartilhada por todos os servicos
+networks:
+  servicos:
+    name: servicos
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16 
+        
+volumes:
+  esdata1:
+    driver: local
+    
+  prometheus_data: {}
+  grafana_data: {}
+
+services:
+
+  consul-1: 
+    image: "consul"
+    container_name: "consul-1"
+    hostname: "consul-1"
+    restart: always
+    networks:
+      servicos:
+        ipv4_address: 172.18.0.200
+    ports:
+      - "8301:8301"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+    command: "agent -server -bootstrap-expect=3 -advertise=172.18.0.200 -client=0.0.0.0 -ui"
+
+      
+  consul-2: 
+    image: "consul"
+    restart: always
+    container_name: "consul-2"
+    hostname: "consul-2"
+    depends_on:
+      - consul-1
+    networks:
+      servicos:
+        ipv4_address: 172.18.0.201
+    ports:
+      - "8302:8301"
+      - "8401:8400"
+      - "8501:8500"
+      - "8601:53/udp" 
+    command: "agent -server -bootstrap-expect=3 -advertise=172.18.0.201 -retry-join=172.18.0.200 -client=0.0.0.0 -ui"
+
+      
+  consul-3: 
+    image: "consul"
+    container_name: "consul-3"
+    restart: always
+    hostname: "consul-3"
+    depends_on:
+      - consul-2
+    networks:
+      servicos:
+        ipv4_address: 172.18.0.202
+    ports:
+      - "8303:8301"
+      - "8402:8400"
+      - "8502:8500"
+      - "8602:53/udp"
+    command: "agent -server -bootstrap-expect=3 -advertise=172.18.0.202 -retry-join=172.18.0.200 -client=0.0.0.0 -ui"
+      
+  rabbitmq:
+    container_name: "rabbitmq"
+    hostname: "rabbitmq"
+    environment:
+      - TCP_PORTS=15672,5672
+      - AUTOCLUSTER_TYPE=consul
+      - AUTOCLUSTER_DELAY=60
+      - CONSUL_HOST=consul-1
+      - CONSUL_SVC_ADDR_AUTO=true
+      - AUTOCLUSTER_CLEANUP=true
+      - CLEANUP_WARN_ONLY=false
+      - CONSUL_DEREGISTER_AFTER=60 
+    image: pivotalrabbitmq/rabbitmq-autocluster
+    depends_on:
+    - consul-3
+    restart: always
+    command:  sh -c "rabbitmq-server;" 
+    networks:
+      - servicos
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+    - "5671:5671"
+    - "15671:15671"
+    
+  logs.postgres:    
+    image: postgres
+    container_name: "logs.postgres"
+    hostname: "logs.postgres"
+    restart: always
+    networks:
+      - servicos
+    environment:
+      POSTGRES_PASSWORD: W01fM0n1t0r
+      POSTGRES_DB: logs
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "5435:5432"
+
+  jobs.postgres:    
+    image: postgres
+    container_name: "jobs.postgres"
+    hostname: "jobs.postgres"
+    restart: always
+    networks:
+      - servicos
+    environment:
+      POSTGRES_PASSWORD: W01fM0n1t0r
+      POSTGRES_DB: hangfire
+      TZ: "America/Sao_Paulo"    
+    ports:
+      - "5433:5432"
+
+  auth.postgres:    
+    image: postgres
+    container_name: "auth.postgres"
+    hostname: "auth.postgres"
+    restart: always
+    networks:
+      - servicos
+    environment:
+      POSTGRES_PASSWORD: W01fM0n1t0r
+      POSTGRES_DB: auth
+      TZ: "America/Sao_Paulo"    
+    ports:
+      - "5434:5432"
+    
+  grafana:
+    image: "grafana/grafana:latest"
+    container_name: "grafana"
+    hostname: "grafana"
+    env_file:
+    - 'env.grafana'
+    ports:
+    - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - servicos
+    restart: always
+    depends_on:
+    - logs.postgres
+    - prometheus
+        
+  prometheus:
+    image: prom/prometheus
+    container_name: "prometheus"
+    hostname: "prometheus"
+    volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        - prometheus_data:/prometheus
+    command: "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+        - "9090:9090"
+    networks:
+      - servicos
+    depends_on:
+      - consul-3
+      - rabbitmq
+    restart: always
+        
+  consul.exporter:
+    image: prom/consul-exporter
+    container_name: "consul.exporter"
+    hostname: "consul.exporter"
+    command: "--consul.server=consul-1:8500"
+    depends_on:
+        - consul-3
+        - prometheus
+    ports:
+        - "9107:9107"
+    networks:
+      - servicos
+    restart: always

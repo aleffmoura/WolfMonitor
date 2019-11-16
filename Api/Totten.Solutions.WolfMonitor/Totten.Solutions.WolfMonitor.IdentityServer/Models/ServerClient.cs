@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Totten.Solutions.WolfMonitor.IdentityServer.Models
 {
@@ -9,7 +6,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Models
     {
         public string Id { get; set; }
         public string Secret { get; set; }
-        public string Name { get; internal set; }
-        public ICollection<string> Scopes { get; internal set; }
+        public string Name { get; set; }
+        public List<string> Scopes { get; set; }
     }
 }

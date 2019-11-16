@@ -12,11 +12,12 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Auth
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                     .AddIdentityServerAuthentication(opt =>
                     {
-                        opt.Authority = configuration["identityServer"];
+                        opt.Authority = configuration["identityServerAddress"];
                         opt.RequireHttpsMetadata = false;
                         opt.ApiName = configuration["apiName"];
                         opt.ApiSecret = configuration["apiSecret"];
                     });
+            services.AddAuthorization();
         }
     }
 }

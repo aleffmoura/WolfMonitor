@@ -1,5 +1,4 @@
-﻿using IdentityServer4;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +18,12 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
         {
             return new List<ApiResource>
             {
-                new ApiResource("Gateway", "Gateway Service Wolf Monitor"),
-                new ApiResource("Agents", "Agents Service"),
-                new ApiResource("Companies", "Gateway Service Wolf Monitor"),
-                new ApiResource("Itens", "Gateway Service Wolf Monitor"),
-                new ApiResource("Register", "Register Service"),
-                new ApiResource("users", "Users Service"),
-                new ApiResource("postman_api", "Postman Test Resource")
+                new ApiResource("Agents", "Agents Service", new List<string> { "Role","UserId", "RoleLevel", "CompanyId", "Login" }){
+                    ApiSecrets =
+                    {
+                        new Secret(_configuration["agentsApiSecret"].Sha256())
+                    }
+                }
             };
         }
 
@@ -33,9 +31,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
         {
             return new List<IdentityResource>
             {
-                    new IdentityResources.OpenId(),
-                    new IdentityResources.Profile(),
-                    new IdentityResources.Email(),
+                    new IdentityResources.OpenId()
             };
         }
         public IEnumerable<Client> GetClients()
@@ -55,12 +51,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                         new Secret(c.Secret.Sha256())
                     },
                     AllowedScopes = c.Scopes,
-                    AllowAccessTokensViaBrowser = true,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                    AlwaysSendClientClaims = true,
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    Enabled = true,
-                    LogoUri = null
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
                 });
             });
 

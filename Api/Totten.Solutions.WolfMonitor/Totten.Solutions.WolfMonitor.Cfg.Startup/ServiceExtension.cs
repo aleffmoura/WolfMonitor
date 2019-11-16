@@ -28,6 +28,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             services.AddConsulServiceConfigurations(new string[] { "Global", _helper.GetServiceName() });
             IConfigurationRoot configuration = services.BuildServiceProvider().GetService<IConfigurationRoot>();
             services.AddSimpleInjector(container);
+            services.AddAuth(configuration);
             services.AddDependencies(container, configuration);
             services.AddAutoMapper(typeof(Application.Module));
             services.AddOData();
@@ -47,7 +48,6 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
             });
-            services.AddAuth(configuration);
             services.BuildServiceProvider();
         }
 

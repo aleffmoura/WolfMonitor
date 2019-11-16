@@ -3,12 +3,12 @@ using Totten.Solutions.WolfMonitor.Domain.Base;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
 {
-    public enum RoleLevelEnum
+    public enum RoleLevelEnum : int
     {
-        Agent,
-        User,
-        Admin,
-        System
+        Agent = 0,
+        User = 1,
+        Admin = 2,
+        System = 3
     }
     public class Role : Entity
     {

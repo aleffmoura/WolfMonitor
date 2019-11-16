@@ -19,6 +19,17 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string Login { get; set; }
             public string Password { get; set; }
 
+            public Command(Guid companyId,
+                           Guid userWhoCreated,
+                           string login,
+                           string password)
+            {
+                CompanyId = companyId;
+                UserWhoCreated = userWhoCreated;
+                Login = login;
+                Password = password;
+            }
+
             public ValidationResult Validate()
             {
                 return new Validator().Validate(this);

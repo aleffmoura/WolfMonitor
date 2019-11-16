@@ -10,9 +10,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
     {
         public class Query : IRequest<Result<Exception, IQueryable<Agent>>>
         {
-            public string CompanyId { get; set; }
+            public Guid CompanyId { get; set; }
 
-            public Query(string companyId)
+            public Query(Guid companyId)
             {
                 CompanyId = companyId;
             }
@@ -29,8 +29,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             protected override Result<Exception, IQueryable<Agent>> Handle(Query request)
             {
-                var companyId = Guid.Parse(request.CompanyId);
-                return _repository.GetAll(companyId);
+                return _repository.GetAll(request.CompanyId);
             }
         }
     }

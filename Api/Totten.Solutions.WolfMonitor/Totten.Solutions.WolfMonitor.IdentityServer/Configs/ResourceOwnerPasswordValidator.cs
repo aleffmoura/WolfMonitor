@@ -45,6 +45,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                     claims.Add(new Claim("RoleLevel", userCallback.Success.Role.Level.ToString()));
                     claims.Add(new Claim("Login", userCallback.Success.Login));
                     claims.Add(new Claim("CompanyId", userCallback.Success.CompanyId.ToString()));
+                    claims.Add(new Claim("UserId", userCallback.Success.Id.ToString()));
                     context.Result = new GrantValidationResult(userCallback.Success.Id.ToString(), "password", claims, "local", null);
                 }
                 else

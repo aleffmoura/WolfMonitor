@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Agents.Commands;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
@@ -25,16 +26,16 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 
         #region HTTP POST
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create([FromBody]AgentCreate.Command command)
+        [CustomAuthorizeAttributte(RoleLevelEnum.Admin)]
+        public async Task<IActionResult> Create([FromBody]AgentCreateCommand command)
         {
-            command.UserWhoCreated = UserId;
-            return HandleCommand(await _mediator.Send(command));
+            return HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.Login, command.Password)));
         }
         #endregion
 
         #region HTTP PATCH
         [HttpPatch]
+        [CustomAuthorizeAttributte(RoleLevelEnum.Admin)]
         public async Task<IActionResult> PatchClient([FromBody]AgentUpdate.Command command)
         {
             return HandleCommand(await _mediator.Send(command));
@@ -42,16 +43,17 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         #endregion
 
         #region HTTP GET
-        [HttpGet("{companyId}")]
         [ODataQueryOptionsValidate]
-        public async Task<IActionResult> ReadAll([FromRoute]string companyId, ODataQueryOptions<Agent> queryOptions)
+        [CustomAuthorizeAttributte( RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadAll( ODataQueryOptions<Agent> queryOptions)
         {
-            return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(companyId)), queryOptions);
+            return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(CompanyId)), queryOptions);
         }
-        [HttpGet("{companyId}/{agentId}")]
-        public async Task<IActionResult> ReadById([FromRoute]Guid companyId, [FromRoute]Guid agentId)
+        [HttpGet("{agentId}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadById([FromRoute]Guid agentId)
         {
-            return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId, agentId)));
+            return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, agentId)));
         }
         #endregion
     }

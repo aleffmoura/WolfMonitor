@@ -14,7 +14,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Exceptions;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions;
-using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
@@ -24,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
     public class ApiControllerBase : ControllerBase
     {
         protected Guid UserId => Guid.Parse(GetClaimValue("UserId"));
+        protected Guid CompanyId => Guid.Parse(GetClaimValue("CompanyId"));
         #region Handlers    
         protected IActionResult HandleCommand<TFailure, TSuccess>(Result<TFailure, TSuccess> result) where TFailure : Exception
                             => result.IsFailure ? HandleFailure(result.Failure) : Ok(result.Success);

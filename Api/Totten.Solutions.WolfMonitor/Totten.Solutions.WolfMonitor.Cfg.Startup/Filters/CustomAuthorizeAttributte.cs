@@ -35,7 +35,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Filters
             }
             var permissions = Roles.ToList().Contains(roleEnum.Value);
 
-            if (permissions)
+            if (!permissions)
                 throw new ForbiddenException();
 
             base.OnActionExecuting(context);
