@@ -26,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 
         #region HTTP POST
         [HttpPost]
-        [CustomAuthorizeAttributte(RoleLevelEnum.Admin)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromBody]AgentCreateCommand command)
         {
             return HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.Login, command.Password)));
@@ -35,7 +35,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 
         #region HTTP PATCH
         [HttpPatch]
-        [CustomAuthorizeAttributte(RoleLevelEnum.Admin)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]AgentUpdate.Command command)
         {
             return HandleCommand(await _mediator.Send(command));
@@ -44,13 +44,13 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 
         #region HTTP GET
         [ODataQueryOptionsValidate]
-        [CustomAuthorizeAttributte( RoleLevelEnum.User)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll( ODataQueryOptions<Agent> queryOptions)
         {
             return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(CompanyId)), queryOptions);
         }
         [HttpGet("{agentId}")]
-        [CustomAuthorizeAttributte(RoleLevelEnum.User)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadById([FromRoute]Guid agentId)
         {
             return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, agentId)));
