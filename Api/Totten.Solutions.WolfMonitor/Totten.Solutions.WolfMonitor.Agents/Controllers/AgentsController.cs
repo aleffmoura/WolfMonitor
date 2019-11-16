@@ -35,16 +35,16 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         #region HTTP PATCH
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
-        public async Task<IActionResult> PatchClient([FromBody]AgentUpdate.Command command)
+        public async Task<IActionResult> PatchClient([FromBody]AgentUpdateCommand command)
         {
-            return HandleCommand(await _mediator.Send(command));
+            return HandleCommand(await _mediator.Send(new AgentUpdate.Command(UserId, command.Name, command.LocalIp, command.HostName, command.HostAddress)));
         }
         #endregion
 
         #region HTTP GET
         [ODataQueryOptionsValidate]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        public async Task<IActionResult> ReadAll( ODataQueryOptions<Agent> queryOptions)
+        public async Task<IActionResult> ReadAll(ODataQueryOptions<Agent> queryOptions)
         {
             return await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(CompanyId)), queryOptions);
         }

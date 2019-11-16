@@ -68,7 +68,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                                                             companyId: companCallback.Success.Id,
                                                             userId: agentCallback.Success.Id);
 
-                            context.Result = new GrantValidationResult(userCallback.Success.Id.ToString(), "password", claims, "local", null);
+                            context.Result = new GrantValidationResult(agentCallback.Success.Id.ToString(), "password", claims, "local", null);
                         }
                         else
                         {

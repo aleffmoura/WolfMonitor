@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
         {
             CreateMap<AgentCreate.Command, Agent>()
                 .ForMember(dest => dest.CompanyId, opt => opt.MapFrom(src => src.CompanyId))
-                .ForMember(dest => dest.UserWhoCreatedId, opt => opt.MapFrom(src => src.UserWhoCreated))
+                .ForMember(dest => dest.UserWhoCreatedId, opt => opt.MapFrom(src => src.UserWhoCreatedId))
                 .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => "Never connected"))

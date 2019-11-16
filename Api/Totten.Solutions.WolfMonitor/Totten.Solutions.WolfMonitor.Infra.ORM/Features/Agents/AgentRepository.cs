@@ -21,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> CreateAsync(Agent agent)
         {
+            agent.Password = agent.Password.GenerateHash();
             EntityEntry<Agent> newAgent = _context.Agents.Add(agent);
 
             await _context.SaveChangesAsync();

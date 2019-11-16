@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.Client.Service", "Totten.Solutions.WolfMonitor.Client.Service\Totten.Solutions.WolfMonitor.Client.Service.csproj", "{0718BF27-250D-4E60-8767-BBA19783ADBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Client.Service", "Totten.Solutions.WolfMonitor.Client.Service\Totten.Solutions.WolfMonitor.Client.Service.csproj", "{0718BF27-250D-4E60-8767-BBA19783ADBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation Layer", "1. Presentation Layer", "{21E1CD3A-1F6F-4E71-99B4-ED5A18DBB03B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application Layer", "2. Application Layer", "{1CF27162-6611-4151-AD0A-20F3EEC1E793}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infra Layer", "3. Infra Layer", "{3B4BDCAE-15C6-4C9F-9D42-8FA7D0DB0EFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.Client.Appl", "Totten.Solutions.WolfMonitor.Client.Appl\Totten.Solutions.WolfMonitor.Client.Appl.csproj", "{1EFFACC5-418D-412B-9E14-813291BF2B0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,17 @@ Global
 		{0718BF27-250D-4E60-8767-BBA19783ADBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0718BF27-250D-4E60-8767-BBA19783ADBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0718BF27-250D-4E60-8767-BBA19783ADBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFFACC5-418D-412B-9E14-813291BF2B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFFACC5-418D-412B-9E14-813291BF2B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFFACC5-418D-412B-9E14-813291BF2B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFFACC5-418D-412B-9E14-813291BF2B0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0718BF27-250D-4E60-8767-BBA19783ADBA} = {21E1CD3A-1F6F-4E71-99B4-ED5A18DBB03B}
+		{1EFFACC5-418D-412B-9E14-813291BF2B0A} = {1CF27162-6611-4151-AD0A-20F3EEC1E793}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB00A1DC-426A-48FB-AD90-8299ECB39B04}

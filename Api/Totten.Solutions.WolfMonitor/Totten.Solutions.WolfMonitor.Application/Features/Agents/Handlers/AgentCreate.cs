@@ -15,7 +15,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
         public class Command : IRequest<Result<Exception, Guid>>
         {
             public Guid CompanyId { get; set; }
-            public Guid UserWhoCreated { get; set; }
+            public Guid UserWhoCreatedId { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
 
@@ -25,7 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                            string password)
             {
                 CompanyId = companyId;
-                UserWhoCreated = userWhoCreated;
+                UserWhoCreatedId = userWhoCreated;
                 Login = login;
                 Password = password;
             }
@@ -41,7 +41,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 {
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador da empresa é invalido");
-                    RuleFor(a => a.UserWhoCreated).NotEqual(Guid.Empty)
+                    RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta criando o agente é invalido");
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Password).NotEmpty().Length(4, 100);

@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.IdentityServer.Configs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users;
 
@@ -21,7 +23,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Extensions
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
-            //services.AddScoped<IProfileService, ProfileService>();
+            services.AddTransient<IAgentRepository, AgentRepository>();
         }
     }
 }

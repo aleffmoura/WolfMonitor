@@ -21,6 +21,16 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string HostName { get; set; }
             public string HostAddress { get; set; }
 
+
+            public Command(Guid id, string name, string localIp, string hostName, string hostAddress)
+            {
+                Id = id;
+                Name = name;
+                LocalIp = localIp;
+                HostName = hostName;
+                HostAddress = hostAddress;
+            }
+
             public ValidationResult Validate()
             {
                 return new Validator().Validate(this);
@@ -50,13 +60,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var agentCallback = await _repository.GetByIdAsync(request.Id);
+                Result<Exception, Agent> agentCallback = await _repository.GetByIdAsync(request.Id);
 
 
                 if (agentCallback.IsFailure)
+                {
                     return agentCallback.Failure;
+                }
 
-                var agent = agentCallback.Success;
+                Agent agent = agentCallback.Success;
 
                 Mapper.Map(request, agent);
 
