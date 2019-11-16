@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Users\" />
+    <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.csproj" />
   </ItemGroup>
 
 </Project>
