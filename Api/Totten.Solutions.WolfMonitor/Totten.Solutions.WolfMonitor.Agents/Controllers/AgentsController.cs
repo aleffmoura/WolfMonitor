@@ -54,6 +54,12 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         {
             return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, agentId)));
         }
+        [HttpGet("info")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
+        public async Task<IActionResult> ReadInfoAgent()
+        {
+            return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, UserId)));
+        }
         #endregion
     }
 }

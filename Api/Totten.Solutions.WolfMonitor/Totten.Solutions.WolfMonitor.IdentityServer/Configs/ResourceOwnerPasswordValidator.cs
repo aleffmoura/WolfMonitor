@@ -44,36 +44,36 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
             }
             else
             {
-                Result<Exception, User> userCallback = await _repository.GetByCredentials(companCallback.Success.Id, login, context.Password);
 
-                if (userCallback.IsSuccess)
+                if (userType.Equals("Agent", StringComparison.InvariantCultureIgnoreCase))
                 {
+                    Result<Exception, Agent> agentCallback = await _agentRepository.Authentication(companCallback.Success.Id, login, context.Password);
+                    if (agentCallback.IsSuccess)
+                    {
+                        List<Claim> claims = MakeClaims(RoleLevelEnum.Agent,
+                                                        login,
+                                                        companyId: companCallback.Success.Id,
+                                                        userId: agentCallback.Success.Id);
 
-                    List<Claim> claims = MakeClaims(userCallback.Success.Role.Level,
-                                                    login,
-                                                    companyId: companCallback.Success.Id,
-                                                    userId: userCallback.Success.Id);
-
-                    context.Result = new GrantValidationResult(userCallback.Success.Id.ToString(), "password", claims, "local", null);
+                        context.Result = new GrantValidationResult(agentCallback.Success.Id.ToString(), "password", claims, "local", null);
+                    }
+                    else
+                    {
+                        context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "The agent login or password are incorrect", null);
+                    }
                 }
                 else
                 {
-                    if (userType.Equals("Agent", StringComparison.InvariantCultureIgnoreCase))
+                    Result<Exception, User> userCallback = await _repository.GetByCredentials(companCallback.Success.Id, login, context.Password);
+                    if (userCallback.IsSuccess)
                     {
-                        Result<Exception, Agent> agentCallback = await _agentRepository.Authentication(companCallback.Success.Id, login, context.Password);
-                        if (agentCallback.IsSuccess)
-                        {
-                            List<Claim> claims = MakeClaims(RoleLevelEnum.Agent,
-                                                            login,
-                                                            companyId: companCallback.Success.Id,
-                                                            userId: agentCallback.Success.Id);
 
-                            context.Result = new GrantValidationResult(agentCallback.Success.Id.ToString(), "password", claims, "local", null);
-                        }
-                        else
-                        {
-                            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "The agent login or password are incorrect", null);
-                        }
+                        List<Claim> claims = MakeClaims(userCallback.Success.Role.Level,
+                                                        login,
+                                                        companyId: companCallback.Success.Id,
+                                                        userId: userCallback.Success.Id);
+
+                        context.Result = new GrantValidationResult(userCallback.Success.Id.ToString(), "password", claims, "local", null);
                     }
                     else
                     {
@@ -81,7 +81,6 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                     }
                 }
             }
-
             await Task.FromResult(context.Result);
         }
 

@@ -12,5 +12,6 @@
         public string FirstConnection { get; set; }
         public string LastConnection { get; set; }
         public string LastUpload { get; set; }
+        public bool Configured { get; set; }
     }
 }
