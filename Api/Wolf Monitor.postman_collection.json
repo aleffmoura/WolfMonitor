@@ -1,0 +1,533 @@
+{
+	"info": {
+		"_postman_id": "f18985e4-539b-46de-aa94-f07c7ede8e43",
+		"name": "Wolf Monitor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Agents",
+			"item": [
+				{
+					"name": "Agent Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFhMmU4OTE5N2VlMWVlZGU5YWJjZmE4MDMwMDg0M2RjIiwidHlwIjoiSldUIn0.eyJuYmYiOjE1NzM5NDQ2NjUsImV4cCI6MTU3Mzk0ODI2NSwiaXNzIjoiaHR0cDovLzEwLjAuNzUuMToxNjAwMCIsImF1ZCI6WyJodHRwOi8vMTAuMC43NS4xOjE2MDAwL3Jlc291cmNlcyIsIkFnZW50cyJdLCJjbGllbnRfaWQiOiJwb3N0bWFuIiwic3ViIjoiOWM5M2YxMTMtNzZiMS00Y2FmLTk2MjgtYmU4NDRhNjhjYjUwIiwiYXV0aF90aW1lIjoxNTczOTQ0NjY1LCJpZHAiOiJsb2NhbCIsIlJvbGUiOiJTeXN0ZW0iLCJMb2dpbiI6ImFsZWZmbW91cmEiLCJDb21wYW55SWQiOiJjNTc2Y2Y5My0zNzBjLTQ0NjQtMjFmOS0wOGQ3NjNkMjdkNzUiLCJVc2VySWQiOiI5YzkzZjExMy03NmIxLTRjYWYtOTYyOC1iZTg0NGE2OGNiNTAiLCJzY29wZSI6WyJBZ2VudHMiXSwiYW1yIjpbInBhc3N3b3JkIl19.cecRRmNVBOmTofodc1puGaB2RDN3FwBgrdqkiSZPBbOOWF5LLDeNrHkf5Utspv5pUQitA8JAtJRNpdPUiA3BJqtt9EQGSlZszElKSHjOOc_QLL0UT5h-s3ImohAAuisnyWmdK1LbNYRpxMl1mP94yT6qSOmM0k8qBSRhiva9xbqson3k22qNpJQYkTIuD0WKKy4H6rj5RZS2AF-YIY7KDIsNii7LQV-5ydUboU17LvBiK75EqOsrKO2mqYgjH9DUuP0ybwZn86w_XNpu1k6Qz1RvxdkHatHDIZkINDQHGnev3v_Rzimxktpo1zUD_ZZ9PV4UrVMdSJadLpZ5lGf80A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "scope",
+								"value": "agents",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\":\"aesirAgent\",\n\t\"password\":\"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/agents",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agents List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/agents/c576cf93-370c-4464-21f9-08d763d27d75",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"agents",
+								"c576cf93-370c-4464-21f9-08d763d27d75"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agents Resume",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/agents/6fe23e6f-3670-416b-0e29-08d7645254bb",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"agents",
+								"6fe23e6f-3670-416b-0e29-08d7645254bb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agent Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/agents",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agents Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"aegirpc\",\n\t\"localIp\": \"10.0.0.100\",\n\t\"hostName\": \"aesir.localhost\",\n\t\"hostAddress\": \"10:00:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/agents",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "Company Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/companies",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Companies List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{gateway}}/companies?$count=true",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"companies"
+							],
+							"query": [
+								{
+									"key": "$count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "User Add",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"CompanyId\":\"c576cf93-370c-4464-21f9-08d763d27d75\",\n\t\"Email\":\"thaliiiateles@gmail.com\",\n\t\"Cpf\":\"10693373903\",\n\t\"FirstName\":\"Thalia\",\n\t\"LastName\":\"Teles da Rosa\",\n\t\"Language\":\"pt-BR\",\n\t\"Login\":\"thaliateles\",\n\t\"Password\":\"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{gateway}}/register/users",
+									"host": [
+										"{{gateway}}"
+									],
+									"path": [
+										"register",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Users List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway}}/users/c576cf93-370c-4464-21f9-08d763d27d75?$count=true",
+									"host": [
+										"{{gateway}}"
+									],
+									"path": [
+										"users",
+										"c576cf93-370c-4464-21f9-08d763d27d75"
+									],
+									"query": [
+										{
+											"key": "$count",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Authorize",
+			"item": [
+				{
+					"name": "User Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "userName",
+								"value": "aleffmoura",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "88633251",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CompanyId\":\"c576cf93-370c-4464-21f9-08d763d27d75\",\n\t\"Email\":\"thaliiiateles@gmail.com\",\n\t\"Cpf\":\"10693373903\",\n\t\"FirstName\":\"Thalia\",\n\t\"LastName\":\"Teles da Rosa\",\n\t\"Language\":\"pt-BR\",\n\t\"Login\":\"thaliateles\",\n\t\"Password\":\"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/authorize/token",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"authorize",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "postmanSecret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "postman",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "aleffmoura@totemsolutions#user",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "88633251",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "Agents",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/identityserver/connect/token",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"identityserver",
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Agent",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "postmanSecret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "postman",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "aesirAgent@totemsolutions#agent",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "88633251",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "Agents",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/identityserver/connect/token",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"identityserver",
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFhMmU4OTE5N2VlMWVlZGU5YWJjZmE4MDMwMDg0M2RjIiwidHlwIjoiSldUIn0.eyJuYmYiOjE1NzM5NDQ1NDUsImV4cCI6MTU3Mzk0ODE0NSwiaXNzIjoiaHR0cDovLzEwLjAuNzUuMToxNjAwMCIsImF1ZCI6WyJodHRwOi8vMTAuMC43NS4xOjE2MDAwL3Jlc291cmNlcyIsIkFnZW50cyJdLCJjbGllbnRfaWQiOiJwb3N0bWFuIiwic3ViIjoiOWM5M2YxMTMtNzZiMS00Y2FmLTk2MjgtYmU4NDRhNjhjYjUwIiwiYXV0aF90aW1lIjoxNTczOTQ0NTQ1LCJpZHAiOiJsb2NhbCIsIlJvbGUiOiJTeXN0ZW0iLCJMb2dpbiI6ImFsZWZmbW91cmEiLCJDb21wYW55SWQiOiJjNTc2Y2Y5My0zNzBjLTQ0NjQtMjFmOS0wOGQ3NjNkMjdkNzUiLCJVc2VySWQiOiI5YzkzZjExMy03NmIxLTRjYWYtOTYyOC1iZTg0NGE2OGNiNTAiLCJzY29wZSI6WyJBZ2VudHMiXSwiYW1yIjpbInBhc3N3b3JkIl19.K1Aj5fyYmhXWDQZwP11g4h0x0QoNzz-zJZXs-J2xaTCOUjguBmt62cq4J-MCmxKUR5gupUVeOjCvKMtWsaFymyHCcdq5fKD9yx_quHePKlIiyWS14OErw55ahaO7yhRSL7ybO70bsxCjaZ6hDyiOYYfNFsXfhhh3IinhiB9oSP8kKfvv1jebcxhC49Wn49q2iuZG0DCLfiIqYBTb6YKXMhvZbQlJWYeK2tnj0MzNv4qQNX4UcbKwL10QYk5CZw-O8HnPKx5CN88CCO0ydj-6MjbtUn52nWlNsUMn-t0VaWOwfDmeG7kk-DKt7qJjYpBrTmFK8C2GEEQKgqQa_Z6Rhg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "341a5ad7-253d-4ffe-8808-c9d0c62391ba",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "05f93d07-837d-4f91-b03c-7d654ad2ce76",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4466ff33-d847-411e-bfe5-717312771d5b",
+			"key": "gateway",
+			"value": "http://10.0.75.1:15999",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
