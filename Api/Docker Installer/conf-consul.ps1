@@ -9,7 +9,7 @@ Write-Output ""
 $Global = @'
 {
   "loggingLevel": "Warning",
-  "databaseLogging": "User ID=postgres;Password=Ud5#B4tP4Y!;Host=10.0.75.1;Port=5432;Database=logs;",
+  "databaseLogging": "User ID=postgres;Password=W01fM0n1t0r;Host=10.0.75.1;Port=5432;Database=logs;",
   "healthCheckIntervalSegs": "10",
   "deregisterCriticalServiceAfterSegs": "10",
   "cors": "localhost:4200",
@@ -24,7 +24,7 @@ $Global = @'
 $Jobs = @'
 {
   "tags": "Recurring jobs",
-  "connectionString": "User ID=postgres;Password=Ud5#B4tP4Y!;Host=10.0.75.1;Port=5433;Database=hangfire;",
+  "connectionString": "User ID=postgres;Password=W01fM0n1t0r;Host=10.0.75.1;Port=5433;Database=hangfire;",
   "jobs": [
     {
       "intervalMinutes": "15",      
