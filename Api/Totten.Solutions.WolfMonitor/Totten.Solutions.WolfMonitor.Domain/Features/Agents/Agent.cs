@@ -24,8 +24,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         public DateTime? LastUpload { get; set; }
         //public List<Item> Items { get; set; }
 
-        public Company Company { get; set; }
-        public User UserWhoCreated { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual User UserWhoCreated { get; set; }
 
         public override void Validate() { }
     }

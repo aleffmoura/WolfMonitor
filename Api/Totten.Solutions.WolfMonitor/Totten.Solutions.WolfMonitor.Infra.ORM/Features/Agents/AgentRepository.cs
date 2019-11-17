@@ -79,7 +79,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public Result<Exception, IQueryable<Agent>> GetAll(Guid companyId)
         {
-            return Result.Run(() => _context.Agents.Where(a => !a.Removed && a.CompanyId == companyId));
+            return Result.Run(() => _context.Agents.Include(a => a.Company).Where(a => !a.Removed && a.CompanyId.Equals(companyId)));
         }
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Agent agent)

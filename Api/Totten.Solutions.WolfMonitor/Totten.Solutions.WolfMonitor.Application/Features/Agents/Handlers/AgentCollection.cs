@@ -29,7 +29,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             protected override Result<Exception, IQueryable<Agent>> Handle(Query request)
             {
-                return _repository.GetAll(request.CompanyId);
+                Result<Exception, IQueryable<Agent>> agents =  _repository.GetAll(request.CompanyId);
+
+
+                return agents;
             }
         }
     }
