@@ -1,18 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 using System.Timers;
 using Totten.Solutions.WolfMonitor.Client.Appl.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Service.Dtos;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Service.Base
 {
     public class WolfService
     {
-        static object _locker = new object();
-        private int _oneMinute = 1000;
+        private readonly object _locker = new object();
+
         private Timer _loginTimer;
+        private Timer _updateInfo;
+
+        private readonly int _oneMinute = 1000;
+
         private readonly IAgentService _agentService;
-        private AgentConfiguration _agentConfiguration;
+        private readonly AgentConfiguration _agentConfiguration;
         private Agent _agent;
 
         public WolfService(IAgentService agentService, AgentConfiguration agentConfiguration)
@@ -25,12 +30,51 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
         {
             lock (_locker)
             {
-                _agent = _agentService.GetInfo().Success;
+                Result<Exception, Agent> result = _agentService.GetInfo();
 
-                if (_agent != null)
+                result.OptionalSuccess.Match<Result<Exception, Agent>>(agent =>
+                 {
+                     _agent = agent;
+
+                     _loginTimer.Stop();
+                     _loginTimer.Dispose();
+
+                     if (!_agent.Configured)
+                     {
+                         _updateInfo = new Timer(_oneMinute);
+                         _updateInfo.Elapsed += Update;
+                         _updateInfo.Start();
+                     }
+
+                     return _agent;
+                 }, () => result.Failure);
+            }
+        }
+
+        private void Update(object sender, ElapsedEventArgs e)
+        {
+            lock (_locker)
+            {
+                _agent = new Agent
                 {
-                    _loginTimer.Stop();
-                }
+                    Name = "",
+                    HostAddress = "",
+                    HostName = "",
+                    LocalIp = "",
+                    Configured = true
+                };
+                _agentService.Update(_agent);
+                _agentService.GetInfo().OptionalSuccess.Match<bool>(agent =>
+                 {
+                     _agent = agent;
+                     _updateInfo.Stop();
+                     _updateInfo.Dispose();
+                     return true;
+                 }, () =>
+                 {
+
+                     return false;
+                 });
             }
         }
 
