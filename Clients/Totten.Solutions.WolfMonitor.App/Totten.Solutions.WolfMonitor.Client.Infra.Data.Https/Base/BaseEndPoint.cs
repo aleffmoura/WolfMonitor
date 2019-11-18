@@ -25,7 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             _httpCliente = customHttpCliente;
         }
 
-        protected async Task<T> InnerGetAsync<T>(string methodPath)
+        protected async Task<TResult> InnerGetAsync<TResult>(string methodPath)
         {
             var httpRequest = _httpCliente.CreateRequest(HttpMethod.Get, methodPath);
 
@@ -33,7 +33,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             using (var httpResponse = await _httpCliente.HttpClient.SendAsync(httpRequest))
             {
                 var content = await httpResponse.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(content);
+                return JsonConvert.DeserializeObject<TResult>(content);
             }
         }
 

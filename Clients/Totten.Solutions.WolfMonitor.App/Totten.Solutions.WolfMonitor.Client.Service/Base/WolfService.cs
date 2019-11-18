@@ -13,24 +13,21 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
         private Timer _loginTimer;
         private readonly IAgentService _agentService;
         private AgentConfiguration _agentConfiguration;
+        private Agent _agent;
 
         public WolfService(IAgentService agentService, AgentConfiguration agentConfiguration)
         {
             _agentService = agentService;
+            _agentConfiguration = agentConfiguration;
         }
 
         private void Login(object sender, ElapsedEventArgs e)
         {
             lock (_locker)
             {
-                Agent agent = new Agent
-                {
-                    HostAddress = "HostAddress",
-                    HostName = "HostName",
-                    LocalIp = "LocalIp",
-                    Name = "Name"
-                };
-                if (_agentService.Update(agent))
+                _agent = _agentService.GetInfo().Success;
+
+                if (_agent != null)
                 {
                     _loginTimer.Stop();
                 }
