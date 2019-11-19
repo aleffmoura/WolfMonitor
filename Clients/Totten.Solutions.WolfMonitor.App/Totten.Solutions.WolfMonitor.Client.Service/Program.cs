@@ -9,6 +9,8 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
 using Totten.Solutions.WolfMonitor.Client.Service.Base;
 using Totten.Solutions.WolfMonitor.Client.Service.Dtos;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 
 namespace Totten.Solutions.WolfMonitor.Client.Service
 {
@@ -21,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Service
             AgentConfiguration agentConfiguration = JsonConvert.DeserializeObject<AgentConfiguration>(json);
 
             ServiceProvider serviceProvider = new ServiceCollection()
+                                    .AddSingleton<IHelper, Helper>()
                                     .AddSingleton(typeof(AgentConfiguration), agentConfiguration)
                                     .AddSingleton(typeof(CustomHttpCliente), new CustomHttpCliente(agentConfiguration.UrlApi, agentConfiguration.User))
                                     .AddSingleton<IAgentEndPoint, AgentEndPoint>()

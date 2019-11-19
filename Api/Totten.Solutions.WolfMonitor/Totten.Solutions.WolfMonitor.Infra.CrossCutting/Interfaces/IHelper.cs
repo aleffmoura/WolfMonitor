@@ -11,5 +11,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces
         string GetAssemblyVersion();
         SigningCredentials GetSigningCredentials();
         string GetConfiguration(string key);
+        string GetMACAddress();
+        string GetHostName();
     }
 }

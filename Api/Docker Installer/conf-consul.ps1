@@ -15,7 +15,7 @@ $Global = @'
   "cors": "localhost:4200",
   "broker": {
     "hostname": "10.0.75.1",
-    "exchangeName": "uds"
+    "exchangeName": "tottem"
   },
   "identityServerAddress": "http://10.0.75.1:16000"
 }
@@ -111,7 +111,7 @@ $Register = @'
 '@
 $Agents = @'
 {
-	"Tags": "Agents",
+  "Tags": "Agents",
   "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
   "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Agents",
@@ -144,7 +144,10 @@ $response = Invoke-RestMethod -Method 'Put' -Uri $url"Register" -Body $Register
 if($response -eq 'true') {
 	Write-Output "Configuração Register criada com sucesso!"
 }
-
+$response = Invoke-RestMethod -Method 'Put' -Uri $url"Agents" -Body $Agents
+if($response -eq 'true') {
+	Write-Output "Configuração Agents criada com sucesso!"
+}
 Write-Output ""
 Write-Output "Configuração concluída com sucesso!"
 Write-Output ""

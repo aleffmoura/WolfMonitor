@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Client.Domain.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
@@ -20,7 +22,13 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
 
         public Result<Exception, Agent> GetInfo()
         {
-            return InnerGetAsync<Result<Exception, Agent>>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
+            try
+            {
+                return InnerGetAsync<Agent>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
+            }catch(Exception ex)
+            {
+                return ex;
+            }
         }
 
         private async Task<Result<Exception, Unit>> PostAsync(Agent agent)
@@ -28,5 +36,16 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
             return await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, HttpMethod.Patch);
         }
 
+        public Result<Exception, List<SystemService>> GetServices()
+        {
+            try
+            {
+                return InnerGetAsync<List<SystemService>>("agents/monitoring/services").ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+        }
     }
 }

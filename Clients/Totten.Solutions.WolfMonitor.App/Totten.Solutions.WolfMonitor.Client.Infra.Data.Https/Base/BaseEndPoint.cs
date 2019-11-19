@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ExtensionsMethods;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
 {
@@ -25,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             _httpCliente = customHttpCliente;
         }
 
-        protected async Task<TResult> InnerGetAsync<TResult>(string methodPath)
+        protected async Task<Result<Exception, TResult>> InnerGetAsync<TResult>(string methodPath)
         {
             var httpRequest = _httpCliente.CreateRequest(HttpMethod.Get, methodPath);
 
@@ -33,7 +34,14 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             using (var httpResponse = await _httpCliente.HttpClient.SendAsync(httpRequest))
             {
                 var content = await httpResponse.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResult>(content);
+                try
+                {
+                    return JsonConvert.DeserializeObject<TResult>(content);
+                }
+                catch
+                {
+                    return JsonConvert.DeserializeObject<Exception>(content);
+                }
             }
         }
 

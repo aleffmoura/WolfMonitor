@@ -15,5 +15,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers
             => Dns.GetHostEntry(Dns.GetHostName())
                 .AddressList
                     .First(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToString();
+
     }
 }
