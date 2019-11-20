@@ -27,7 +27,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.SystemServices
 
             return newService.Entity;
         }
-
         public Result<Exception, IQueryable<SystemService>> GetAll()
         {
             return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !service.Removed));
