@@ -30,12 +30,25 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.SystemServices
 
         public Result<Exception, IQueryable<SystemService>> GetAll()
         {
-            return Result.Run(() => _context.SystemServices.AsNoTracking().Where(a => !a.Removed));
+            return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !a.Removed));
         }
 
         public async Task<Result<Exception, SystemService>> GetByIdAsync(Guid id)
         {
-            SystemService systemService = await _context.SystemServices.AsNoTracking().FirstOrDefaultAsync(a => !a.Removed && a.Id == id && a.Id == id);
+            SystemService systemService = await _context.SystemServices.AsNoTracking().FirstOrDefaultAsync(service => !service.Removed && service.Id == id);
+
+            if (systemService == null)
+            {
+                return new NotFoundException();
+            }
+            return systemService;
+        }
+
+        public async Task<Result<Exception, SystemService>> GetByNameWithAgentId(string name, Guid agentId)
+        {
+            SystemService systemService = await _context.SystemServices
+                                                        .AsNoTracking()
+                                                        .FirstOrDefaultAsync(service => !service.Removed && service.Name.Equals(name) && service.AgentId == agentId);
 
             if (systemService == null)
             {

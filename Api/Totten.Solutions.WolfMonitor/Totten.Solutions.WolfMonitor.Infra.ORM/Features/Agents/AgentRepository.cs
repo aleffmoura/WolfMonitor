@@ -34,7 +34,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
 
             if (agent == null)
             {
-                return new NotFoundException();
+                return new NotFoundException("Não foi encontrado um agent com o ID informado.");
             }
 
             return agent;
