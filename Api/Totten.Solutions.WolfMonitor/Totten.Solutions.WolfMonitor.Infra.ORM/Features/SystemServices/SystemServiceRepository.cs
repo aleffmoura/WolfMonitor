@@ -30,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.SystemServices
 
         public Result<Exception, IQueryable<SystemService>> GetAll()
         {
-            return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !a.Removed));
+            return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !service.Removed));
         }
 
         public async Task<Result<Exception, SystemService>> GetByIdAsync(Guid id)
