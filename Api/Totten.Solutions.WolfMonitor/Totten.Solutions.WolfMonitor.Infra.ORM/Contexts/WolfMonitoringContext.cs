@@ -8,7 +8,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
     {
         public DbSet<SystemService> SystemServices { get; set; }
 
-        public WolfMonitoringContext(DbContextOptions<WolfMonitorContext> options) : base(options) { }
+        public WolfMonitoringContext(DbContextOptions<WolfMonitoringContext> options) : base(options) { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

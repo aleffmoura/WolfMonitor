@@ -35,13 +35,17 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
                 var options = new DbContextOptionsBuilder<WolfMonitorContext>().UseSqlServer(configuration["connectionString"]).Options;
                 return new WolfMonitorContext(options);
             }, Lifestyle.Scoped);
-
+            container.Register(() =>
+            {
+                var options = new DbContextOptionsBuilder<WolfMonitoringContext>().UseSqlServer(configuration["MonitoringConnectionString"]).Options;
+                return new WolfMonitoringContext(options);
+            }, Lifestyle.Scoped);
             container.Register(() =>
             {
                 var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["AuthConnectionString"]).Options;
                 return new AuthContext(options);
             }, Lifestyle.Scoped);
-            
+
 
             RegisterFeatures(container);
 
