@@ -23,7 +23,7 @@ namespace Totten.Solutions.WolfMonitor.SignalR.Features.Agents.Commands
         {
             public Validator()
             {
-                RuleFor(s => s.AgentToken).NotEmpty().Matches(RegexTypes.AgentToken);
+                RuleFor(s => s.AgentToken).NotEmpty().Matches(RegexTypes.MacAddress);
                 RuleFor(s => s.ClientToken).NotEmpty();
             }
         }

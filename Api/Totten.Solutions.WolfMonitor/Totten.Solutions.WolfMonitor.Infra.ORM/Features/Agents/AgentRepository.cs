@@ -30,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> GetByIdAsync(Guid id)
         {
-            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
+            Agent agent = await _context.Agents.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
 
             if (agent == null)
             {
@@ -41,7 +41,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> GetByLogin(Guid companyId, string login)
         {
-            Agent agent = await _context.Agents
+            Agent agent = await _context.Agents.AsNoTracking()
                                         .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase));
 
             if (agent == null)
@@ -53,7 +53,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> Authentication(Guid companyId, string login, string password)
         {
-            Agent agent = await _context.Agents
+            Agent agent = await _context.Agents.AsNoTracking()
                                         .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) && a.Password == password.GenerateHash());
 
             if (agent == null)
@@ -65,7 +65,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public async Task<Result<Exception, Agent>> GetByIdAsync(Guid companyId, Guid id)
         {
-            Agent agent = await _context.Agents.FirstOrDefaultAsync(a => !a.Removed && a.Id == id && a.CompanyId == companyId);
+            Agent agent = await _context.Agents.AsNoTracking().FirstOrDefaultAsync(a => !a.Removed && a.Id == id && a.CompanyId == companyId);
 
             if (agent == null)
             {
@@ -75,11 +75,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
         }
         public Result<Exception, IQueryable<Agent>> GetAll()
         {
-            return Result.Run(() => _context.Agents.Where(a => !a.Removed));
+            return Result.Run(() => _context.Agents.AsNoTracking().Where(a => !a.Removed));
         }
         public Result<Exception, IQueryable<Agent>> GetAll(Guid companyId)
         {
-            return Result.Run(() => _context.Agents.Include(a => a.Company).Where(a => !a.Removed && a.CompanyId.Equals(companyId)));
+            return Result.Run(() => _context.Agents.Include(a => a.Company).AsNoTracking().Where(a => !a.Removed && a.CompanyId.Equals(companyId)));
         }
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Agent agent)
