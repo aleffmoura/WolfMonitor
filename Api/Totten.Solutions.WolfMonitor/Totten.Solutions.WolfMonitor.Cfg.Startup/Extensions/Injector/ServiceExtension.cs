@@ -37,12 +37,12 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             }, Lifestyle.Scoped);
             container.Register(() =>
             {
-                var options = new DbContextOptionsBuilder<WolfMonitoringContext>().UseSqlServer(configuration["MonitoringConnectionString"]).Options;
+                var options = new DbContextOptionsBuilder<WolfMonitoringContext>().UseSqlServer(configuration["monitoringConnectionString"]).Options;
                 return new WolfMonitoringContext(options);
             }, Lifestyle.Scoped);
             container.Register(() =>
             {
-                var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["AuthConnectionString"]).Options;
+                var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["authConnectionString"]).Options;
                 return new AuthContext(options);
             }, Lifestyle.Scoped);
 
