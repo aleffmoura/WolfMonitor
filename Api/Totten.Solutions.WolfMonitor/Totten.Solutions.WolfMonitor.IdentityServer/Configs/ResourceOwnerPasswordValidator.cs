@@ -36,7 +36,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
             string userType = companyData[1];
 
 
-            Result<Exception, Company> companCallback = await _companyRepository.GetByNameAsync(company);
+            var companCallback = await _companyRepository.GetByNameAsync(company);
 
             if (companCallback.IsFailure)
             {
@@ -47,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
 
                 if (userType.Equals("Agent", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Result<Exception, Agent> agentCallback = await _agentRepository.Authentication(companCallback.Success.Id, login, context.Password);
+                    var agentCallback = await _agentRepository.Authentication(companCallback.Success.Id, login, context.Password);
                     if (agentCallback.IsSuccess)
                     {
                         List<Claim> claims = MakeClaims(RoleLevelEnum.Agent,
@@ -64,7 +64,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                 }
                 else
                 {
-                    Result<Exception, User> userCallback = await _repository.GetByCredentials(companCallback.Success.Id, login, context.Password);
+                    var userCallback = await _repository.GetByCredentials(companCallback.Success.Id, login, context.Password);
                     if (userCallback.IsSuccess)
                     {
 

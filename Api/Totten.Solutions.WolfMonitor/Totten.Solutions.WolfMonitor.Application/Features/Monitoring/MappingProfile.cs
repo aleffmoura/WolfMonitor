@@ -17,6 +17,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
                 .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(f => DateTime.Now));
             //CreateMap<SystemServiceUpdate.Command, SystemService>();
             CreateMap<SystemService, SystemServiceDetailViewModel>();
+            CreateMap<SystemService, SystemServiceResumeViewModel>();
             CreateMap<SystemService, SystemServiceResumeForAgentViewModel>();
             #endregion
 

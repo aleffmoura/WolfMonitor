@@ -69,7 +69,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Result<Exception, Agent> agentCallback = await _agentRepository.GetByIdAsync(request.AgentId);
+                var agentCallback = await _agentRepository.GetByIdAsync(request.AgentId);
                 if (agentCallback.IsFailure)
                 {
                     return agentCallback.Failure;
@@ -79,7 +79,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     return new NotAllowedException("Usuário não pode salvar serviços no agent informado, a empresa do usuario e do agent não são iguais");
                 }
 
-                Result<Exception, SystemService> SystemServiceVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+                var SystemServiceVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
                 if (SystemServiceVerify.IsSuccess)
                 {
                     return new DuplicateException("Já existe um SystemService com esse nome cadastrado nesse agent.");
@@ -87,7 +87,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                 SystemService SystemService = Mapper.Map<Command, SystemService>(request);
 
-                Result<Exception, SystemService> callback = await _repository.CreateAsync(SystemService);
+                var callback = await _repository.CreateAsync(SystemService);
                 if (callback.IsFailure)
                 {
                     return callback.Failure;
