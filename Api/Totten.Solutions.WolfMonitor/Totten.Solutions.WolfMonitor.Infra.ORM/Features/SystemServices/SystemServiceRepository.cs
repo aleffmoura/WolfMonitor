@@ -32,13 +32,30 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.SystemServices
             return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !service.Removed));
         }
 
+        public Result<Exception, IQueryable<SystemService>> GetAll(Guid agentId)
+        {
+            return Result.Run(() => _context.SystemServices.AsNoTracking().Where(service => !service.Removed && service.AgentId == agentId));
+        }
+
         public async Task<Result<Exception, SystemService>> GetByIdAsync(Guid id)
         {
             SystemService systemService = await _context.SystemServices.AsNoTracking().FirstOrDefaultAsync(service => !service.Removed && service.Id == id);
 
             if (systemService == null)
             {
-                return new NotFoundException();
+                return new NotFoundException("Não foi encontrado um serviço com o identificador informado.");
+            }
+            return systemService;
+        }
+        public async Task<Result<Exception, SystemService>> GetByIdAsync(Guid agentId, Guid id)
+        {
+            SystemService systemService = await _context.SystemServices
+                                                        .AsNoTracking()
+                                                        .FirstOrDefaultAsync(service => !service.Removed && service.AgentId == agentId && service.Id == id);
+
+            if (systemService == null)
+            {
+                return new NotFoundException("Não foi encontrado um serviço com o identificador informado.");
             }
             return systemService;
         }
@@ -51,7 +68,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.SystemServices
 
             if (systemService == null)
             {
-                return new NotFoundException();
+                return new NotFoundException("Não foi encontrado um serviço com o identificador do agent informado.");
             }
             return systemService;
         }

@@ -47,12 +47,10 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
             _timerLogin.Stop();
             _timerLogin.Elapsed -= TimerEventLogin;
             _timerLogin.Dispose();
-            _timerLogin = null;
 
             _timerUpdateInfo.Stop();
             _timerUpdateInfo.Elapsed -= TimerEventUpdate;
             _timerUpdateInfo.Dispose();
-            _timerUpdateInfo = null;
         }
 
         private void TimerEventLogin(object sender, ElapsedEventArgs e)

@@ -10,7 +10,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.SystemServices;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers
+namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.SystemServices
 {
     public class SystemServiceCreate
     {
