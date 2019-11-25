@@ -53,7 +53,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 Result<Exception, SystemService> systemServiceCallback = await _repository.GetByIdAsync(request.Id);
 
-
                 if (systemServiceCallback.IsFailure)
                 {
                     return systemServiceCallback.Failure;
