@@ -74,7 +74,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 {
                     return agentCallback.Failure;
                 }
-                if (agentCallback.Success.CompanyId == request.CompanyId)
+                if (agentCallback.Success.CompanyId != request.CompanyId)
                 {
                     return new NotAllowedException("Usuário não pode salvar serviços no agent informado, a empresa do usuario e do agent não são iguais");
                 }
@@ -82,7 +82,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 Result<Exception, SystemService> SystemServiceVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
                 if (SystemServiceVerify.IsSuccess)
                 {
-                    return new Exception("Já existe um SystemService com esse nome cadastrado nesse agent.");
+                    return new DuplicateException("Já existe um SystemService com esse nome cadastrado nesse agent.");
                 }
 
                 SystemService SystemService = Mapper.Map<Command, SystemService>(request);

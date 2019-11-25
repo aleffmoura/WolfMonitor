@@ -25,7 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
 
         #region HTTP POST
         [HttpPost]
-        [CustomAuthorizeAttributte(RoleLevelEnum.Admin)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromBody]SystemServiceCreateCommand command)
         {
             return HandleCommand(await _mediator.Send(new SystemServiceCreate.Command(CompanyId, command.AgentId, UserId, command.Name, command.DisplayName)));

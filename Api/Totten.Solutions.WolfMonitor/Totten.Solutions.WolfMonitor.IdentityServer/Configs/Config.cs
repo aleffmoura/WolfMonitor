@@ -18,12 +18,18 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
         {
             return new List<ApiResource>
             {
-                new ApiResource("Agents", "Agents Service", new List<string> { "Role","UserId", "RoleLevel", "CompanyId", "Login" }){
+                new ApiResource("Agents", "Agents Service", new List<string> { "Role","UserId", "CompanyId"}){
                     ApiSecrets =
                     {
                         new Secret(_configuration["agentsApiSecret"].Sha256())
                     }
-                }
+                },
+                new ApiResource("Monitoring", "Monitoring Service", new List<string> { "Role","UserId", "CompanyId"}){
+                    ApiSecrets =
+                    {
+                        new Secret(_configuration["monitoringApiSecret"].Sha256())
+                    }
+                },
             };
         }
 

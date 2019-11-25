@@ -56,7 +56,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
 
             var exceptionPayload = ExceptionPayload.New(exceptionToHandle);
             return exceptionToHandle is BusinessException ?
-                StatusCode(HttpStatusCode.BadRequest.GetHashCode(), exceptionPayload) :
+                StatusCode(exceptionPayload.ErrorCode.GetHashCode(), exceptionPayload) :
                 StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), exceptionPayload);
         }
 
