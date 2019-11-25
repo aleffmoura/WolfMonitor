@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleInjector;
 using System;
 using System.Threading;
 using Winton.Extensions.Configuration.Consul;

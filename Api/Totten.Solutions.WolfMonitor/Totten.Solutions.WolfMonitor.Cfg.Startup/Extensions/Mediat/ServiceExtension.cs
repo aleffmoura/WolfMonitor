@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using SimpleInjector;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Behaviours;
 

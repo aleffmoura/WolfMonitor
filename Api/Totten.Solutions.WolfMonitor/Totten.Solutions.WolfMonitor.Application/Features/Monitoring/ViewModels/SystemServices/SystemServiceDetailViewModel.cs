@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels.SystemServices
+﻿namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels.SystemServices
 {
     public class SystemServiceDetailViewModel
     {

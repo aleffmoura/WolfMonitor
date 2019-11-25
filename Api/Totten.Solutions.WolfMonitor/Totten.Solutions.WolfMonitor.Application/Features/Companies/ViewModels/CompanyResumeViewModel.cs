@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels
+﻿namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels
 {
     public class CompanyResumeViewModel
     {

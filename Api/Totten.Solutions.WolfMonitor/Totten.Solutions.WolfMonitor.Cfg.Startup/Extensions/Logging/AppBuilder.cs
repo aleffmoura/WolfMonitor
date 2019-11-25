@@ -10,7 +10,6 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Sinks.PostgreSQL;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

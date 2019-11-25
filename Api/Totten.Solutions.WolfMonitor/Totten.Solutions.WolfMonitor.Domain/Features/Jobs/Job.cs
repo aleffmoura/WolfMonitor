@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.Domain.Features.Jobs
+﻿namespace Totten.Solutions.WolfMonitor.Domain.Features.Jobs
 {
     public class Job
     {

@@ -1,11 +1,9 @@
-﻿using IdentityServer4.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
-using Totten.Solutions.WolfMonitor.IdentityServer.Configs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs
+﻿namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs
 {
     public partial class Option
     {

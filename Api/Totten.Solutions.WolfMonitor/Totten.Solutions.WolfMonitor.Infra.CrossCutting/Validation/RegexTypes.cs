@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Validation
+﻿namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Validation
 {
     public static class RegexTypes
     {
