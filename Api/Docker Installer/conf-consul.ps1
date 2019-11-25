@@ -90,7 +90,7 @@ $IdentityServer = @'
       "secret": "postmanSecret",
       "name": "Postman Client",
       "scopes": [
-      		"Agents"
+      		"Agents", "Monitoring"
       ]
     }
   ]
@@ -116,6 +116,16 @@ $Agents = @'
   "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Agents",
   "apiSecret":"agentsSuperSecret"
+}
+'@
+$Monitoring = @'
+{
+  "Tags": "Monitoring",
+  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "apiName":"Monitoring",
+  "apiSecret":"monitoringSuperSecret"
 }
 '@
 
