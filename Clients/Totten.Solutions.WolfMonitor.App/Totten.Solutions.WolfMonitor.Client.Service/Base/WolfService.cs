@@ -5,6 +5,7 @@ using System.Timers;
 using Totten.Solutions.WolfMonitor.Client.Appl.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Monitorings;
+using Totten.Solutions.WolfMonitor.Client.Domain.Interfaces;
 using Totten.Solutions.WolfMonitor.Client.Service.Dtos;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -14,7 +15,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
     public class WolfService
     {
         private static readonly object _locker = new object();
-
+        private IMonitoring _monitoring;
         private Timer _timerLogin;
         private Timer _timerUpdateInfo;
         private Timer _timerPrincipal;
@@ -131,10 +132,18 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
         {
             lock (_locker)
             {
-                Task.Run(() =>
+                Result<Exception, List<SystemService>> services = _agentService.GetServicesMonitoring();
+                if (services.IsSuccess)
                 {
-                    Result<Exception, List<SystemService>> services = _agentService.GetServicesMonitoring();
-                });
+                    Parallel.ForEach(services.Success, new ParallelOptions { MaxDegreeOfParallelism = 20 }, service =>
+                    {
+                        service.Value = _monitoring.GetStatus(service.Name, service.DisplayName);
+                    });
+                }
+                else
+                {
+
+                }
             }
         }
     }

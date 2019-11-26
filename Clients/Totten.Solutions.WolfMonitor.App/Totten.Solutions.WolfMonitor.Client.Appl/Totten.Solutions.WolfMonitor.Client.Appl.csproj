@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.csproj" />
   </ItemGroup>
 
