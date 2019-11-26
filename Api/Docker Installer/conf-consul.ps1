@@ -158,6 +158,10 @@ $response = Invoke-RestMethod -Method 'Put' -Uri $url"Agents" -Body $Agents
 if($response -eq 'true') {
 	Write-Output "Configuração Agents criada com sucesso!"
 }
+$response = Invoke-RestMethod -Method 'Put' -Uri $url"Monitoring" -Body $Monitoring
+if($response -eq 'true') {
+	Write-Output "Configuração Monitoring criada com sucesso!"
+}
 Write-Output ""
 Write-Output "Configuração concluída com sucesso!"
 Write-Output ""

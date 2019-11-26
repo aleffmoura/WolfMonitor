@@ -15,7 +15,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
                 .ForMember(dest => dest.Value, src => src.MapFrom(f => "Not monitored yeat"))
                 .ForMember(dest => dest.CreatedIn, src => src.MapFrom(f => DateTime.Now))
                 .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(f => DateTime.Now));
-            //CreateMap<SystemServiceUpdate.Command, SystemService>();
+            CreateMap<SystemServiceUpdate.Command, SystemService>();
             CreateMap<SystemService, SystemServiceDetailViewModel>();
             CreateMap<SystemService, SystemServiceResumeViewModel>();
             CreateMap<SystemService, SystemServiceResumeForAgentViewModel>();

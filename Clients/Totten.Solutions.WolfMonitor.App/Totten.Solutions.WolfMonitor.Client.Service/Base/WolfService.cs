@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Timers;
 using Totten.Solutions.WolfMonitor.Client.Appl.Features.Agents;
+using Totten.Solutions.WolfMonitor.Client.Appl.Features.Monitorings;
+using Totten.Solutions.WolfMonitor.Client.Domain.Base;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Domain.Interfaces;
@@ -16,11 +17,12 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
     {
         private static readonly object _locker = new object();
         private IMonitoring _monitoring;
+        private readonly ISystemServicesService _systemServicesService;
         private Timer _timerLogin;
         private Timer _timerUpdateInfo;
         private Timer _timerPrincipal;
 
-        private readonly int _oneMinute = 60000 / 2;
+        private readonly int _oneMinute = 60000 / 10;
 
         private readonly IHelper _helper;
         private readonly IAgentService _agentService;
@@ -28,12 +30,16 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
         private Agent _agent;
 
         public WolfService(IAgentService agentService,
-                           AgentConfiguration agentConfiguration,
-                            IHelper helper)
+                            AgentConfiguration agentConfiguration,
+                            IHelper helper,
+                            IMonitoring monitoring,
+                            ISystemServicesService systemServicesService)
         {
+            _systemServicesService = systemServicesService;
             _agentService = agentService;
             _agentConfiguration = agentConfiguration;
             _helper = helper;
+            _monitoring = monitoring;
         }
 
         public void Start()
@@ -132,13 +138,14 @@ namespace Totten.Solutions.WolfMonitor.Client.Service.Base
         {
             lock (_locker)
             {
-                Result<Exception, List<SystemService>> services = _agentService.GetServicesMonitoring();
+                Result<Exception, ApiResult<SystemService>> services = _agentService.GetServicesMonitoring();
                 if (services.IsSuccess)
                 {
-                    Parallel.ForEach(services.Success, new ParallelOptions { MaxDegreeOfParallelism = 20 }, service =>
+                    Parallel.ForEach(services.Success.Items, new ParallelOptions { MaxDegreeOfParallelism = 20 }, service =>
                     {
                         service.Value = _monitoring.GetStatus(service.Name, service.DisplayName);
                     });
+                    _systemServicesService.Post(services.Success.Items);
                 }
                 else
                 {

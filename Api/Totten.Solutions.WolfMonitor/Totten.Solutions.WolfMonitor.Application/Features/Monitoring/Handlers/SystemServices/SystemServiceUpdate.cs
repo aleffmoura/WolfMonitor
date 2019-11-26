@@ -48,13 +48,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
-            private readonly ILogMonitoringRepository _logMonitoringRepository;
+            //private readonly ILogMonitoringRepository _logMonitoringRepository;
             private readonly ISystemServiceRepository _repository;
 
-            public Handler(ISystemServiceRepository repository, ILogMonitoringRepository logMonitoringRepository)
+            public Handler(ISystemServiceRepository repository/*, ILogMonitoringRepository logMonitoringRepository*/)
             {
                 _repository = repository;
-                _logMonitoringRepository = logMonitoringRepository;
+                //_logMonitoringRepository = logMonitoringRepository;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -82,7 +82,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     log.IsSuccess = returned.IsSuccess;
                     log.JsonResult = returned.IsSuccess ? JsonConvert.SerializeObject(returned.Success) : JsonConvert.SerializeObject(returned.Failure);
                 }
-                await _logMonitoringRepository.CreateAsync(log);
+                //await _logMonitoringRepository.CreateAsync(log);
 
                 return returned;
             }

@@ -60,7 +60,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
                 { "grant_type", "password"},
                 { "username", _client.User.Login },
                 { "password", _client.User.Password},
-                { "scope", "Agents"}
+                { "scope", "Agents Monitoring"}
             });
 
             using (var httpClient = new HttpClient())

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Totten.Solutions.WolfMonitor.Client.Domain.Base;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -23,7 +24,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Appl.Features.Agents
             return _agentEndPoint.GetInfo();
         }
 
-        public Result<Exception, List<SystemService>> GetServicesMonitoring()
+        public Result<Exception, ApiResult<SystemService>> GetServicesMonitoring()
         {
             return _agentEndPoint.GetServices();
         }

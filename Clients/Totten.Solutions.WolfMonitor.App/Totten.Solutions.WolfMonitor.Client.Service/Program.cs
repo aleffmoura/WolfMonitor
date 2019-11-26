@@ -3,10 +3,15 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using Topshelf;
+using Totten.Solutions.WolfMonitor.Client.Appl.Base;
 using Totten.Solutions.WolfMonitor.Client.Appl.Features.Agents;
+using Totten.Solutions.WolfMonitor.Client.Appl.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Client.Domain.Features.Monitorings;
+using Totten.Solutions.WolfMonitor.Client.Domain.Interfaces;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Service.Base;
 using Totten.Solutions.WolfMonitor.Client.Service.Dtos;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
@@ -28,6 +33,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Service
                                     .AddSingleton(typeof(CustomHttpCliente), new CustomHttpCliente(agentConfiguration.UrlApi, agentConfiguration.User))
                                     .AddSingleton<IAgentEndPoint, AgentEndPoint>()
                                     .AddSingleton<IAgentService, AgentService>()
+                                    .AddSingleton<IMonitoring, MonitoringService>()
+                                    .AddSingleton<ISystemServiceEndPoint, SystemServiceEndPoint>()
+                                    .AddSingleton<ISystemServicesService, SystemServicesService>()
                                     .AddSingleton<WolfService>()
                                     .BuildServiceProvider();
 
