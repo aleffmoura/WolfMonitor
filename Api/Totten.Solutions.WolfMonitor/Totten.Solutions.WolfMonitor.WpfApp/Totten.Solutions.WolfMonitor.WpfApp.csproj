@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <None Remove="Assets\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Infra\" />
     <Folder Include="Screens\Agents\" />
+    <Folder Include="Screens\Passwords\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\home.png">
+    <Resource Include="Assets\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Resource>
   </ItemGroup>
 
 </Project>

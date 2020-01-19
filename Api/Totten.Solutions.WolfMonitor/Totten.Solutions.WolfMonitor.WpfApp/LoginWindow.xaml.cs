@@ -32,13 +32,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             var fullUserName = $"{txtUser.Text}@{txtCompany.Text}#user";
-            //var user = _userService.Authentication(userName: fullUserName, password: txtPass.Password);
-            //if(user != null)
-            //{
-                this.Visibility = Visibility.Hidden;
+            var user = _userService.Authentication(userName: fullUserName, password: txtPass.Password);
+            if (user != null)
+            {
                 Home home = new Home();
                 home.Show();
-           // }
+            }
         }
 
         private void lblForgot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
