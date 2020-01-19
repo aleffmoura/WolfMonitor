@@ -29,9 +29,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
             request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 { "grant_type", "password"},
-                { "username", userName },
-                { "password", password},
-                { "scope", "Users Agents Monitoring Register"}
+                { "username", "aleffmoura@totemsolutions#user" },
+                { "password", "88633251"},
+                { "scope", "Agents Monitoring"}
             });
 
             using (var httpClient = new HttpClient())

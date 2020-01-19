@@ -1,4 +1,4 @@
-﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.MainWindow"
+﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,16 +17,17 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Image Source="Images/home.png" Width="100" Height="100" VerticalAlignment="Top" Margin="20"/>
-        <Rectangle Width="280" Height="240" Fill="White" VerticalAlignment="Bottom" Margin="0,100"> 
+        <Image Source="Images/home.png" Width="90" Height="90" VerticalAlignment="Top" Margin="5"/>
+        <Rectangle Width="280" Height="280" Fill="White" VerticalAlignment="Bottom" Margin="0,100"> 
             <Rectangle.Effect>
                 <DropShadowEffect BlurRadius="15" Color="#FFBBBBBB" Direction="0" RenderingBias="Quality" ShadowDepth="1"/>
             </Rectangle.Effect>
         </Rectangle>
         
-        <Grid Width="280" Height="240" VerticalAlignment="Bottom" Margin="0,100">
-            <TextBlock Text="LOGIN" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="18"/>
+        <Grid Width="280" Height="280" VerticalAlignment="Bottom" Margin="0,100">
+            <TextBlock Text="LOGIN" VerticalAlignment="Top" Margin="2" Foreground="Gray" FontSize="18"/>
             <StackPanel VerticalAlignment="Center" Margin="10">
+                <TextBox Name="txtCompany" materialDesign:HintAssist.Hint="Empresa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
                 <TextBox Name="txtUser" materialDesign:HintAssist.Hint="Usuário" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
                 <PasswordBox Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10"  FontSize="18"/>
             </StackPanel>

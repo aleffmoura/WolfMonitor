@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.SignalR", "Totten.Solutions.WolfMonitor.SignalR\Totten.Solutions.WolfMonitor.SignalR.csproj", "{C1FCC3FE-FEC5-4EFB-AE75-BEF563AC15B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Tests", "Totten.Solutions.WolfMonitor.Tests\Totten.Solutions.WolfMonitor.Tests.csproj", "{B14D06C0-395F-4D13-8659-F7C6B167B21A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Presentation", "0. Presentation", "{C4B3C6D3-8742-405A-B9D8-778C38E8ACD5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Distribution", "1. Distribution", "{E2AF2537-5283-49BC-9586-FDAFE361A8F0}"
@@ -32,8 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infra", "4. Infra", "{35F46F69-3569-44F6-9F04-8DEAC4D78B17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{56FFF10C-E9A9-4696-9BA5-DE6470059BEB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{782358E3-32D9-416F-A53D-F8F8FDF67D1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1 Base", "1.1 Base", "{0AB7531E-5476-4FE4-BC87-344D27F5DE56}"
 EndProject
@@ -57,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.WpfApp", "Totten.Solutions.WolfMonitor.WpfApp\Totten.Solutions.WolfMonitor.WpfApp.csproj", "{10BDEADF-40E0-4A92-BABD-6E0E41582127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Totten.Solutions.WolfMonitor.ServiceAgent", "Totten.Solutions.WolfMonitor.ServiceAgent\Totten.Solutions.WolfMonitor.ServiceAgent.csproj", "{0F7EC445-AC23-467B-80C0-E87D14C34F01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.ServiceAgent", "Totten.Solutions.WolfMonitor.ServiceAgent\Totten.Solutions.WolfMonitor.ServiceAgent.csproj", "{0F7EC445-AC23-467B-80C0-E87D14C34F01}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totten.Solutions.WolfMonitor.Client.Infra.Data.Https", "Totten.Solutions.WolfMonitor.Client.Infra.Data.Https\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.csproj", "{2E1EEB11-DE02-4F76-9C65-70AB1FB8C454}"
 EndProject
@@ -99,10 +95,6 @@ Global
 		{C1FCC3FE-FEC5-4EFB-AE75-BEF563AC15B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1FCC3FE-FEC5-4EFB-AE75-BEF563AC15B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1FCC3FE-FEC5-4EFB-AE75-BEF563AC15B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B14D06C0-395F-4D13-8659-F7C6B167B21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B14D06C0-395F-4D13-8659-F7C6B167B21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B14D06C0-395F-4D13-8659-F7C6B167B21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B14D06C0-395F-4D13-8659-F7C6B167B21A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA935AB1-B053-4FF5-9F69-CD4A5B74875D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA935AB1-B053-4FF5-9F69-CD4A5B74875D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA935AB1-B053-4FF5-9F69-CD4A5B74875D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -152,7 +144,6 @@ Global
 		{1B5165EC-8C30-4C97-A9B4-FC2520053BC3} = {448E9029-D00D-42AA-BDE2-B2F645911C04}
 		{5003BE9A-AEA0-4A23-B84A-CDE368D0EFA0} = {0AB7531E-5476-4FE4-BC87-344D27F5DE56}
 		{C1FCC3FE-FEC5-4EFB-AE75-BEF563AC15B6} = {0AB7531E-5476-4FE4-BC87-344D27F5DE56}
-		{B14D06C0-395F-4D13-8659-F7C6B167B21A} = {782358E3-32D9-416F-A53D-F8F8FDF67D1C}
 		{0AB7531E-5476-4FE4-BC87-344D27F5DE56} = {E2AF2537-5283-49BC-9586-FDAFE361A8F0}
 		{EDBA4988-661B-48D3-B258-90DE7CBB91EF} = {E2AF2537-5283-49BC-9586-FDAFE361A8F0}
 		{D83EEACD-67CE-4435-8EAD-3980FD8D891C} = {35F46F69-3569-44F6-9F04-8DEAC4D78B17}

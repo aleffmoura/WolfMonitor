@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Infra\" />
+    <Folder Include="Screens\Agents\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https\Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

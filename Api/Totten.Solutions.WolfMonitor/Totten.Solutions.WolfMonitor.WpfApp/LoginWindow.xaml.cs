@@ -13,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginWindow : Window
     {
         private UserService _userService;
-        public MainWindow()
+        public LoginWindow()
         {
             InitializeComponent();
             _userService = new UserService(new Client.Infra.Data.Https.Base.CustomHttpCliente("http://10.0.75.1:15999"));
@@ -30,7 +31,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            _userService.Authentication(userName: txtUser.Text, password: txtPass.Password);
+            var fullUserName = $"{txtUser.Text}@{txtCompany.Text}#user";
+            //var user = _userService.Authentication(userName: fullUserName, password: txtPass.Password);
+            //if(user != null)
+            //{
+                this.Visibility = Visibility.Hidden;
+                Home home = new Home();
+                home.Show();
+           // }
         }
 
         private void lblForgot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

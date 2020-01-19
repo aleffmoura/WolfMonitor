@@ -1,0 +1,95 @@
+﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Home"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="WolfMonitor Manager" Height="600" Width="1080" ResizeMode="NoResize" WindowState="Normal" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="White">
+    <Window.Resources>
+        <Storyboard x:Key="openMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="gridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="closeMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="gridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource  openMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource  closeMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    
+    <Grid Background="LightGray">
+        
+        <Grid Height="60" VerticalAlignment="Top" Background="#FF1969DC">
+            <TextBlock Text="WolfMonitor" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+            
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right"  Orientation="Horizontal">
+                <TextBlock Text="Usuario" VerticalAlignment="Center" FontSize="18"/>
+                <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                    <StackPanel Width="150">
+                        <Button Content="Account" />
+                        <Button Content="Settings" />
+                        <Button Content="Chat" />
+                        <Separator/>
+                        <Button x:Name="btnLogout" Content="Logout" Click="btnLogout_Click"/>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+        </Grid>
+        
+        <Grid x:Name="gridMenu" Width="60" HorizontalAlignment="Left" Background="#FF133B81" >
+            <StackPanel>
+                <Grid Height="60" Background="White">
+                    <Button x:Name="btnCloseMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="btnCloseMenu_Click">
+                        <materialDesign:PackIcon Foreground="#FF3161B6" Kind="ArrowLeft" Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="btnOpenMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnOpenMenu_Click">
+                        <materialDesign:PackIcon Foreground="#FF3161B6" Kind="Menu" Width="25" Height="25"/>
+                    </Button>
+                </Grid>
+                
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="#FF1969DC">
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/> 
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Visibility" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
+                            <TextBlock Text="Monitoramentos" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Computer" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+                            <TextBlock Text="Agentes" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Business" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
+                            <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
