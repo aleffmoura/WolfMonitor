@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens;
 
@@ -26,16 +28,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
         public LoginWindow()
         {
             InitializeComponent();
-            _userService = new UserService(new Client.Infra.Data.Https.Base.CustomHttpCliente("http://10.0.75.1:15999"));
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var fullUserName = $"{txtUser.Text}@{txtCompany.Text}#user";
-            var user = _userService.Authentication(userName: fullUserName, password: txtPass.Password);
-            if (user != null)
+            var endpoint = new UserEndPoint(new CustomHttpCliente("http://10.0.75.1:15999", new UserLogin
             {
-                Home home = new Home();
+                Login = $"{txtUser.Text}@{txtCompany.Text}#user",
+                Password = txtPass.Password,
+            }));
+
+            _userService = new UserService(endpoint);
+
+            var user = _userService.GetInfo();
+
+            if (user.IsSuccess)
+            {
+                Home home = new Home(user.Success);
                 home.Show();
             }
         }

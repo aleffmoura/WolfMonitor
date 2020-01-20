@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 {
@@ -17,9 +8,26 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
     /// </summary>
     public partial class Home : Window
     {
-        public Home()
+        private UserBasicInformationViewModel _userBasicInformation;
+
+        public Home(UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
+            VerifyPermissionsUser(userBasicInformation);
+        }
+        private void VerifyPermissionsUser(UserBasicInformationViewModel userBasicInformation)
+        {
+            _userBasicInformation = userBasicInformation;
+            this.lblUserName.Text = _userBasicInformation.FullName;
+
+            if(this._userBasicInformation.UserLevel >= (int)UserLevel.Admin)
+            {
+                this.menuItemAgents.Visibility = Visibility.Visible;
+            }
+            if(this._userBasicInformation.UserLevel == (int)UserLevel.Admin)
+            {
+                this.menuItemCompanies.Visibility = Visibility.Visible;
+            }
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)

@@ -27,5 +27,12 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         {
             return await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(companyId)), queryOptions);
         }
+
+
+        [HttpGet("info")]
+        public async Task<IActionResult> ReadInformations()
+        {
+            return HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
+        }
     }
 }

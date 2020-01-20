@@ -38,12 +38,12 @@
             <TextBlock Text="WolfMonitor" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right"  Orientation="Horizontal">
-                <TextBlock Text="Usuario" VerticalAlignment="Center" FontSize="18"/>
+                <TextBlock x:Name="lblUserName" Text="User" VerticalAlignment="Center" FontSize="18"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                     <StackPanel Width="150">
-                        <Button Content="Account" />
-                        <Button Content="Settings" />
-                        <Button Content="Chat" />
+                        <Button x:Name="btnAccount" Content="Account" />
+                        <Button x:Name="btnSettings" Content="Settings" />
+                        <Button x:Name="btnChat" Content="Chat" />
                         <Separator/>
                         <Button x:Name="btnLogout" Content="Logout" Click="btnLogout_Click"/>
                     </StackPanel>
@@ -75,13 +75,13 @@
                             <TextBlock Text="Monitoramentos" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="60">
-                        <StackPanel Orientation="Horizontal">
+                    <ListViewItem Height="60" x:Name="menuItemAgents">
+                        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                             <materialDesign:PackIcon Kind="Computer" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
                             <TextBlock Text="Agentes" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="menuItemCompanies" Height="60" Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Business" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
                             <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10"/>

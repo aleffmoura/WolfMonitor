@@ -9,5 +9,10 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
         public string Login { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
+
+        public string GetClientCredentials()
+        {
+            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
+        }
     }
 }
