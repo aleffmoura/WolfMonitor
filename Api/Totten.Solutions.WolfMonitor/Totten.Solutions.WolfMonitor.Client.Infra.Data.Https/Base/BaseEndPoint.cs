@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             HttpStatusCode.InternalServerError,
         };
 
-        private readonly CustomHttpCliente _httpCliente;
+        protected readonly CustomHttpCliente _httpCliente;
         public BaseEndPoint(CustomHttpCliente customHttpCliente)
         {
             _httpCliente = customHttpCliente;

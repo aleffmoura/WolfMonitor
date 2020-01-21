@@ -25,17 +25,17 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_client.User.Token))
-                _client.User.Token = GetToken();
+            if (string.IsNullOrEmpty(UserLogin.Token))
+                UserLogin.Token = GetToken();
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _client.User.Token);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserLogin.Token);
 
             var response = await base.SendAsync(request, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                _client.User.Token = GetToken();
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _client.User.Token);
+                UserLogin.Token = GetToken();
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", UserLogin.Token);
                 return await base.SendAsync(request, cancellationToken);
             }
             return response;
@@ -51,7 +51,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
         }
         public string GetClientCredentials()
         {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"clientApp:clientSecret"));
+            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
         }
 
         private string RequestNewToken()
@@ -65,7 +65,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
                 { "grant_type", "password"},
                 { "username", _client.User.Login },
                 { "password", _client.User.Password},
-                { "scope", "Agents Monitoring"}
+                { "scope", "Agents Monitoring Users"}
             });
 
             using (var httpClient = new HttpClient())

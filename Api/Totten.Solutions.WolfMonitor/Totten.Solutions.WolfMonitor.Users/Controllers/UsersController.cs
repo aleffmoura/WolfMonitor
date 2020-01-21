@@ -23,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
 
         [HttpGet("{companyId}")]
         [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll([FromRoute]Guid companyId, ODataQueryOptions<User> queryOptions)
         {
             return await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(companyId)), queryOptions);
@@ -30,6 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
 
 
         [HttpGet("info")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadInformations()
         {
             return HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));

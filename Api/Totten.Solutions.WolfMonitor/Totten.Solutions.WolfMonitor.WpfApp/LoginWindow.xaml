@@ -27,9 +27,9 @@
         <Grid VerticalAlignment="Bottom" Margin="35,100" Height="240">
             <Label Content="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="18"/>
             <StackPanel VerticalAlignment="Center" Margin="15">
-                <TextBox Name="txtCompany" materialDesign:HintAssist.Hint="Empresa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
-                <TextBox Name="txtUser" materialDesign:HintAssist.Hint="Usuário" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
-                <PasswordBox Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10"  FontSize="18"/>
+                <TextBox Name="txtCompany" Text="tottemsolutions" materialDesign:HintAssist.Hint="Empresa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
+                <TextBox Name="txtUser" Text="aleffmoura"  materialDesign:HintAssist.Hint="Usuário" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
+                <PasswordBox Name="txtPass" Password="88633251" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10"  FontSize="18"/>
             </StackPanel>
         </Grid>
         <Button Click="btnLogin_Click" Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,65" Content="LOGIN"/>

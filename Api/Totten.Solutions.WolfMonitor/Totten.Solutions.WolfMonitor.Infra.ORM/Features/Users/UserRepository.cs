@@ -56,7 +56,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
 
         public async Task<Result<Exception, User>> GetByIdAsync(Guid id)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
+            User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
 
             if (user == null)
             {

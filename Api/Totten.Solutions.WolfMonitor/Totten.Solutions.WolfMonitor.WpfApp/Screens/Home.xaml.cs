@@ -24,7 +24,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             {
                 this.menuItemAgents.Visibility = Visibility.Visible;
             }
-            if(this._userBasicInformation.UserLevel == (int)UserLevel.Admin)
+            if(this._userBasicInformation.UserLevel >= (int)UserLevel.System)
             {
                 this.menuItemCompanies.Visibility = Visibility.Visible;
             }

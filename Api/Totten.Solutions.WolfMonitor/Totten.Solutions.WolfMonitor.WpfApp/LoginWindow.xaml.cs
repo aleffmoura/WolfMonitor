@@ -30,22 +30,29 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var endpoint = new UserEndPoint(new CustomHttpCliente("http://10.0.75.1:15999", new UserLogin
+            try
             {
-                Login = $"{txtUser.Text}@{txtCompany.Text}#user",
-                Password = txtPass.Password,
-            }));
 
-            _userService = new UserService(endpoint);
+                var custom = new CustomHttpCliente("http://10.0.75.1:15999", new UserLogin
+                {
+                    Login = $"{txtUser.Text}@{txtCompany.Text}#user",
+                    Password = txtPass.Password,
+                });
+                _userService = new UserService(new UserEndPoint(custom));
 
-            var user = _userService.GetInfo();
-
-            if (user.IsSuccess)
+                UserLogin.Token = _userService.Authentication();
+                var user = await _userService.GetInfo();
+                if (user.IsSuccess)
+                {
+                    Home home = new Home(user.Success);
+                    home.Show();
+                }
+            }
+            catch(Exception ex)
             {
-                Home home = new Home(user.Success);
-                home.Show();
+                //
             }
         }
 
