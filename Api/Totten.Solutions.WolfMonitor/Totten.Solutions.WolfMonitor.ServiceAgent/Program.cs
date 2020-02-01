@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using Topshelf;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent
 {
@@ -6,7 +11,20 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ServiceProvider serviceProvider = new ServiceCollection()
+                                    .AddSingleton<IHelper, Helper>()
+                                    .AddSingleton<WolfService>()
+                                    .BuildServiceProvider();
+
+            HostFactory.Run(service =>
+            {
+                service.Service(() => new TopShelfService(serviceProvider.GetService<WolfService>()));
+                service.EnableServiceRecovery(conf => conf.RestartService(TimeSpan.FromSeconds(10)));
+                service.SetServiceName("Totem.Solutions.WolfMonitor.Agent");
+                service.SetDisplayName("Totem Solutions - Wolf Monitor");
+                service.RunAsLocalService();
+                service.StartAutomatically();
+            });
         }
     }
 }

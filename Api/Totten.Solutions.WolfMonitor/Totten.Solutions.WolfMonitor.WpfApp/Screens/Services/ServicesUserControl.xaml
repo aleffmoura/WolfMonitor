@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Services.ServicesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Height="Auto" MinWidth="980" Width="auto">
+    <Grid Margin="0,10,0,0">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox x:Name="txtAgentId" Height="25" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Height="25" Width="50" Margin="0,0,30,0">
+                    <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
+                </Button>
+            </StackPanel>
+            <ScrollViewer>
+                <WrapPanel x:Name="wrapPanel">
+
+                </WrapPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</UserControl>

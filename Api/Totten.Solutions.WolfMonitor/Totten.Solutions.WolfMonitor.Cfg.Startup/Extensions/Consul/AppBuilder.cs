@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
@@ -11,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Consul
 {
     public static class AppBuilder
     {
-        public async static void UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
+        public async static void UseConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime)
         {
             var configuration = (IConfigurationRoot)app.ApplicationServices.GetService(typeof(IConfigurationRoot));
             var helpers = (IHelper)app.ApplicationServices.GetService(typeof(IHelper));

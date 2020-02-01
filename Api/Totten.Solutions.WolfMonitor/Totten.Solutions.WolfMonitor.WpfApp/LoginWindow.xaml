@@ -11,9 +11,9 @@
         <Rectangle Height="280" VerticalAlignment="Top">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF2281D1"/>
-                    <GradientStop Color="#FF34268A" Offset="1"/>
-                    <GradientStop Color="#FF33288B" Offset="0.546"/>
+                    <GradientStop Color="#FF4A94DE" Offset="0.088"/>
+                    <GradientStop Color="#FF112335" Offset="1"/>
+                    <GradientStop Color="#FF19324C" Offset="0.707"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
@@ -32,7 +32,7 @@
                 <PasswordBox Name="txtPass" Password="88633251" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10"  FontSize="18"/>
             </StackPanel>
         </Grid>
-        <Button Click="btnLogin_Click" Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,65" Content="LOGIN"/>
+        <Button Click="btnLogin_Click" Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,65" Content="LOGIN" Background="#FF4A94DE"/>
         <TextBlock Text="ESQUECEU A SENHA?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Foreground="Gray" Cursor="Hand" MouseLeftButtonUp="lblForgot_MouseLeftButtonUp"/>
     </Grid>
 </Window>

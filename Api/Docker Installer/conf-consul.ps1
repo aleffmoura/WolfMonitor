@@ -118,6 +118,16 @@ $Agents = @'
   "apiSecret":"agentsSuperSecret"
 }
 '@
+
+$Users = @'
+{
+  "Tags": "Users",
+  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "apiName":"Users",
+  "apiSecret":"usersSuperSecret"
+}
+'@
 $Monitoring = @'
 {
   "Tags": "Monitoring",
@@ -161,6 +171,10 @@ if($response -eq 'true') {
 $response = Invoke-RestMethod -Method 'Put' -Uri $url"Monitoring" -Body $Monitoring
 if($response -eq 'true') {
 	Write-Output "Configuração Monitoring criada com sucesso!"
+}
+$response = Invoke-RestMethod -Method 'Put' -Uri $url"Monitoring" -Body $Users
+if($response -eq 'true') {
+	Write-Output "Configuração Users criada com sucesso!"
 }
 Write-Output ""
 Write-Output "Configuração concluída com sucesso!"

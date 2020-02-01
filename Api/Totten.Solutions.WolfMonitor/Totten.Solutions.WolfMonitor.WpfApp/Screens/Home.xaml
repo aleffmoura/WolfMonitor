@@ -31,12 +31,18 @@
             <BeginStoryboard Storyboard="{StaticResource  closeMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    
-    <Grid Background="LightGray">
-        
-        <Grid Height="60" VerticalAlignment="Top" Background="#FF1969DC">
+
+    <Grid>
+
+        <Grid Height="60" VerticalAlignment="Top">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF112335" Offset="0.789"/>
+                    <GradientStop Color="#FF112335" Offset="0.017"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <TextBlock Text="WolfMonitor" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
-            
+
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right"  Orientation="Horizontal">
                 <TextBlock x:Name="lblUserName" Text="User" VerticalAlignment="Center" FontSize="18"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
@@ -50,46 +56,68 @@
                 </materialDesign:PopupBox>
             </StackPanel>
         </Grid>
-        
-        <Grid x:Name="gridMenu" Width="60" HorizontalAlignment="Left" Background="#FF133B81" >
+
+        <Grid x:Name="gridRoot" Margin="60,60,0,0" Width="auto" Height="auto"  Background="AliceBlue">
+
+        </Grid>
+
+
+        <Grid x:Name="gridMenu" Width="60" HorizontalAlignment="Left" >
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF4A94DE" Offset="1"/>
+                    <GradientStop Color="#FF112335" Offset="0.241"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+
+            <materialDesign:TransitioningContent x:Name="transitionHighlighter" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">
+                <Grid  Margin="0,60,0,0"  x:Name="gridHighlighter" HorizontalAlignment="Left" Width="4" Height="60" Background="#FF62B1FF" VerticalAlignment="Top"/>
+            </materialDesign:TransitioningContent>
+
             <StackPanel>
-                <Grid Height="60" Background="White">
+                
+                <Grid Height="60" Background="Transparent" >
                     <Button x:Name="btnCloseMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="btnCloseMenu_Click">
                         <materialDesign:PackIcon Foreground="#FF3161B6" Kind="ArrowLeft" Width="25" Height="25"/>
                     </Button>
                     <Button x:Name="btnOpenMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnOpenMenu_Click">
-                        <materialDesign:PackIcon Foreground="#FF3161B6" Kind="Menu" Width="25" Height="25"/>
+                        <materialDesign:PackIcon Foreground="#FF3161B6" Kind="Menu" Width="25" Height="25" />
                     </Button>
                 </Grid>
                 
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="#FF1969DC">
+                <ListView x:Name="viewMenu" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" Foreground="#FF1969DC" SelectionChanged="viewMenu_SelectionChanged">
+
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
-                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/> 
+                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="btnAgentsMenu" Height="60" MouseLeftButtonUp="btnAgentsMenu_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Visibility" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
-                            <TextBlock Text="Monitoramentos" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Text="Monitoramentos" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="60" x:Name="menuItemAgents">
-                        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                        <StackPanel Orientation="Horizontal" >
                             <materialDesign:PackIcon Kind="Computer" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
-                            <TextBlock Text="Agentes" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Text="Agentes" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="menuItemCompanies" Height="60" Visibility="Collapsed">
+                    <ListViewItem x:Name="menuItemCompanies" Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Business" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
-                            <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
-                
             </StackPanel>
         </Grid>
+
+
+
+
     </Grid>
 </Window>

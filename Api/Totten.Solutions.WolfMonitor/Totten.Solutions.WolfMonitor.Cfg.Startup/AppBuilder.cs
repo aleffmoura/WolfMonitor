@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Consul;
@@ -13,9 +15,9 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
     public static class AppBuilder
     {
         public static void DefaultApplicationSetup(this IApplicationBuilder app,
-                                                    IApplicationLifetime lifetime,
+                                                    IHostApplicationLifetime lifetime,
                                                     ILoggerFactory loggerFactory,
-                                                    IHostingEnvironment env,
+                                                    IWebHostEnvironment env,
                                                     Container container)
         {
             app.UseAuthentication();

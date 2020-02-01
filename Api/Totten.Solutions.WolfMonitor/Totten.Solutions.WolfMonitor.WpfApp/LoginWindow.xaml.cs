@@ -43,11 +43,17 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 _userService = new UserService(new UserEndPoint(custom));
 
                 UserLogin.Token = _userService.Authentication();
-                var user = await _userService.GetInfo();
-                if (user.IsSuccess)
+                var userCallback = await _userService.GetInfo();
+                if (userCallback.IsSuccess)
                 {
-                    Home home = new Home(user.Success);
-                    home.Show();
+                    Home home = new Home(custom, userCallback.Success);
+                    this.Visibility = Visibility.Hidden;
+                    home.ShowDialog();
+                    this.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    MessageBox.Show($"Falha: {userCallback.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch(Exception ex)

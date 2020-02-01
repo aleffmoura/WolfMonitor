@@ -10,8 +10,6 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users
 {
     public class UserEndPoint : BaseEndPoint
     {
-        public CustomHttpCliente Client => _httpCliente;
-
         public UserEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
 

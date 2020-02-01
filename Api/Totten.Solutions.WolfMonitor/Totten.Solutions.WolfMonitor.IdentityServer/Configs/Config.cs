@@ -36,6 +36,12 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                         new Secret(_configuration["usersApiSecret"].Sha256())
                     }
                 },
+                new ApiResource("Companies", "Companies Service", new List<string> { "Role","UserId", "CompanyId"}){
+                    ApiSecrets =
+                    {
+                        new Secret(_configuration["companiesApiSecret"].Sha256())
+                    }
+                },
             };
         }
 

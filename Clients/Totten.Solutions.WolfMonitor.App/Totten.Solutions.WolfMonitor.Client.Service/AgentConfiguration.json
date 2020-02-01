@@ -1,8 +1,8 @@
 {
   "urlApi": "http://10.0.75.1:15999",
-  "company": "totemsolutions#agent",
+  "company": "TottemSolutions#agent",
   "user": {
-    "login": "aesirAgent@totemsolutions#agent",
+    "login": "aesirAgent@TottemSolutions#agent",
     "password": "1234"
   }
 }
