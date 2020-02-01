@@ -45,18 +45,26 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             }
         }
 
-        protected async Task<TResult> InnerAsync<TResult, TPost>(string methodPath, TPost postBody, HttpMethod httpMethod)
+        protected async Task<Result<Exception, TResult>> InnerAsync<TResult, TPost>(string methodPath, TPost postBody, HttpMethod httpMethod)
         {
-            if (postBody == null) throw new ArgumentNullException(nameof(postBody));
+            var httpRequest = _httpCliente.CreateRequest(httpMethod, methodPath);
 
-            var httpRequest = _httpCliente.CreateRequest(httpMethod, methodPath)
-                .AddJsonBody(postBody, new JsonSerializerSettings());
+            if (postBody != null)
+                httpRequest = httpRequest.AddJsonBody(postBody, new JsonSerializerSettings());
 
             using (httpRequest)
             using (var httpResponse = await _httpCliente.HttpClient.SendAsync(httpRequest))
             {
                 var str = await httpResponse.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResult>(str);
+
+                
+                var content = await httpResponse.Content.ReadAsStringAsync();
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    var convert = JsonConvert.DeserializeObject<TResult>(content);
+                    return convert;
+                }
+                return JsonConvert.DeserializeObject<BusinessException>(content);
             }
         }
     }

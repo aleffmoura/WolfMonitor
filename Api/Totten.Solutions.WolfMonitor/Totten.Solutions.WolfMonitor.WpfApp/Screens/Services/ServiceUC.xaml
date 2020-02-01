@@ -12,14 +12,14 @@
                 <StackPanel Orientation="Vertical" Width="180">
                     <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="18" Height="30"  Width="154" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"/>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Button x:Name="btnEdit" Margin="2" >
+                        <Button x:Name="btnEdit" Margin="2" Click="btnEdit_Click">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="OpenInApp" Width="16" Height="16" />
                         </Button>
-                        <Button x:Name="btnSync" Margin="2" >
-                            <materialDesign:PackIcon Foreground="AliceBlue" Kind="SwapVertical" Width="16" Height="16"/>
-                        </Button>
-                        <Button x:Name="btnRestartService" Margin="2" >
+                        <Button x:Name="btnRestart" Margin="2" Click="btnRestart_Click">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="Autorenew" Width="16" Height="16"/>
+                        </Button>
+                        <Button x:Name="btnDel" Margin="2" Click="btnDel_Click">
+                            <materialDesign:PackIcon Foreground="AliceBlue" Kind="DeleteAlertOutline" Width="16" Height="16"/>
                         </Button>
                     </StackPanel>
                 </StackPanel>

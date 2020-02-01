@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings.NovaPasta
+namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices
 {
+
     public class SystemServiceViewModel
     {
         public Guid Id { get; set; }

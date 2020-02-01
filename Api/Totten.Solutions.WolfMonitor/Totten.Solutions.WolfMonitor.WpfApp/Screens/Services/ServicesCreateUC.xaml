@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Height="450" Width="400">
+    <Grid Height="150" Width="400">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Nome:" FontSize="16" HorizontalAlignment="Left" Margin="5"/>
-                <TextBox x:Name="txtName" FontSize="16" Height="30" MinWidth="340" Width="auto" Margin="5"/>
+                <TextBox x:Name="txtName" FontSize="16" Height="30" MinWidth="250" Width="auto" Margin="90,0,0,0"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
@@ -19,12 +19,12 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Intervalo de verificação:" FontSize="16" Margin="0,5,0,0" HorizontalAlignment="Left" />
-                <TextBox x:Name="txtTime" Margin="10,0,0,0" FontSize="16" Height="25" Width="60"/>
+                <TextBox  x:Name="txtInterval" Margin="10,0,0,0" FontSize="16" Height="25" Width="60"/>
                 <ComboBox x:Name="cbTypeTime" Margin="10,0,0,0" Height="25" Width="150" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Valor Padrão:" FontSize="16" Margin="0,5,0,0" HorizontalAlignment="Left" />
-                <ComboBox x:Name="cbDefaultValue" Margin="10,0,0,0" Height="25" Width="150"/>
+                <TextBox x:Name="txtDefaultValue" Height="25" Width="253"  Margin="55,0,0,0" />
             </StackPanel>
         </StackPanel>
     </Grid>

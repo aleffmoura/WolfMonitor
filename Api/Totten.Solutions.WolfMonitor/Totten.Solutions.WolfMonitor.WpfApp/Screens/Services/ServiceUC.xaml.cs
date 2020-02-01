@@ -1,6 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Windows.Media;
-using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings.NovaPasta;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
@@ -10,10 +11,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
     public partial class ServiceUC : UserControl
     {
         private SystemServiceViewModel _systemServiceViewModel;
+        private EventHandler _onRemove;
 
-        public ServiceUC(SystemServiceViewModel systemServiceViewModel)
+        public ServiceUC(EventHandler onRemove, SystemServiceViewModel systemServiceViewModel)
         {
             InitializeComponent();
+            _onRemove = onRemove;
             _systemServiceViewModel = systemServiceViewModel;
             SetServiceValues();
         }
@@ -45,6 +48,21 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 textBlock.Foreground = new SolidColorBrush(Colors.Black);
             }
             OnApplyTemplate();
+        }
+
+        private void btnDel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _onRemove?.Invoke(_systemServiceViewModel, new EventArgs());
+        }
+
+        private void btnRestart_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }

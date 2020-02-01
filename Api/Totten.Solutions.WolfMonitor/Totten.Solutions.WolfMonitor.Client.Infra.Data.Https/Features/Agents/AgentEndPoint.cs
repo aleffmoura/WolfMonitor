@@ -60,7 +60,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
 
         private async Task<Result<Exception, Unit>> InnerAsync(Agent agent, HttpMethod httpMethod)
         {
-            return await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, httpMethod);
+            return await InnerAsync<Unit, Agent>("agents", agent, httpMethod);
         }
 
     }

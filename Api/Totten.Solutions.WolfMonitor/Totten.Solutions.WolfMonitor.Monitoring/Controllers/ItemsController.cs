@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
@@ -37,6 +38,15 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         //    return HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, command.Name, command.Value)));
         //}
         //#endregion
+
+        #region HTTP Delete
+        [HttpDelete("{agentId}/{Id}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
+        {
+            return HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id)));
+        }
+        #endregion
 
         //#region HTTP GET
         //[HttpGet]

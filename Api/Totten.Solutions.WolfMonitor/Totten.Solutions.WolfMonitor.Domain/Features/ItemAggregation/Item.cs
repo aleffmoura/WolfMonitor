@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public string Interval { get; set; }
+        public int Interval { get; set; }
         public string Default { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }

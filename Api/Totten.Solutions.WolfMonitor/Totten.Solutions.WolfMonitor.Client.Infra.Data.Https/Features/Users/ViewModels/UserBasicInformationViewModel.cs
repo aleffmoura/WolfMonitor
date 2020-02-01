@@ -18,5 +18,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.Vi
         public string FullName { get; set; }
         public int UserLevel { get; set; }
         public static string Token { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }

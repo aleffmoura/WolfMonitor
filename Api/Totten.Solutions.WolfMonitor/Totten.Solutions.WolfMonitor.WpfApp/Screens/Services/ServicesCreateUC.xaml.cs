@@ -10,19 +10,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     /// <summary>
     /// Interação lógica para ServicesCreateUC.xam
     /// </summary>
-    public partial class ServicesCreateUC : UserControl
+    public partial class ServicesCreateUC : UserControl, IItemUC
     {
-        public List<string> Items { get; set; }
-        public ServicesCreateUC()
+        public List<string> TypeTimers { get; set; }
+        private Guid _agentId;
+
+        public ServicesCreateUC(Guid agentId)
         {
             InitializeComponent();
-            Items = new List<string>
+            _agentId = agentId;
+            TypeTimers = new List<string>
             {
                 new string("segundos"),
                 new string("minutos")
@@ -30,9 +36,29 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             LoadCombobox();
         }
 
-        private void LoadCombobox()
+        private void LoadCombobox() => cbTypeTime.ItemsSource = TypeTimers;
+
+        public Item GetItem()
         {
-            cbTypeTime.ItemsSource = Items;
+            Item item = null;
+
+            if (!_agentId.Equals(Guid.Empty) && !string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtDisplayName.Text)
+                && !string.IsNullOrEmpty(txtInterval.Text) && int.TryParse(txtInterval.Text, out int result))
+            {
+                item = new SystemServiceCreateVO
+                {
+                    AgentId = _agentId,
+                    Name = txtName.Text,
+                    DisplayName = txtDisplayName.Text,
+                    Interval = result,
+                    Default = txtDefaultValue.Text,
+                    Type = Domain.Enums.ETypeItem.SystemService
+                };
+                item.Interval = cbTypeTime.SelectedItem.Equals("minutos") ? item.Interval * 60 : item.Interval;
+            }
+            return item;
         }
+
+        public void SetItem(Item item) { }
     }
 }

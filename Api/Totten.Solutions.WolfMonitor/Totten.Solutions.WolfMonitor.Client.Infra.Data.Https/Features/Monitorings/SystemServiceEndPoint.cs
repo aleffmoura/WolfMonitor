@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
-using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings.NovaPasta;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings
@@ -24,9 +22,14 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
         //    return await InnerAsync<Result<Exception, Unit>, SystemService>("monitoring/systemservices", agent, httpMethod);
         //}
 
-        public async Task<Result<Exception, PageResult<SystemServiceViewModel>>> GetServicesByAgentId(Guid guid)
+        public async Task<Result<Exception, PageResult<T>>> GetServicesByAgentId<T>(Guid agentId)
         {
-            return await InnerGetAsync<PageResult<SystemServiceViewModel>>($"monitoring/SystemServices/{guid}");
+            return await InnerGetAsync<PageResult<T>>($"monitoring/{agentId}");
+        }
+
+        public async Task<Result<Exception, Unit>> Delete(Guid agentId, Guid id)
+        {
+            return await InnerAsync<Unit, object>($"monitoring/{agentId}/{id}", null, HttpMethod.Delete);
         }
     }
 }

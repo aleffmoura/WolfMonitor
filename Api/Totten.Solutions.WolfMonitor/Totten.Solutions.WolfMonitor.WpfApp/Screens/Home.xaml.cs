@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
-using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings.NovaPasta;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
@@ -56,18 +56,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             btnCloseMenu.Visibility = Visibility.Collapsed;
         }
 
-        private async void btnAgentsMenu_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ItensMonitoringService itensMonitoringService = new ItensMonitoringService(new SystemServiceEndPoint(_customHttpCliente));
-
-            var callBack = await itensMonitoringService.GetSystemServices();
-
-            ServicesUserControl servicesUserControl = new ServicesUserControl(callBack.Success.Items);
+            ServicesUserControl servicesUserControl = new ServicesUserControl(Guid.Parse("7819adf4-0a58-4fed-e856-08d79f81f999"), new ItensMonitoringService(new SystemServiceEndPoint(_customHttpCliente)));
             gridRoot.Children.Clear();
             gridRoot.Children.Add(servicesUserControl);
         }
 
-        private void viewMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void viewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var index = viewMenu.SelectedIndex;
             MoveHighlighter(index);

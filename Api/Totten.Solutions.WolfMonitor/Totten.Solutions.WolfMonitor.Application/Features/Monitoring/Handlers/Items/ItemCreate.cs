@@ -21,6 +21,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public Guid UserIdWhoAdd { get; set; }
             public string Name { get; set; }
             public string DisplayName { get; set; }
+            public int Interval { get; set; }
+            public int IntervalType { get; set; }
+
 
             public Command(Guid companyId,
                            Guid agentId,
