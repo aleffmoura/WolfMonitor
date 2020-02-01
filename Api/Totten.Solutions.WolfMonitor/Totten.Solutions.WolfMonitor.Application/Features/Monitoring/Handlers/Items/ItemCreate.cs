@@ -17,25 +17,28 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
         public class Command : IRequest<Result<Exception, Guid>>
         {
             public Guid CompanyId { get; set; }
-            public Guid AgentId { get; set; }
             public Guid UserIdWhoAdd { get; set; }
+            public Guid AgentId { get; set; }
             public string Name { get; set; }
             public string DisplayName { get; set; }
+            public string Default { get; set; }
             public int Interval { get; set; }
-            public int IntervalType { get; set; }
-
 
             public Command(Guid companyId,
-                           Guid agentId,
                            Guid userIdWhoAdd,
+                           Guid agentId,
                            string name,
-                           string displayName)
+                           string displayName,
+                           string defaultValue,
+                           int interval)
             {
                 CompanyId = companyId;
                 AgentId = agentId;
                 UserIdWhoAdd = userIdWhoAdd;
                 Name = name;
                 DisplayName = displayName;
+                Default = defaultValue;
+                Interval = interval;
             }
 
             public ValidationResult Validate()

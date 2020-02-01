@@ -21,13 +21,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public Guid AgentId { get; set; }
             public string Name { get; set; }
             public string Value { get; set; }
+            public string LastValue { get; set; }
 
 
-            public Command(Guid agentId, string name, string value)
+            public Command(Guid agentId, string name, string value, string lastValue)
             {
                 AgentId = agentId;
                 Name = name;
                 Value = value;
+                LastValue = lastValue;
             }
 
             public ValidationResult Validate()

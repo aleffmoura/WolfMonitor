@@ -42,7 +42,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
             if (_watcher == null)
             {
-                MakeArchiveWatcher();
+                MakeconfigWatcher();
             }
         }
 
@@ -75,7 +75,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         }
 
-        public void MakeArchiveWatcher()
+        public void MakeconfigWatcher()
         {
             _watcher = new FileSystemWatcher();
             _watcher.Path = $"./Monitoring";

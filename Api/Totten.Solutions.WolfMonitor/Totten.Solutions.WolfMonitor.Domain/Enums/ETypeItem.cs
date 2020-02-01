@@ -7,6 +7,6 @@ namespace Totten.Solutions.WolfMonitor.Domain.Enums
     public enum ETypeItem
     {
         SystemService = 0,
-        SystemArchive = 1
+        SystemConfig = 1
     }
 }

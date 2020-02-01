@@ -8,7 +8,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<SystemService> SystemServices { get; set; }
-        public DbSet<SystemArchive> SystemArchives { get; set; }
+        public DbSet<SystemConfig> SystemConfigs { get; set; }
 
         public WolfMonitoringContext(DbContextOptions<WolfMonitoringContext> options) : base(options) { }
 

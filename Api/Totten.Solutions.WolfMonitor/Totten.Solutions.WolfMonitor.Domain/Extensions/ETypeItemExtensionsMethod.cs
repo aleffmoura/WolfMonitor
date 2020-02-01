@@ -13,7 +13,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Extensions
             eTypeItem switch
             {
                 ETypeItem.SystemService => new SystemService(item),
-                ETypeItem.SystemArchive => new SystemArchive(item),
+                ETypeItem.SystemConfig => new SystemConfig(item),
                 _ => throw new BusinessException(ErrorCodes.InvalidObject, "Não existe um tipo cadastrado que corresponda ao informado.")
             };
     }

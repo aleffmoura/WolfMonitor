@@ -6,9 +6,9 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings
 {
-    public class SystemServiceEndPoint : BaseEndPoint
+    public class ItemsEndPoint : BaseEndPoint
     {
-        public SystemServiceEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
+        public ItemsEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
 
         }
@@ -24,7 +24,11 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
 
         public async Task<Result<Exception, PageResult<T>>> GetServicesByAgentId<T>(Guid agentId)
         {
-            return await InnerGetAsync<PageResult<T>>($"monitoring/{agentId}");
+            return await InnerGetAsync<PageResult<T>>($"monitoring/services/{agentId}");
+        }
+        public async Task<Result<Exception, PageResult<T>>> GetconfigsByAgentId<T>(Guid agentId)
+        {
+            return await InnerGetAsync<PageResult<T>>($"monitoring/configs/{agentId}");
         }
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId, Guid id)

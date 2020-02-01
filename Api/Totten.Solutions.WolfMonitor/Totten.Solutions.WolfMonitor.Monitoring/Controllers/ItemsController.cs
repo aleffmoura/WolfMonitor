@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items;
+using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels.SystemServices;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
@@ -21,56 +23,62 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
             _mediator = mediator;
         }
 
-        //#region HTTP POST
-        //[HttpPost]
-        //[CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
-        //public async Task<IActionResult> Create([FromBody]ItemCreateCommand command)
-        //{
-        //    return HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, command.AgentId, UserId, command.Name, command.DisplayName)));
-        //}
-        //#endregion
+        #region HTTP POST
 
-        //#region HTTP PATCH
-        //[HttpPatch]
-        //[CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
-        //public async Task<IActionResult> PatchClient([FromBody]ItemUpdateCommand command)
-        //{
-        //    return HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, command.Name, command.Value)));
-        //}
-        //#endregion
+        [HttpPost]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
+        public async Task<IActionResult> Create([FromBody]ItemCreateVO itemCreate)
+             => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,  itemCreate.Name, itemCreate.DisplayName, itemCreate.Default, itemCreate.Interval)));
+
+        #endregion
+
+
+        #region HTTP PATCH
+
+        [HttpPatch]
+        [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
+        public async Task<IActionResult> PatchClient([FromBody]ItemUpdateVO itemUpdate)
+            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.LastValue)));
+
+        #endregion
+
 
         #region HTTP Delete
+
         [HttpDelete("{agentId}/{Id}")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
-        {
-            return HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id)));
-        }
+            => HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id)));
+
         #endregion
 
-        //#region HTTP GET
-        //[HttpGet]
-        //[ODataQueryOptionsValidate]
-        //[CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
-        //public async Task<IActionResult> ReadAllByAgentId(ODataQueryOptions<Item> queryOptions)
-        //{
-        //    return await HandleQueryable<Item, ItemResumeForAgentViewModel>(await _mediator.Send(new ItemCollectionForAgent.Query(UserId)), queryOptions);
-        //}
 
-        //[HttpGet("{agentId}")]
-        //[ODataQueryOptionsValidate]
-        //[CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        //public async Task<IActionResult> ReadAll([FromRoute]Guid agentId, ODataQueryOptions<Item> queryOptions)
-        //{
-        //    return await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId)), queryOptions);
-        //}
+        #region HTTP GET
 
-        //[HttpGet("{agentId}/{serviceId}")]
-        //[CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        //public async Task<IActionResult> ReadResumeService([FromRoute]Guid serviceId, [FromRoute]Guid agentId)
-        //{
-        //    return HandleQuery<Item, ItemDetailViewModel>(await _mediator.Send(new ItemResume.Query(CompanyId, agentId, serviceId)));
-        //}
-        //#endregion
+        [HttpGet]
+        [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
+        public async Task<IActionResult> ReadAllByAgentId(ODataQueryOptions<Item> queryOptions)
+            => await HandleQueryable<Item, ItemResumeForAgentViewModel>(await _mediator.Send(new ItemCollectionForAgent.Query(UserId)), queryOptions);
+
+        [HttpGet("services/{agentId}")]
+        [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadAllServices([FromRoute]Guid agentId, ODataQueryOptions<Item> queryOptions)
+            => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
+
+        [HttpGet("configs/{agentId}")]
+        [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadAllconfigs([FromRoute]Guid agentId, ODataQueryOptions<Item> queryOptions)
+            => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
+
+        [HttpGet("{agentId}/{itemId}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadResumeItem([FromRoute]Guid serviceId, [FromRoute]Guid agentId)
+            => HandleQuery<Item, ItemDetailViewModel>(await _mediator.Send(new ItemResume.Query(CompanyId, agentId, serviceId)));
+
+        #endregion
+
     }
 }

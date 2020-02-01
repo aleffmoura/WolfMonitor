@@ -36,8 +36,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 public Validator()
                 {
-                    RuleFor(d => d.AgentId).NotEqual(Guid.Empty);
                     RuleFor(d => d.Id).NotEqual(Guid.Empty);
+                    RuleFor(d => d.AgentId).NotEqual(Guid.Empty);
+                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty);
                 }
             }
         }

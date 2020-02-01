@@ -58,7 +58,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ServicesUserControl servicesUserControl = new ServicesUserControl(Guid.Parse("7819adf4-0a58-4fed-e856-08d79f81f999"), new ItensMonitoringService(new SystemServiceEndPoint(_customHttpCliente)));
+            ServicesUserControl servicesUserControl = new ServicesUserControl(Guid.Parse("7819adf4-0a58-4fed-e856-08d79f81f999"), new ItensMonitoringService(new ItemsEndPoint(_customHttpCliente)));
             gridRoot.Children.Clear();
             gridRoot.Children.Add(servicesUserControl);
         }

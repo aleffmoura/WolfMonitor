@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using System;
 using System.Linq;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
@@ -14,11 +15,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
         {
             public Guid AgentId { get; set; }
             public Guid CompanyId { get; set; }
+            public ETypeItem Type { get; set; }
 
-            public Query(Guid agentId, Guid companyId)
+
+            public Query(Guid agentId, Guid companyId, ETypeItem type)
             {
                 AgentId = agentId;
                 CompanyId = companyId;
+                Type = type;
             }
         }
 
@@ -42,7 +46,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     return new NotFoundException("Não foi encontrado um agent com o identificador informado na empresa do usuário");
                 }
 
-                Result<Exception, IQueryable<Item>> Item = _repository.GetAll(request.AgentId);
+                Result<Exception, IQueryable<Item>> Item = _repository.GetAll(request.AgentId, request.Type);
 
                 return Item;
             }

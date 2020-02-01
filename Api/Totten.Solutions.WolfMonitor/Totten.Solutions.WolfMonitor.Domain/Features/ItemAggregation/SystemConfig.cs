@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
 {
-    public class SystemArchive : Item
+    public class SystemConfig : Item
     {
-        public SystemArchive() { }
-        public SystemArchive(Item item)
+        public SystemConfig() { }
+        public SystemConfig(Item item)
         {
             this.Id = item.Id;
             this.Name = item.Name;

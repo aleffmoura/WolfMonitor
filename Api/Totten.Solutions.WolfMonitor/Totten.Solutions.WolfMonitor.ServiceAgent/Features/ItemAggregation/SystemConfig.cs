@@ -3,12 +3,12 @@ using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 {
-    public class SystemArchive : Item
+    public class SystemConfig : Item
     {
 
-        public SystemArchive() { }
+        public SystemConfig() { }
 
-        public SystemArchive(Item item)
+        public SystemConfig(Item item)
         {
             this.Id = item.Id;
             this.Name = item.Name;
@@ -22,7 +22,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
         public override bool VerifyChanges()
         {
-            var value = SystemArchiveService.GetCurrentValue(this.Name);
+            var value = SystemConfigService.GetCurrentValue(this.Name);
 
             if (!this.Value.Equals(value))
             {

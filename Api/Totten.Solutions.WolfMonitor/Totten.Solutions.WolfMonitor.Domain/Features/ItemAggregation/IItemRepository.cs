@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Base;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
@@ -10,6 +11,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
     {
         Task<Result<Exception, Item>> GetByNameWithAgentId(string name, Guid agentId);
         Result<Exception, IQueryable<Item>> GetAll(Guid agentId);
+        Result<Exception, IQueryable<Item>> GetAll(Guid agentId, ETypeItem type);
         Task<Result<Exception, Item>> GetByIdAsync(Guid agentId, Guid id);
     }
 }

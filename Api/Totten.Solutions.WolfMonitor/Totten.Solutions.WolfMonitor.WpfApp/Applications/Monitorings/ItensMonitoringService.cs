@@ -11,9 +11,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings
 {
     public class ItensMonitoringService
     {
-        private SystemServiceEndPoint _endPoint;
+        private ItemsEndPoint _endPoint;
 
-        public ItensMonitoringService(SystemServiceEndPoint endPoint)
+        public ItensMonitoringService(ItemsEndPoint endPoint)
         {
             _endPoint = endPoint;
         }

@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         [Description("Serviço")]
         SystemService = 0,
         [Description("Arquivo")]
-        SystemArchive = 1
+        SystemConfig = 1
     }
     public abstract class Item
     {
@@ -36,7 +36,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             eTypeItem switch
             {
                 ETypeItem.SystemService => new SystemService(item),
-                ETypeItem.SystemArchive => new SystemArchive(item),
+                ETypeItem.SystemConfig => new SystemConfig(item),
                 _ => throw new Exception("Não existe um tipo cadastrado que corresponda ao informado.")
             };
     }

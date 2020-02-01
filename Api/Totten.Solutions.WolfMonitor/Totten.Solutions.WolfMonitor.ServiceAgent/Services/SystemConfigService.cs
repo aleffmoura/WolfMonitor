@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 {
-    public class SystemArchiveService
+    public class SystemConfigService
     {
         public static string GetCurrentValue(string path)
         {
@@ -13,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
             {
                 return File.ReadAllText(path);
             }
-            return "Archive Not Found";
+            return "config Not Found";
         }
     }
 }
