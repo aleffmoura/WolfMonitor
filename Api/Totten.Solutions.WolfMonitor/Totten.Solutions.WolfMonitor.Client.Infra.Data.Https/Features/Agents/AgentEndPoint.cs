@@ -28,10 +28,5 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
             return await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, httpMethod);
         }
 
-        //public Result<Exception, ApiResult<SystemService>> GetServices()
-        //{
-        //    return InnerGetListAsync<SystemService>("monitoring/systemservices").ConfigureAwait(false).GetAwaiter().GetResult();
-        //}
-
     }
 }

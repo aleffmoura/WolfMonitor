@@ -4,6 +4,7 @@ using Topshelf;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent
 {
@@ -13,6 +14,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
         {
             ServiceProvider serviceProvider = new ServiceCollection()
                                     .AddSingleton<IHelper, Helper>()
+                                    .AddSingleton<AgentService>()
                                     .AddSingleton<WolfService>()
                                     .BuildServiceProvider();
 

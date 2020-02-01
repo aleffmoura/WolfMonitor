@@ -5,12 +5,12 @@ using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 {
-    public class SystemService : Item
+    public class SystemArchive : Item
     {
 
-        public SystemService() { }
+        public SystemArchive() { }
 
-        public SystemService(Item item)
+        public SystemArchive(Item item)
         {
             this.Id = item.Id;
             this.Name = item.Name;
@@ -24,15 +24,17 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
         public override bool VerifyChanges()
         {
-            var status = SystemServicesService.GetStatus(this.Name, this.DisplayName);
-            if (this.Value.Equals(status))
+            var value = SystemArchiveService.GetCurrentValue(this.Name);
+
+            if (!this.Value.Equals(value))
             {
-                return false;
+                this.LastValue = this.Value;
+                this.Value = value;
+                this.MonitoredAt = DateTime.Now;
+                return true;
             }
-            this.LastValue = this.Value;
-            this.Value = status;
-            this.MonitoredAt = DateTime.Now;
-            return true;
+
+            return false;
         }
     }
 }
