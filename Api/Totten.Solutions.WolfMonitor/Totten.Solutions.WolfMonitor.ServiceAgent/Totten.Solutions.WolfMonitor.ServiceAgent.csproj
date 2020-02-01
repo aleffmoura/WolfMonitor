@@ -14,4 +14,14 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="AgentSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infra\Features\Monitorings\" />
+  </ItemGroup>
+
 </Project>

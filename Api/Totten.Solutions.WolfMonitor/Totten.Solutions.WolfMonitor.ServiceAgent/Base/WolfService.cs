@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Timers;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
@@ -11,16 +12,20 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 {
     public class WolfService
     {
-        private FileSystemWatcher _watcher;
-        private double _timerTick = 1000;
-        private Timer _timer;
-        private AgentService _agentService;
-        private object _agent;
+        public static object _locker = new object();
+        private readonly double _timerTick = 500;
 
-        public WolfService(AgentService agentService)
+        private readonly IHelper _helper;
+        private AgentService _agentService;
+        private FileSystemWatcher _watcher;
+        private Agent _agent;
+        private Timer _timer;
+
+        public WolfService(AgentService agentService, IHelper helper)
         {
-            _timer = new Timer(_timerTick);
             _agentService = agentService;
+            _helper = helper;
+            _timer = new Timer(_timerTick);
 
             CreateDirs();
         }
@@ -28,11 +33,13 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         public void CreateDirs()
         {
             var pathServices = $"./Monitoring";
+
             if (!Directory.Exists(pathServices))
             {
                 Directory.CreateDirectory(pathServices);
                 Directory.CreateDirectory($"./Monitoring/Exceptions");
             }
+
             if (_watcher == null)
             {
                 MakeArchiveWatcher();
@@ -61,7 +68,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                 var item = JsonConvert.DeserializeObject<Item>(json);
                 _agentService.Send(item);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 CreateLogException(ex);
             }
@@ -84,22 +91,58 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         private void Tick(object sender, ElapsedEventArgs e)
         {
-            if (_agent == null)
+            lock (_locker)
             {
-                _agent = _agentService.Login();
-                return;
-            }
-            List<Item> items = _agentService.GetItems(_agent);
-
-            foreach (Item item in items)
-            {
-                var instance = item.Type.GetInstance(item);
-                if (instance.ShouldBeMonitoring())
+                try
                 {
-                    if (instance.VerifyChanges())
+                    if (_agent == null)
                     {
-                        GenerateFile(instance);
+                        var agentCallback = _agentService.Login();
+
+                        if (agentCallback.IsSuccess)
+                            _agent = agentCallback.Success;
+                        else
+                            CreateLogException(agentCallback.Failure);
+                        return;
                     }
+
+                    if (!_agent.Configured)
+                    {
+                        _agent.Name = Environment.MachineName;
+                        _agent.HostAddress = _helper.GetMACAddress();
+                        _agent.HostName = _helper.GetHostName();
+                        _agent.LocalIp = _helper.GetLocalIpAddress();
+
+                        _agentService.Update(_agent);
+
+                        var agentCallback = _agentService.GetInfo();
+
+                        if (agentCallback.IsSuccess)
+                            _agent = agentCallback.Success;
+                        else
+                            CreateLogException(agentCallback.Failure);
+                        return;
+                    }
+
+                    var itemsCallback = _agentService.GetItems();
+
+                    if (itemsCallback.IsSuccess)
+                    {
+                        foreach (Item item in itemsCallback.Success.Items)
+                        {
+                            var instance = item.Type.GetInstance(item);
+
+                            if (instance.ShouldBeMonitoring())
+                                if (instance.VerifyChanges())
+                                    GenerateFile(instance);
+                        }
+                    }
+                    else
+                        CreateLogException(itemsCallback.Failure);
+                }
+                catch (Exception ex)
+                {
+                    CreateLogException(ex);
                 }
             }
         }
@@ -117,13 +160,16 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
             {
                 CreateLogException(ex, item);
             }
-
         }
 
         private void CreateLogException(Exception ex, Item item = null)
         {
-            string path = $"./Monitoring/Exceptions/{item?.Name}_{item?.MonitoredAt.Value}_{DateTime.Now}.mon";
-            File.WriteAllText(path, JsonConvert.SerializeObject(ex));
+            try
+            {
+                string path = $"./Monitoring/Exceptions/{item?.Name}_{item?.MonitoredAt.Value}_{DateTime.Now}.mon";
+                File.WriteAllText(path, JsonConvert.SerializeObject(ex));
+            }
+            catch { }
         }
 
     }

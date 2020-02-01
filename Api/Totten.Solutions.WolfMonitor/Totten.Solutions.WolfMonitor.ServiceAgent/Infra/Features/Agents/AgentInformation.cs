@@ -5,27 +5,24 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
-using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
 
-namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication
+namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
 {
-    public class AgentEndPoint : BaseEndPoint
+    public class AgentInformation : BaseEndPoint
     {
-        public AgentEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
+        public AgentInformation(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
 
-        }
-        public string GetClientCredentials()
-        {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
         }
         public string Login()
         {
             var request = base.Client.CreateRequest(HttpMethod.Post, "identityserver/connect/token");
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", GetClientCredentials());
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", UserLogin.GetClientCredentials());
             request.Headers.Host = base.Client.UrlApi.Replace("http://", "");
             request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
@@ -40,28 +37,27 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
             using (var response = httpClient.SendAsync(request).ConfigureAwait(false).GetAwaiter().GetResult())
             {
                 if (!response.IsSuccessStatusCode)
-                {
                     throw new Exception($"Erro na comunicação com a API, não foi possivel obter o token. status de erro: {response.StatusCode}");
-                }
 
                 dynamic content = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult());
                 return content.access_token.ToString();
             }
         }
-        public bool Update(Agent agent)
-        {
-            return InnerAsync(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
-        }
+
+        public Result<Exception, Unit> Send(Item item)
+             => InnerAsync<Result<Exception, Unit>, Item>("monitoring", item, HttpMethod.Post).ConfigureAwait(false).GetAwaiter().GetResult();
+        
+        public Result<Exception, PageResult<Item>> GetItems()
+             =>  InnerGetAsync<PageResult<Item>>("monitoring").ConfigureAwait(false).GetAwaiter().GetResult();
+
+        public Result<Exception, Unit> Update(Agent agent)
+             =>  InnerAsync(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
 
         public Result<Exception, Agent> GetInfo()
-        {
-            return InnerGetAsync<Agent>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
-        }
+             =>  InnerGetAsync<Agent>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
 
         private async Task<Result<Exception, Unit>> InnerAsync(Agent agent, HttpMethod httpMethod)
-        {
-            return await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, httpMethod);
-        }
+             =>  await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, httpMethod);
 
     }
 }

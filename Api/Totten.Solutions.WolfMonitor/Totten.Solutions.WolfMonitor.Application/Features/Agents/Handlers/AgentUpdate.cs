@@ -69,7 +69,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 }
 
                 Agent agent = agentCallback.Success;
-
+                agent.Configured = true;
                 Mapper.Map(request, agent);
 
                 return await _repository.UpdateAsync(agent);

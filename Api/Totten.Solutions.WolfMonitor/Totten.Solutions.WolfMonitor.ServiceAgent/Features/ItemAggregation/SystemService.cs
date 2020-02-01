@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation

@@ -1,25 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 {
     public class AgentService
     {
-        public object Login()
+        private AgentInformation _agentInformations;
+        public AgentService(AgentInformation agentEndPoint)
         {
-            return true;
+            _agentInformations = agentEndPoint;
+        }
+        public Result<Exception, Agent> Login()
+        {
+            var token = _agentInformations.Login();
+
+            if (!string.IsNullOrEmpty(token))
+                UserLogin.Token = token;
+
+            return _agentInformations.GetInfo();
         }
 
-        public List<Item> GetItems(object agent)
-        {
-            return null;
-        }
+        public Result<Exception, PageResult<Item>> GetItems()
+                => _agentInformations.GetItems();
 
-        public void Send(Item item)
-        {
+        public Result<Exception, Unit> Send(Item item)
+                => _agentInformations.Send(item);
 
-        }
+        public Result<Exception, Unit> Update(Agent agent)
+                => _agentInformations.Update(agent);
+        
+
+        public Result<Exception, Agent> GetInfo()
+                => _agentInformations.GetInfo();
+        
     }
 }
