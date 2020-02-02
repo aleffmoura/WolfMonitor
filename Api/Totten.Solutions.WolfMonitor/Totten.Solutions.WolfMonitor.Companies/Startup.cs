@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using Totten.Solutions.WolfMonitor.Cfg.Startup;
 
-namespace Totten.Solutions.WolfMonitor.Companies
+namespace Totten.Solutions.WolfMonitor.Agents
 {
     public class Startup
     {
-
         private readonly Container container = new Container();
         public void ConfigureServices(IServiceCollection services)
         {
@@ -18,9 +16,9 @@ namespace Totten.Solutions.WolfMonitor.Companies
         }
 
         public void Configure(IApplicationBuilder app,
-                              IHostApplicationLifetime lifetime,
+                              IApplicationLifetime lifetime,
                               ILoggerFactory loggerFactory,
-                              IWebHostEnvironment env)
+                              IHostingEnvironment env)
         {
             app.DefaultApplicationSetup(lifetime, loggerFactory, env, container);
         }

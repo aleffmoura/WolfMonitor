@@ -43,10 +43,10 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             //services.AddRabbitMQ();
             services.AddMvc().AddMetrics().AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.IgnoreNullValues = true;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddJsonOptions(options =>
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.IgnoreNullValues = true;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
             });
             services.BuildServiceProvider();
         }

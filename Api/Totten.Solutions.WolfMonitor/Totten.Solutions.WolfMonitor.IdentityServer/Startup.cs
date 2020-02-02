@@ -1,10 +1,8 @@
 ﻿using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Consul;
@@ -26,10 +24,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
             services.AddMetric();
             services.AddSingleton<IHelper, Helper>();
             services.AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
-            services.AddMvcCore().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.IgnoreNullValues = true;
-            });
+            services.AddMvcCore().AddJsonFormatters();
 
             IConfigurationRoot configOnConsul = services.BuildServiceProvider().GetService<IConfigurationRoot>();
             Config conf = new Config(configOnConsul);
@@ -44,9 +39,9 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
         }
 
         public void Configure(IApplicationBuilder app,
-                             IWebHostEnvironment env,
+                             IHostingEnvironment env,
                              ILoggerFactory loggerFactory,
-                             IHostApplicationLifetime lifetime)
+                             IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +53,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer
             app.UseLogging(loggerFactory);
             app.UseMetrics();
             app.UseIdentityServer();
+            app.UseMvc();
         }
     }
 }

@@ -44,14 +44,15 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
             return company;
         }
 
-        public async Task<Result<Exception, Company>> GetByNameAsync(string name)
+        public async Task<Result<Exception, Company>> GetByNameAsync(string fantasyName)
         {
-            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.FantasyName.Equals(fantasyName, StringComparison.InvariantCultureIgnoreCase));
 
             if (company == null)
             {
                 return new NotFoundException("Company not found");
             }
+
             return company;
         }
 

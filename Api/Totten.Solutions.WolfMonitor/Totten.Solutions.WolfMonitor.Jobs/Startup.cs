@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using System.Collections.Generic;
@@ -28,12 +27,7 @@ namespace Totten.Solutions.WolfMonitor.Jobs
             services.AddHangfire(_ => _.UsePostgreSqlStorage(configuration["connectionString"]));
         }
 
-
-        public void Configure(IApplicationBuilder app,
-                              IHostApplicationLifetime lifetime,
-                              ILoggerFactory loggerFactory,
-                              IWebHostEnvironment env,
-                              ILoggerFactory logger, IRabbitMQ rabbitMQ, IConfigurationRoot configuration)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime, ILoggerFactory logger, IRabbitMQ rabbitMQ, IConfigurationRoot configuration)
         {
             app.DefaultApplicationSetup(lifetime, logger, env, container);
             app.UseHangfireDashboard("/hangfire", new DashboardOptions()

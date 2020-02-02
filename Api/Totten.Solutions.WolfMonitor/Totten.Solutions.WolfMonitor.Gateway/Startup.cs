@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -25,9 +24,9 @@ namespace Totten.Solutions.WolfMonitor.Gateway
         }
 
         public void Configure(IApplicationBuilder app,
-                              IHostApplicationLifetime lifetime,
+                              IApplicationLifetime lifetime,
                               ILoggerFactory loggerFactory,
-                              IWebHostEnvironment env)
+                              IHostingEnvironment env)
         { 
             app.DefaultApplicationSetup(lifetime,
                                         loggerFactory,

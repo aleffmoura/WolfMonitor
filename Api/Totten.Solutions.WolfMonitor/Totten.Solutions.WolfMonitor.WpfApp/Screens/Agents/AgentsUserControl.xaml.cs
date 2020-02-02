@@ -20,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             InitializeComponent();
             _agentService = agentService;
             _indexes = new Dictionary<Guid, AgentUC>();
-
+            Populate();
         }
 
         ~AgentsUserControl()

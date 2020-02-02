@@ -114,6 +114,7 @@ $Agents = @'
   "Tags": "Agents",
   "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
   "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Agents",
   "apiSecret":"agentsSuperSecret"
 }

@@ -32,12 +32,14 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
     }
     public static class ETypeItemExtensionsMethod
     {
-        public static Item GetInstance(this ETypeItem eTypeItem, Item item) =>
-            eTypeItem switch
+        public static Item GetInstance(this ETypeItem eTypeItem, Item item)
+        {
+            switch (eTypeItem)
             {
-                ETypeItem.SystemService => new SystemService(item),
-                ETypeItem.SystemConfig => new SystemConfig(item),
-                _ => throw new Exception("Não existe um tipo cadastrado que corresponda ao informado.")
+                case ETypeItem.SystemService: return new SystemService(item);
+                case ETypeItem.SystemConfig: return new SystemConfig(item);
+                default: throw new Exception("Não existe um tipo cadastrado que corresponda ao informado.");
             };
+        }
     }
 }

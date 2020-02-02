@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
 {

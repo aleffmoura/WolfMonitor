@@ -1,4 +1,5 @@
-﻿using Totten.Solutions.WolfMonitor.Cfg.Startup;
+﻿using Totten.Solutions.WolfMonitor.Agents;
+using Totten.Solutions.WolfMonitor.Cfg.Startup;
 
 namespace Totten.Solutions.WolfMonitor.Users
 {
