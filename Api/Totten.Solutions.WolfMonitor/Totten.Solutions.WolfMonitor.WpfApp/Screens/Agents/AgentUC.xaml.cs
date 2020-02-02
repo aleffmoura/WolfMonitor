@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 {
@@ -18,9 +10,46 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     /// </summary>
     public partial class AgentUC : UserControl
     {
-        public AgentUC()
+        private AgentResumeViewModel _agentResumeViewModel;
+        private EventHandler _onRemove;
+
+        public AgentUC(EventHandler onRemove, AgentResumeViewModel agentResumeViewModel)
         {
             InitializeComponent();
+            _agentResumeViewModel = agentResumeViewModel;
+            _onRemove = onRemove;
+            SetServiceValues();
         }
+        ~AgentUC()
+        {
+            _onRemove = null;
+            _agentResumeViewModel = null;
+        }
+        private void btnDel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _onRemove?.Invoke(_agentResumeViewModel, new EventArgs());
+        }
+
+        public async void SetServiceValues()
+        {
+            lblDisplayName.Text = _agentResumeViewModel.DisplayName;
+            lblCreatedBy.Text = _agentResumeViewModel.UserWhoCreated;
+            lblCreatedIn.Text = _agentResumeViewModel.CreatedIn;
+            lblUpdatedIn.Text = _agentResumeViewModel.LastUpdate;
+            lblServicesCount.Text = $"{TryGetCount(ETypeItem.SystemService)}";
+            lblConfigsCount.Text = $"{TryGetCount(ETypeItem.SystemConfig)}";
+        }
+
+        private int TryGetCount(ETypeItem eTypeItem)
+        {
+            int returned = 0;
+
+            if (_agentResumeViewModel.Items.TryGetValue((int)eTypeItem, out int count))
+            {
+                returned = count;
+            }
+            return returned;
+        }
+
     }
 }

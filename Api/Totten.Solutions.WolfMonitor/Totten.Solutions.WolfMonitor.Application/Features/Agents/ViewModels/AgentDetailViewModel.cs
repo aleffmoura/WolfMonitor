@@ -4,6 +4,7 @@
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string MachineName { get; set; }
         public string LocalIp { get; set; }
         public string HostName { get; set; }
         public string HostAddress { get; set; }

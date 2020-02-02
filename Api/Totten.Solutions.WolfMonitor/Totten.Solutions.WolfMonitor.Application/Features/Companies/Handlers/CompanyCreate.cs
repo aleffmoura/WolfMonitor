@@ -36,16 +36,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
+            private readonly IMapper _mapper;
             private readonly ICompanyRepository _repository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(IMapper mapper, ICompanyRepository repository)
             {
+                _mapper = mapper;
                 _repository = repository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Company company = Mapper.Map<Command, Company>(request);
+                Company company = _mapper.Map<Command, Company>(request);
 
                 Result<Exception, Company> callback = await _repository.CreateAsync(company);
 

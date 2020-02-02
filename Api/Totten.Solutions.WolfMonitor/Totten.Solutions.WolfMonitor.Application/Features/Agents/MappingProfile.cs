@@ -13,9 +13,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
             CreateMap<AgentCreate.Command, Agent>()
                 .ForMember(dest => dest.CompanyId, opt => opt.MapFrom(src => src.CompanyId))
                 .ForMember(dest => dest.UserWhoCreatedId, opt => opt.MapFrom(src => src.UserWhoCreatedId))
+                .ForMember(dest => dest.UserWhoCreatedName, opt => opt.MapFrom(src => src.UserWhoCreatedName))
                 .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => "Never connected"))
+                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.DisplayName))
+                .ForMember(dest => dest.MachineName, opt => opt.MapFrom(src => "Never connected"))
                 .ForMember(dest => dest.LocalIp, opt => opt.MapFrom(src => "Never connected"))
                 .ForMember(dest => dest.HostName, opt => opt.MapFrom(src => "Never connected"))
                 .ForMember(dest => dest.HostAddress, opt => opt.MapFrom(src => "Never connected"))
@@ -31,9 +33,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
                 .ForPath(dest => dest.Id, option => option.MapFrom(src => src.Id));
 
             CreateMap<Agent, AgentResumeViewModel>()
+                .ForMember(dest => dest.DisplayName, option => option.MapFrom(src => src.DisplayName))
                 .ForMember(dest => dest.Company, option => option.MapFrom(src => src.Company.FantasyName))
                 .ForMember(dest => dest.LastUpdate, option => option.MapFrom(src => src.UpdatedIn.ToString()))
-                .ForMember(dest => dest.UserWhoCreatedId, option => option.MapFrom(src => $"{src.UserWhoCreatedId}"))
+                .ForMember(dest => dest.UserWhoCreated, option => option.MapFrom(src => $"{src.UserWhoCreatedName}"))
                 .ForMember(dest => dest.CreatedIn, option => option.MapFrom(src => src.CreatedIn.ToString()));
 
             CreateMap<Agent, AgentDetailViewModel>()

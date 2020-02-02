@@ -3,9 +3,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
@@ -24,6 +27,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _customHttpCliente = customHttpCliente;
             VerifyPermissionsUser(userBasicInformation);
         }
+        private void IncludeUserControl(UserControl userControl)
+        {
+            gridRoot.Children.Clear();
+            gridRoot.Children.Add(userControl);
+        }
         private void VerifyPermissionsUser(UserBasicInformationViewModel userBasicInformation)
         {
             _userBasicInformation = userBasicInformation;
@@ -31,7 +39,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
             if (this._userBasicInformation.UserLevel < (int)UserLevel.Admin)
             {
-                this.menuItemAgents.Visibility = Visibility.Collapsed;
+                this.btnMonitoramentos.Visibility = Visibility.Collapsed;
             }
             if (this._userBasicInformation.UserLevel < (int)UserLevel.System)
             {
@@ -58,9 +66,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ServicesUserControl servicesUserControl = new ServicesUserControl(Guid.Parse("7819adf4-0a58-4fed-e856-08d79f81f999"), new ItensMonitoringService(new ItemsEndPoint(_customHttpCliente)));
-            gridRoot.Children.Clear();
-            gridRoot.Children.Add(servicesUserControl);
+            IncludeUserControl(new AgentsUserControl(new AgentService(new AgentEndPoint(_customHttpCliente))));
         }
 
         private void viewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)

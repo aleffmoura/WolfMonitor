@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Totten.Solutions.WolfMonitor.Domain.Enums;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects
 {
+    public enum ETypeItem
+    {
+        SystemService = 0,
+        SystemConfig = 1
+    }
     public class Item
     {
         public string Name { get; set; }

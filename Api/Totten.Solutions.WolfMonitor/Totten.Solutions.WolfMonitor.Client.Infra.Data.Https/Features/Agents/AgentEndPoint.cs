@@ -6,12 +6,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
-using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication
 {
-    public class AgentEndPoint : BaseEndPoint
+    public class AgentEndPoint : BaseEndPoint 
     {
         public AgentEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
@@ -48,19 +47,29 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
                 return content.access_token.ToString();
             }
         }
-        public bool Update(Agent agent)
+        public bool Update<T>(T agent)
         {
-            return InnerAsync(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
+            return InnerAsync<T>(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
         }
 
-        public Result<Exception, Agent> GetInfo()
+        public async Task<Result<Exception, Unit>> Delete(Guid agentId)
         {
-            return InnerGetAsync<Agent>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
+            return await InnerAsync<Unit, object>($"agents/{agentId}", null, HttpMethod.Delete);
         }
 
-        private async Task<Result<Exception, Unit>> InnerAsync(Agent agent, HttpMethod httpMethod)
+        public Result<Exception, T> GetInfo<T>()
         {
-            return await InnerAsync<Unit, Agent>("agents", agent, httpMethod);
+            return InnerGetAsync<T>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<Result<Exception, PageResult<T>>> GetAllAgents<T>()
+        {
+            return await InnerGetAsync<PageResult<T>>($"agents");
+        }
+
+        private async Task<Result<Exception, Unit>> InnerAsync<T>(T agent, HttpMethod httpMethod)
+        {
+            return await InnerAsync<Unit, T>("agents", agent, httpMethod);
         }
 
     }

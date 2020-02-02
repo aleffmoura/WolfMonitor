@@ -10,5 +10,6 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
     {
         Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password);
         Result<Exception, IQueryable<User>> GetAll(Guid companyId);
+        Result<Exception, IQueryable<User>> GetAllByCompanyId(Guid companyId);
     }
 }

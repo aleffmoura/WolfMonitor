@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Items
 {
@@ -37,6 +37,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Items
                 MessageBox.Show("Os dados inseridos não são validos.");
                 return;
             }
+
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)

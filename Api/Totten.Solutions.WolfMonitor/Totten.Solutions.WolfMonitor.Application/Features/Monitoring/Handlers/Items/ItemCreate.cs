@@ -64,11 +64,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
+            private readonly IMapper _mapper;
             private readonly IAgentRepository _agentRepository;
             private readonly IItemRepository _repository;
 
-            public Handler(IItemRepository repository, IAgentRepository agentRepository)
+            public Handler(IMapper mapper, IItemRepository repository, IAgentRepository agentRepository)
             {
+                _mapper = mapper;
                 _repository = repository;
                 _agentRepository = agentRepository;
             }
@@ -91,7 +93,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     return new DuplicateException("Já existe um Item com esse nome cadastrado nesse agent.");
                 }
 
-                Item Item = Mapper.Map<Command, Item>(request);
+                Item Item = _mapper.Map<Command, Item>(request);
 
                 var callback = await _repository.CreateAsync(Item);
                 if (callback.IsFailure)

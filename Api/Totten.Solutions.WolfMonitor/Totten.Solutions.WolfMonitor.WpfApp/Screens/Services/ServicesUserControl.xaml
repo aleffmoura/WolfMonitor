@@ -9,16 +9,18 @@
              Height="Auto" MinWidth="980" Width="auto">
     <Grid Margin="0,10,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Add" Height="25" Click="btnAdd_Click"/>
+            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Add" Width="40" Height="25" Click="btnAdd_Click" Padding="0"/>
         </StackPanel>
         
         <StackPanel>
+            
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtAgentId" Height="25" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <TextBox x:Name="txtServiceName" Height="25" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
                 <Button x:Name="btnSearch" Height="25" Width="50" Margin="0,0,30,0">
                     <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                 </Button>
             </StackPanel>
+            
             <ScrollViewer>
                 <WrapPanel x:Name="wrapPanel">
 

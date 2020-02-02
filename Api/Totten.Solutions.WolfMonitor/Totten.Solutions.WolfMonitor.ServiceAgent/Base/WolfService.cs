@@ -108,7 +108,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
                     if (!_agent.Configured)
                     {
-                        _agent.Name = Environment.MachineName;
+                        _agent.MachineName = Environment.MachineName;
                         _agent.HostAddress = _helper.GetMACAddress();
                         _agent.HostName = _helper.GetHostName();
                         _agent.LocalIp = _helper.GetLocalIpAddress();

@@ -1,15 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
@@ -52,7 +43,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                     DisplayName = txtDisplayName.Text,
                     Interval = result,
                     Default = txtDefaultValue.Text,
-                    Type = Domain.Enums.ETypeItem.SystemService
+                    Type = ETypeItem.SystemService
                 };
                 item.Interval = cbTypeTime.SelectedItem.Equals("minutos") ? item.Interval * 60 : item.Interval;
             }

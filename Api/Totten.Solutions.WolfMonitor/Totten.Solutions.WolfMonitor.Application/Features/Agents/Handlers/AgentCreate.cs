@@ -16,16 +16,22 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
         {
             public Guid CompanyId { get; set; }
             public Guid UserWhoCreatedId { get; set; }
+            public string UserWhoCreatedName { get; set; }
+            public string DisplayName { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
-
+            
             public Command(Guid companyId,
-                           Guid userWhoCreated,
+                           Guid userWhoCreatedId,
+                           string userWhoCreatedName,
+                           string displayName,
                            string login,
                            string password)
             {
                 CompanyId = companyId;
-                UserWhoCreatedId = userWhoCreated;
+                UserWhoCreatedId = userWhoCreatedId;
+                UserWhoCreatedName = userWhoCreatedName;
+                DisplayName = displayName;
                 Login = login;
                 Password = password;
             }
@@ -43,6 +49,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                         .WithMessage("Identificador da empresa é invalido");
                     RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta criando o agente é invalido");
+                    RuleFor(a => a.UserWhoCreatedName).NotEmpty().Length(4, 100);
+                    RuleFor(a => a.DisplayName).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Password).NotEmpty().Length(4, 100);
                 }
@@ -51,10 +59,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
+            private readonly IMapper _mapper;
             private readonly IAgentRepository _repository;
 
-            public Handler(IAgentRepository repository)
+            public Handler(IMapper mapper, IAgentRepository repository)
             {
+                _mapper = mapper;
                 _repository = repository;
             }
 
@@ -67,7 +77,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                     return new Exception("Já existe um agente com esse login cadastrado.");
                 }
 
-                Agent agent = Mapper.Map<Command, Agent>(request);
+                Agent agent = _mapper.Map<Command, Agent>(request);
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);
 
                 if (callback.IsFailure)

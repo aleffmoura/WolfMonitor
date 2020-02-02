@@ -20,8 +20,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
             builder.Property(systemService => systemService.Name).IsRequired().HasMaxLength(250);
             builder.Property(systemService => systemService.Value).IsRequired().HasMaxLength(250);
             builder.Property(systemService => systemService.DisplayName).IsRequired().HasMaxLength(250);
+            builder.Property(systemService => systemService.Interval).IsRequired();
             builder.Property(systemService => systemService.CreatedIn).IsRequired();
             builder.Property(systemService => systemService.UpdatedIn).IsRequired();
+            builder.Property(systemService => systemService.Type).IsRequired();
         }
     }
 }

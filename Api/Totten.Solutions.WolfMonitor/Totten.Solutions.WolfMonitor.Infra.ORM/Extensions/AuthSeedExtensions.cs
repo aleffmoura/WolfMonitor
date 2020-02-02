@@ -37,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 UpdatedIn = DateTime.Now,
                 Level = RoleLevelEnum.Admin,
                 Removed = false,
-                Id = Guid.NewGuid()
+                Id = Guid.Parse("f91a2366-c469-412a-9197-976a90516272")
             });
             builder.Entity<Role>().HasData(new Role()
             {
@@ -57,7 +57,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Login = "aleffmoura",
                 Email = "aleffmds@gmail.com",
                 Cpf = "10685805425",
-                Password = "88633251".GenerateHash(),
+                Password = "123456".GenerateHash(),
                 RoleId = idSystem,
                 FirstName = "Aleff",
                 LastName = "Moura da Silva",

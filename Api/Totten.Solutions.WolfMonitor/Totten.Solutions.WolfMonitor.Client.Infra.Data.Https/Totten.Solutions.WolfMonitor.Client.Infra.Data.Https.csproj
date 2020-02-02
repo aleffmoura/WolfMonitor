@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Domain\Totten.Solutions.WolfMonitor.Domain.csproj" />
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Infra.CrossCutting\Totten.Solutions.WolfMonitor.Infra.CrossCutting.csproj" />
   </ItemGroup>
 

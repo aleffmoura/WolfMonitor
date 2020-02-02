@@ -6,35 +6,50 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Height="145" Width="200">
+    <Grid Height="190" Width="200">
+        
         <StackPanel>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock Text="Servidor Brasil 1" FontSize="18"  FontWeight="Bold"/>
+                <TextBlock x:Name="lblDisplayName" Text="Servidor Brasil 1" FontSize="18"  FontWeight="Bold"/>
             </StackPanel>
             
             <Separator Margin="0,5,0,5" Background="LightGray"/>
 
             <StackPanel Orientation="Vertical">
-
-                <TextBlock Text="Items Monitorados" FontSize="14" Foreground="Black" FontWeight="Light" Margin="0,5"/>
                 
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Criado por:" FontSize="12"/>
+                    <TextBlock x:Name="lblCreatedBy" Text="Aleff moura" Foreground="Black" FontWeight="Bold" FontSize="12" Margin="25,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Criado em:" FontSize="12"/>
+                    <TextBlock x:Name="lblCreatedIn" Text="04/10/2020 15:00" Foreground="Black" FontWeight="Bold" FontSize="12" Margin="27,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Atualizado em:" FontSize="12"/>
+                    <TextBlock x:Name="lblUpdatedIn" Text="04/10/2020 15:00" Foreground="Black" FontWeight="Bold" FontSize="12" Margin="5,0" />
+                </StackPanel>
+
+                <TextBlock Text="Items Monitorados" Margin="0,5,0,0" FontWeight="Bold" FontSize="13"/>
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Serviços:" FontSize="12"/>
-                    <TextBlock Text="500" Foreground="Green" FontSize="12" Margin="38,0" />
+                    <TextBlock x:Name="lblServicesCount" Text="500" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="38,0" />
                 </StackPanel>
-                
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Configurações:" FontSize="12"/>
-                    <TextBlock Text="500" Foreground="Green" FontSize="12" Margin="5,0" />
+                    <TextBlock x:Name="lblConfigsCount" Text="500" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="5,0" />
                 </StackPanel>
-                
+
             </StackPanel>
 
             <Separator Margin="0,10,0,5" Background="LightGray"/>
             
             <StackPanel >
-                <Button Height="30" Padding="0" Margin="0">
+                <Button x:Name="btnEdit" Height="30" Padding="0" Margin="0">
                     <materialDesign:PackIcon Kind="OpenInApp"/>
                 </Button>
             </StackPanel>
@@ -42,7 +57,7 @@
         </StackPanel>
         
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2">
-            <Button FontSize="11" Height="25"  Width="25" Margin="0" Padding="0">
+            <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0" Click="btnDel_Click">
                 <materialDesign:PackIcon Kind="DeleteAlertOutline" VerticalAlignment="Center" Margin="0" Width="auto"/>
             </Button>
         </StackPanel>

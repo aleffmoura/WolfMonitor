@@ -3,8 +3,8 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Exceptions;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ExtensionsMethods;
-using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base

@@ -47,11 +47,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
-            //private readonly ILogMonitoringRepository _logMonitoringRepository;
+            private readonly IMapper _mapper;
             private readonly IItemRepository _repository;
+            //private readonly ILogMonitoringRepository _logMonitoringRepository;
 
-            public Handler(IItemRepository repository/*, ILogMonitoringRepository logMonitoringRepository*/)
+            public Handler(IMapper mapper, IItemRepository repository/*, ILogMonitoringRepository logMonitoringRepository*/)
             {
+                _mapper = mapper;
                 _repository = repository;
                 //_logMonitoringRepository = logMonitoringRepository;
             }
@@ -68,7 +70,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                 Item Item = ItemCallback.Success;
 
-                Mapper.Map(request, Item);
+                _mapper.Map(request, Item);
                 Item.Removed = true;
                 returned = await _repository.UpdateAsync(Item);
 

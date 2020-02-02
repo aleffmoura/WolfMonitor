@@ -7,8 +7,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
     public class WolfMonitoringContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
-        public DbSet<SystemService> SystemServices { get; set; }
-        public DbSet<SystemConfig> SystemConfigs { get; set; }
 
         public WolfMonitoringContext(DbContextOptions<WolfMonitoringContext> options) : base(options) { }
 

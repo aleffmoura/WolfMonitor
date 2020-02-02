@@ -51,11 +51,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
+            private readonly IMapper _mapper;
             private readonly IAgentRepository _repository;
 
-            public Handler(IAgentRepository repository)
+            public Handler(IMapper mapper, IAgentRepository repository)
             {
                 _repository = repository;
+                _mapper = mapper;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -70,7 +72,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
                 Agent agent = agentCallback.Success;
                 agent.Configured = true;
-                Mapper.Map(request, agent);
+                _mapper.Map(request, agent);
 
                 return await _repository.UpdateAsync(agent);
             }

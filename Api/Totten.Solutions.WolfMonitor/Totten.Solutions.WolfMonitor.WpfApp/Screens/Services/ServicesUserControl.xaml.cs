@@ -8,7 +8,7 @@ using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
-    public partial class ServicesUserControl : UserControl
+    public partial class ServicesUserControl : UserControl, IUserControl
     {
         private ItensMonitoringService _itemsMonitoringService;
         public Guid _agentId;
@@ -27,12 +27,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             var callBack = await _itemsMonitoringService.GetSystemServices(_agentId);
             if (callBack.IsSuccess)
             {
-                foreach (var service in callBack.Success.Items)
+                foreach (SystemServiceViewModel service in callBack.Success.Items)
                 {
                     this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
                 }
+                OnApplyTemplate();
             }
-            OnApplyTemplate();
         }
 
         private async void OnRemove(object sender, EventArgs e)
