@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.AgentUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Height="145" Width="200">
+        <StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Servidor Brasil 1" FontSize="18"  FontWeight="Bold"/>
+            </StackPanel>
+            
+            <Separator Margin="0,5,0,5" Background="LightGray"/>
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Items Monitorados" FontSize="14" Foreground="Black" FontWeight="Light" Margin="0,5"/>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Serviços:" FontSize="12"/>
+                    <TextBlock Text="500" Foreground="Green" FontSize="12" Margin="38,0" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Configurações:" FontSize="12"/>
+                    <TextBlock Text="500" Foreground="Green" FontSize="12" Margin="5,0" />
+                </StackPanel>
+                
+            </StackPanel>
+
+            <Separator Margin="0,10,0,5" Background="LightGray"/>
+            
+            <StackPanel >
+                <Button Height="30" Padding="0" Margin="0">
+                    <materialDesign:PackIcon Kind="OpenInApp"/>
+                </Button>
+            </StackPanel>
+            
+        </StackPanel>
+        
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2">
+            <Button FontSize="11" Height="25"  Width="25" Margin="0" Padding="0">
+                <materialDesign:PackIcon Kind="DeleteAlertOutline" VerticalAlignment="Center" Margin="0" Width="auto"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
