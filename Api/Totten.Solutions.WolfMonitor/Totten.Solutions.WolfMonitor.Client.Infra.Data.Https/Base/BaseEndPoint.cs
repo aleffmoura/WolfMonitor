@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
     public class BaseEndPoint
     {
         protected static readonly HttpStatusCode[] KnownStatusCodeForPost =
-           {
+        {
             HttpStatusCode.Created,
             HttpStatusCode.BadRequest,
             HttpStatusCode.Unauthorized,

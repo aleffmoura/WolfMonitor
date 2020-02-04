@@ -24,7 +24,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
 
         public async Task<Result<Exception, PageResult<T>>> GetServicesByAgentId<T>(Guid agentId)
         {
-            return await InnerGetAsync<PageResult<T>>($"monitoring/services/{agentId}");
+            return await InnerGetAsync<PageResult<T>>($"monitoring/items/services/{agentId}");
         }
         public async Task<Result<Exception, PageResult<T>>> GetconfigsByAgentId<T>(Guid agentId)
         {

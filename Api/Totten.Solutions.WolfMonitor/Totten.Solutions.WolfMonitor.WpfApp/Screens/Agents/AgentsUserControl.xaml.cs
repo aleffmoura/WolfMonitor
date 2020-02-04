@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
@@ -13,12 +15,19 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     public partial class AgentsUserControl : UserControl, IUserControl
     {
         private AgentService _agentService;
+        private ItensMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
 
-        public AgentsUserControl(AgentService agentService)
+        private EventHandler _onSwitchControl;
+
+        public AgentsUserControl(AgentService agentService,
+                                ItensMonitoringService itensMonitoringService,
+                                EventHandler onSwitchControl)
         {
             InitializeComponent();
             _agentService = agentService;
+            _onSwitchControl = onSwitchControl;
+            _itensMonitoringService = itensMonitoringService;
             _indexes = new Dictionary<Guid, AgentUC>();
             Populate();
         }
@@ -48,12 +57,19 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             {
                 foreach (AgentResumeViewModel agentViewModel in callBack.Success.Items)
                 {
-                    _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, agentViewModel));
+                    _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
                 }
             }
+
             PopulateByDictionary();
         }
+        private async void OnEdit(object sender, EventArgs e)
+        {
+            Guid agentId = (Guid)sender;
 
+            _onSwitchControl?.Invoke(new AgentDetailUC(agentId, _itensMonitoringService), new EventArgs());
+
+        }
         private async void OnRemove(object sender, EventArgs e)
         {
             AgentResumeViewModel agentViewModel = sender as AgentResumeViewModel;

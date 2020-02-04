@@ -57,7 +57,7 @@
                 <Separator Margin="0,10,0,5" Background="LightGray"/>
 
                 <StackPanel >
-                    <Button x:Name="btnEdit" Height="30" Padding="0" Margin="0">
+                    <Button x:Name="btnEdit" Height="30" Padding="0" Margin="0" Click="btnEdit_Click">
                         <materialDesign:PackIcon Kind="OpenInApp"/>
                     </Button>
                 </StackPanel>

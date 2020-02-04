@@ -12,23 +12,28 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     {
         private AgentResumeViewModel _agentResumeViewModel;
         private EventHandler _onRemove;
+        private EventHandler _onEditHandler;
 
-        public AgentUC(EventHandler onRemove, AgentResumeViewModel agentResumeViewModel)
+        public AgentUC(EventHandler onRemove, EventHandler onEdit, AgentResumeViewModel agentResumeViewModel)
         {
             InitializeComponent();
             _agentResumeViewModel = agentResumeViewModel;
             _onRemove = onRemove;
+            _onEditHandler = onEdit;
             SetServiceValues();
         }
+
         ~AgentUC()
         {
             _onRemove = null;
             _agentResumeViewModel = null;
         }
+
         private void btnDel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _onRemove?.Invoke(_agentResumeViewModel, new EventArgs());
-        }
+            => _onRemove?.Invoke(_agentResumeViewModel, new EventArgs());
+
+        private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+            => _onEditHandler?.Invoke(_agentResumeViewModel.Id, new EventArgs());
 
         public async void SetServiceValues()
         {

@@ -17,9 +17,8 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
 
         }
         public string GetClientCredentials()
-        {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
-        }
+            => Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
+
         public string Login()
         {
             var request = base.Client.CreateRequest(HttpMethod.Post, "identityserver/connect/token");
@@ -47,30 +46,24 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
                 return content.access_token.ToString();
             }
         }
-        public bool Update<T>(T agent)
-        {
-            return InnerAsync<T>(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
-        }
+
+        public async Task<Result<Exception, T>> GetDetail<T>(Guid id)
+            => await InnerGetAsync<T>($"agents/{id}");
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId)
-        {
-            return await InnerAsync<Unit, object>($"agents/{agentId}", null, HttpMethod.Delete);
-        }
-
-        public Result<Exception, T> GetInfo<T>()
-        {
-            return InnerGetAsync<T>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
-        }
+            => await InnerAsync<Unit, object>($"agents/{agentId}", null, HttpMethod.Delete);
 
         public async Task<Result<Exception, PageResult<T>>> GetAllAgents<T>()
-        {
-            return await InnerGetAsync<PageResult<T>>($"agents");
-        }
+            => await InnerGetAsync<PageResult<T>>($"agents");
 
         private async Task<Result<Exception, Unit>> InnerAsync<T>(T agent, HttpMethod httpMethod)
-        {
-            return await InnerAsync<Unit, T>("agents", agent, httpMethod);
-        }
+            => await InnerAsync<Unit, T>("agents", agent, httpMethod);
+
+        public bool Update<T>(T agent)
+            => InnerAsync<T>(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
+
+        public Result<Exception, T> GetInfo<T>()
+            => InnerGetAsync<T>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
 
     }
 }

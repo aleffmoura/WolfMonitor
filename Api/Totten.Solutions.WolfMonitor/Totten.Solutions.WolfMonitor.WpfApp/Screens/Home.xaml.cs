@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
@@ -23,11 +26,16 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _customHttpCliente = customHttpCliente;
             VerifyPermissionsUser(userBasicInformation);
         }
-        private void IncludeUserControl(UserControl userControl)
+
+        private void IncludeUserControl(object sender, EventArgs e)
         {
+            UserControl userControl = (UserControl)sender;
+
             gridRoot.Children.Clear();
+
             gridRoot.Children.Add(userControl);
         }
+
         private void VerifyPermissionsUser(UserBasicInformationViewModel userBasicInformation)
         {
             _userBasicInformation = userBasicInformation;
@@ -62,7 +70,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            IncludeUserControl(new AgentsUserControl(new AgentService(new AgentEndPoint(_customHttpCliente))));
+            var service = new AgentService(new AgentEndPoint(_customHttpCliente));
+            var monitoringItems = new ItensMonitoringService(new ItemsEndPoint(_customHttpCliente));
+
+
+            var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
+
+            IncludeUserControl(agentsUserControl, new EventArgs());
         }
 
         private void viewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
