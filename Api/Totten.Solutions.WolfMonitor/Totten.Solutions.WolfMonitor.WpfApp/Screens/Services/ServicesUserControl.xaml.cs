@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
@@ -54,10 +55,16 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             }
         }
 
-        private void btnAdd_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void btnAdd_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             FrmItemsAdd frmItemsAdd = new FrmItemsAdd(new ServicesCreateUC(_agentId));
-            frmItemsAdd.ShowDialog();
+
+            var dialogResult = frmItemsAdd.ShowDialog();
+
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                await _itemsMonitoringService.Post(frmItemsAdd.Item);
+            }
         }
     }
 }

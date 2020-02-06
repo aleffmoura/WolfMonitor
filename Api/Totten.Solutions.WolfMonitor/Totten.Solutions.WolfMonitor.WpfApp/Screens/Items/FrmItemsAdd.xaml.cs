@@ -24,7 +24,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Items
         public FrmItemsAdd(UserControl userControl)
         {
             InitializeComponent();
+            InsertPanel(userControl);
+        }
+
+        private void InsertPanel(UserControl userControl)
+        {
             _userControl = userControl;
+            rootPanel.Children.Clear();
+            rootPanel.Children.Add(_userControl);
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -32,12 +39,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Items
             IItemUC itemUC = _userControl as IItemUC;
 
             var item = itemUC.GetItem();
-            if(item == null)
-            {
-                MessageBox.Show("Os dados inseridos não são validos.");
-                return;
-            }
 
+            if(item != null)
+            {
+                Item = item;
+                DialogResult = true;
+            }
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)

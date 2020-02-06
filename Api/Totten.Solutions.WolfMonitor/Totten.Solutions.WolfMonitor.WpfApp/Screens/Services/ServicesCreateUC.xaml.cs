@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
@@ -29,27 +30,41 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private void LoadCombobox() => cbTypeTime.ItemsSource = TypeTimers;
 
-        public Item GetItem()
+        public bool Validate()
         {
-            Item item = null;
+            bool isMinuts = cbTypeTime.SelectedItem.Equals("minutos");
 
             if (!_agentId.Equals(Guid.Empty) && !string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtDisplayName.Text)
                 && !string.IsNullOrEmpty(txtInterval.Text) && int.TryParse(txtInterval.Text, out int result))
             {
-                item = new SystemServiceCreateVO
+                if (!isMinuts && int.TryParse(txtInterval.Text, out int interval) && interval < 30)
+                {
+                    MessageBox.Show("Minimo para intervalo é de: 30 segundos.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        public Item GetItem()
+        {
+            if (Validate())
+            {
+                return new SystemServiceCreateVO
                 {
                     AgentId = _agentId,
                     Name = txtName.Text,
                     DisplayName = txtDisplayName.Text,
-                    Interval = result,
+                    Interval = cbTypeTime.SelectedItem.Equals("minutos") ? int.Parse(txtInterval.Text) * 60 : int.Parse(txtInterval.Text),
                     Default = txtDefaultValue.Text,
                     Type = ETypeItem.SystemService
                 };
-                item.Interval = cbTypeTime.SelectedItem.Equals("minutos") ? item.Interval * 60 : item.Interval;
             }
-            return item;
+
+            return null;
         }
 
         public void SetItem(Item item) { }
+
     }
 }

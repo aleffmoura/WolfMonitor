@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Items"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Adicionar" Height="255" Width="400">
+        Title="Adicionar" Height="200" Width="400" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Background="AliceBlue">
         <StackPanel>
-            <StackPanel x:Name="contentPanel" Height="200" Width="auto" Margin="0,5,0,5" VerticalAlignment="Top" Background="White">
+            <StackPanel x:Name="rootPanel" Height="150" Width="auto" Margin="0,5,0,5" VerticalAlignment="Top" Background="White">
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="auto" Height="auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,0">
-                <Button x:Name="btnAdd" Content="Add" Width="60" Height="25" FontSize="12" Click="btnAdd_Click"/>
-                <Button x:Name="btnExit" Content="Exit" Width="60" Height="25" FontSize="12"  Margin="5,0,0,0" Click="btnExit_Click"/>
+                <Button x:Name="btnAdd" Content="Add" Width="50" Height="20" FontSize="12" Click="btnAdd_Click" Padding="0"/>
+                <Button x:Name="btnExit" Content="Exit" Width="50" Height="20" FontSize="12"  Click="btnExit_Click" Padding="0" Margin="5,0,0,0" />
             </StackPanel>
         </StackPanel>
     </Grid>

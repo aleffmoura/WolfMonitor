@@ -12,16 +12,16 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
         {
 
         }
-        //public void Patch(SystemService systemService)
-        //{
-        //    InnerAsync(systemService, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
-        //}
+
 
         //private async Task<Result<Exception, Unit>> InnerAsync(SystemService services, HttpMethod httpMethod)
         //{
         //    return await InnerAsync<Result<Exception, Unit>, SystemService>("monitoring/systemservices", agent, httpMethod);
         //}
-
+        public async Task<Result<Exception, Guid>> Post<T>(T Item)
+        {
+            return await InnerAsync<Guid,T>("monitoring/items", Item, HttpMethod.Post);
+        }
         public async Task<Result<Exception, PageResult<T>>> GetServicesByAgentId<T>(Guid agentId)
         {
             return await InnerGetAsync<PageResult<T>>($"monitoring/items/services/{agentId}");
