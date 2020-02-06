@@ -7,7 +7,7 @@
              mc:Ignorable="d" >
     <Grid Height="800" Width="1240">
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Background="Aqua" Height="200">
+            <StackPanel Orientation="Horizontal" Background="Aqua" Height="180">
                 
             </StackPanel>
             <TabControl Margin="0">
