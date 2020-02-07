@@ -14,4 +14,6 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: |
+          dotnet restore "Api/Totten.Solutions.WolfMonitor/Totten.Solutions.WolfMonitor.sln"
+          dotnet build -c Release "Api/Totten.Solutions.WolfMonitor/Totten.Solutions.WolfMonitor.sln"
