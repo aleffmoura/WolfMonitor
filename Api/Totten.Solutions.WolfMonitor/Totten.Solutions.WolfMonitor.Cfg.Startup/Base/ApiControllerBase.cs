@@ -42,7 +42,18 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
             (IQueryable<TQueryOptions> query, ODataQueryOptions<TQueryOptions> queryOptions)
         {
             var queryResults = queryOptions.ApplyTo(query);
-            var list = await queryResults.ProjectToListAsync<TResult>();
+
+            List<TResult> list;
+
+            try
+            {
+                list = await queryResults.ProjectToListAsync<TResult>();
+            }
+            catch
+            {
+                list = queryResults.ProjectTo<TResult>().ToList();
+            }
+
             var pageResult = new PageResult<TResult>(list,
                                                     Request.HttpContext.ODataFeature().NextLink,
                                                     Request.HttpContext.ODataFeature().TotalCount);

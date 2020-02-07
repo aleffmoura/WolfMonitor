@@ -67,7 +67,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             Guid agentId = (Guid)sender;
 
-            _onSwitchControl?.Invoke(new AgentDetailUC(agentId, _itensMonitoringService), new EventArgs());
+            _onSwitchControl?.Invoke(new AgentDetailUC(agentId, _agentService, _itensMonitoringService), new EventArgs());
 
         }
         private async void OnRemove(object sender, EventArgs e)

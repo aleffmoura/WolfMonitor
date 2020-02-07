@@ -9,7 +9,7 @@
              Height="Auto" MinWidth="980" Width="auto">
     <Grid Margin="0,10,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
+            <Button x:Name="btnAdd" Margin="10,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
         </StackPanel>
         
         <StackPanel>

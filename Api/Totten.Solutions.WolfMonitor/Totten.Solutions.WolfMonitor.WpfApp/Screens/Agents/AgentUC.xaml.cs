@@ -35,7 +35,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
             => _onEditHandler?.Invoke(_agentResumeViewModel.Id, new EventArgs());
 
-        public async void SetServiceValues()
+        public void SetServiceValues()
         {
             lblDisplayName.Text = _agentResumeViewModel.DisplayName;
             lblCreatedBy.Text = _agentResumeViewModel.UserWhoCreated;

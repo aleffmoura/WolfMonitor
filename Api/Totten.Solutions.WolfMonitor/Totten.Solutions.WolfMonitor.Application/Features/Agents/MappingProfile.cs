@@ -37,13 +37,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
                 .ForMember(dest => dest.Company, option => option.MapFrom(src => src.Company.FantasyName))
                 .ForMember(dest => dest.LastUpdate, option => option.MapFrom(src => src.UpdatedIn.ToString()))
                 .ForMember(dest => dest.UserWhoCreated, option => option.MapFrom(src => $"{src.UserWhoCreatedName}"))
+                .ForMember(dest => dest.Items, option => option.MapFrom(src => src.Items))
                 .ForMember(dest => dest.CreatedIn, option => option.MapFrom(src => src.CreatedIn.ToString()));
 
             CreateMap<Agent, AgentDetailViewModel>()
                 .ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id.ToString()))
                 .ForMember(dest => dest.LastUpdate, option => option.MapFrom(src => src.UpdatedIn.ToString()))
                 .ForMember(dest => dest.CreatedIn, option => option.MapFrom(src => src.CreatedIn.ToString()));
-
 
         }
     }

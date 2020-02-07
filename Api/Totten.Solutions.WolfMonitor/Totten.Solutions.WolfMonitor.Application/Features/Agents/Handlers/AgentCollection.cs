@@ -36,13 +36,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             protected override Result<Exception, IQueryable<Agent>> Handle(Query request)
             {
-                Result<Exception, IQueryable<Agent>> agents = _repository.GetAll(request.CompanyId);
+                Result<Exception, IQueryable<Agent>> agentCallback = _repository.GetAll(request.CompanyId);
 
-                if (agents.IsFailure)
+                if (agentCallback.IsFailure)
                 {
-                    return agents.Failure;
+                    return agentCallback.Failure;
                 }
-                foreach (var agent in agents.Success)
+                var agents = agentCallback.Success.ToList();
+
+                foreach (var agent in agents)
                 {
                     Result<Exception, IQueryable<Item>> itemsCallback = _itemRepository.GetAll(agent.Id);
 
@@ -53,7 +55,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                     }
                 }
 
-                return agents;
+                return Result<Exception, IQueryable<Agent>>.Of(agents.AsQueryable());
             }
         }
     }

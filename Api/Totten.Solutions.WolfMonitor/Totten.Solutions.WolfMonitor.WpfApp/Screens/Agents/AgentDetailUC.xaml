@@ -5,12 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents"
              mc:Ignorable="d" >
-    <Grid Height="800" Width="1240">
+    <Grid Height="800" Width="1240" >
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Background="Aqua" Height="180">
+            <StackPanel>
+                <TextBlock x:Name="lblName" Text="Servidor Brasil 1" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
+                <Separator  Width="1240"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Height="120" Margin="5" >
+                
+                <StackPanel Width="500">
+                    <StackPanel Margin="5" Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Configurado:" FontSize="15" Foreground="Black"/>
+                            <TextBlock x:Name="lblConfigured" Text="Não" FontSize="15" Foreground="Red" Margin="5,0" FontWeight="Bold"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="Criado em:" FontSize="15" Foreground="Black"/>
+                            <TextBlock x:Name="lblCreatedIn" Text="01/02/2020" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="Nome do Host:" FontSize="15" Foreground="Black"/>
+                            <TextBlock x:Name="lblHostName" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0,0,0" FontWeight="Bold"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="Nome da Máquina:" FontSize="15" Foreground="Black"/>
+                            <TextBlock x:Name="lblMachineName" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0,0,0" FontWeight="Bold"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="5" Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="IP:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblIp" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="Primeira Conexão:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblFirstConnection" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="Última atualização:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblUpdatedIn" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="Endereço MAC:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblHostAddress" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0,0,0" FontWeight="Bold"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="Última Conexão:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblLastConnection" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0,0,0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                </StackPanel>
                 
             </StackPanel>
-            <TabControl Margin="0">
+            
+            <TabControl Margin="0" Height="550">
                 <TabItem x:Name="tabSystemServices" Header="Serviços">
                     
                 </TabItem>

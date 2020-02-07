@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
 
@@ -20,15 +21,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     /// </summary>
     public partial class AgentDetailUC : UserControl
     {
+        private AgentService _agentsService;
         private ItensMonitoringService _itensMonitoringService;
         private Guid _id;
 
-        public AgentDetailUC(Guid id, ItensMonitoringService itensMonitoringService)
+        public AgentDetailUC(Guid id, AgentService agentService, ItensMonitoringService itensMonitoringService)
         {
             InitializeComponent();
             _id = id;
             _itensMonitoringService = itensMonitoringService;
+            _agentsService = agentService;
             Populate();
+            InsertAgentDetail();
         }
 
         private void Populate()
@@ -37,5 +41,32 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
             tabSystemServices.Content = servicesUserControl;
         }
+
+
+        private async void InsertAgentDetail()
+        {
+           var agentCakkbak = await _agentsService.GetDetail(_id);
+
+            if (agentCakkbak.IsSuccess)
+            {
+                lblName.Text = agentCakkbak.Success.DisplayName;
+                lblMachineName.Text = agentCakkbak.Success.MachineName;
+                lblIp.Text = agentCakkbak.Success.LocalIp;
+                lblHostName.Text = agentCakkbak.Success.HostName;
+                lblHostAddress.Text = agentCakkbak.Success.HostAddress;
+                lblCreatedIn.Text = agentCakkbak.Success.CreatedIn;
+                lblFirstConnection.Text = agentCakkbak.Success.FirstConnection;
+                lblLastConnection.Text = agentCakkbak.Success.LastConnection;
+                lblUpdatedIn.Text = agentCakkbak.Success.LastUpload;
+                lblConfigured.Text = agentCakkbak.Success.Configured ? "Sim" : "Não";
+
+                lblConfigured.Foreground = lblConfigured.Text.Equals("Sim") ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+
+            }
+        }
+
     }
 }

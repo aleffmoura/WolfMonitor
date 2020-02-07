@@ -59,12 +59,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
-            private readonly IMapper _mapper;
             private readonly IAgentRepository _repository;
 
-            public Handler(IMapper mapper, IAgentRepository repository)
+            public Handler(IAgentRepository repository)
             {
-                _mapper = mapper;
                 _repository = repository;
             }
 
@@ -77,7 +75,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                     return new Exception("Já existe um agente com esse login cadastrado.");
                 }
 
-                Agent agent = _mapper.Map<Command, Agent>(request);
+                Agent agent = Mapper.Map<Command, Agent>(request);
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);
 
                 if (callback.IsFailure)

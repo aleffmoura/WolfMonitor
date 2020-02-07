@@ -13,13 +13,13 @@
                     <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="190" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                        <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30">
+                        <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="CornflowerBlue">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="OpenInApp" />
                         </Button>
-                        <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30">
+                        <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30" Background="LimeGreen">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="Autorenew" />
                         </Button>
-                        <Button x:Name="btnDel" Margin="2" Padding="0"  Click="btnDel_Click" Width="40" Height="30">
+                        <Button x:Name="btnDel" Margin="2" Padding="0"  Click="btnDel_Click" Width="40" Height="30" Background="Tomato">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="DeleteAlertOutline"/>
                         </Button>
                     </StackPanel>
