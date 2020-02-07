@@ -51,9 +51,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             OnApplyTemplate();
         }
 
-        public async void Populate()
+        public void Populate()
         {
-            await _agentService.GetAllAgentsByCompany().ContinueWith(task =>
+            this.wrapPanel.Children.Clear();
+
+            _agentService.GetAllAgentsByCompany().ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
@@ -66,9 +68,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                         PopulateByDictionary();
                     });
                 }
+                else
+                {
+
+                }
             });
-
-
         }
         private void OnEdit(object sender, EventArgs e)
         {
