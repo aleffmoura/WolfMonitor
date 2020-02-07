@@ -25,6 +25,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         public async void Populate()
         {
             this.wrapPanel.Children.Clear();
+
             var callBack = await _itemsMonitoringService.GetSystemServices(_agentId);
             if (callBack.IsSuccess)
             {

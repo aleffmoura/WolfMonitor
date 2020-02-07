@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -42,6 +43,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         public void PopulateByDictionary()
         {
             this.wrapPanel.Children.Clear();
+
             foreach (var agentViewModel in _indexes)
             {
                 this.wrapPanel.Children.Add(_indexes[agentViewModel.Key]);
@@ -51,19 +53,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
         public async void Populate()
         {
-            var callBack = await _agentService.GetAllAgentsByCompany();
-
-            if (callBack.IsSuccess)
+            await _agentService.GetAllAgentsByCompany().ContinueWith(task =>
             {
-                foreach (AgentResumeViewModel agentViewModel in callBack.Success.Items)
+                if (task.Result.IsSuccess)
                 {
-                    _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
+                    this.wrapPanel.Dispatcher.Invoke(() =>
+                    {
+                        foreach (AgentResumeViewModel agentViewModel in task.Result.Success.Items)
+                        {
+                            _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
+                        }
+                        PopulateByDictionary();
+                    });
                 }
-            }
+            });
 
-            PopulateByDictionary();
+
         }
-        private async void OnEdit(object sender, EventArgs e)
+        private void OnEdit(object sender, EventArgs e)
         {
             Guid agentId = (Guid)sender;
 
