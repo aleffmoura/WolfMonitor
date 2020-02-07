@@ -22,19 +22,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             Populate();
         }
 
-        public async void Populate()
+        public void Populate()
         {
             this.wrapPanel.Children.Clear();
 
-            var callBack = await _itemsMonitoringService.GetSystemServices(_agentId);
-            if (callBack.IsSuccess)
+            _itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
             {
-                foreach (SystemServiceViewModel service in callBack.Success.Items)
+                if (task.Result.IsSuccess)
                 {
-                    this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
+                    this.wrapPanel.Dispatcher.Invoke(() =>
+                    {
+                        foreach (SystemServiceViewModel service in task.Result.Success.Items)
+                        {
+                            this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
+                        }
+                        OnApplyTemplate();
+                    });
                 }
-                OnApplyTemplate();
-            }
+            });
         }
 
         private async void OnRemove(object sender, EventArgs e)
