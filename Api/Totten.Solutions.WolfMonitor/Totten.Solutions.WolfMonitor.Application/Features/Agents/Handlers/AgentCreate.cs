@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
@@ -20,17 +21,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string DisplayName { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
-            
+
             public Command(Guid companyId,
                            Guid userWhoCreatedId,
-                           string userWhoCreatedName,
                            string displayName,
                            string login,
                            string password)
             {
                 CompanyId = companyId;
                 UserWhoCreatedId = userWhoCreatedId;
-                UserWhoCreatedName = userWhoCreatedName;
                 DisplayName = displayName;
                 Login = login;
                 Password = password;
@@ -60,10 +59,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
             private readonly IAgentRepository _repository;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(IAgentRepository repository)
+            public Handler(IAgentRepository repository,
+                           IUserRepository userRepository)
             {
                 _repository = repository;
+                _userRepository = userRepository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
@@ -74,8 +76,17 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 {
                     return new Exception("Já existe um agente com esse login cadastrado.");
                 }
+                var userCallback = await _userRepository.GetByIdAsync(request.UserWhoCreatedId);
+
+                if (userCallback.IsFailure)
+                {
+                    return new Exception("Não foi encontrado um usúario com o id da requisição.");
+                }
+
+                request.UserWhoCreatedName = userCallback.Success.Login;
 
                 Agent agent = Mapper.Map<Command, Agent>(request);
+
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);
 
                 if (callback.IsFailure)

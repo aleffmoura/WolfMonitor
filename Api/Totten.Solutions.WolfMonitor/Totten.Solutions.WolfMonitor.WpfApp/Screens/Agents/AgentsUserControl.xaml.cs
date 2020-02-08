@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
@@ -30,7 +31,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _onSwitchControl = onSwitchControl;
             _itensMonitoringService = itensMonitoringService;
             _indexes = new Dictionary<Guid, AgentUC>();
-            Populate();
         }
 
         ~AgentsUserControl()
@@ -55,24 +55,22 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             this.wrapPanel.Children.Clear();
 
-            _agentService.GetAllAgentsByCompany().ContinueWith(task =>
+            var loading = new LoadingWindow(_agentService.GetAllAgentsByCompany().ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
-                    this.wrapPanel.Dispatcher.Invoke(() =>
+                    foreach (AgentResumeViewModel agentViewModel in task.Result.Success.Items)
                     {
-                        foreach (AgentResumeViewModel agentViewModel in task.Result.Success.Items)
-                        {
-                            _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
-                        }
-                        PopulateByDictionary();
-                    });
+                        _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
+                    }
+                    PopulateByDictionary();
                 }
                 else
                 {
-
+                    MessageBox.Show("Falha na requisição de agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-            });
+            }, TaskScheduler.FromCurrentSynchronizationContext()));
+            loading.ShowDialog();
         }
         private void OnEdit(object sender, EventArgs e)
         {
@@ -81,31 +79,32 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _onSwitchControl?.Invoke(new AgentDetailUC(agentId, _agentService, _itensMonitoringService), new EventArgs());
 
         }
-        private async void OnRemove(object sender, EventArgs e)
+        private void OnRemove(object sender, EventArgs e)
         {
             AgentResumeViewModel agentViewModel = sender as AgentResumeViewModel;
 
             if (MessageBox.Show($"Deseja realmente remover o serviço: {agentViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
-                var removeCallback = await _agentService.Delete(agentViewModel.Id);
-
-                if (removeCallback.IsSuccess)
+                _agentService.Delete(agentViewModel.Id).ContinueWith(task =>
                 {
-                    MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _indexes.Remove(agentViewModel.Id);
-                    PopulateByDictionary();
-                }
-                else
-                {
-                    MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                    if (task.Result.IsSuccess)
+                    {
+                        MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                        _indexes.Remove(agentViewModel.Id);
+                        PopulateByDictionary();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AgentCreateWindow agentCreateWindow = new AgentCreateWindow(_agentService);
+            agentCreateWindow.ShowDialog();
         }
     }
 }

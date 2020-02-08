@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Items"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
-        Title="Adicionar" Height="200" Width="400" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" ShowInTaskbar="False"
+        Title="Adicionar" Height="310" Width="500" WindowStyle="None" BorderThickness="1" 
+        ResizeMode="NoResize" BorderBrush="LightGray" WindowStartupLocation="CenterScreen" >
     <Grid Background="AliceBlue">
         <StackPanel>
-            <StackPanel x:Name="rootPanel" Height="150" Width="auto" Margin="0,5,0,5" VerticalAlignment="Top" Background="White">
+            <StackPanel x:Name="rootPanel" Margin="5,5,5,5" VerticalAlignment="Top" Background="White">
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="auto" Height="auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,0">

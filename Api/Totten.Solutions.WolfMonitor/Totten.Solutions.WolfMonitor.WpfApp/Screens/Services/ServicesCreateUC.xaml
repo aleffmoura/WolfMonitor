@@ -6,26 +6,15 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Height="150" Width="400">
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Nome:" FontSize="16" HorizontalAlignment="Left" Margin="5"/>
-                <TextBox x:Name="txtName" FontSize="16" Height="30" MinWidth="250" Width="auto" Margin="90,0,0,0"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Nome de exibição:" FontSize="16" Height="26" HorizontalAlignment="Left" Margin="5"/>
-                <TextBox x:Name="txtDisplayName" FontSize="16" Height="30" MinWidth="250" Width="auto" HorizontalAlignment="Left"  Margin="5"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Intervalo de verificação:" FontSize="16" Margin="5" HorizontalAlignment="Left" />
-                <TextBox  x:Name="txtInterval" Margin="5,0,0,0" FontSize="16" Height="25" Width="60"/>
-                <ComboBox x:Name="cbTypeTime" Margin="5,0,0,0" Height="25" Width="150" HorizontalAlignment="Right"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Valor Padrão:" FontSize="16" Margin="5" HorizontalAlignment="Left" />
-                <TextBox x:Name="txtDefaultValue" Height="25" Width="253"  Margin="50,0,0,0" />
-            </StackPanel>
+    <Grid Width="auto">
+        <StackPanel VerticalAlignment="Top" Margin="5">
+            <TextBox Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
+            <TextBox Name="txtDisplayName" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
+            <TextBox Name="txtDefaultValue"  materialDesign:HintAssist.Hint="Valor Padrão" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
+            <TextBox Name="txtInterval"  materialDesign:HintAssist.Hint="Intervalo" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18" Width="70" HorizontalAlignment="Left"/>
         </StackPanel>
+
+        <ComboBox x:Name="cbTypeTime" materialDesign:HintAssist.Hint="tipo de tempo"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="90,192.3,10,0" FontSize="18" />
+
     </Grid>
 </UserControl>

@@ -30,11 +30,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
             InitializeComponent();
         }
 
-        private async void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 var custom = new CustomHttpCliente("http://10.0.75.1:15999", new UserLogin
                 {
                     Login = $"{txtUser.Text}@{txtCompany.Text}#user",
@@ -43,22 +42,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 _userService = new UserService(new UserEndPoint(custom));
 
                 UserLogin.Token = _userService.Authentication();
-                var userCallback = await _userService.GetInfo();
-                if (userCallback.IsSuccess)
+                _userService.GetInfo().ContinueWith(task =>
                 {
-                    Home home = new Home(custom, userCallback.Success);
-                    this.Visibility = Visibility.Hidden;
-                    home.ShowDialog();
-                    this.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    MessageBox.Show($"Falha: {userCallback.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                    if (task.Result.IsSuccess)
+                    {
+                        Home home = new Home(custom, task.Result.Success);
+                        this.Visibility = Visibility.Hidden;
+                        home.ShowDialog();
+                        this.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Falha: {task.Result.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+
             }
             catch(Exception ex)
             {
-                //
             }
         }
 

@@ -77,6 +77,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
 
             IncludeUserControl(agentsUserControl, new EventArgs());
+            agentsUserControl.Populate();
         }
 
         private void viewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)

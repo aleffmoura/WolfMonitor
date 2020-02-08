@@ -47,6 +47,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
             }
         }
 
+        public async Task<Result<Exception, Guid>> Post<T>(T agent)
+            => await InnerAsync<Guid, T>("agents", agent, HttpMethod.Post);
+
         public async Task<Result<Exception, T>> GetDetail<T>(Guid id)
             => await InnerGetAsync<T>($"agents/{id}");
 

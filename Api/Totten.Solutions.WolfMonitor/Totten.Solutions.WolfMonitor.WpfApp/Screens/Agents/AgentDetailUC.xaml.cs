@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,9 +11,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 {
@@ -38,34 +41,33 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private void Populate()
         {
             ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _itensMonitoringService);
-
             tabSystemServices.Content = servicesUserControl;
         }
 
 
-        private async void InsertAgentDetail()
+        private void InsertAgentDetail()
         {
-           var agentCakkbak = await _agentsService.GetDetail(_id);
-
-            if (agentCakkbak.IsSuccess)
+            _agentsService.GetDetail(_id).ContinueWith(task =>
             {
-                lblName.Text = agentCakkbak.Success.DisplayName;
-                lblMachineName.Text = agentCakkbak.Success.MachineName;
-                lblIp.Text = agentCakkbak.Success.LocalIp;
-                lblHostName.Text = agentCakkbak.Success.HostName;
-                lblHostAddress.Text = agentCakkbak.Success.HostAddress;
-                lblCreatedIn.Text = agentCakkbak.Success.CreatedIn;
-                lblFirstConnection.Text = agentCakkbak.Success.FirstConnection;
-                lblLastConnection.Text = agentCakkbak.Success.LastConnection;
-                lblUpdatedIn.Text = agentCakkbak.Success.LastUpload;
-                lblConfigured.Text = agentCakkbak.Success.Configured ? "Sim" : "Não";
+                if (task.Result.IsSuccess)
+                {
+                    lblName.Text = task.Result.Success.DisplayName;
+                    lblMachineName.Text = task.Result.Success.MachineName;
+                    lblIp.Text = task.Result.Success.LocalIp;
+                    lblHostName.Text = task.Result.Success.HostName;
+                    lblHostAddress.Text = task.Result.Success.HostAddress;
+                    lblCreatedIn.Text = task.Result.Success.CreatedIn;
+                    lblFirstConnection.Text = task.Result.Success.FirstConnection;
+                    lblLastConnection.Text = task.Result.Success.LastConnection;
+                    lblConfigured.Text = task.Result.Success.Configured ? "Sim" : "Não";
 
-                lblConfigured.Foreground = lblConfigured.Text.Equals("Sim") ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
-            }
-            else
-            {
+                    lblConfigured.Foreground = lblConfigured.Text.Equals("Sim") ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+                }
+                else
+                {
 
-            }
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
     }

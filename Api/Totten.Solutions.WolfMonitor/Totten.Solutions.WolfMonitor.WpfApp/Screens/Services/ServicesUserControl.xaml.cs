@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
@@ -25,39 +26,36 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         public void Populate()
         {
             this.wrapPanel.Children.Clear();
-
-            _itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
+            var loading = new LoadingWindow(_itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
-                    this.wrapPanel.Dispatcher.Invoke(() =>
+                    foreach (SystemServiceViewModel service in task.Result.Success.Items)
                     {
-                        foreach (SystemServiceViewModel service in task.Result.Success.Items)
-                        {
-                            this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
-                        }
-                        OnApplyTemplate();
-                    });
+                        this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
+                    }
+                    OnApplyTemplate();
                 }
-            });
+            }, TaskScheduler.FromCurrentSynchronizationContext()));
+            loading.ShowDialog();
         }
 
-        private async void OnRemove(object sender, EventArgs e)
+        private void OnRemove(object sender, EventArgs e)
         {
             SystemServiceViewModel serviceViewModel = sender as SystemServiceViewModel;
             if (MessageBox.Show($"Deseja realmente remover o serviço: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
-                var removeCallback = await _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id);
-
-                if (removeCallback.IsSuccess)
+                _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id).ContinueWith(task =>
                 {
-                    MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                    if (task.Result.IsSuccess)
+                    {
+                        MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 

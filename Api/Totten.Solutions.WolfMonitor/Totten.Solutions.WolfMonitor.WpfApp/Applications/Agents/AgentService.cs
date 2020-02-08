@@ -17,17 +17,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents
         }
 
         public async Task<Result<Exception, PageResult<AgentResumeViewModel>>> GetAllAgentsByCompany()
-        {
-            return await _endPoint.GetAllAgents<AgentResumeViewModel>();
-        }
+            => await _endPoint.GetAllAgents<AgentResumeViewModel>();
+
+        public async Task<Result<Exception, Guid>> Post(AgentCreateVO agent)
+            => await _endPoint.Post<AgentCreateVO>(agent);
+
         public async Task<Result<Exception, AgentDetailViewModel>> GetDetail(Guid id)
-        {
-            return await _endPoint.GetDetail<AgentDetailViewModel>(id);
-        }
+            => await _endPoint.GetDetail<AgentDetailViewModel>(id);
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId)
-        {
-            return await _endPoint.Delete(agentId);
-        }
+            => await _endPoint.Delete(agentId);
     }
 }
