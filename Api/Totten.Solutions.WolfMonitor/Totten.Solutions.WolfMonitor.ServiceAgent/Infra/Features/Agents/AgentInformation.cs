@@ -14,9 +14,11 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
 {
     public class AgentInformation : BaseEndPoint
     {
-        public AgentInformation(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
-        {
+        private Agent _agent;
 
+        public AgentInformation(Agent agent, CustomHttpCliente customHttpCliente) : base(customHttpCliente)
+        {
+            _agent = agent;
         }
         public string Login()
         {
@@ -27,7 +29,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
             request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 { "grant_type", "password"},
-                { "username",  base.Client.User.Login },
+                { "username",  $"{base.Client.User.Login}@{_agent.Company}#agent" },
                 { "password",  base.Client.User.Password},
                 { "scope", "Agents Monitoring"}
             });
@@ -45,10 +47,10 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
         }
 
         public Result<Exception, Unit> Send(Item item)
-             => InnerAsync<Result<Exception, Unit>, Item>("monitoring", item, HttpMethod.Post).ConfigureAwait(false).GetAwaiter().GetResult();
+             => InnerAsync<Result<Exception, Unit>, Item>("monitoring/Items", item, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
         
         public Result<Exception, PageResult<Item>> GetItems()
-             =>  InnerGetAsync<PageResult<Item>>("monitoring").ConfigureAwait(false).GetAwaiter().GetResult();
+             =>  InnerGetAsync<PageResult<Item>>("monitoring/items").ConfigureAwait(false).GetAwaiter().GetResult();
 
         public Result<Exception, Unit> Update(Agent agent)
              =>  InnerAsync(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();

@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Timers;
+using System.Threading;
+using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
@@ -12,22 +11,18 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 {
     public class WolfService
     {
-        public static object _locker = new object();
-        private readonly double _timerTick = 500;
+        public object _locker = new object();
+        private readonly int _timerTick = 1000;
+        private bool _started = false;
 
         private readonly IHelper _helper;
         private AgentService _agentService;
-        private FileSystemWatcher _watcher;
         private Agent _agent;
-        private Timer _timer;
 
         public WolfService(AgentService agentService, IHelper helper)
         {
             _agentService = agentService;
             _helper = helper;
-            _timer = new Timer(_timerTick);
-
-            CreateDirs();
         }
 
         public void CreateDirs()
@@ -39,59 +34,48 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                 Directory.CreateDirectory(pathServices);
                 Directory.CreateDirectory($"./Monitoring/Exceptions");
             }
-
-            if (_watcher == null)
-            {
-                MakeconfigWatcher();
-            }
         }
 
         public void Start()
         {
-            _timer.Enabled = true;
-            _timer.Elapsed += Tick;
-            _timer.Start();
+            _started = true;
+            Task.Factory.StartNew(() =>
+            {
+
+                CreateDirs();
+                Service();
+            });
         }
 
-        public void Stop()
-        {
-            _timer.Stop();
-            _timer.Enabled = false;
-            _timer.Elapsed -= Tick;
-        }
+        public void Stop() => _started = false;
 
-        private void OnFileCreated(object sender, FileSystemEventArgs e)
+        private void CreateLogException(Exception ex, Item item = null)
         {
             try
             {
-                var json = File.ReadAllText(e.FullPath);
-                var item = JsonConvert.DeserializeObject<Item>(json);
-                _agentService.Send(item);
+                string path = $"./Monitoring/Exceptions/{item?.Name}_{item?.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}_{DateTime.Now.ToString("ddMMyyyyhhmmss")}.mon";
+                File.WriteAllText(path, JsonConvert.SerializeObject(ex));
+            }
+            catch { }
+        }
+
+        private void GenerateFile(Item item)
+        {
+            try
+            {
+                string path = $"./Monitoring/{item.Name}_{item.Type.ToString()}_{item.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}.mon";
+
+                File.WriteAllText(path, JsonConvert.SerializeObject(item));
             }
             catch (Exception ex)
             {
-                CreateLogException(ex);
+                CreateLogException(ex, item);
             }
-
         }
 
-        public void MakeconfigWatcher()
+        private void Service()
         {
-            _watcher = new FileSystemWatcher();
-            _watcher.Path = $"./Monitoring";
-            _watcher.NotifyFilter = NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.DirectoryName;
-
-            _watcher.Filter = "*.mon";
-            _watcher.Created += OnFileCreated;
-            _watcher.EnableRaisingEvents = true;
-        }
-
-        private void Tick(object sender, ElapsedEventArgs e)
-        {
-            lock (_locker)
+            while (_started)
             {
                 try
                 {
@@ -103,7 +87,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                             _agent = agentCallback.Success;
                         else
                             CreateLogException(agentCallback.Failure);
-                        return;
+                        continue;
                     }
 
                     if (!_agent.Configured)
@@ -121,22 +105,25 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                             _agent = agentCallback.Success;
                         else
                             CreateLogException(agentCallback.Failure);
-                        return;
+                        continue;
                     }
 
                     var itemsCallback = _agentService.GetItems();
 
                     if (itemsCallback.IsSuccess)
-                    {
-                        foreach (Item item in itemsCallback.Success.Items)
+                        for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
                         {
-                            var instance = item.Type.GetInstance(item);
+                            var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
 
                             if (instance.ShouldBeMonitoring())
                                 if (instance.VerifyChanges())
+                                {
                                     GenerateFile(instance);
+                                    _agentService.Send(instance);
+                                }
+
+                            itemsCallback.Success.Items[i] = instance;
                         }
-                    }
                     else
                         CreateLogException(itemsCallback.Failure);
                 }
@@ -144,32 +131,10 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                 {
                     CreateLogException(ex);
                 }
-            }
-        }
 
-        private void GenerateFile(Item item)
-        {
-            try
-            {
-                CreateDirs();
-                string path = $"./Monitoring/{item.Name}_{item.MonitoredAt.Value}_{item.Type.ToString()}.mon";
+                Thread.Sleep(_timerTick);
+            }
 
-                File.WriteAllText(path, JsonConvert.SerializeObject(item));
-            }
-            catch (Exception ex)
-            {
-                CreateLogException(ex, item);
-            }
-        }
-
-        private void CreateLogException(Exception ex, Item item = null)
-        {
-            try
-            {
-                string path = $"./Monitoring/Exceptions/{item?.Name}_{item?.MonitoredAt.Value}_{DateTime.Now}.mon";
-                File.WriteAllText(path, JsonConvert.SerializeObject(ex));
-            }
-            catch { }
         }
 
     }

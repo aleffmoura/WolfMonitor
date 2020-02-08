@@ -37,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]AgentUpdateCommand command)
         {
-            return HandleCommand(await _mediator.Send(new AgentUpdate.Command(UserId, command.Name, command.LocalIp, command.HostName, command.HostAddress)));
+            return HandleCommand(await _mediator.Send(new AgentUpdate.Command(UserId, command.MachineName, command.LocalIp, command.HostName, command.HostAddress)));
         }
         #endregion
 

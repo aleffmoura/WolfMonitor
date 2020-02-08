@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         [Description("Arquivo")]
         SystemConfig = 1
     }
-    public abstract class Item
+    public class Item
     {
         public Guid Id { get; set; }
         public Guid AgentId { get; set; }
@@ -26,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }
 
-        public abstract bool VerifyChanges();
+        public virtual bool VerifyChanges() { return false; }
 
         public bool ShouldBeMonitoring() => MonitoredAt.HasValue ? MonitoredAt.Value.AddMinutes(Interval) < DateTime.Now : true;
     }

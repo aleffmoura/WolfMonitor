@@ -49,7 +49,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                         Home home = new Home(custom, task.Result.Success);
                         this.Visibility = Visibility.Hidden;
                         home.ShowDialog();
-                        this.Visibility = Visibility.Visible;
                     }
                     else
                     {

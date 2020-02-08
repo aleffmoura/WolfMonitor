@@ -3,7 +3,7 @@
 namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs
 {
     using static Helpers;
-    public struct Result<TFailure, TSuccess>
+    public struct Result<TFailure, TSuccess> : IDisposable
     {
         public TFailure Failure { get; internal set; }
         public TSuccess Success { get; internal set; }
@@ -29,26 +29,20 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs
             Success = success;
         }
 
-        public TResult Match<TResult>(
-                Func<TFailure, TResult> failure,
-                Func<TSuccess, TResult> success
-            )
-            => IsFailure ? failure(Failure) : success(Success);
+        public static Result<TFailure, TSuccess> Of(TSuccess obj) => obj;
+        public static Result<TFailure, TSuccess> Of(TFailure obj) => obj;
 
-        public Unit Match(
-                Action<TFailure> failure,
-                Action<TSuccess> success
-            )
-            => Match(ToFunc(failure), ToFunc(success));
+        public void Dispose()
+        {
+            Success = default;
+            Failure = default;
+        }
 
         public static implicit operator Result<TFailure, TSuccess>(TFailure failure)
             => new Result<TFailure, TSuccess>(failure);
 
         public static implicit operator Result<TFailure, TSuccess>(TSuccess success)
             => new Result<TFailure, TSuccess>(success);
-
-        public static Result<TFailure, TSuccess> Of(TSuccess obj) => obj;
-        public static Result<TFailure, TSuccess> Of(TFailure obj) => obj;
     }
 
     public struct Unit

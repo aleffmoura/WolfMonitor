@@ -11,11 +11,13 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public SystemService(Item item)
         {
             this.Id = item.Id;
+            this.AgentId = item.AgentId;
             this.Name = item.Name;
-            this.DisplayName = item.Name;
             this.Default = item.Default;
+            this.DisplayName = item.Name;
             this.LastValue = item.LastValue;
             this.Interval = item.Interval;
+            this.MonitoredAt = item.MonitoredAt;
             this.Type = item.Type;
             this.Value = item.Value;
         }

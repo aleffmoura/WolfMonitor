@@ -23,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
             ServiceProvider serviceProvider = new ServiceCollection()
                                     .AddSingleton<IHelper, Helper>()
                                     .AddSingleton(typeof(CustomHttpCliente), new CustomHttpCliente(agent.urlApi, login))
+                                    .AddSingleton<Agent>(agent)
                                     .AddSingleton<AgentInformation>()
                                     .AddSingleton<AgentService>()
                                     .AddSingleton<WolfService>()

@@ -42,6 +42,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
 
             CreateMap<Agent, AgentDetailViewModel>()
                 .ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id.ToString()))
+                .ForMember(dest => dest.Configured, option => option.MapFrom(src => src.Configured))
                 .ForMember(dest => dest.LastUpdate, option => option.MapFrom(src => src.UpdatedIn.ToString()))
                 .ForMember(dest => dest.CreatedIn, option => option.MapFrom(src => src.CreatedIn.ToString()));
 
