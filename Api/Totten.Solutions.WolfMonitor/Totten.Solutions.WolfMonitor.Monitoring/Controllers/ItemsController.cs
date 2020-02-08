@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]ItemUpdateVO itemUpdate)
-            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.LastValue)));
+            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.LastValue, itemUpdate.MonitoredAt)));
 
         #endregion
 

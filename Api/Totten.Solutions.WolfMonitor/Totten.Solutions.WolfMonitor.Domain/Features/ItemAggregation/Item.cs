@@ -19,7 +19,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         public Guid UserIdWhoAdd { get; set; }
         public Guid AgentId { get; set; }
         
-        //public DateTime? MonitoredAt { get; set; }
+        public DateTime? MonitoredAt { get; set; }
 
         public override void Validate() {}
 

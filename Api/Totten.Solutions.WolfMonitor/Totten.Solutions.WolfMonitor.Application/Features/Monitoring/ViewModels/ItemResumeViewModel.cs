@@ -9,5 +9,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModel
         public string Name { get; set; }
         public string Value { get; set; }
         public string LastStatus { get; set; }
+        public DateTime? MonitoredAt { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public string Name { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }
+        public DateTime MonitoredAt { get; set; }
     }
 }

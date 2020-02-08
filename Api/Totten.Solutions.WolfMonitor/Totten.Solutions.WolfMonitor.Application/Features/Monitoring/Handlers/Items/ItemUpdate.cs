@@ -22,14 +22,16 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public string Name { get; set; }
             public string Value { get; set; }
             public string LastValue { get; set; }
+            public DateTime MonitoredAt { get; set; }
 
 
-            public Command(Guid agentId, string name, string value, string lastValue)
+            public Command(Guid agentId, string name, string value, string lastValue, DateTime monitoredAt)
             {
                 AgentId = agentId;
                 Name = name;
                 Value = value;
                 LastValue = lastValue;
+                MonitoredAt = monitoredAt;
             }
 
             public ValidationResult Validate()

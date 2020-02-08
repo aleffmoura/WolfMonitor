@@ -21,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
             this.UpdatedIn = item.UpdatedIn;
             this.UserIdWhoAdd = item.UserIdWhoAdd;
             this.AgentId = item.AgentId;
+            this.MonitoredAt = item.MonitoredAt;
         }
 
         public override void Validate() {}

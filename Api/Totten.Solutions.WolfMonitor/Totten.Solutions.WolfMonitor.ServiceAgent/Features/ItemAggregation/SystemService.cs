@@ -14,7 +14,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.AgentId = item.AgentId;
             this.Name = item.Name;
             this.Default = item.Default;
-            this.DisplayName = item.Name;
+            this.DisplayName = item.DisplayName;
             this.LastValue = item.LastValue;
             this.Interval = item.Interval;
             this.MonitoredAt = item.MonitoredAt;

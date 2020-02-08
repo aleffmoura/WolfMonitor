@@ -12,5 +12,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices
         public string Name { get; set; }
         public string Value { get; set; }
         public string LastStatus { get; set; } = "stopped";
+        public string MonitoredAt { get; set; }
     }
 }
