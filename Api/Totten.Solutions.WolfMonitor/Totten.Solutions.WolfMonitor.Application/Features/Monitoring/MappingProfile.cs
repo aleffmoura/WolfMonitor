@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
         {
             #region System Services
             CreateMap<ItemCreate.Command, Item>()
-                .ForMember(dest => dest.Value, src => src.MapFrom(f => "Not monitored yeat"))
+                .ForMember(dest => dest.Value, src => src.MapFrom(f => "Não monitorado."))
                 .ForMember(dest => dest.CreatedIn, src => src.MapFrom(f => DateTime.Now))
                 .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(f => DateTime.Now));
 
