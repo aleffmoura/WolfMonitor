@@ -12,11 +12,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
     {
         private SystemServiceViewModel _systemServiceViewModel;
         private EventHandler _onRemove;
+        private EventHandler _onEdit;
 
-        public ServiceUC(EventHandler onRemove, SystemServiceViewModel systemServiceViewModel)
+        public ServiceUC(EventHandler onRemove, EventHandler onEdit, SystemServiceViewModel systemServiceViewModel)
         {
             InitializeComponent();
             _onRemove = onRemove;
+            _onEdit = onEdit;
             _systemServiceViewModel = systemServiceViewModel;
             SetServiceValues();
         }
@@ -28,32 +30,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             this.lblLastStatus.Text = _systemServiceViewModel.LastStatus;
             this.lblServiceName.Text = _systemServiceViewModel.Name;
             this.lblMonitoredAt.Text = _systemServiceViewModel.MonitoredAt;
-            ChangeColorTextBlock(this.lblCurrentStatus);
 
+            ChangeColorTextBlock(this.lblCurrentStatus);
             ChangeColorTextBlock(this.lblLastStatus);
         }
 
         public void ChangeColorTextBlock(TextBlock textBlock)
         {
             if(textBlock.Text.Equals("running", System.StringComparison.InvariantCultureIgnoreCase))
-            {
                 textBlock.Foreground = new SolidColorBrush(Colors.Green);
-            }
             else if(textBlock.Text.Equals("stopped", System.StringComparison.InvariantCultureIgnoreCase))
-            {
                 textBlock.Foreground = new SolidColorBrush(Colors.Red);
-            }
             else
-            {
-                textBlock.Foreground = new SolidColorBrush(Colors.Black);
-            }
+                textBlock.Foreground = new SolidColorBrush(Colors.Yellow);
             OnApplyTemplate();
         }
 
         private void btnDel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _onRemove?.Invoke(_systemServiceViewModel, new EventArgs());
-        }
+            => _onRemove?.Invoke(_systemServiceViewModel, new EventArgs());
 
         private void btnRestart_Click(object sender, System.Windows.RoutedEventArgs e)
         {

@@ -86,6 +86,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 }
 
                 var ItemVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+
                 if (ItemVerify.IsSuccess)
                 {
                     return new DuplicateException("Já existe um Item com esse nome cadastrado nesse agent.");

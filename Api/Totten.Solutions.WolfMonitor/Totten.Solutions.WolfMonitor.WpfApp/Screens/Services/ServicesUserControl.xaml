@@ -11,6 +11,12 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Button x:Name="btnAdd" Margin="10,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
         </StackPanel>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0">
+            <Button x:Name="btnRefrash" Padding="0" Width="50" Height="30" Click="btnRefrash_Click">
+                <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
+            </Button>
+        </StackPanel>
         
         <StackPanel>
             

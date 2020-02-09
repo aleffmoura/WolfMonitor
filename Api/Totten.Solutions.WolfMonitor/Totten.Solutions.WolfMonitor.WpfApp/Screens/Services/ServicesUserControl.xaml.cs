@@ -13,6 +13,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
     public partial class ServicesUserControl : UserControl, IUserControl
     {
         private ItensMonitoringService _itemsMonitoringService;
+        private Dictionary<Guid, ServiceUC> _indexes;
         public Guid _agentId;
 
         public ServicesUserControl(Guid agentId, ItensMonitoringService itemsMonitoringService)
@@ -20,29 +21,58 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             InitializeComponent();
             _agentId = agentId;
             _itemsMonitoringService = itemsMonitoringService;
+            _indexes = new Dictionary<Guid, ServiceUC>();
             Populate();
+        }
+
+        public void PopulateByDictionary()
+        {
+            this.wrapPanel.Children.Clear();
+
+            foreach (var itemViewModel in _indexes)
+            {
+                this.wrapPanel.Children.Add(_indexes[itemViewModel.Key]);
+            }
+            OnApplyTemplate();
+        }
+
+        ~ServicesUserControl()
+        {
+            _indexes.Clear();
+            _indexes = null;
+            _itemsMonitoringService = null;
         }
 
         public void Populate()
         {
+            _indexes.Clear();
             this.wrapPanel.Children.Clear();
             var loading = new LoadingWindow(_itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
-                    foreach (SystemServiceViewModel service in task.Result.Success.Items)
+                    foreach (SystemServiceViewModel serviceViewModel in task.Result.Success.Items)
                     {
-                        this.wrapPanel.Children.Add(new ServiceUC(OnRemove, service));
+                        _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, serviceViewModel));
                     }
-                    OnApplyTemplate();
+                    PopulateByDictionary();
                 }
+                else
+                    MessageBox.Show("Falha na requisição de agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, TaskScheduler.FromCurrentSynchronizationContext()));
             loading.ShowDialog();
+        }
+
+        private void OnEdit(object sender, EventArgs e)
+        {
+            Guid agentId = (Guid)sender;
+
         }
 
         private void OnRemove(object sender, EventArgs e)
         {
             SystemServiceViewModel serviceViewModel = sender as SystemServiceViewModel;
+
             if (MessageBox.Show($"Deseja realmente remover o serviço: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id).ContinueWith(task =>
@@ -50,6 +80,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                     if (task.Result.IsSuccess)
                     {
                         MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                        _indexes.Remove(serviceViewModel.Id);
+                        PopulateByDictionary();
                     }
                     else
                     {
@@ -69,6 +101,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             {
                 await _itemsMonitoringService.Post(frmItemsAdd.Item);
             }
+        }
+
+        private void btnRefrash_Click(object sender, RoutedEventArgs e)
+        {
+            Populate();
         }
     }
 }

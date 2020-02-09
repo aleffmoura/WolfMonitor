@@ -11,7 +11,6 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
         </StackPanel>
-        
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <TextBox x:Name="txtAgentName" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
