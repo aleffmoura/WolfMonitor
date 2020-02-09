@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
@@ -12,16 +12,17 @@ using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
 {
-    public class AgentInformation : BaseEndPoint
+    public class AgentInformationEndPoint : BaseEndPoint
     {
-        private Agent _agent;
+        private AgentSettings _agentSettings;
 
-        public AgentInformation(Agent agent, CustomHttpCliente customHttpCliente) : base(customHttpCliente)
+        public AgentInformationEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
-            _agent = agent;
         }
         public string Login()
         {
+            _agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText(".\\AgentSettings.json"));
+
             var request = base.Client.CreateRequest(HttpMethod.Post, "identityserver/connect/token");
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", UserLogin.GetClientCredentials());
@@ -29,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
             request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 { "grant_type", "password"},
-                { "username",  $"{base.Client.User.Login}@{_agent.Company}#agent" },
+                { "username",  $"{base.Client.User.Login}@{_agentSettings.Company}#agent" },
                 { "password",  base.Client.User.Password},
                 { "scope", "Agents Monitoring"}
             });
@@ -47,19 +48,19 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
         }
 
         public Result<Exception, Unit> Send(Item item)
-             => InnerAsync<Result<Exception, Unit>, Item>("monitoring/Items", item, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
+             => InnerAsync<Unit, Item>("monitoring/Items", item, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
         
         public Result<Exception, PageResult<Item>> GetItems()
              =>  InnerGetAsync<PageResult<Item>>("monitoring/items").ConfigureAwait(false).GetAwaiter().GetResult();
 
-        public Result<Exception, Unit> Update(Agent agent)
+        public Result<Exception, Unit> Update(AgentUpdateVO agent)
              =>  InnerAsync(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult();
 
         public Result<Exception, Agent> GetInfo()
              =>  InnerGetAsync<Agent>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
 
-        private async Task<Result<Exception, Unit>> InnerAsync(Agent agent, HttpMethod httpMethod)
-             =>  await InnerAsync<Result<Exception, Unit>, Agent>("agents", agent, httpMethod);
+        private async Task<Result<Exception, Unit>> InnerAsync(AgentUpdateVO agent, HttpMethod httpMethod)
+             =>  await InnerAsync<Unit, AgentUpdateVO>("agents", agent, httpMethod);
 
     }
 }

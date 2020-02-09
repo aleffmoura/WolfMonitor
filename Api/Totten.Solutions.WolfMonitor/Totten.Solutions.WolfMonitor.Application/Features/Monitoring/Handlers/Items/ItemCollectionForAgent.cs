@@ -39,8 +39,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                 var agentCallBack = await _agentRepository.GetByIdAsync(request.AgentId);
 
+
+
                 if (agentCallBack.IsFailure)
                     return new BusinessException(Domain.Enums.ErrorCodes.NotFound, "O id informado não pertence a nenhum agent ativo.");
+
+
+                agentCallBack.Success.LastConnection = DateTime.Now;
 
                 await _agentRepository.UpdateAsync(agentCallBack.Success);
 

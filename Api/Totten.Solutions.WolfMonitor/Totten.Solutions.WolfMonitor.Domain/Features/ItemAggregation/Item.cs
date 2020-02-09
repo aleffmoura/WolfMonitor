@@ -21,6 +21,9 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         
         public DateTime? MonitoredAt { get; set; }
 
+
+        public List<ItemHistoric> Historic { get; set; }
+
         public override void Validate() {}
 
         public bool VerifyIfChange(Item item) => !this.Value.Equals(item.Value);

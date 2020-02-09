@@ -3,26 +3,31 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
+using Timer = System.Timers.Timer;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 {
     public class WolfService
     {
-        public object _locker = new object();
-        private readonly int _timerTick = 1000;
         private bool _started = false;
+        private int _whileCycle = 1000;
 
-        private readonly IHelper _helper;
-        private AgentService _agentService;
         private Agent _agent;
+        private IHelper _helper;
+        private AgentService _agentService;
+        private Timer _sendFiles;
+        private AgentSettings _agentSettings;
 
-        public WolfService(AgentService agentService, IHelper helper)
+
+        public WolfService(AgentSettings agentSettings, AgentService agentService, IHelper helper)
         {
             _agentService = agentService;
             _helper = helper;
+            _agentSettings = agentSettings;
         }
 
         public void CreateDirs()
@@ -36,6 +41,45 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
             }
         }
 
+        private void Tick(object sender, ElapsedEventArgs e)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(_agentSettings.PathFilesIfFailSend);
+
+            if (directoryInfo.Exists)
+            {
+                foreach (FileInfo fileInfo in directoryInfo.GetFiles() ?? new FileInfo[0])
+                {
+                    try
+                    {
+                        var item = JsonConvert.DeserializeObject<Item>(File.ReadAllText(fileInfo.FullName));
+                        if (_agentService.Send(item).IsSuccess)
+                            fileInfo.Delete();
+                    }
+                    catch (Exception ex)
+                    {
+                        fileInfo.Delete();
+                        GenerateLogException(ex);
+                    }
+                }
+            }
+        }
+
+        private void ConfigureTimerSendFiles(bool initial = true)
+        {
+            if (initial)
+            {
+                _sendFiles = new Timer(_agentSettings.RetrySendIfFailInHours * 3.6e+6);
+                _sendFiles.Elapsed += Tick;
+                _sendFiles.Enabled = true;
+                _sendFiles.Start();
+                return;
+            }
+            _sendFiles.Elapsed -= Tick;
+            _sendFiles.Enabled = false;
+            _sendFiles.Stop();
+            _sendFiles.Dispose();
+        }
+
         public void Start()
         {
             _started = true;
@@ -43,18 +87,24 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
             {
 
                 CreateDirs();
+                ConfigureTimerSendFiles();
                 Service();
             });
         }
 
         public void Stop() => _started = false;
 
-        private void CreateLogException(Exception ex, Item item = null)
+        private void GenerateLogException(Exception ex, Item item = default)
         {
             try
             {
-                string path = $"./Monitoring/Exceptions/{item?.Name}_{item?.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}_{DateTime.Now.ToString("ddMMyyyyhhmmss")}.mon";
-                File.WriteAllText(path, JsonConvert.SerializeObject(ex));
+                var obj = new
+                {
+                    Exception = JsonConvert.SerializeObject(ex.Message),
+                    Item = item
+                };
+                File.WriteAllText(Path.Combine(_agentSettings.PathFilesExceptions, $"{item?.Name}_{item?.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}_{DateTime.Now.ToString("ddMMyyyyhhmmss")}.mon"),
+                                  JsonConvert.SerializeObject(obj, Formatting.Indented));
             }
             catch { }
         }
@@ -63,13 +113,12 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         {
             try
             {
-                string path = $"./Monitoring/{item.Name}_{item.Type.ToString()}_{item.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}.mon";
-
-                File.WriteAllText(path, JsonConvert.SerializeObject(item));
+                File.WriteAllText(Path.Combine(_agentSettings.PathFilesIfFailSend, $"{item.Name}_{item.Type.ToString()}_{item.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}.mon"),
+                                  JsonConvert.SerializeObject(item));
             }
             catch (Exception ex)
             {
-                CreateLogException(ex, item);
+                GenerateLogException(ex, item);
             }
         }
 
@@ -86,25 +135,26 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         if (agentCallback.IsSuccess)
                             _agent = agentCallback.Success;
                         else
-                            CreateLogException(agentCallback.Failure);
+                            GenerateLogException(agentCallback.Failure);
                         continue;
                     }
 
                     if (!_agent.Configured)
                     {
-                        _agent.MachineName = Environment.MachineName;
-                        _agent.HostAddress = _helper.GetMACAddress();
-                        _agent.HostName = _helper.GetHostName();
-                        _agent.LocalIp = _helper.GetLocalIpAddress();
+                        AgentUpdateVO agent = new AgentUpdateVO();
+                        agent.MachineName = Environment.MachineName;
+                        agent.HostAddress = _helper.GetMACAddress();
+                        agent.HostName = _helper.GetHostName();
+                        agent.LocalIp = _helper.GetLocalIpAddress();
 
-                        _agentService.Update(_agent);
+                        _agentService.Update(agent);
 
                         var agentCallback = _agentService.GetInfo();
 
                         if (agentCallback.IsSuccess)
                             _agent = agentCallback.Success;
                         else
-                            CreateLogException(agentCallback.Failure);
+                            GenerateLogException(agentCallback.Failure);
                         continue;
                     }
 
@@ -118,21 +168,29 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                             if (instance.ShouldBeMonitoring())
                                 if (instance.VerifyChanges())
                                 {
-                                    GenerateFile(instance);
-                                    _agentService.Send(instance);
+                                    try
+                                    {
+                                        if (_agentService.Send(instance).IsFailure)
+                                            GenerateFile(instance);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        GenerateFile(instance);
+                                        GenerateLogException(ex, instance);
+                                    }
                                 }
 
                             itemsCallback.Success.Items[i] = instance;
                         }
                     else
-                        CreateLogException(itemsCallback.Failure);
+                        GenerateLogException(itemsCallback.Failure);
                 }
                 catch (Exception ex)
                 {
-                    CreateLogException(ex);
+                    GenerateLogException(ex);
                 }
 
-                Thread.Sleep(_timerTick);
+                Thread.Sleep(_whileCycle);
             }
 
         }

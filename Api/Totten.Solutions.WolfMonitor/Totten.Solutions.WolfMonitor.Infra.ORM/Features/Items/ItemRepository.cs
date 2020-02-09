@@ -28,9 +28,19 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
 
             return newitem.Entity;
         }
+        public async Task<Result<Exception, Unit>> CreateHistoricAsync(ItemHistoric itemHistoric)
+        {
+            _context.Historic.Add(itemHistoric);
+
+            await _context.SaveChangesAsync();
+
+            return Unit.Successful;
+        }
 
         public Result<Exception, IQueryable<Item>> GetAll()
             => Result.Run(() => _context.Items.AsNoTracking().Where(item => !item.Removed));
+        public Result<Exception, IQueryable<Item>> GetAllWithHistoric()
+            => Result.Run(() => _context.Items.Include(x => x.Historic).AsNoTracking().Where(item => !item.Removed));
 
         public Result<Exception, IQueryable<Item>> GetAll(Guid agentId)
             => Result.Run(() => _context.Items.AsNoTracking().Where(item => !item.Removed && item.AgentId == agentId));

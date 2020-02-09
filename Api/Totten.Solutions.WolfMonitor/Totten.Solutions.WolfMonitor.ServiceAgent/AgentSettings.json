@@ -1,6 +1,11 @@
 ﻿{
   "urlApi": "http://10.0.75.1:15999",
   "company": "tottemsolutions",
-  "login": "servidor1",
-  "password": "123456"
+  "user": {
+    "login": "servidor1",
+    "password": "123456"
+  },
+  "retrySendIfFailInHours": "1",
+  "pathFilesIfFailSend": "./Monitoring/Items",
+  "pathFilesExceptions": "./Monitoring/Exceptions"
 }

@@ -44,7 +44,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base
             }
         }
 
-        protected async Task<TResult> InnerAsync<TResult, TPost>(string methodPath, TPost postBody, HttpMethod httpMethod)
+        protected async Task<Result<Exception, TResult>> InnerAsync<TResult, TPost>(string methodPath, TPost postBody, HttpMethod httpMethod)
         {
             if (postBody == null) throw new ArgumentNullException(nameof(postBody));
 
@@ -55,7 +55,12 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base
             using (var httpResponse = await _httpCliente.HttpClient.SendAsync(httpRequest))
             {
                 var str = await httpResponse.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResult>(str);
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    var convert = JsonConvert.DeserializeObject<TResult>(str);
+                    return convert;
+                }
+                return JsonConvert.DeserializeObject<Exception>(str);
             }
         }
     }

@@ -56,7 +56,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ServiceDetailWindow serviceDetail = new ServiceDetailWindow();
+            ServiceDetailWindow serviceDetail = new ServiceDetailWindow(_systemServiceViewModel);
             serviceDetail.ShowDialog();
         }
     }

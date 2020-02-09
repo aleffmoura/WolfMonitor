@@ -9,8 +9,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 {
     public class AgentService
     {
-        private AgentInformation _agentInformations;
-        public AgentService(AgentInformation agentEndPoint)
+        private AgentInformationEndPoint _agentInformations;
+        public AgentService(AgentInformationEndPoint agentEndPoint)
         {
             _agentInformations = agentEndPoint;
         }
@@ -30,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
         public Result<Exception, Unit> Send(Item item)
                 => _agentInformations.Send(item);
 
-        public Result<Exception, Unit> Update(Agent agent)
+        public Result<Exception, Unit> Update(AgentUpdateVO agent)
                 => _agentInformations.Update(agent);
         
 

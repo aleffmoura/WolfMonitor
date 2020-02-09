@@ -64,32 +64,41 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 Result<Exception, Unit> returned = Unit.Successful;
-                Result<Exception, Item> ItemCallback = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
 
-                if (ItemCallback.IsFailure)
+                Result<Exception, Item> itemCallback = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+
+                if (itemCallback.IsFailure)
                 {
-                    return ItemCallback.Failure;
+                    return itemCallback.Failure;
                 }
 
                 MonitoringLog log = new MonitoringLog
                 {
                     AgentId = request.AgentId,
                     Date = DateTime.Now,
-                    Action = $"O tentou atualizar seu valor de: {ItemCallback.Success.Value} para: {request.Value}",
+                    Action = $"O tentou atualizar seu valor de: {itemCallback.Success.Value} para: {request.Value}",
                     JsonResult = JsonConvert.SerializeObject(new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "Os valores são iguais."))
                 };
 
-                Item Item = ItemCallback.Success;
+                Item itemToUpdate = itemCallback.Success;
 
-                if (!Item.Value.Equals(request.Value))
+                if (!itemToUpdate.Value.Equals(request.Value))
                 {
-                    Mapper.Map(request, Item);
-                    returned = await _repository.UpdateAsync(Item);
+
+                    Mapper.Map(request, itemToUpdate);
+
+                    returned = await _repository.UpdateAsync(itemToUpdate);
+
                     log.IsSuccess = returned.IsSuccess;
                     log.JsonResult = returned.IsSuccess ? JsonConvert.SerializeObject(returned.Success) : JsonConvert.SerializeObject(returned.Failure);
-                }
-                //await _logMonitoringRepository.CreateAsync(log);
 
+                    if (returned.IsSuccess)
+                    {
+                        var itemHistoric = Mapper.Map<ItemHistoric>(itemCallback.Success);
+                        await _repository.CreateHistoricAsync(itemHistoric);
+                    }
+                }
+                
                 return returned;
             }
         }

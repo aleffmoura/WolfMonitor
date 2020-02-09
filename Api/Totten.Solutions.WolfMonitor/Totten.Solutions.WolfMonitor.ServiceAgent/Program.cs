@@ -16,15 +16,19 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
     {
         static void Main(string[] args)
         {
-            var json = File.ReadAllText(".\\AgentSettings.json");
-            var agent = JsonConvert.DeserializeObject<Agent>(json);
-            var login = new UserLogin { Login = agent.Login, Password = agent.Password };
+            var agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText(".\\AgentSettings.json")) ?? new AgentSettings
+            {
+                User = new Infra.Base.UserLogin(),
+                Company = "Error",
+                urlApi = "error",
+                RetrySendIfFailInHours = 1
+            };
 
             ServiceProvider serviceProvider = new ServiceCollection()
                                     .AddSingleton<IHelper, Helper>()
-                                    .AddSingleton(typeof(CustomHttpCliente), new CustomHttpCliente(agent.urlApi, login))
-                                    .AddSingleton<Agent>(agent)
-                                    .AddSingleton<AgentInformation>()
+                                    .AddSingleton<AgentSettings>(agentSettings)
+                                    .AddSingleton(typeof(CustomHttpCliente), new CustomHttpCliente(agentSettings.urlApi))
+                                    .AddSingleton<AgentInformationEndPoint>()
                                     .AddSingleton<AgentService>()
                                     .AddSingleton<WolfService>()
                                     .BuildServiceProvider();
