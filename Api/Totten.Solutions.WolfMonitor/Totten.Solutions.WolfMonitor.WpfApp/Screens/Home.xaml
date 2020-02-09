@@ -88,30 +88,34 @@
                 
                 <ListView x:Name="viewMenu" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" Foreground="#FF1969DC" SelectionChanged="viewMenu_SelectionChanged">
 
-                    <ListViewItem Height="60">
+                    <ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
                             <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
+                    
                     <ListViewItem x:Name="btnAgentsMenu" Height="60" MouseLeftButtonUp="btnAgentsMenu_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Computer" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
                             <TextBlock Text="Agents" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
+                    
                     <ListViewItem Height="60" x:Name="btnMonitoramentos">
                         <StackPanel Orientation="Horizontal" >
                             <materialDesign:PackIcon Kind="Visibility" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
                             <TextBlock Text="Monitoramentos" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
+                    
                     <ListViewItem x:Name="menuItemCompanies" Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Business" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
                             <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
+                    
                 </ListView>
             </StackPanel>
         </Grid>

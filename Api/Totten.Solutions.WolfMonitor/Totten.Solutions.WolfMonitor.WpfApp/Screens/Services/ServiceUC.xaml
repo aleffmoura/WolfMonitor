@@ -10,16 +10,16 @@
         <Border x:Name="componentListagem" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Height="100" Width="382">
                 <StackPanel Orientation="Vertical" Width="200">
-                    <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="190" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"/>
+                    <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="190" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"  ToolTip="Nome de exibição"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
-                        <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="CornflowerBlue">
+                        <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="CornflowerBlue"  ToolTip="Abrir detalhes">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="OpenInApp" />
                         </Button>
-                        <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30" Background="LimeGreen">
+                        <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30" Background="LimeGreen" ToolTip="Alterna status atual" >
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="RestartAlert" />
                         </Button>
-                        <Button x:Name="btnDel" Margin="2" Padding="0"  Click="btnDel_Click" Width="40" Height="30" Background="Tomato">
+                        <Button x:Name="btnDel" Margin="2" Padding="0"  Click="btnDel_Click" Width="40" Height="30" Background="Tomato"  ToolTip="Deletar serviço">
                             <materialDesign:PackIcon Foreground="AliceBlue" Kind="DeleteAlertOutline"/>
                         </Button>
                     </StackPanel>
