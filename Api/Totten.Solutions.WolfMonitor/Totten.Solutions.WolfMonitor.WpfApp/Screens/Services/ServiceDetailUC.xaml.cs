@@ -22,5 +22,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         {
             InitializeComponent();
         }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
