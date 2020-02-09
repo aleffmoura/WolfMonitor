@@ -42,7 +42,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             else if(textBlock.Text.Equals("stopped", System.StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Red);
             else
-                textBlock.Foreground = new SolidColorBrush(Colors.Yellow);
+                textBlock.Foreground = new SolidColorBrush(Colors.Gold);
             OnApplyTemplate();
         }
 

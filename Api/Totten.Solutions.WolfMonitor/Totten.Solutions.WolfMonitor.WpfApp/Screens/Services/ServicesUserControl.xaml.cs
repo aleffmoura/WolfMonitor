@@ -47,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         {
             _indexes.Clear();
             this.wrapPanel.Children.Clear();
-            var loading = new LoadingWindow(_itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
+            _itemsMonitoringService.GetSystemServices(_agentId).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
@@ -59,8 +59,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 }
                 else
                     MessageBox.Show("Falha na requisição de agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }, TaskScheduler.FromCurrentSynchronizationContext()));
-            loading.ShowDialog();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnEdit(object sender, EventArgs e)
