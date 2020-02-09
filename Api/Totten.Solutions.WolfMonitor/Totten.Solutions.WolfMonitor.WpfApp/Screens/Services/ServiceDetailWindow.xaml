@@ -1,0 +1,153 @@
+﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Services.ServiceDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Detalhes do serviço" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        Width="500" Height="490">
+    <Grid>
+        
+        <StackPanel Orientation="Vertical" Margin="5,10">
+            
+            <TextBlock x:Name="lblServiceName" Foreground="Black" Text="Windows Update" FontSize="36"/>
+            <Separator Margin="0,5,0,10"/>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Nome:" FontSize="13"/>
+                <TextBlock Text="wuauserv" Margin="13,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Status:" FontSize="13"/>
+                <TextBlock Text="running" Margin="13,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Ultima atualização:" FontSize="13"/>
+                <TextBlock Text="04/10/1994 15:00" Margin="5,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+
+            <TabControl  FontSize="15" Margin="0,10,5,10">
+                <TabItem Header="Historico">
+                    
+                    <Grid>
+                        
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="Data" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5,0,0" x:Name="pnlDate">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="22/22/2222"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <TextBlock Text="Horário" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5,0,0" x:Name="pnlHours">
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" >
+                                <TextBlock Text="23:59"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <TextBlock Text="Valor" Margin="0,5"/>
+
+                            <StackPanel x:Name="pnlStatus1">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus2">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus3">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus4">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus5">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus6">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus7">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus8">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus9">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                            <StackPanel x:Name="pnlStatus10">
+                                <TextBlock Text="running"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                    </Grid>
+                    
+                </TabItem>
+            </TabControl>
+            
+            
+            <Grid Margin="0,0,5,5">
+                <Button x:Name="btnPrevPage" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Click="btnPrevPage_Click">
+                    <materialDesign:PackIcon Kind="NavigateBefore"/>
+                </Button>
+
+                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" />
+
+                <Button x:Name="btnNextPage" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnNextPage_Click">
+                    <materialDesign:PackIcon Kind="NavigateNext"/>
+                </Button>
+            </Grid>
+            
+        </StackPanel>
+
+    </Grid>
+</Window>

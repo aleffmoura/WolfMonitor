@@ -8,27 +8,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     /// <summary>
-    /// Interação lógica para ServiceDetailUC.xam
+    /// Lógica interna para ServiceDetailWindow.xaml
     /// </summary>
-    public partial class ServiceDetailUC : UserControl
+    public partial class ServiceDetailWindow : Window
     {
-        public ServiceDetailUC()
+        public ServiceDetailWindow()
         {
             InitializeComponent();
         }
 
-        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
 
         }

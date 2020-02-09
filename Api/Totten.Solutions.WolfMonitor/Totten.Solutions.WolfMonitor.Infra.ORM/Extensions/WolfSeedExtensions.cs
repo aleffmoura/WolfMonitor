@@ -2,6 +2,7 @@
 using System;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
 {
@@ -30,7 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 DisplayName = "Servidor BR 1",
                 Id = Guid.NewGuid(),
                 Login = "servidor1",
-                Password = "123456",
+                Password = "123456".GenerateHash(),
                 UserWhoCreatedId = Guid.Parse("f91a2366-c469-412a-9197-976a90516272"),
                 UserWhoCreatedName = "Admin"
 
