@@ -84,6 +84,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                 if (!itemToUpdate.Value.Equals(request.Value))
                 {
+                    var itemHistoric = Mapper.Map<ItemHistoric>(itemCallback.Success);
 
                     Mapper.Map(request, itemToUpdate);
 
@@ -94,7 +95,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                     if (returned.IsSuccess)
                     {
-                        var itemHistoric = Mapper.Map<ItemHistoric>(itemCallback.Success);
                         await _repository.CreateHistoricAsync(itemHistoric);
                     }
                 }

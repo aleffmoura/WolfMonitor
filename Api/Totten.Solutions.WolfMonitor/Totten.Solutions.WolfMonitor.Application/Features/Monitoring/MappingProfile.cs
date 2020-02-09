@@ -12,9 +12,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
         {
             #region Items
             CreateMap<ItemCreate.Command, Item>()
-                .ForMember(dest => dest.Value, src => src.MapFrom(f => "Não monitorado."))
-                .ForMember(dest => dest.CreatedIn, src => src.MapFrom(f => DateTime.Now))
-                .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(f => DateTime.Now));
+                .ForMember(dest => dest.Value, src => src.MapFrom(item => "Não monitorado."))
+                .ForMember(dest => dest.CreatedIn, src => src.MapFrom(item => DateTime.Now))
+                .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(item => DateTime.Now));
 
 
             CreateMap<ItemUpdate.Command, Item>();
@@ -31,8 +31,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             #region Historic Items
 
             CreateMap<Item, ItemHistoric>()
-                .ForMember(dest => dest.Id, src => src.MapFrom(f => Guid.Empty))
-                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(f => f.MonitoredAt.Value));
+                .ForMember(dest => dest.Id, src => src.MapFrom(item => Guid.Empty))
+                .ForMember(dest => dest.ItemId, src => src.MapFrom(item => item.Id))
+                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.Value));
+            CreateMap<ItemHistoric, ItemHistoric>();
             #endregion
 
         }

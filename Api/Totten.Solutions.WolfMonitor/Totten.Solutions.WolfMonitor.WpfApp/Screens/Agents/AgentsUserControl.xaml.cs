@@ -17,13 +17,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     public partial class AgentsUserControl : UserControl, IUserControl
     {
         private AgentService _agentService;
-        private ItensMonitoringService _itensMonitoringService;
+        private ItemsMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
 
         private EventHandler _onSwitchControl;
 
         public AgentsUserControl(AgentService agentService,
-                                ItensMonitoringService itensMonitoringService,
+                                ItemsMonitoringService itensMonitoringService,
                                 EventHandler onSwitchControl)
         {
             InitializeComponent();

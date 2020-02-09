@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
@@ -10,16 +11,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
     /// </summary>
     public partial class ServiceUC : UserControl
     {
+        private ItemsMonitoringService _itemsMonitoringService;
         private SystemServiceViewModel _systemServiceViewModel;
         private EventHandler _onRemove;
         private EventHandler _onEdit;
 
-        public ServiceUC(EventHandler onRemove, EventHandler onEdit, SystemServiceViewModel systemServiceViewModel)
+        public ServiceUC(EventHandler onRemove, EventHandler onEdit, SystemServiceViewModel systemServiceViewModel, ItemsMonitoringService itemsMonitoringService)
         {
             InitializeComponent();
             _onRemove = onRemove;
             _onEdit = onEdit;
             _systemServiceViewModel = systemServiceViewModel;
+            _itemsMonitoringService = itemsMonitoringService;
             SetServiceValues();
         }
 
@@ -56,7 +59,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ServiceDetailWindow serviceDetail = new ServiceDetailWindow(_systemServiceViewModel);
+            ServiceDetailWindow serviceDetail = new ServiceDetailWindow(_systemServiceViewModel, _itemsMonitoringService);
             serviceDetail.ShowDialog();
         }
     }

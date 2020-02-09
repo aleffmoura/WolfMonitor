@@ -71,7 +71,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var service = new AgentService(new AgentEndPoint(_customHttpCliente));
-            var monitoringItems = new ItensMonitoringService(new ItemsEndPoint(_customHttpCliente));
+            var monitoringItems = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
 
 
             var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);

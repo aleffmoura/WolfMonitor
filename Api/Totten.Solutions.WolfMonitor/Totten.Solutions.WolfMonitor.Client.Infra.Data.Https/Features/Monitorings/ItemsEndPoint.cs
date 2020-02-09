@@ -32,5 +32,11 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
         {
             return await InnerAsync<Unit, object>($"monitoring/Items/{agentId}/{id}", null, HttpMethod.Delete);
         }
+
+        public async Task<Result<Exception, PageResult<T>>> GetItemHistoric<T>(Guid id)
+        {
+            return await InnerGetAsync<PageResult<T>>($"monitoring/Items/historic/{id}?$count=true&$top=10");
+        }
+
     }
 }

@@ -12,11 +12,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     public partial class ServicesUserControl : UserControl, IUserControl
     {
-        private ItensMonitoringService _itemsMonitoringService;
+        private ItemsMonitoringService _itemsMonitoringService;
         private Dictionary<Guid, ServiceUC> _indexes;
         public Guid _agentId;
 
-        public ServicesUserControl(Guid agentId, ItensMonitoringService itemsMonitoringService)
+        public ServicesUserControl(Guid agentId, ItemsMonitoringService itemsMonitoringService)
         {
             InitializeComponent();
             _agentId = agentId;
@@ -53,7 +53,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 {
                     foreach (SystemServiceViewModel serviceViewModel in task.Result.Success.Items)
                     {
-                        _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, serviceViewModel));
+                        _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, serviceViewModel, _itemsMonitoringService));
                     }
                     PopulateByDictionary();
                 }

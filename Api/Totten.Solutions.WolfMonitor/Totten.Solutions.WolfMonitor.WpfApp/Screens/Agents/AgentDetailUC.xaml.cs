@@ -25,10 +25,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     public partial class AgentDetailUC : UserControl
     {
         private AgentService _agentsService;
-        private ItensMonitoringService _itensMonitoringService;
+        private ItemsMonitoringService _itensMonitoringService;
         private Guid _id;
 
-        public AgentDetailUC(Guid id, AgentService agentService, ItensMonitoringService itensMonitoringService)
+        public AgentDetailUC(Guid id, AgentService agentService, ItemsMonitoringService itensMonitoringService)
         {
             InitializeComponent();
             _id = id;
