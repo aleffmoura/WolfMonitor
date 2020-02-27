@@ -74,6 +74,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
             => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
 
         [HttpGet("historic/{itemId}")]
+        [ODataQueryOptionsValidate]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadResumeItem([FromRoute]Guid itemId, ODataQueryOptions<ItemHistoric> queryOptions)
             => await HandleQueryable<ItemHistoric, ItemHistoric>(await _mediator.Send(new HistoricCollection.Query(itemId)), queryOptions);
