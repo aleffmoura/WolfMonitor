@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
     {
         public Guid ItemId { get; set; }
         public string Value { get; set; }
-        public DateTime MonitoredAt { get; set; }
+        public string MonitoredAt { get; set; }
 
         public override void Validate() { }
     }

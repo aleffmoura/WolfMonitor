@@ -48,7 +48,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                         .WithMessage("Identificador da empresa é invalido");
                     RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta criando o agente é invalido");
-                    RuleFor(a => a.UserWhoCreatedName).NotEmpty().Length(4, 100);
                     RuleFor(a => a.DisplayName).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Password).NotEmpty().Length(4, 100);

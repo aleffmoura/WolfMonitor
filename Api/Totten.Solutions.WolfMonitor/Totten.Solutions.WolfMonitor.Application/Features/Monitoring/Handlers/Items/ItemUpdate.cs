@@ -93,6 +93,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     log.IsSuccess = returned.IsSuccess;
                     log.JsonResult = returned.IsSuccess ? JsonConvert.SerializeObject(returned.Success) : JsonConvert.SerializeObject(returned.Failure);
 
+
                     if (returned.IsSuccess)
                     {
                         await _repository.CreateHistoricAsync(itemHistoric);
