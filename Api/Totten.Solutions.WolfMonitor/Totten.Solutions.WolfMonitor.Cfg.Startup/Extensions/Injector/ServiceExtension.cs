@@ -6,6 +6,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System.Net.Http;
+using Totten.Solutions.WolfMonitor.Application.Features.Services;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
@@ -61,6 +62,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             container.Register<IItemRepository, ItemRepository>();
             container.Register<IUserRepository, UserRepository>();
             container.Register<IRoleRepository, RoleRepository>();
+            container.Register<IEmailService, EmailService>();
         }
         
     }

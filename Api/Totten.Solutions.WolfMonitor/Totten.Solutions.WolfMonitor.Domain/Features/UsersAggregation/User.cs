@@ -19,6 +19,11 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
         public string LastName { get; set; }
         public string Language { get; set; }
 
+
+        public string Token { get; set; }
+        public string TokenSolicitationCode { get; set; }
+        public string RecoverSolicitationCode { get; set; }
+
         public virtual Role Role { get; set; }
         public virtual Company Company { get; set; }
         public List<Agent> Agents { get; set; }

@@ -45,6 +45,15 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         {
             return Result.Run(() => _context.Users.Where(u => u.CompanyId == companyId));
         }
+        public async Task<Result<Exception, User>> GetByLoginAndEmail(string login, string email)
+        {
+            User userCallBack = await _context.Users.Include(x => x.Role).FirstOrDefaultAsync(user => user.Email == email && !user.Removed &&
+                                                                          (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)));
+            if (userCallBack == null)
+                return new InvalidCredentialsException();
+
+            return userCallBack;
+        }
 
         public async Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password)
         {

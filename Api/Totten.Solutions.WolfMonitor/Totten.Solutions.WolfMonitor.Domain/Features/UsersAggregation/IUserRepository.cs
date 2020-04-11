@@ -9,6 +9,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
     public interface IUserRepository : IRepository<User>
     {
         Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password);
+        Task<Result<Exception, User>> GetByLoginAndEmail(string login, string email);
         Result<Exception, IQueryable<User>> GetAll(Guid companyId);
         Result<Exception, IQueryable<User>> GetAllByCompanyId(Guid companyId);
     }

@@ -48,17 +48,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
-            private readonly IMapper _mapper;
             private readonly IUserRepository _repository;
             private readonly IRoleRepository _roleRepository;
             private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IMapper mapper,
-                            IUserRepository repository,
+            public Handler(IUserRepository repository,
                             IRoleRepository roleRepository,
                             ICompanyRepository companyRepository)
             {
-                _mapper = mapper;
                 _repository = repository;
                 _roleRepository = roleRepository;
                 _companyRepository = companyRepository;
@@ -79,7 +76,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     return role.Failure;
                 }
                 request.Password = request.Password.GenerateHash();
-                User user = _mapper.Map<Command, User>(request);
+                User user = Mapper.Map<Command, User>(request);
                 user.RoleId = role.Success.Id;
 
                 Result<Exception, User> callback = await _repository.CreateAsync(user);

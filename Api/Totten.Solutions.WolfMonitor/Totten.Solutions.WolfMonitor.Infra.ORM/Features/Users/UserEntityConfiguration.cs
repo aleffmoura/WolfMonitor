@@ -21,6 +21,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
             builder.Property(user => user.UpdatedIn).IsRequired();
             builder.Property(user => user.Removed).IsRequired();
 
+
+            builder.Property(user => user.Token);
+            builder.Property(user => user.TokenSolicitationCode);
+            builder.Property(user => user.RecoverSolicitationCode); ;
+
             builder.HasIndex(user => user.CompanyId);
             builder.Ignore(user => user.Agents);
             builder.Ignore(role => role.Company);

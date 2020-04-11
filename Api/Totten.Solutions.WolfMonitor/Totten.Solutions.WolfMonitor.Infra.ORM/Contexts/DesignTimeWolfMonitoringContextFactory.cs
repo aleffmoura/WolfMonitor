@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
         {
             DbContextOptionsBuilder<WolfMonitoringContext> optionsBuilder = new DbContextOptionsBuilder<WolfMonitoringContext>();
 
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=WolfMonitoringContext;Persist Security Info=True; Integrated Security=True;",
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WolfMonitoringContext;Persist Security Info=True; Integrated Security=True;",
                 opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
 
             return new WolfMonitoringContext(optionsBuilder.Options);

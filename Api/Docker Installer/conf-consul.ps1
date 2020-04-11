@@ -28,7 +28,7 @@ $Jobs = @'
   "jobs": [
     {
       "intervalMinutes": "15",      
-      "targetServiceName": "Sample2",
+      "targetServiceName": "Sample",
       "messageType": "InfoMessage"
     }
   ]
@@ -84,15 +84,26 @@ $IdentityServer = @'
   "wolfMonitorConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
   "issuerUri": "http://localhost",
   "agentsApiSecret":"agentSuperSecret",
+  "monitoringApiSecret":"monitoringSuperSecret",
+  "usersApiSecret":"usersSuperSecret",
+  "companiesApiSecret":"companiesSuperSecret",
   "clients": [
     {
-      "id": "postman",
-      "secret": "postmanSecret",
-      "name": "Postman Client",
+      "id": "agentService",
+      "secret": "agentServiceSecret",
+      "name": "Agent Service",
       "scopes": [
       		"Agents", "Monitoring"
       ]
     }
+    {
+      "id": "application",
+      "secret": "applicationSecret",
+      "name": "Application WPF",
+      "scopes": [
+      		"Agents", "Monitoring", "Users"
+      ]
+    },
   ]
 }
 '@
@@ -140,6 +151,17 @@ $Monitoring = @'
 }
 '@
 
+$Companies = @'
+{
+  "Tags": "Companies",
+  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "apiName":"Companies",
+  "apiSecret":"companiesSuperSecret"
+}
+'@
+
 $response = Invoke-RestMethod -Method 'Put' -Uri $url"Global" -Body $Global
 if($response -eq 'true') {
 	Write-Output "Configuração Global criada com sucesso!"
@@ -173,9 +195,13 @@ $response = Invoke-RestMethod -Method 'Put' -Uri $url"Monitoring" -Body $Monitor
 if($response -eq 'true') {
 	Write-Output "Configuração Monitoring criada com sucesso!"
 }
-$response = Invoke-RestMethod -Method 'Put' -Uri $url"Monitoring" -Body $Users
+$response = Invoke-RestMethod -Method 'Put' -Uri $url"Users" -Body $Users
 if($response -eq 'true') {
 	Write-Output "Configuração Users criada com sucesso!"
+}
+$response = Invoke-RestMethod -Method 'Put' -Uri $url"Companies" -Body $Companies
+if($response -eq 'true') {
+	Write-Output "Configuração Companies criada com sucesso!"
 }
 Write-Output ""
 Write-Output "Configuração concluída com sucesso!"

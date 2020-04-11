@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens"
         mc:Ignorable="d"
-        Height="500" Width="500" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Height="300" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         Background="AliceBlue" Loaded="Window_Loaded" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="Storyboard1" RepeatBehavior="Forever">
@@ -275,16 +275,15 @@
     </Window.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="17*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="22*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle x:Name="rectangle4" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="200,350,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100"/>
-        <Rectangle x:Name="rectangle" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="200,50,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100"/>
-        <Rectangle x:Name="rectangle2" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="10,200,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100" Grid.Column="1"/>
-        <Rectangle x:Name="rectangle6" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="50,200,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100"/>
-        <Rectangle x:Name="rectangle1" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="305,95,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100" Grid.ColumnSpan="2"/>
-        <Rectangle x:Name="rectangle3" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="305,305,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100" Grid.ColumnSpan="2"/>
-        <Rectangle x:Name="rectangle5" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="95,305,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100"/>
-        <Rectangle x:Name="rectangle7" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="100" Margin="95,95,0,0" VerticalAlignment="Top" Width="100" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle4" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="121,192,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="121,50,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle2" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="192,121,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle6" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="50,121,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle1" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="48" Margin="171,71,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle3" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="171,171,0,0" VerticalAlignment="Top" Width="47" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle5" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="47" Margin="71,171,0,0" VerticalAlignment="Top" Width="48" RadiusX="100" RadiusY="100"/>
+        <Rectangle x:Name="rectangle7" Fill="#FF1E1E85" HorizontalAlignment="Left" Height="48" Margin="71,71,0,0" VerticalAlignment="Top" Width="48" RadiusX="100" RadiusY="100"/>
     </Grid>
 </Window>

@@ -36,5 +36,17 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         {
             return HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
         }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> Create([FromBody]UserForgotPasswordCreate.Command command)
+        {
+            return HandleCommand(await _mediator.Send(command));
+        }
+
+        [HttpPost("forgot-password/validate-token")]
+        public async Task<IActionResult> ValidateToken([FromBody]UserValidateTokenCreate.Command command)
+        {
+            return HandleCommand(await _mediator.Send(command));
+        }
     }
 }

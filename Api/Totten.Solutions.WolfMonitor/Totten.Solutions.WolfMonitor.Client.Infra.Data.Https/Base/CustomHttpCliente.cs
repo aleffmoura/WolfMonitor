@@ -11,12 +11,13 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
         public HttpClient HttpClient { get; private set; }
         public UserLogin User { get; private set; }
 
-        public CustomHttpCliente(string uriBaseApi, UserLogin userLogin)
+        public CustomHttpCliente(string uriBaseApi, UserLogin userLogin, bool ignoreAuth = false)
         {
             _uriBaseApi = uriBaseApi;
-            HttpClient = new HttpClient(new AuthenticationHandler(this, new HttpClientHandler()));
+            HttpClient = ignoreAuth ? new HttpClient() : new HttpClient(new AuthenticationHandler(this, new HttpClientHandler()));
             User = userLogin;
         }
+
         private string Concat(string partialUri)
         {
             return $@"{_uriBaseApi}/{partialUri}";

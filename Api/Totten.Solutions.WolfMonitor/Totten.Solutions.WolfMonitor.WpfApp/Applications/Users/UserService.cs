@@ -9,12 +9,14 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
 {
     public class UserService : IUserService
     {
         private UserEndPoint _endPoint;
+
         public UserService(UserEndPoint endPoint)
         {
             _endPoint = endPoint;
@@ -24,11 +26,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         {
             return await _endPoint.GetInfo();
         }
+
         public string GetClientCredentials()
         {
             return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
         }
-        public string Authentication()
+
+        public async Task<string> Authentication()
         {
             var request = _endPoint.Client.CreateRequest(HttpMethod.Post, "identityserver/connect/token");
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -44,7 +48,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
 
             using (var httpClient = new HttpClient())
             using (request)
-            using (var response = httpClient.SendAsync(request).ConfigureAwait(false).GetAwaiter().GetResult())
+            using (var response = await httpClient.SendAsync(request))
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -55,5 +59,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
                 return content.access_token.ToString();
             }
         }
+
+        public Task<Result<Exception, string>> RecoverPassword(string login, string email)
+            => _endPoint.Post<string, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email});
+
+        public Task<Result<Exception, string>> TokenConfimation(string login, string email, string recoverSolicitationCode, string token)
+            => _endPoint.Post<string, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO {
+                Login = login,
+                Email = email,
+                RecoverSolicitationCode = recoverSolicitationCode,
+                Token = token
+            });
+
+        public Task<Result<Exception, Unit>> ChangePassword(string username, string email, string tokenSolicitationCode, string pass, string repass)
+         => _endPoint.Post<Unit, TokenConfirmationRequestVO>("forgot-password/change-password", new TokenConfirmationRequestVO
+         {
+             Email = email
+         });
+
     }
 }
