@@ -2,10 +2,12 @@
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords
 {
-    public class TokenSolicitationVO
+    public class TokenChangePasswordVO
     {
         public string Login { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public Guid TokenSolicitationCode { get; set; }
         public Guid RecoverSolicitationCode { get; set; }
     }
 }

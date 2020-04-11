@@ -8,8 +8,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications
     public interface IUserService
     {
         Task<Result<Exception, UserBasicInformationViewModel>> GetInfo();
-        Task<Result<Exception, string>> RecoverPassword(string username, string email);
-        Task<Result<Exception, string>> TokenConfimation(string username, string email, string recoverSolicitationCode, string token);
-        Task<Result<Exception, Unit>> ChangePassword(string username, string email, string tokenSolicitationCode, string pass, string repass);
+        Task<Result<Exception, Guid>> RecoverPassword(string login, string email);
+        Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token);
+        Task<Result<Exception, Unit>> ChangePassword(string login, string email, Guid tokenSolicitationCode, Guid RecoverSolicitationCode, string pass);
     }
 }

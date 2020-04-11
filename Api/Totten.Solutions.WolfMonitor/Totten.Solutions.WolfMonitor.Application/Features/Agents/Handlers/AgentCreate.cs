@@ -5,6 +5,7 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -72,15 +73,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 Result<Exception, Agent> agentVerify = await _repository.GetByLogin(request.CompanyId, request.Login);
 
                 if (agentVerify.IsSuccess)
-                {
-                    return new Exception("Já existe um agente com esse login cadastrado.");
-                }
+                    return new DuplicateException("Já existe um agente com esse login cadastrado.");
+
                 var userCallback = await _userRepository.GetByIdAsync(request.UserWhoCreatedId);
 
                 if (userCallback.IsFailure)
-                {
-                    return new Exception("Não foi encontrado um usúario com o id da requisição.");
-                }
+                    return new NotFoundException("Não foi encontrado um usúario com o id da requisição.");
 
                 request.UserWhoCreatedName = userCallback.Success.Login;
 

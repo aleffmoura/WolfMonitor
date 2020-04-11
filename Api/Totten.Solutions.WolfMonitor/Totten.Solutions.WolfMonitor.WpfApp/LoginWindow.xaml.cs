@@ -64,15 +64,20 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show($"Falha: {ex.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void lblForgot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             InstanceUserService(true);
-            var recover = new ForgotPasswordWindow(_userService);
-            recover.ShowDialog();
+            try
+            {
+
+                var recover = new ForgotPasswordWindow(_userService);
+                recover.ShowDialog();
+            }
+            catch { }
 
         }
     }

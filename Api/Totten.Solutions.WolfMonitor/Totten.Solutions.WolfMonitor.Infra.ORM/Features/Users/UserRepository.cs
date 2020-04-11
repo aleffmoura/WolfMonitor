@@ -32,25 +32,21 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         }
 
         public Result<Exception, IQueryable<User>> GetAll(Guid companyId)
-        {
-            return Result.Run(() => _context.Users.Where(a => a.CompanyId == companyId && !a.Removed));
-        }
+             => Result.Run(() => _context.Users.Where(a => a.CompanyId == companyId && !a.Removed));
 
         public Result<Exception, IQueryable<User>> GetAll()
-        {
-            return Result.Run(() => _context.Users.Where(a => !a.Removed));
-        }
+             => Result.Run(() => _context.Users.Where(a => !a.Removed));
 
         public Result<Exception, IQueryable<User>> GetAllByCompanyId(Guid companyId)
-        {
-            return Result.Run(() => _context.Users.Where(u => u.CompanyId == companyId));
-        }
+             => Result.Run(() => _context.Users.Where(u => u.CompanyId == companyId));
+
         public async Task<Result<Exception, User>> GetByLoginAndEmail(string login, string email)
         {
-            User userCallBack = await _context.Users.Include(x => x.Role).FirstOrDefaultAsync(user => user.Email == email && !user.Removed &&
-                                                                          (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)));
+            User userCallBack = await _context.Users.FirstOrDefaultAsync(user => user.Email == email &&
+                                                                         (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)) &&
+                                                                         !user.Removed);
             if (userCallBack == null)
-                return new InvalidCredentialsException();
+                return new InvalidCredentialsException("The login or email is incorrect");
 
             return userCallBack;
         }
@@ -62,9 +58,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
                                                                           user.Password == password.GenerateHash() &&
                                                                           !user.Removed);
             if (userCallBack == null)
-            {
                 return new InvalidCredentialsException();
-            }
+
             return userCallBack;
         }
 
@@ -73,9 +68,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
             User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(a => a.Id == id && !a.Removed);
 
             if (user == null)
-            {
                 return new NotFoundException();
-            }
 
             return user;
         }

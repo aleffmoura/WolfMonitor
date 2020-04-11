@@ -33,27 +33,32 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
 
         public async Task<object> Validation(object param)
         {
-            if (param is ValidationFullVO validationFull)
+            if (param is ValidationFullVO validation)
             {
                 if (!txtPass.Password.Equals(txtRepass.Password))
                 {
-                    MessageBox.Show("As senhas não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return null;
+                    MessageBox.Show("As senhas não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return param;
                 }
-                var callback = await _userService.ChangePassword(validationFull.Username, validationFull.Email, validationFull.TokenSolicitationCode, txtPass.Password, txtRepass.Password);
+
+                var callback = await _userService.ChangePassword(validation.Username, validation.Email,
+                                                                 validation.TokenSolicitationCode, validation.RecoverSolicitationCode, txtPass.Password);
 
                 if (callback.IsSuccess)
-                    return validationFull;
+                {
+                    MessageBox.Show("A senha foi alterada com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return true;
+                }
                 else
                 {
-                    MessageBox.Show(callback.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return null;
+                    MessageBox.Show(callback.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return param;
                 }
             }
 
 
             MessageBox.Show("Falha interna, por favor contate um administrador.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
-            return null;
+            return param;
         }
 
         private void textChanged(object sender, RoutedEventArgs e)

@@ -37,13 +37,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         {
             if (param is TokenSolicitationVO validationResponse)
             {
-                var callback = await _userService.TokenConfimation(validationResponse.Username, validationResponse.Email, validationResponse.RecoverSolicitationCode, txtToken.Text);
+                if(!Guid.TryParse(txtToken.Text, out Guid token))
+                {
+                    MessageBox.Show("O token informado não corresponde a um formato válido.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return param;
+                }
+                var callback = await _userService.TokenConfimation(validationResponse.Login, validationResponse.Email, validationResponse.RecoverSolicitationCode, token);
 
                 if (callback.IsSuccess)
                 {
                     return new ValidationFullVO
                     {
-                        Username = validationResponse.Username,
+                        Username = validationResponse.Login,
                         Email = validationResponse.Email,
                         RecoverSolicitationCode = validationResponse.RecoverSolicitationCode,
                         TokenSolicitationCode = callback.Success
@@ -51,11 +56,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 }
 
                 MessageBox.Show("Token incorreto.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
+                return param;
             }
 
             MessageBox.Show("Erro interno, contate o administrador.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
-            return null;
+            return param;
         }
 
         private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

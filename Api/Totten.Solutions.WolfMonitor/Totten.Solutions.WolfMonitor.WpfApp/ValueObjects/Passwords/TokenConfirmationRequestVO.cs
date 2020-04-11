@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords
 {
@@ -8,7 +6,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords
     {
         public string Login { get; set; }
         public string Email { get; set; }
-        public string Token { get; set; }
-        public string RecoverSolicitationCode { get; set; }
+        public Guid Token { get; set; }
+        public Guid RecoverSolicitationCode { get; set; }
     }
 }

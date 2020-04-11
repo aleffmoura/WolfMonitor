@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers.ForgotPasswords;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
@@ -17,36 +18,31 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         private IMediator _mediator;
 
         public UsersController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+            => _mediator = mediator;
 
         [HttpGet("{companyId}")]
         [ODataQueryOptionsValidate]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll([FromRoute]Guid companyId, ODataQueryOptions<User> queryOptions)
-        {
-            return await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(companyId)), queryOptions);
-        }
+            => await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(companyId)), queryOptions);
 
 
         [HttpGet("info")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadInformations()
-        {
-            return HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
-        }
+            => HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> Create([FromBody]UserForgotPasswordCreate.Command command)
-        {
-            return HandleCommand(await _mediator.Send(command));
-        }
+            => HandleCommand(await _mediator.Send(command));
 
         [HttpPost("forgot-password/validate-token")]
         public async Task<IActionResult> ValidateToken([FromBody]UserValidateTokenCreate.Command command)
-        {
-            return HandleCommand(await _mediator.Send(command));
-        }
+            => HandleCommand(await _mediator.Send(command));
+
+        [HttpPost("forgot-password/change-password")]
+        public async Task<IActionResult> ChangePasswordByToken([FromBody]UserChangePasswordByTokenCreate.Command command)
+            => HandleCommand(await _mediator.Send(command));
+
     }
 }

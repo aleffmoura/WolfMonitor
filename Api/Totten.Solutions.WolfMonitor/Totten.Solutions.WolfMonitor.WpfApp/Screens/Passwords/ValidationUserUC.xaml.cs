@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             {
                 _enableNext = false;
                 MessageBox.Show("Por favor preencha todos os campos.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                return param;
+                return null;
             }
 
             var callback = await _userService.RecoverPassword(txtLogin.Text, txtEmail.Text);
@@ -47,12 +47,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             {
                 _enableNext = false;
                 MessageBox.Show("Os dados informados não são correspondentes a uma conta.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                return param;
+                return null;
             }
 
             return new TokenSolicitationVO
             {
-                Username = txtLogin.Text,
+                Login = txtLogin.Text,
                 Email = txtEmail.Text,
                 RecoverSolicitationCode = callback.Success
             };

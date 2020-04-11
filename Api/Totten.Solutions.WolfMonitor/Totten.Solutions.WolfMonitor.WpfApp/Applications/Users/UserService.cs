@@ -23,14 +23,31 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         }
 
         public async Task<Result<Exception, UserBasicInformationViewModel>> GetInfo()
-        {
-            return await _endPoint.GetInfo();
-        }
+            => await _endPoint.GetInfo();
 
         public string GetClientCredentials()
-        {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
-        }
+            => Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
+
+        public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email});
+
+        public Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token)
+            => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO {
+                Login = login,
+                Email = email,
+                RecoverSolicitationCode = recoverSolicitationCode,
+                Token = token
+            });
+
+        public Task<Result<Exception, Unit>> ChangePassword(string login, string email, Guid tokenSolicitationCode, Guid recoverSolicitationCode, string password)
+         => _endPoint.Post<Unit, TokenChangePasswordVO>("forgot-password/change-password", new TokenChangePasswordVO
+         {
+             Login = login,
+             Email = email,
+             TokenSolicitationCode = tokenSolicitationCode,
+             RecoverSolicitationCode = recoverSolicitationCode,
+             Password = password
+         });
 
         public async Task<string> Authentication()
         {
@@ -59,23 +76,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
                 return content.access_token.ToString();
             }
         }
-
-        public Task<Result<Exception, string>> RecoverPassword(string login, string email)
-            => _endPoint.Post<string, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email});
-
-        public Task<Result<Exception, string>> TokenConfimation(string login, string email, string recoverSolicitationCode, string token)
-            => _endPoint.Post<string, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO {
-                Login = login,
-                Email = email,
-                RecoverSolicitationCode = recoverSolicitationCode,
-                Token = token
-            });
-
-        public Task<Result<Exception, Unit>> ChangePassword(string username, string email, string tokenSolicitationCode, string pass, string repass)
-         => _endPoint.Post<Unit, TokenConfirmationRequestVO>("forgot-password/change-password", new TokenConfirmationRequestVO
-         {
-             Email = email
-         });
 
     }
 }

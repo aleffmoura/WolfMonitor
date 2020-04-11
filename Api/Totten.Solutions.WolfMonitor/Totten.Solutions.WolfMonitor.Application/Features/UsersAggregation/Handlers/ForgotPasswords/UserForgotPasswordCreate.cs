@@ -9,11 +9,11 @@ using Totten.Solutions.WolfMonitor.Application.Features.Services;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers
+namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers.ForgotPasswords
 {
     public class UserForgotPasswordCreate
     {
-        public class Command : IRequest<Result<Exception, string>>
+        public class Command : IRequest<Result<Exception, Guid>>
         {
             public string Login { get; set; }
             public string Email { get; set; }
@@ -33,7 +33,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Exception, string>>
+        public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
             private readonly IUserRepository _repository;
             private readonly IEmailService _emailService;
@@ -44,7 +44,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 _emailService = emailService;
             }
 
-            public async Task<Result<Exception, string>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
                 Result<Exception, User> callback = await _repository.GetByLoginAndEmail(request.Login, request.Email);
 
@@ -63,7 +63,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
                 await _repository.UpdateAsync(callback.Success);
 
-                return callback.Success.RecoverSolicitationCode;
+                return Guid.Parse(callback.Success.RecoverSolicitationCode);
             }
         }
     }

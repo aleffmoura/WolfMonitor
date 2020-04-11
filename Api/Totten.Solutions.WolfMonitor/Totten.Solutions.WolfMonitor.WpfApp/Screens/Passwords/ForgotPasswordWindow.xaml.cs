@@ -16,7 +16,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
     /// </summary>
     public partial class ForgotPasswordWindow : Window
     {
-        private object validationObject;
+        private object _validationObject;
         private IRecoverPassword _actualControl;
         private ValidationUserUC _validationUser;
         private ValidationTokenUC _validationToken;
@@ -56,7 +56,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         private UserControl GetControl(bool isNext)
         {
             if (_actualControl.StepRecover == StepRecover.validateUser && isNext)
-                    return _validationToken;
+                return _validationToken;
             else if (_actualControl.StepRecover == StepRecover.tokenConfirm)
             {
                 if (isNext)
@@ -64,7 +64,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 return _validationUser;
             }
             else if (!isNext)
-                    return _validationToken;
+                return _validationToken;
 
             return null;
         }
@@ -72,21 +72,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         private void btnPrev_Click(object sender, RoutedEventArgs e)
            => SwitchPanels(GetControl(false));
 
-        private void btnNext_Click(object sender, RoutedEventArgs e)
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
             btnNext.IsEnabled = false;
             btnPrev.IsEnabled = false;
 
-            _actualControl.Validation(validationObject).ContinueWith(task => {
-                validationObject = task.Result;
-                if (validationObject != null)
+            var result = await _actualControl.Validation(_validationObject);
+
+            if (result != null)
+            {
+                if (_actualControl.StepRecover != StepRecover.passwordChange && result != _validationObject)
                 {
-                    if (_actualControl.StepRecover != StepRecover.passwordChange)
-                        SwitchPanels(GetControl(true));
-                    else
-                        this.Close();
+                    _validationObject = result;
+                    SwitchPanels(GetControl(true));
                 }
-            });
+                else if(_actualControl.StepRecover == StepRecover.passwordChange && bool.TryParse(result.ToString(), out bool resultBool) && resultBool == true)
+                    this.Close();
+            }
+
         }
     }
 }
