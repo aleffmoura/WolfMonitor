@@ -70,6 +70,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Codigo de recuperação da solicitação não está correto com a requisição, contate um administrador");
 
                 callback.Success.Password = request.Password.GenerateHash();
+                callback.Success.Token = string.Empty;
+                callback.Success.TokenSolicitationCode = string.Empty;
+                callback.Success.RecoverSolicitationCode = string.Empty;
 
                 await _repository.UpdateAsync(callback.Success);
 
