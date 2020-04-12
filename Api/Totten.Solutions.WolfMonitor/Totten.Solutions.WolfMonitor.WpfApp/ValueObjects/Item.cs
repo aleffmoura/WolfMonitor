@@ -11,6 +11,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects
     }
     public class Item
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public int Interval { get; set; }

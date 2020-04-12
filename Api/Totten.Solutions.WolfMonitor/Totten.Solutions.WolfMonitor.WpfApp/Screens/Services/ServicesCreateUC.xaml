@@ -11,10 +11,7 @@
             <TextBox Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
             <TextBox Name="txtDisplayName" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
             <TextBox Name="txtDefaultValue"  materialDesign:HintAssist.Hint="Valor Padrão" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>
-            <TextBox Name="txtInterval"  materialDesign:HintAssist.Hint="Intervalo" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18" Width="70" HorizontalAlignment="Left"/>
         </StackPanel>
-
-        <ComboBox x:Name="cbTypeTime" materialDesign:HintAssist.Hint="tipo de tempo"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="90,192.3,10,0" FontSize="18" />
 
     </Grid>
 </UserControl>
