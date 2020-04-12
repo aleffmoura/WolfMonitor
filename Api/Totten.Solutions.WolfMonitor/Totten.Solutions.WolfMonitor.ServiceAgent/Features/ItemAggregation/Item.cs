@@ -26,8 +26,11 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public ETypeItem Type { get; set; }
 
         public virtual bool VerifyChanges() { return false; }
+        public virtual void Change(string newStatus) { }
 
         public bool ShouldBeMonitoring() => MonitoredAt.HasValue ? MonitoredAt.Value.AddMinutes(Interval) < DateTime.Now : true;
+
+        
     }
     public static class ETypeItemExtensionsMethod
     {

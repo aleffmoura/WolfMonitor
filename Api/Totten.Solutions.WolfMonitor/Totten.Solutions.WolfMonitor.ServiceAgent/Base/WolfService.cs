@@ -1,11 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 using Timer = System.Timers.Timer;
 
@@ -21,13 +26,16 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         private AgentService _agentService;
         private Timer _sendFiles;
         private AgentSettings _agentSettings;
-
+        private Rabbit _rabbitMQ;
+        private CancellationTokenSource _cancellationToken;
+        private Result<Exception, PageResult<Item>> _items;
 
         public WolfService(AgentSettings agentSettings, AgentService agentService, IHelper helper)
         {
             _agentService = agentService;
             _helper = helper;
             _agentSettings = agentSettings;
+            _cancellationToken = new CancellationTokenSource();
         }
 
         public void CreateDirs()
@@ -92,7 +100,11 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
             });
         }
 
-        public void Stop() => _started = false;
+        public void Stop()
+        {
+            _started = false;
+            _cancellationToken.Cancel();
+        }
 
         private void GenerateLogException(Exception ex, Item item = default)
         {
@@ -152,7 +164,17 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         var agentCallback = _agentService.GetInfo();
 
                         if (agentCallback.IsSuccess)
+                        {
                             _agent = agentCallback.Success;
+                            if (_rabbitMQ == null)
+                            {
+                                _rabbitMQ = new Rabbit(_agent.Id.ToString());
+                                Task.Run(() =>
+                                {
+                                    _rabbitMQ.Receive(ReceivedMessage, _cancellationToken.Token);
+                                }, _cancellationToken.Token);
+                            }
+                        }
                         else
                             GenerateLogException(agentCallback.Failure);
                         continue;
@@ -161,8 +183,11 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                     var itemsCallback = _agentService.GetItems();
 
                     if (itemsCallback.IsSuccess)
+                    {
+                        _items = itemsCallback.Success;
                         for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
                         {
+
                             var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
 
                             if (instance.ShouldBeMonitoring())
@@ -182,6 +207,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
                             itemsCallback.Success.Items[i] = instance;
                         }
+                    }
                     else
                         GenerateLogException(itemsCallback.Failure);
                 }
@@ -195,5 +221,29 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         }
 
+        private void ReceivedMessage(object obj)
+        {
+            try
+            {
+                if (obj is ChangeStatusService changeStatus)
+                {
+                    if (_agent.Id == changeStatus.AgentID)
+                    {
+                        var item = _items.Success.Items.FirstOrDefault(x => x.Name.Equals(changeStatus.Name) && x.DisplayName.Equals(changeStatus.DisplayName));
+                        if (item != null)
+                        {
+                            var instance = item.Type.GetInstance(item);
+                            instance.Change(changeStatus.NewStatus);
+                        }
+                        var msg = $"Não foi encontrado nenhum item com nome: {changeStatus.Name}\n";
+                        msg += $"ou com DisplayName: {changeStatus.DisplayName}\n";
+                        GenerateLogException(new Exception(msg));
+                    }
+                }
+            }catch(Exception ex)
+            {
+
+            }
+        }
     }
 }

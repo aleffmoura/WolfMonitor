@@ -12,6 +12,7 @@ using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Logging;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Mapper;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Mediat;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Metrics;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Swagger;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Validators;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
@@ -40,7 +41,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             services.AddFilters();
             services.AddLog();
             services.AddMetric();
-            //services.AddRabbitMQ();
+            services.AddRabbitMQ();
             services.AddMvc().AddMetrics().AddJsonOptions(options =>
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;

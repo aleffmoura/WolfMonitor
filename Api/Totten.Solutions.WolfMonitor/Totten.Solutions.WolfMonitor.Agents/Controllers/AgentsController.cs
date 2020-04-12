@@ -7,6 +7,7 @@ using Totten.Solutions.WolfMonitor.Agents.Commands;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
@@ -17,10 +18,12 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
     public class AgentsController : ApiControllerBase
     {
         private IMediator _mediator;
+        private IRabbitMQ _rabbitMQ;
 
-        public AgentsController(IMediator mediator)
+        public AgentsController(IMediator mediator, IRabbitMQ rabbitMQ)
         {
             _mediator = mediator;
+            _rabbitMQ = rabbitMQ;
         }
 
         #region HTTP Delete
@@ -38,6 +41,13 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         public async Task<IActionResult> Create([FromBody]AgentCreateCommand command)
         {
             return HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.DisplayName, command.Login, command.Password)));
+        }
+
+        [HttpPatch]
+        public IActionResult StartService([FromBody]ChangeServiceStatusCommand command)
+        {
+            _rabbitMQ.RouteMessage(channel: command.AgentID.ToString(), command);
+            return Ok();
         }
         #endregion
 

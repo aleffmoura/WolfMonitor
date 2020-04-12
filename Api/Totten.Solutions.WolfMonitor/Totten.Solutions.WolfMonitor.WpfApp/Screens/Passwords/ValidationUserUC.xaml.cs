@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords;
 
@@ -38,6 +39,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             {
                 _enableNext = false;
                 MessageBox.Show("Por favor preencha todos os campos.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+            if (!ValidatorHelper.IsValidEmail(txtEmail.Text))
+            {
+                MessageBox.Show("Email com formato inválido ou o servidor do email informado não esta respondendo", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
 
