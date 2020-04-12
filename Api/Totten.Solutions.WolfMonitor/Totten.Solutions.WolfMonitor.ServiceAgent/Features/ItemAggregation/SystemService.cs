@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceProcess;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
@@ -33,6 +34,14 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.Value = status;
             this.MonitoredAt = DateTime.Now;
             return true;
+        }
+
+        public override void Change(string newStatus)
+        {
+            if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
+                SystemServicesService.Stop(this.Name, this.DisplayName);
+            else
+                SystemServicesService.Start(this.Name, this.DisplayName);
         }
     }
 }

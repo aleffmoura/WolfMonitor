@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
@@ -19,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private AgentService _agentService;
         private ItemsMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
-
+        
         private EventHandler _onSwitchControl;
 
         public AgentsUserControl(AgentService agentService,
@@ -74,10 +75,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         }
         private void OnEdit(object sender, EventArgs e)
         {
-            Guid agentId = (Guid)sender;
-
-            _onSwitchControl?.Invoke(new AgentDetailUC(agentId, _agentService, _itensMonitoringService), new EventArgs());
-
+            _onSwitchControl?.Invoke(new AgentDetailUC((Guid)sender, _agentService, _itensMonitoringService), new EventArgs());
         }
         private void OnRemove(object sender, EventArgs e)
         {

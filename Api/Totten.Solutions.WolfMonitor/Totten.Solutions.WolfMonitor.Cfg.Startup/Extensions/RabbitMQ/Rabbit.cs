@@ -9,13 +9,13 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ
 {
-    internal class RabbitMQ : IRabbitMQ
+    internal class Rabbit : IRabbitMQ
     {
         private readonly IConfiguration configuration;
         private readonly IHelper _helper;
         private readonly string exchangeName, hostname;
 
-        public RabbitMQ(IConfigurationRoot configuration, IHelper helper)
+        public Rabbit(IConfigurationRoot configuration, IHelper helper)
         {
             this.configuration = configuration.GetSection("broker");
             this._helper = helper;

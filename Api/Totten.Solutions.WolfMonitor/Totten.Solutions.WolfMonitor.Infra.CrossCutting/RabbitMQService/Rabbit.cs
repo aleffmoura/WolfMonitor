@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using System.Threading;
 
-namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
+namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
 {
     public class Rabbit : IRabbitMQ
     {
@@ -13,8 +13,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
         private readonly string queue;
         public Rabbit(string queue)
         {
-            this.exchangeName = "";
-            this.hostname = "";
+            this.exchangeName = "tottem";
+            this.hostname = "192.168.0.101";
             this.queue = queue;
         }
 
@@ -68,7 +68,6 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
                 channel.BasicPublish(exchange: exchangeName,
                                      routingKey: routingKey,
                                      body: Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)));
-
             }
         }
         /// <summary>
@@ -98,7 +97,6 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
                 channel.BasicConsume(queue: this.queue,
                                  autoAck: true,
                                  consumer: consumer);
-
 
                 WaitHandle.WaitAny(new[] { token.WaitHandle });
             }

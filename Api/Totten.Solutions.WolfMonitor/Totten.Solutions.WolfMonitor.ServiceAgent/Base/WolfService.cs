@@ -10,7 +10,7 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
-using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 using Timer = System.Timers.Timer;
 
@@ -164,52 +164,22 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         var agentCallback = _agentService.GetInfo();
 
                         if (agentCallback.IsSuccess)
-                        {
                             _agent = agentCallback.Success;
-                            if (_rabbitMQ == null)
-                            {
-                                _rabbitMQ = new Rabbit(_agent.Id.ToString());
-                                Task.Run(() =>
-                                {
-                                    _rabbitMQ.Receive(ReceivedMessage, _cancellationToken.Token);
-                                }, _cancellationToken.Token);
-                            }
-                        }
                         else
                             GenerateLogException(agentCallback.Failure);
                         continue;
                     }
 
-                    var itemsCallback = _agentService.GetItems();
+                    GetItemsEndVerifyStatus();
 
-                    if (itemsCallback.IsSuccess)
+                    if (_rabbitMQ == null)
                     {
-                        _items = itemsCallback.Success;
-                        for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
+                        _rabbitMQ = new Rabbit(_agent.Id.ToString());
+                        Task.Run(() =>
                         {
-
-                            var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
-
-                            if (instance.ShouldBeMonitoring())
-                                if (instance.VerifyChanges())
-                                {
-                                    try
-                                    {
-                                        if (_agentService.Send(instance).IsFailure)
-                                            GenerateFile(instance);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        GenerateFile(instance);
-                                        GenerateLogException(ex, instance);
-                                    }
-                                }
-
-                            itemsCallback.Success.Items[i] = instance;
-                        }
+                            _rabbitMQ.Receive(ReceivedMessage, _cancellationToken.Token);
+                        }, _cancellationToken.Token);
                     }
-                    else
-                        GenerateLogException(itemsCallback.Failure);
                 }
                 catch (Exception ex)
                 {
@@ -221,28 +191,66 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         }
 
+        private void GetItemsEndVerifyStatus()
+        {
+            var itemsCallback = _agentService.GetItems();
+
+            if (itemsCallback.IsSuccess)
+            {
+                _items = itemsCallback.Success;
+                for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
+                {
+
+                    var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
+
+                    if (instance.ShouldBeMonitoring())
+                        if (instance.VerifyChanges())
+                        {
+                            try
+                            {
+                                if (_agentService.Send(instance).IsFailure)
+                                    GenerateFile(instance);
+                            }
+                            catch (Exception ex)
+                            {
+                                GenerateFile(instance);
+                                GenerateLogException(ex, instance);
+                            }
+                        }
+                    itemsCallback.Success.Items[i] = instance;
+                }
+            }
+            else
+                GenerateLogException(itemsCallback.Failure);
+        }
+
         private void ReceivedMessage(object obj)
         {
             try
             {
-                if (obj is ChangeStatusService changeStatus)
+                var changeStatus = JsonConvert.DeserializeObject<ChangeStatusService>(obj.ToString());
+                if (changeStatus != null)
                 {
-                    if (_agent.Id == changeStatus.AgentID)
+                    var item = _items.Success.Items.FirstOrDefault(x => x.Id == changeStatus.Id);
+                    if (item != null)
                     {
-                        var item = _items.Success.Items.FirstOrDefault(x => x.Name.Equals(changeStatus.Name) && x.DisplayName.Equals(changeStatus.DisplayName));
-                        if (item != null)
-                        {
-                            var instance = item.Type.GetInstance(item);
-                            instance.Change(changeStatus.NewStatus);
-                        }
+                        var instance = item.Type.GetInstance(item);
+                        instance.Change(changeStatus.NewStatus);
+
+                        if (_agentService.Send(instance).IsFailure)
+                            GenerateFile(instance);
+                    }
+                    else
+                    {
                         var msg = $"Não foi encontrado nenhum item com nome: {changeStatus.Name}\n";
                         msg += $"ou com DisplayName: {changeStatus.DisplayName}\n";
                         GenerateLogException(new Exception(msg));
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-
+                GenerateLogException(ex);
             }
         }
     }

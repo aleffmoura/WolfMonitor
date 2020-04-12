@@ -7,10 +7,13 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System.Net.Http;
 using Totten.Solutions.WolfMonitor.Application.Features.Services;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
@@ -50,12 +53,12 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             }, Lifestyle.Scoped);
 
 
-            RegisterFeatures(container);
+            RegisterFeatures(container, (IConfigurationRoot)configuration);
 
             services.AddScoped(s => s.GetRequiredService<IHttpClientFactory>().CreateClient());
         }
 
-        private static void RegisterFeatures(Container container)
+        private static void RegisterFeatures(Container container, IConfigurationRoot configurationRoot)
         {
             container.Register<IAgentRepository, AgentRepository>();
             container.Register<ICompanyRepository, CompanyRepository>();
@@ -63,7 +66,11 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             container.Register<IUserRepository, UserRepository>();
             container.Register<IRoleRepository, RoleRepository>();
             container.Register<IEmailService, EmailService>();
+            container.Register<IRabbitMQ, Rabbit>();
+            container.Register<BrokerReceiver>();
+            container.Register(() => configurationRoot);
+            container.Register<IHelper>(() => new Helper(configurationRoot));
         }
-        
+
     }
 }

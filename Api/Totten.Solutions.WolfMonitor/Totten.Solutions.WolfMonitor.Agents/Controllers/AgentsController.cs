@@ -42,16 +42,17 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         {
             return HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.DisplayName, command.Login, command.Password)));
         }
+        #endregion
 
-        [HttpPatch]
-        public IActionResult StartService([FromBody]ChangeServiceStatusCommand command)
+        #region HTTP PATCH
+
+        [HttpPatch("change-service")]
+        public IActionResult ChangeService([FromBody]ChangeServiceStatusCommand command)
         {
             _rabbitMQ.RouteMessage(channel: command.AgentID.ToString(), command);
             return Ok();
         }
-        #endregion
 
-        #region HTTP PATCH
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]AgentUpdateCommand command)

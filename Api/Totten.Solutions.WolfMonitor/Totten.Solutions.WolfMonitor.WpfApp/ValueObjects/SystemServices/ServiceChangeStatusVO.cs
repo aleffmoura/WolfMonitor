@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs
+namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices
 {
-    public class ChangeStatusService
+    public class ServiceChangeStatusVO
     {
-        public Guid Id { get; set; }
+        public Guid AgentID { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string NewStatus { get; set; }

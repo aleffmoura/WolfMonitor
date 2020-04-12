@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
@@ -11,23 +13,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
     /// </summary>
     public partial class ServiceUC : UserControl
     {
-        private ItemsMonitoringService _itemsMonitoringService;
         private SystemServiceViewModel _systemServiceViewModel;
         private EventHandler _onRemove;
         private EventHandler _onEdit;
+        private EventHandler _onRestart;
 
-        public ServiceUC(EventHandler onRemove, EventHandler onEdit, SystemServiceViewModel systemServiceViewModel, ItemsMonitoringService itemsMonitoringService)
+        public ServiceUC(EventHandler onRemove, EventHandler onEdit, EventHandler onRestart,
+                         SystemServiceViewModel systemServiceViewModel)
         {
             InitializeComponent();
             _onRemove = onRemove;
             _onEdit = onEdit;
-            _systemServiceViewModel = systemServiceViewModel;
-            _itemsMonitoringService = itemsMonitoringService;
-            SetServiceValues();
+            _onRestart = onRestart;
+            SetServiceValues(systemServiceViewModel);
         }
-
-        public void SetServiceValues()
+        public void SetServiceValues(SystemServiceViewModel systemServiceViewModel)
         {
+            _systemServiceViewModel = systemServiceViewModel;
             this.lblDisplayName.Text = _systemServiceViewModel.DisplayName;
             this.lblCurrentStatus.Text = _systemServiceViewModel.Value;
             this.lblLastStatus.Text = _systemServiceViewModel.LastStatus;
@@ -40,27 +42,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         public void ChangeColorTextBlock(TextBlock textBlock)
         {
-            if(textBlock.Text.Equals("running", System.StringComparison.InvariantCultureIgnoreCase))
+            if(textBlock.Text.Equals("running", StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Green);
-            else if(textBlock.Text.Equals("stopped", System.StringComparison.InvariantCultureIgnoreCase))
+            else if(textBlock.Text.Equals("stopped", StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Red);
             else
                 textBlock.Foreground = new SolidColorBrush(Colors.Gold);
             OnApplyTemplate();
         }
 
-        private void btnDel_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnDel_Click(object sender, RoutedEventArgs e)
             => _onRemove?.Invoke(_systemServiceViewModel, new EventArgs());
 
         private void btnRestart_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
+            => _onRestart?.Invoke(_systemServiceViewModel, new EventArgs());
+           
 
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ServiceDetailWindow serviceDetail = new ServiceDetailWindow(_systemServiceViewModel, _itemsMonitoringService);
-            serviceDetail.ShowDialog();
-        }
+            => _onEdit?.Invoke(_systemServiceViewModel, new EventArgs());
     }
 }

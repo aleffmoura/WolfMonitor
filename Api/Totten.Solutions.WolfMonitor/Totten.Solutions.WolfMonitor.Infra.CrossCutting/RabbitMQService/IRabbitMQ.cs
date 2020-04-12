@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
+namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService
 {
     public interface IRabbitMQ
     {

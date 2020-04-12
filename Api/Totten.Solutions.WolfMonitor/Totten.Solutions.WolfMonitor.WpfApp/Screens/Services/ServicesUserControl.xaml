@@ -13,13 +13,21 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0">
-            <Button x:Name="btnRefrash" Padding="0" Width="50" Height="30" Click="btnRefrash_Click">
+            <Button x:Name="btnRefrash" ToolTip="Recarregar página" Padding="0" Width="50" Height="30" Click="btnRefrash_Click">
                 <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
             </Button>
         </StackPanel>
         
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,365,0">
+            <Label>Recarregar automaticamente:</Label>
+            <TextBox x:Name="txtValueRefresh" materialDesign:HintAssist.Hint="Valor" Width="50" Margin="5,0,5,0" Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="txtValueRefresh_PreviewTextInput"/>
+            <ComboBox x:Name="cbTimeRefesh" Width="150" Height="30" materialDesign:HintAssist.Hint="Tempo" Style="{StaticResource MaterialDesignComboBox}" />
+            <Button x:Name="btnApplyTimer" Height="30" Width="50" Margin="5,0,0,0" Click="btnApplyTimer_Click">
+                <materialDesign:PackIcon x:Name="kindTimer" Kind="Play" Foreground="AliceBlue" />
+            </Button>
+        </StackPanel>
+        
         <StackPanel>
-            
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <TextBox x:Name="txtServiceName" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
                 <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">

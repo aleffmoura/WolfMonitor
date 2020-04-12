@@ -20,7 +20,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base
         }
         private string Concat(string partialUri)
         {
-            return $@"{_uriBaseApi}/{partialUri}";
+            var adc = $@"{_uriBaseApi}/{partialUri}";
+            return adc;
         }
 
         public HttpRequestMessage CreateRequest(HttpMethod httpMethod, string endPoint)

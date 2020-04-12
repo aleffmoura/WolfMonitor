@@ -6,6 +6,7 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
@@ -20,7 +21,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         private UserBasicInformationViewModel _userBasicInformation;
         private CustomHttpCliente _customHttpCliente;
 
-        public Home(CustomHttpCliente customHttpCliente, UserBasicInformationViewModel userBasicInformation)
+        public Home(CustomHttpCliente customHttpCliente,
+                    UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _customHttpCliente = customHttpCliente;
@@ -72,7 +74,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         {
             var service = new AgentService(new AgentEndPoint(_customHttpCliente));
             var monitoringItems = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
-
 
             var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
 

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
@@ -28,7 +29,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private ItemsMonitoringService _itensMonitoringService;
         private Guid _id;
 
-        public AgentDetailUC(Guid id, AgentService agentService, ItemsMonitoringService itensMonitoringService)
+        public AgentDetailUC(Guid id, AgentService agentService,
+                            ItemsMonitoringService itensMonitoringService)
         {
             InitializeComponent();
             _id = id;

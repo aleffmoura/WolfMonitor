@@ -41,7 +41,6 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             services.AddFilters();
             services.AddLog();
             services.AddMetric();
-            services.AddRabbitMQ();
             services.AddMvc().AddMetrics().AddJsonOptions(options =>
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;

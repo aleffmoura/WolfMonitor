@@ -48,6 +48,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
                     {
                         serviceController.Start();
                         serviceController.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(15));
+                        serviceController.Close();
+                        serviceController.Dispose();
                     }
                 }
             }
@@ -76,6 +78,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
                     {
                         serviceController.Stop();
                         serviceController.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(120));
+                        serviceController.Close();
+                        serviceController.Dispose();
                     }
                     return true;
                 }
