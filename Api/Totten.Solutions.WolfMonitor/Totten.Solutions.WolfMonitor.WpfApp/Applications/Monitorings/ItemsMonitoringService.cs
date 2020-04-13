@@ -22,10 +22,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings
         public async Task<Result<Exception, PageResult<SystemServiceViewModel>>> GetSystemServices(Guid id)
             => await _endPoint.GetServicesByAgentId<SystemServiceViewModel>(id);
 
-        public async Task<Result<Exception, Unit>> Delete(Guid agentId,Guid id)
-            => await _endPoint.Delete(agentId,id);
+        public async Task<Result<Exception, Unit>> Delete(Guid agentId, Guid id)
+            => await _endPoint.Delete(agentId, id);
 
-        public Task<Result<Exception, PageResult<ItemHistoricViewModel>>> GetItemHistoric(Guid id)
-            => _endPoint.GetItemHistoric<ItemHistoricViewModel>(id);
+        public Task<Result<Exception, PageResult<ItemHistoricViewModel>>> GetItemHistoric(Guid id, string take, string skip)
+            => _endPoint.GetItemHistoric<ItemHistoricViewModel>(id, take, skip);
+
+        public Task<Result<Exception, PageResult<ItemSolicitationViewModel>>> GetSolicitationsHistoric(Guid id, string take, string skip)
+            => _endPoint.GetItemHistoric<ItemSolicitationViewModel>(id, take, skip);
     }
 }

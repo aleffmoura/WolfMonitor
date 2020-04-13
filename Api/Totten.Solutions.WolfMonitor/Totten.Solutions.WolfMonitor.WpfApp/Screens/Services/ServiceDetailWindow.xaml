@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Detalhes do serviço" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
-        Width="600" Height="550">
+        Width="600" Height="680">
     
     <Grid>
         
@@ -32,15 +32,15 @@
             </StackPanel>
 
 
-            <TabControl  FontSize="15" Margin="0,10,5,10" SelectionChanged="TabControl_SelectionChanged">
+            <TabControl x:Name="tabControl" FontSize="15" Margin="0,10,5,10" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="Histórico de status">
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <DataGrid Width="580" Height="280"  x:Name="gridHistoric" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="580" Height="420"  ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Data Inicial" Binding="{Binding FirstName}"/>
-                                    <DataGridHyperlinkColumn Header="Data Final" Binding="{Binding Email}" />
-                                    <DataGridCheckBoxColumn Header="Valor" Width="100" Binding="{Binding Solicitation}" />
+                                    <DataGridTextColumn Width="280" Header="Item ID" Binding="{Binding ItemId}"/>
+                                    <DataGridTextColumn Header="Valor" Width="100" Binding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Data e Hora" Width="180" Binding="{Binding MonitoredAt}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -65,7 +65,7 @@
             
             
             <Grid Margin="0,0,5,5">
-                <Button x:Name="btnPrevPage" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Click="btnPrevPage_Click">
+                <Button x:Name="btnPrevPage" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Click="btnPrevPage_Click">
                     <materialDesign:PackIcon Kind="NavigateBefore"/>
                 </Button>
 

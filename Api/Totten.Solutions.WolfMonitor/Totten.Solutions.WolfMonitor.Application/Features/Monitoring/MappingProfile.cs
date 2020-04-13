@@ -34,7 +34,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             CreateMap<Item, ItemHistoric>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(item => Guid.NewGuid()))
                 .ForMember(dest => dest.ItemId, src => src.MapFrom(item => item.Id))
-                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Não monitorado"));
+                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm") : "Não monitorado"));
 
             CreateMap<ItemHistoric, ItemHistoric>();
             #endregion
