@@ -36,9 +36,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             _itemsMonitoringService = itemsMonitoringService;
             Populate();
         }
-        private void GetHistoricItems()
+        private Task GetHistoricItems()
         {
-            _itemsMonitoringService.GetItemHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
+            return _itemsMonitoringService.GetItemHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
              .ContinueWith(task =>
              {
                  Result<Exception, PageResult<ItemHistoricViewModel>> result = task.Result;
@@ -53,15 +53,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
                          if (result.Success.Items.Count < _take || _skip > _qtItems)
                              btnNextPage.IsEnabled = false;
-
+                         else
+                             btnNextPage.IsEnabled = true;
                      }
                  }
+
+                 return btnNextPage.IsEnabled;
              }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void GetSolicitations()
+        private Task GetSolicitations()
         {
-            _itemsMonitoringService.GetSolicitationsHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
+            return _itemsMonitoringService.GetSolicitationsHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
              .ContinueWith(task =>
              {
                  Result<Exception, PageResult<ItemSolicitationViewModel>> result = task.Result;
@@ -76,7 +79,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
                          if (result.Success.Items.Count < _take || _skip > _qtItems)
                              btnNextPage.IsEnabled = false;
-
+                         else
+                             btnNextPage.IsEnabled = true;
                      }
                  }
              }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -94,30 +98,46 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         {
             _skip -= _take;
             btnActualPage.Content = $"{--_actualPage}";
+            btnPrevPage.IsEnabled = false;
+            btnNextPage.IsEnabled = false;
 
-            if (_skip < _qtItems)
-                btnNextPage.IsEnabled = true;
+            Task task;
 
             if (tabControl.SelectedIndex == 0)
-                GetHistoricItems();
+                task = GetHistoricItems();
             else
-                GetSolicitations();
+                task = GetSolicitations();
 
-            if (_actualPage == 1)
-                btnPrevPage.IsEnabled = false;
+            task.ContinueWith(task =>
+            {
+                btnPrevPage.IsEnabled = true;
+                if (_actualPage == 1)
+                    btnPrevPage.IsEnabled = false;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
             btnActualPage.Content = $"{++_actualPage}";
             _skip += _take;
+            btnNextPage.IsEnabled = false;
+            btnPrevPage.IsEnabled = false;
+
+            Task task;
 
             if (tabControl.SelectedIndex == 0)
-                GetHistoricItems();
+                task = GetHistoricItems();
             else
-                GetSolicitations();
+                task = GetSolicitations();
 
-            btnPrevPage.IsEnabled = true;
+            task.ContinueWith(task =>
+            {
+                if (_actualPage != 1)
+                    btnPrevPage.IsEnabled = true;
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -126,6 +146,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             _actualPage = 1;
             _qtItems = 0;
             btnActualPage.Content = $"{_actualPage}";
+            btnPrevPage.IsEnabled = false;
+            btnNextPage.IsEnabled = true;
 
             if (tabControl.SelectedIndex == 0)
             {
