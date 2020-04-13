@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items;
+using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels;
 using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels.SystemServices;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
@@ -61,6 +62,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public async Task<IActionResult> ReadAllByAgentId(ODataQueryOptions<Item> queryOptions)
             => await HandleQueryable<Item, ItemResumeForAgentViewModel>(await _mediator.Send(new ItemCollectionForAgent.Query(UserId)), queryOptions);
 
+        #region Reading to view
         [HttpGet("services/{agentId}")]
         [ODataQueryOptionsValidate]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
@@ -72,12 +74,22 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAllconfigs([FromRoute]Guid agentId, ODataQueryOptions<Item> queryOptions)
             => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
+        #endregion
 
         [HttpGet("historic/{itemId}")]
         [ODataQueryOptionsValidate]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        public async Task<IActionResult> ReadResumeItem([FromRoute]Guid itemId, ODataQueryOptions<ItemHistoric> queryOptions)
+        public async Task<IActionResult> ReadHistoricItem([FromRoute]Guid itemId, ODataQueryOptions<ItemHistoric> queryOptions)
             => await HandleQueryable<ItemHistoric, ItemHistoric>(await _mediator.Send(new HistoricCollection.Query(itemId)), queryOptions);
+
+
+        [HttpGet("solicitations/{itemId}")]
+        [ODataQueryOptionsValidate]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> ReadSolicitationHistoric([FromRoute]Guid itemId, ODataQueryOptions<ItemSolicitationHistoric> queryOptions)
+            => await HandleQueryable<ItemSolicitationHistoric, SolicitationHistoricViewModel>(await _mediator.Send(new SolicitationHistoricCollection.Query(itemId)), queryOptions);
+
+
 
         #endregion
 

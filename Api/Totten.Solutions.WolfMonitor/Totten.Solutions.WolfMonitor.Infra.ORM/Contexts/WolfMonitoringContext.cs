@@ -8,6 +8,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemHistoric> Historic { get; set; }
+        public DbSet<ItemSolicitationHistoric> SolicitationsHistoric { get; set; }
 
         public WolfMonitoringContext(DbContextOptions<WolfMonitoringContext> options) : base(options) { }
 
@@ -16,6 +17,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Contexts
         {
             modelBuilder.ApplyConfiguration(new ItemEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ItemHistoricEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemSolicitationHistoricEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

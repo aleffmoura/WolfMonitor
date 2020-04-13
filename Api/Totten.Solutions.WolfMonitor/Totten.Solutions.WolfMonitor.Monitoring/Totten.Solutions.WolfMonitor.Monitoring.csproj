@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Totten.Solutions.WolfMonitor.Cfg.Startup\Totten.Solutions.WolfMonitor.Cfg.Startup.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
 </Project>

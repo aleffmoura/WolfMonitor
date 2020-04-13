@@ -46,7 +46,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
 
                 if (callback.IsSuccess)
                 {
-                    MessageBox.Show("A senha foi alterada com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("A senha foi alterada com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
                     return true;
                 }
                 else

@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
-using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents

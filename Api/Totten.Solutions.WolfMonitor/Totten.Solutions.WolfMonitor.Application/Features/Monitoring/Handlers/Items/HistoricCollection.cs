@@ -37,9 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 var item = _repository.GetByIdAsync(request.ItemId).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (item.IsFailure)
-                {
                     return new NotFoundException("Não foi encontrado um item valido com id informado.");
-                }
 
                 Result<Exception, IQueryable<ItemHistoric>> historic = _repository.GetAllHistoric(request.ItemId);
 

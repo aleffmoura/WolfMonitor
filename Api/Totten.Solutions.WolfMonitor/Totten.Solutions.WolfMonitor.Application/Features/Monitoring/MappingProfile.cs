@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items;
+using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels;
 using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModels.SystemServices;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 
@@ -38,6 +39,20 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             CreateMap<ItemHistoric, ItemHistoric>();
             #endregion
 
+
+            #region solicitations
+
+            CreateMap<ItemSolicitationHistoric, SolicitationHistoricViewModel>()
+                .ForMember(dest => dest.Value, src => src.MapFrom(item => item.NewValue))
+                .ForMember(dest => dest.User, src => src.MapFrom(item => $"{item.User.FirstName} {item.User.LastName}"))
+                .ForMember(dest => dest.UserEmail, src => src.MapFrom(item => item.User.Email))
+                .ForMember(dest => dest.SolicitationType, src => src.MapFrom(item => item.SolicitationType.ToString()));
+
+            CreateMap<ItemSolicitationHistoricCreate.Command, ItemSolicitationHistoric>()
+                .ForMember(dest => dest.NewValue, src => src.MapFrom(item => item.NewStatus))
+                .ForMember(dest => dest.CreatedIn, src => src.MapFrom(item => DateTime.Now))
+                .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(item => DateTime.Now));
+            #endregion
         }
     }
 }

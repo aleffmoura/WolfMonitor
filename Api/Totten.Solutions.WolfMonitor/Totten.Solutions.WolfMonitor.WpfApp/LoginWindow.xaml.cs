@@ -70,7 +70,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 var recover = new ForgotPasswordWindow(_userService);
                 recover.ShowDialog();
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("Falha inesperada, por favor contate um administrador de sistema", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

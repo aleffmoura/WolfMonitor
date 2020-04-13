@@ -14,15 +14,13 @@ using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
-    /// <summary>
-    /// Lógica interna para ServiceDetailWindow.xaml
-    /// </summary>
     public partial class ServiceDetailWindow : Window
     {
         private ItemsMonitoringService _itemsMonitoringService;
         private SystemServiceViewModel _systemServiceView;
 
-        public ServiceDetailWindow(SystemServiceViewModel systemServiceView, ItemsMonitoringService itemsMonitoringService)
+        public ServiceDetailWindow(SystemServiceViewModel systemServiceView,
+                                   ItemsMonitoringService itemsMonitoringService)
         {
             InitializeComponent();
             _systemServiceView = systemServiceView;
@@ -54,6 +52,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var a = 1;
         }
     }
 }

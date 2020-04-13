@@ -14,28 +14,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings
         private ItemsEndPoint _endPoint;
 
         public ItemsMonitoringService(ItemsEndPoint endPoint)
-        {
-            _endPoint = endPoint;
-        }
+            => _endPoint = endPoint;
 
         public async Task<Result<Exception, Guid>> Post(Item Item)
-        {
-            return await _endPoint.Post<Item>(Item);
-        }
+            => await _endPoint.Post<Item>(Item);
 
         public async Task<Result<Exception, PageResult<SystemServiceViewModel>>> GetSystemServices(Guid id)
-        {
-            return await _endPoint.GetServicesByAgentId<SystemServiceViewModel>(id);
-        }
+            => await _endPoint.GetServicesByAgentId<SystemServiceViewModel>(id);
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId,Guid id)
-        {
-            return await _endPoint.Delete(agentId,id);
-        }
+            => await _endPoint.Delete(agentId,id);
 
         public Task<Result<Exception, PageResult<ItemHistoricViewModel>>> GetItemHistoric(Guid id)
-        {
-            return _endPoint.GetItemHistoric<ItemHistoricViewModel>(id);
-        }
+            => _endPoint.GetItemHistoric<ItemHistoricViewModel>(id);
     }
 }

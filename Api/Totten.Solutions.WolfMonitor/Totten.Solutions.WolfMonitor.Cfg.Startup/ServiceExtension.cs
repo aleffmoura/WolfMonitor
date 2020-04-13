@@ -36,6 +36,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
             AddCors(services, configuration);
             services.AddSingleton<IHelper, Helper>();
             services.AddSwagger();
+            services.AddRabbitMQ();
             services.AddMediator(container);
             services.AddValidators(container);
             services.AddFilters();

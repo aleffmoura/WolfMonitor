@@ -6,11 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 using Timer = System.Timers.Timer;
 
@@ -174,10 +174,10 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
                     if (_rabbitMQ == null)
                     {
-                        _rabbitMQ = new Rabbit(_agent.Id.ToString());
+                        _rabbitMQ = new Rabbit(null, null);
                         Task.Run(() =>
                         {
-                            _rabbitMQ.Receive(ReceivedMessage, _cancellationToken.Token);
+                            _rabbitMQ.Receive(ReceivedMessage, _cancellationToken.Token, queue: _agent.Id.ToString());
                         }, _cancellationToken.Token);
                     }
                 }
@@ -231,7 +231,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                 var changeStatus = JsonConvert.DeserializeObject<ChangeStatusService>(obj.ToString());
                 if (changeStatus != null)
                 {
-                    var item = _items.Success.Items.FirstOrDefault(x => x.Id == changeStatus.Id);
+                    var item = _items.Success.Items.FirstOrDefault(x => x.Id == changeStatus.ItemId);
                     if (item != null)
                     {
                         var instance = item.Type.GetInstance(item);

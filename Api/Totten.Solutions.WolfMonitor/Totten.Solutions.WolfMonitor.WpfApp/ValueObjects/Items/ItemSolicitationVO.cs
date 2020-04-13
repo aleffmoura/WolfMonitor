@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Totten.Solutions.WolfMonitor.Agents.Commands
+namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Items
 {
-    public class ChangeServiceStatusCommand
+    public class ItemSolicitationVO
     {
         public Guid AgentId { get; set; }
         public string Name { get; set; }

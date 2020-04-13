@@ -11,8 +11,8 @@ using SimpleInjector;
 using System.Collections.Generic;
 using System.Linq;
 using Totten.Solutions.WolfMonitor.Cfg.Startup;
-using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 using Totten.Solutions.WolfMonitor.Domain.Features.Jobs;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 
 namespace Totten.Solutions.WolfMonitor.Jobs
 {
@@ -27,7 +27,9 @@ namespace Totten.Solutions.WolfMonitor.Jobs
             services.AddHangfire(_ => _.UsePostgreSqlStorage(configuration["connectionString"]));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime, ILoggerFactory logger, IRabbitMQ rabbitMQ, IConfigurationRoot configuration)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+                              IApplicationLifetime lifetime, ILoggerFactory logger,
+                              IRabbitMQ rabbitMQ, IConfigurationRoot configuration)
         {
             app.DefaultApplicationSetup(lifetime, logger, env, container);
             app.UseHangfireDashboard("/hangfire", new DashboardOptions()

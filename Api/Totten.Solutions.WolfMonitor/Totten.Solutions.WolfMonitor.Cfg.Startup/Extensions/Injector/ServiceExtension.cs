@@ -14,6 +14,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
@@ -66,10 +67,11 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             container.Register<IUserRepository, UserRepository>();
             container.Register<IRoleRepository, RoleRepository>();
             container.Register<IEmailService, EmailService>();
+
+            container.Register(() => configurationRoot, Lifestyle.Scoped);
+            container.Register<IHelper>(() => new Helper(configurationRoot), Lifestyle.Scoped);
             container.Register<IRabbitMQ, Rabbit>();
             container.Register<BrokerReceiver>();
-            container.Register(() => configurationRoot);
-            container.Register<IHelper>(() => new Helper(configurationRoot));
         }
 
     }

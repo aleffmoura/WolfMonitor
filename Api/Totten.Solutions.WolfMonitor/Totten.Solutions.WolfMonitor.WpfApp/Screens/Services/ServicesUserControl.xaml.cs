@@ -1,37 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 using Timer = System.Timers.Timer;
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     public partial class ServicesUserControl : UserControl, IUserControl
     {
-        private Timer _autoRefresh;
-        private IRabbitMQ _rabbitMQ;
+        private TaskScheduler currentTaskScheduler;
+        private AgentService _agentService;
         private ItemsMonitoringService _itemsMonitoringService;
         private Dictionary<Guid, ServiceUC> _indexes;
         private Guid _agentId;
-        private TaskScheduler currentTaskScheduler;
+        private Timer _autoRefresh;
+
         public ServicesUserControl(Guid agentId,
-                                   ItemsMonitoringService itemsMonitoringService)
+                                   ItemsMonitoringService itemsMonitoringService,
+                                   AgentService agentService)
         {
-            currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             InitializeComponent();
             _agentId = agentId;
+            _agentService = agentService;
             _itemsMonitoringService = itemsMonitoringService;
             _indexes = new Dictionary<Guid, ServiceUC>();
-            Populate();
+            currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
+            Populate();
             LoadCombobox();
         }
 
@@ -47,9 +49,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             this.wrapPanel.Children.Clear();
 
             foreach (var itemViewModel in _indexes)
-            {
                 this.wrapPanel.Children.Add(_indexes[itemViewModel.Key]);
-            }
+
             OnApplyTemplate();
         }
 
@@ -68,22 +69,31 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 if (task.Result.IsSuccess)
                 {
                     foreach (SystemServiceViewModel serviceViewModel in task.Result.Success.Items)
-                    {
                         _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, OnRestart, serviceViewModel));
-                    }
+
                     PopulateByDictionary();
                 }
                 else
                     MessageBox.Show("Falha na busca dos serviços do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-        private void OnRestart(object sender, EventArgs e)
+        private async void OnRestart(object sender, EventArgs e)
         {
             if (MessageBox.Show("Deseja realmente modificar o status do serviço?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                _rabbitMQ = new Rabbit(_agentId.ToString());
-                _rabbitMQ.RouteMessage(_agentId.ToString(), (SystemServiceViewModel)sender);
-                MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                var view = (SystemServiceViewModel)sender;
+
+                var returned = await _agentService.PostSolicitation(new ItemSolicitationVO
+                {
+                    AgentId = _agentId,
+                    Name = view.Name,
+                    DisplayName = view.DisplayName,
+                    NewStatus = "Status"
+                });
+                if (returned.IsSuccess)
+                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show($"Falha na solicitação.\nMensagem: {returned.Failure.Message}", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -182,7 +192,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 {
                     foreach (SystemServiceViewModel serviceViewModel in task.Result.Success.Items)
                     {
-                        if(_indexes.TryGetValue(serviceViewModel.Id, out ServiceUC value))
+                        if (_indexes.TryGetValue(serviceViewModel.Id, out ServiceUC value))
                         {
                             value.SetServiceValues(serviceViewModel);
                         }

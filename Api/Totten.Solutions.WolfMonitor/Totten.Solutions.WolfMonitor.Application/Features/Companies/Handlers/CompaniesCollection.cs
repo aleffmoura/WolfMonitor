@@ -20,9 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
             private readonly ICompanyRepository _repository;
 
             public QueryHandler(ICompanyRepository repository)
-            {
-                _repository = repository;
-            }
+                => _repository = repository;
 
             protected override Result<Exception, IQueryable<Company>> Handle(Query request)
             {

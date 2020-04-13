@@ -10,10 +10,12 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
     public interface IItemRepository : IRepository<Item>
     {
         Task<Result<Exception, Unit>> CreateHistoricAsync(ItemHistoric item);
+        Task<Result<Exception, Unit>> CreateSolicitationAsync(ItemSolicitationHistoric item);
         Task<Result<Exception, Item>> GetByNameWithAgentId(string name, Guid agentId);
         Result<Exception, IQueryable<Item>> GetAll(Guid agentId);
         Result<Exception, IQueryable<Item>> GetAll(Guid agentId, ETypeItem type);
         Result<Exception, IQueryable<ItemHistoric>> GetAllHistoric(Guid itemId);
+        Result<Exception, IQueryable<ItemSolicitationHistoric>> GetAllSolicitation(Guid itemId);
         Task<Result<Exception, Item>> GetByIdAsync(Guid agentId, Guid id);
         
     }

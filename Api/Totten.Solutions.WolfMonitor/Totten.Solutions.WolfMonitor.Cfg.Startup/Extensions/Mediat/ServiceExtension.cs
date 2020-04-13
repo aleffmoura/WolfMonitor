@@ -4,6 +4,7 @@ using SimpleInjector;
 using System.Collections.Generic;
 using System.Reflection;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Behaviours;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Mediat
 {

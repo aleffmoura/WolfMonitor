@@ -12,6 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
 {
     public class AgentEndPoint : BaseEndPoint 
     {
+        private string _baseEndpoint = "agents";
         public AgentEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
         {
 
@@ -47,26 +48,29 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
             }
         }
 
+        public async Task<Result<Exception, TR>> Send<TR,T>(string endpoint, T obj, HttpMethod httpMethod)
+            => await InnerAsync<TR, T>($"{_baseEndpoint}/{endpoint.TrimStart('/')}", obj, httpMethod);
+
         public async Task<Result<Exception, Guid>> Post<T>(T agent)
-            => await InnerAsync<Guid, T>("agents", agent, HttpMethod.Post);
+            => await InnerAsync<Guid, T>(_baseEndpoint, agent, HttpMethod.Post);
 
         public async Task<Result<Exception, T>> GetDetail<T>(Guid id)
-            => await InnerGetAsync<T>($"agents/{id}");
+            => await InnerGetAsync<T>($"{_baseEndpoint}/{id}");
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId)
-            => await InnerAsync<Unit, object>($"agents/{agentId}", null, HttpMethod.Delete);
+            => await InnerAsync<Unit, object>($"{_baseEndpoint}/{agentId}", null, HttpMethod.Delete);
 
         public async Task<Result<Exception, PageResult<T>>> GetAllAgents<T>()
-            => await InnerGetAsync<PageResult<T>>($"agents");
+            => await InnerGetAsync<PageResult<T>>(_baseEndpoint);
 
         private async Task<Result<Exception, Unit>> InnerAsync<T>(T agent, HttpMethod httpMethod)
-            => await InnerAsync<Unit, T>("agents", agent, httpMethod);
+            => await InnerAsync<Unit, T>(_baseEndpoint, agent, httpMethod);
 
         public bool Update<T>(T agent)
             => InnerAsync<T>(agent, HttpMethod.Patch).ConfigureAwait(false).GetAwaiter().GetResult().IsSuccess;
 
         public Result<Exception, T> GetInfo<T>()
-            => InnerGetAsync<T>("agents/info").ConfigureAwait(false).GetAwaiter().GetResult();
+            => InnerGetAsync<T>($"{_baseEndpoint}/info").ConfigureAwait(false).GetAwaiter().GetResult();
 
     }
 }

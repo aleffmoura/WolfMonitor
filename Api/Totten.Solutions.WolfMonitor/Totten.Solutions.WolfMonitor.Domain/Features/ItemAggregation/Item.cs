@@ -23,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
 
 
         public List<ItemHistoric> Historic { get; set; }
+        public List<ItemSolicitationHistoric> SolicitationHistoric { get; set; }
 
         public override void Validate() {}
 

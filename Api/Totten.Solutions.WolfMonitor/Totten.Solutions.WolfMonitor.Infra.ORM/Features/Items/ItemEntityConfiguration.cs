@@ -26,6 +26,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
             builder.Property(item => item.Type).IsRequired();
 
             builder.HasMany(item => item.Historic).WithOne().HasForeignKey(x => x.ItemId);
+            builder.HasMany(item => item.SolicitationHistoric).WithOne().HasForeignKey(x => x.ItemId);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Totten.Solutions.WolfMonitor.Domain.Base;
-using Totten.Solutions.WolfMonitor.Domain.Enums;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
 {

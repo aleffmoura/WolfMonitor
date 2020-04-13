@@ -39,9 +39,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 Result<Exception, IQueryable<Agent>> agentCallback = _repository.GetAll(request.CompanyId);
 
                 if (agentCallback.IsFailure)
-                {
                     return agentCallback.Failure;
-                }
+
                 var agents = agentCallback.Success.ToList();
 
                 foreach (var agent in agents)

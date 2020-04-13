@@ -6,7 +6,6 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;

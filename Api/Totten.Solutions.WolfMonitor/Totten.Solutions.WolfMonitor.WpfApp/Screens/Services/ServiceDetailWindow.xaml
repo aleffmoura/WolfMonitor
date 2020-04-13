@@ -7,7 +7,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Detalhes do serviço" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
-        Width="500" Height="490">
+        Width="600" Height="550">
+    
     <Grid>
         
         <StackPanel Orientation="Vertical" Margin="5,10">
@@ -31,106 +32,34 @@
             </StackPanel>
 
 
-            <TabControl  FontSize="15" Margin="0,10,5,10">
-                <TabItem Header="Historico">
-                    
+            <TabControl  FontSize="15" Margin="0,10,5,10" SelectionChanged="TabControl_SelectionChanged">
+                <TabItem Header="Histórico de status">
                     <Grid>
-                        
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <TextBlock Text="Data" Margin="0,5"/>
-
-                            <StackPanel Margin="0,5,0,0" x:Name="pnlDate">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0">
-                                <TextBlock Text="22/22/2222"/>
-                            </StackPanel>
+                            <DataGrid Width="580" Height="280"  x:Name="gridHistoric" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Data Inicial" Binding="{Binding FirstName}"/>
+                                    <DataGridHyperlinkColumn Header="Data Final" Binding="{Binding Email}" />
+                                    <DataGridCheckBoxColumn Header="Valor" Width="100" Binding="{Binding Solicitation}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </StackPanel>
-                        
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="Horário" Margin="0,5"/>
-
-                            <StackPanel Margin="0,5,0,0" x:Name="pnlHours">
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                            <StackPanel Margin="0,5,0,0" >
-                                <TextBlock Text="23:59"/>
-                            </StackPanel>
-                        </StackPanel>
-                        
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
-                            <TextBlock Text="Valor" Margin="0,5"/>
-
-                            <StackPanel x:Name="pnlStatus1">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus2">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus3">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus4">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus5">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus6">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus7">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus8">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus9">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                            <StackPanel x:Name="pnlStatus10">
-                                <TextBlock Text="running"/>
-                            </StackPanel>
-                        </StackPanel>
-                        
                     </Grid>
-                    
+                </TabItem>
+                
+                <TabItem Header="Solicitações de usuários">
+                    <Grid>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <DataGrid Width="580" Height="280"  x:Name="gridSolicitations" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Primeiro Nome" Binding="{Binding FirstName}"/>
+                                    <DataGridHyperlinkColumn Header="Email" Binding="{Binding Email}" />
+                                    <DataGridCheckBoxColumn Header="Solicitação" Width="100" Binding="{Binding Solicitation}" />
+                                    <DataGridComboBoxColumn Header="Valor"  SelectedItemBinding="{Binding Value}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
             </TabControl>
             

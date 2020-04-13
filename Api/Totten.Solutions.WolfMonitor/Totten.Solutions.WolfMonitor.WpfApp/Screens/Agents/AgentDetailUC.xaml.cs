@@ -1,28 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
-using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Totten.Solutions.WolfMonitor.ServiceAgent.Infra.RabbitMQService;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
-using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 {
-    /// <summary>
-    /// Interação lógica para AgentDetailUC.xam
-    /// </summary>
     public partial class AgentDetailUC : UserControl
     {
         private AgentService _agentsService;
@@ -42,7 +27,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
         private void Populate()
         {
-            ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _itensMonitoringService);
+            ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _itensMonitoringService, _agentsService);
             tabSystemServices.Content = servicesUserControl;
         }
 

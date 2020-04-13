@@ -14,8 +14,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers
         private static List<string> _ports;
 
         private readonly IConfigurationRoot _configuration;
-
-        public Helper() { }
+        
         public Helper(IConfigurationRoot configuration) => this._configuration = configuration;
 
         public string GetLocalIpAddress() => NetworkHelper.LocalIpAddress();

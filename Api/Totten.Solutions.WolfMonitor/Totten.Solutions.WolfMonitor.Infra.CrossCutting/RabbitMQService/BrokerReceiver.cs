@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 
-namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ
+namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService
 {
     public class BrokerReceiver : BackgroundService
     {
@@ -18,7 +18,10 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ
         public static event Action<object> MessageReceived;
 
 
-        public BrokerReceiver(IRabbitMQ rabbitMQ, IConfigurationRoot configuration, ILogger<BrokerReceiver> logger, IHelper helper)
+        public BrokerReceiver(IRabbitMQ rabbitMQ,
+                              IConfigurationRoot configuration,
+                              ILogger<BrokerReceiver> logger,
+                              IHelper helper)
         {
             this._rabbitMQ = rabbitMQ;
             this._configuration = configuration;

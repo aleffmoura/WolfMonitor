@@ -42,9 +42,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 Result<Exception, Agent> agentCallback = _agentRepository.GetByIdAsync(request.CompanyId, request.AgentId).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (agentCallback.IsFailure)
-                {
                     return new NotFoundException("Não foi encontrado um agent com o identificador informado na empresa do usuário");
-                }
 
                 Result<Exception, IQueryable<Item>> Item = _repository.GetAll(request.AgentId, request.Type);
 
