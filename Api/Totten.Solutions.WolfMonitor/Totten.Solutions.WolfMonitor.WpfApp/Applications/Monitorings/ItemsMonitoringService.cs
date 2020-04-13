@@ -29,6 +29,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings
             => _endPoint.GetItemHistoric<ItemHistoricViewModel>(id, take, skip);
 
         public Task<Result<Exception, PageResult<ItemSolicitationViewModel>>> GetSolicitationsHistoric(Guid id, string take, string skip)
-            => _endPoint.GetItemHistoric<ItemSolicitationViewModel>(id, take, skip);
+            => _endPoint.GetSolicitations<ItemSolicitationViewModel>(id, take, skip);
     }
 }

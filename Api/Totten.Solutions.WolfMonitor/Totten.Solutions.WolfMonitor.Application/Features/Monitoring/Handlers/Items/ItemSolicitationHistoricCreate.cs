@@ -100,7 +100,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 if (userCallback.IsFailure)
                     return userCallback.Failure;
 
-                if(userCallback.Success.CompanyId != agentCallback.Success.CompanyId)
+                if (userCallback.Success.CompanyId != agentCallback.Success.CompanyId)
                     return new NotAllowedException("Usuário não pode salvar serviços no agent informado, a empresa do usuario e do agent não são iguais");
 
                 var item = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
@@ -111,6 +111,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 ItemSolicitationHistoric itemSolicitation = Mapper.Map<Command, ItemSolicitationHistoric>(request);
                 itemSolicitation.ItemId = item.Success.Id;
 
+                if (request.SolicitationType == SolicitationType.ChangeStatus)
+                    itemSolicitation.NewValue = item.Success.Value.Equals("Running", StringComparison.OrdinalIgnoreCase) ? "Stopped" : "Running";
+                
                 var callback = await _repository.CreateSolicitationAsync(itemSolicitation);
 
                 if (callback.IsFailure)

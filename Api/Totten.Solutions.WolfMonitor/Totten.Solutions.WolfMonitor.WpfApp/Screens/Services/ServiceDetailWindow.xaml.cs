@@ -20,8 +20,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     public partial class ServiceDetailWindow : Window
     {
-        private int take = 10;
-        private int skip = 0;
+        private int _take = 10;
+        private int _skip = 0;
         private int _actualPage = 1;
         private int _qtItems;
 
@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         }
         private void GetHistoricItems()
         {
-            _itemsMonitoringService.GetItemHistoric(_systemServiceView.Id, $"{take}", $"{skip}")
+            _itemsMonitoringService.GetItemHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
              .ContinueWith(task =>
              {
                  Result<Exception, PageResult<ItemHistoricViewModel>> result = task.Result;
@@ -51,14 +51,37 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
                          gridHistoric.DataContext = result.Success.Items;
 
-                         if (result.Success.Items.Count < take || skip > _qtItems)
+                         if (result.Success.Items.Count < _take || _skip > _qtItems)
                              btnNextPage.IsEnabled = false;
 
                      }
                  }
              }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-        private void Populate(int page = 1)
+
+        private void GetSolicitations()
+        {
+            _itemsMonitoringService.GetSolicitationsHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
+             .ContinueWith(task =>
+             {
+                 Result<Exception, PageResult<ItemSolicitationViewModel>> result = task.Result;
+
+                 if (result.IsSuccess)
+                 {
+                     if (result.Success.Items.Count > 0)
+                     {
+                         _qtItems = int.Parse(result.Success.Count);
+
+                         gridSolicitations.DataContext = result.Success.Items;
+
+                         if (result.Success.Items.Count < _take || _skip > _qtItems)
+                             btnNextPage.IsEnabled = false;
+
+                     }
+                 }
+             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+        private void Populate()
         {
             this.lblDisplayName.Text = _systemServiceView.DisplayName;
             this.lblName.Text = _systemServiceView.Name;
@@ -69,43 +92,47 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private void btnPrevPage_Click(object sender, RoutedEventArgs e)
         {
-            skip -= take;
+            _skip -= _take;
             btnActualPage.Content = $"{--_actualPage}";
 
-            if (skip < _qtItems)
+            if (_skip < _qtItems)
                 btnNextPage.IsEnabled = true;
 
             if (tabControl.SelectedIndex == 0)
-            {
                 GetHistoricItems();
-                if (_actualPage == 1)
-                    btnPrevPage.IsEnabled = false;
-            }
             else
-            {
+                GetSolicitations();
 
-            }
-
+            if (_actualPage == 1)
+                btnPrevPage.IsEnabled = false;
         }
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
-            if (tabControl.SelectedIndex == 0)
-            {
-                btnActualPage.Content = $"{++_actualPage}";
-                skip += take;
-                GetHistoricItems();
-            }
-            else
-            {
+            btnActualPage.Content = $"{++_actualPage}";
+            _skip += _take;
 
-            }
+            if (tabControl.SelectedIndex == 0)
+                GetHistoricItems();
+            else
+                GetSolicitations();
+
             btnPrevPage.IsEnabled = true;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var a = 1;
+            _skip = 0;
+            _actualPage = 1;
+            _qtItems = 0;
+            btnActualPage.Content = $"{_actualPage}";
+
+            if (tabControl.SelectedIndex == 0)
+            {
+                GetHistoricItems();
+                return;
+            }
+            GetSolicitations();
         }
     }
 }

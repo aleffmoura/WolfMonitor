@@ -36,11 +36,11 @@
                 <TabItem Header="Histórico de status">
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="580" Height="420"  ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="580" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="280" Header="Item ID" Binding="{Binding ItemId}"/>
+                                    <DataGridTextColumn Width="280" Header="Identificador" Binding="{Binding Id}"/>
                                     <DataGridTextColumn Header="Valor" Width="100" Binding="{Binding Value}" />
-                                    <DataGridTextColumn Header="Data e Hora" Width="180" Binding="{Binding MonitoredAt}"/>
+                                    <DataGridTextColumn Header="Data e Hora"  Width="180" Binding="{Binding MonitoredAt}" SortDirection="Descending" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -50,12 +50,14 @@
                 <TabItem Header="Solicitações de usuários">
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <DataGrid Width="580" Height="280"  x:Name="gridSolicitations" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="gridSolicitations" CanUserAddRows="False" Width="580" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Primeiro Nome" Binding="{Binding FirstName}"/>
-                                    <DataGridHyperlinkColumn Header="Email" Binding="{Binding Email}" />
-                                    <DataGridCheckBoxColumn Header="Solicitação" Width="100" Binding="{Binding Solicitation}" />
-                                    <DataGridComboBoxColumn Header="Valor"  SelectedItemBinding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Nome do usuário" Binding="{Binding User}"/>
+                                    <DataGridTextColumn Header="Email do usuário" Binding="{Binding UserEmail}" />
+                                    <DataGridTextColumn Header="Solicitação" Binding="{Binding SolicitationType}" />
+                                    <DataGridTextColumn Header="Valor" Binding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Data" Width="150" Binding="{Binding CreateAt}" SortDirection="Descending" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>

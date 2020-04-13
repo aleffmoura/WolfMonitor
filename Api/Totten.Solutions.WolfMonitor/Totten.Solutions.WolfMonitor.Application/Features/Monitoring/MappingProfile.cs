@@ -34,7 +34,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             CreateMap<Item, ItemHistoric>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(item => Guid.NewGuid()))
                 .ForMember(dest => dest.ItemId, src => src.MapFrom(item => item.Id))
-                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm") : "Não monitorado"));
+                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Não monitorado"));
 
             CreateMap<ItemHistoric, ItemHistoric>();
             #endregion
@@ -46,6 +46,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
                 .ForMember(dest => dest.Value, src => src.MapFrom(item => item.NewValue))
                 .ForMember(dest => dest.User, src => src.MapFrom(item => $"{item.User.FirstName} {item.User.LastName}"))
                 .ForMember(dest => dest.UserEmail, src => src.MapFrom(item => item.User.Email))
+                .ForMember(dest => dest.CreateAt, src => src.MapFrom(item => item.CreatedIn.ToString("dd/MM/yyyy HH:mm:ss")))
                 .ForMember(dest => dest.SolicitationType, src => src.MapFrom(item => item.SolicitationType.ToString()));
 
             CreateMap<ItemSolicitationHistoricCreate.Command, ItemSolicitationHistoric>()

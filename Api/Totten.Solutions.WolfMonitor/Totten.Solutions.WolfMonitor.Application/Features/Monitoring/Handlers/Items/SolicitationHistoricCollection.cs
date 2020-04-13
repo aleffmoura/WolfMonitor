@@ -56,7 +56,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                         solicitation.User = user.Success;
                 }
 
-                return Result<Exception, IQueryable<ItemSolicitationHistoric>>.Of(solicitations.AsQueryable());
+                return Result<Exception, IQueryable<ItemSolicitationHistoric>>.Of(solicitations.OrderBy(x => x.CreatedIn).AsQueryable());
             }
         }
     }
