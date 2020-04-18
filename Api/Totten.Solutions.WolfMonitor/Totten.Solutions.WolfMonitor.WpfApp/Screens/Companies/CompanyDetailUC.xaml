@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies.CompanyDetailUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             MinWidth="980" Width="auto" Height="auto">
+    <Grid>
+        <StackPanel>
+            <StackPanel>
+                <TextBlock x:Name="lblName" Text="Totem Solutions SA LIMITADA" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
+                <Separator  Width="1240"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Height="120" Margin="5" >
+                <StackPanel Width="450">
+                    <StackPanel Margin="5" Orientation="Vertical">
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Razão Social:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Aleff Moura da Silva 111.111.111-11" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="5" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="IP:" FontSize="15" Foreground="Black"/>
+                        <TextBlock x:Name="lblIp" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+            <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged"  Margin="0" Height="550">
+                <TabItem x:Name="tbUsers" Header="Usuários">
+                    
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -9,12 +9,10 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewMo
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 {
-    /// <summary>
-    /// Lógica interna para Home.xaml
-    /// </summary>
     public partial class Home : Window
     {
         private UserBasicInformationViewModel _userBasicInformation;
@@ -42,20 +40,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _userBasicInformation = userBasicInformation;
             this.lblUserName.Text = _userBasicInformation.FullName;
 
-            if (this._userBasicInformation.UserLevel < (int)UserLevel.Admin)
-            {
-                this.btnMonitoramentos.Visibility = Visibility.Collapsed;
-            }
             if (this._userBasicInformation.UserLevel < (int)UserLevel.System)
             {
-                this.menuItemCompanies.Visibility = Visibility.Collapsed;
+                this.btnCompanyMenu.Visibility = Visibility.Collapsed;
             }
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+            => Application.Current.Shutdown();
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -69,16 +61,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             btnCloseMenu.Visibility = Visibility.Collapsed;
         }
 
-        private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var service = new AgentService(new AgentEndPoint(_customHttpCliente));
-            var monitoringItems = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
-
-            var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
-
-            IncludeUserControl(agentsUserControl, new EventArgs());
-            agentsUserControl.Populate();
-        }
 
         private void viewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -90,6 +72,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         {
             transitionHighlighter.OnApplyTemplate();
             gridHighlighter.Margin = new Thickness(0, 60 + (60 * index), 0, 0);
+        }
+
+        private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var service = new AgentService(new AgentEndPoint(_customHttpCliente));
+            var monitoringItems = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
+
+            var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
+
+            IncludeUserControl(agentsUserControl, new EventArgs());
+            agentsUserControl.Populate();
+        }
+
+        private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var company = new CompanyDetailUC();
+
+            IncludeUserControl(company, new EventArgs());
         }
     }
 }

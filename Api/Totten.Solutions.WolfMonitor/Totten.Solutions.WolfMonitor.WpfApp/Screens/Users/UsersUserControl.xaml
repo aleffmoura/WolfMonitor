@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Users.UsersUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Grid Height="800" Width="1240" Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
+            <Button x:Name="btnDel" Background="Red" Margin="5,0,0,0" Content="Excluir" Width="80" Height="30" Click="btnDel_Click" IsEnabled="False" Padding="0"/>
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">
+                    <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
+                </Button>
+            </StackPanel>
+
+            <DataGrid x:Name="gridUsers" Margin="0,15" CanUserAddRows="False" Width="auto" Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="gridUsers_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="280" Header="Identificador" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Nome completo" Width="250" Binding="{Binding FullName}"  SortDirection="Ascending" />
+                    <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
+                    <DataGridTextColumn Header="Email" Width="150" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Cpf" Width="100" Binding="{Binding Cpf}" />
+                    <DataGridTextColumn Header="Nível do usuário" Width="150" Binding="{Binding Role}" />
+                    <DataGridTextColumn Header="Último login" Width="100" Binding="{Binding LastLogin}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
