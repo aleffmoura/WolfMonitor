@@ -1,30 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
 {
-    /// <summary>
-    /// Lógica interna para UserCreateWindow.xaml
-    /// </summary>
     public partial class UserCreateWindow : Window
     {
-        public UserCreateWindow()
+        private IUserService _userService;
+        private TaskScheduler _currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        public UserCreateWindow(IUserService userService)
         {
             InitializeComponent();
+            _userService = userService;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            var user = InstanceUser();
 
+            if (user == null)
+                return;
+
+            btnAdd.IsEnabled = false;
+
+            _userService.Post(user).ContinueWith(task =>
+            {
+                if (task.Result.IsFailure)
+                {
+                    if (SetErros(task.Result.Failure.Message))
+                        MessageBox.Show("Falha na atualização de senha", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    else
+                        MessageBox.Show(task.Result.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Cadastro realizado", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    DialogResult = true;
+                }
+
+                btnAdd.IsEnabled = false;
+            }, _currentTaskScheduler);
+        }
+
+        public UserCreateVO InstanceUser()
+        {
+            if (!txtPass.Password.Equals(txtRepass.Password))
+            {
+                MessageBox.Show("As senhãs não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+
+
+            return new UserCreateVO
+            {
+                Login = txtLogin.Text,
+                Password = txtPass.Password,
+                FirstName = txtName.Text,
+                LastName = txtLastName.Text,
+                Email = txtEmail.Text,
+                Cpf = txtCpf.Text,
+                Language = "pt-BR",
+            };
+        }
+        private bool SetErros(string msg)
+        {
+            ValidationErrorVO errors = new ValidationErrorVO(msg);
+
+            lblLoginError.Content = errors["Login"];
+            lblPassError.Content = errors["Password"];
+            lblNameError.Content = errors["FirstName"];
+            lblLastNameError.Content = errors["LastName"];
+            lblEmailError.Content = errors["Email"];
+            lblCpfError.Content = errors["Cpf"];
+
+            return errors.ContainsErros;
         }
     }
 }

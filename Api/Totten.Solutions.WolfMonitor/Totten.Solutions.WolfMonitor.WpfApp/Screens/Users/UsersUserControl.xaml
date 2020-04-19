@@ -15,8 +15,8 @@
 
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
-                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">
+                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" TextChanged="txtUser_TextChanged"/>
+                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0" Click="btnSearch_Click">
                     <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                 </Button>
             </StackPanel>

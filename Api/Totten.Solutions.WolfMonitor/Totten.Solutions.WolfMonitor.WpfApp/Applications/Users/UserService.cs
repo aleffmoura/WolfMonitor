@@ -10,6 +10,7 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
 {
@@ -22,17 +23,27 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
             _endPoint = endPoint;
         }
 
+        public Task<Result<Exception, Guid>> Post(UserCreateVO user)
+            => _endPoint.Register("register/user", user);
+
         public async Task<Result<Exception, UserBasicInformationViewModel>> GetInfo()
             => await _endPoint.GetInfo();
+
+        public async Task<Result<Exception, Unit>> Delete(Guid agentId)
+            => await _endPoint.Delete(agentId);
+
+        public Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll()
+            => _endPoint.GetAll<UserResumeViewModel>();
 
         public string GetClientCredentials()
             => Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
 
         public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
-            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email});
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email });
 
         public Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token)
-            => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO {
+            => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO
+            {
                 Login = login,
                 Email = email,
                 RecoverSolicitationCode = recoverSolicitationCode,
@@ -76,6 +87,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
                 return content.access_token.ToString();
             }
         }
+
 
     }
 }

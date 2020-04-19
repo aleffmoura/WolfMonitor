@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords;
 
@@ -51,7 +52,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 }
                 else
                 {
-                    MessageBox.Show(callback.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    if (SetErrors(callback.Failure.Message))
+                        MessageBox.Show("Falha na atualização de senha", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    else
+                        MessageBox.Show(callback.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+
                     return param;
                 }
             }
@@ -59,6 +64,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
 
             MessageBox.Show("Falha interna, por favor contate um administrador.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
             return param;
+        }
+
+        private bool SetErrors(string message)
+        {
+            ValidationErrorVO errors = new ValidationErrorVO(message);
+            lblError.Content = errors["Password"];
+
+            return errors.ContainsErros;
         }
 
         private void textChanged(object sender, RoutedEventArgs e)

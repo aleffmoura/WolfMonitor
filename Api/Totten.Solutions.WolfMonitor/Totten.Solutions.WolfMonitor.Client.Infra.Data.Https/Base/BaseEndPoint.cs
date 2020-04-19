@@ -55,9 +55,6 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
             using (httpRequest)
             using (var httpResponse = await _httpCliente.HttpClient.SendAsync(httpRequest))
             {
-                var str = await httpResponse.Content.ReadAsStringAsync();
-
-                
                 var content = await httpResponse.Content.ReadAsStringAsync();
                 if (httpResponse.IsSuccessStatusCode)
                 {

@@ -6,24 +6,35 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Adicionar Usuário" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="580" Width="560">
+        mc:Ignorable="d" Height="650" Width="800">
     <Grid>
         <StackPanel VerticalAlignment="Top" Margin="5" >
             
             <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
-            <TextBox x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <PasswordBox Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,5"  FontSize="18"/>
-            <PasswordBox Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,5"  FontSize="18"/>
+            <TextBox x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblLoginError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+            
+            <PasswordBox Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="18"/>
+            <Label x:Name="lblPassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+
+            <PasswordBox Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,1,0,3"  FontSize="18"/>
 
             <Label Content="Informações do usuário" Margin="0,20,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
 
-            <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <TextBox x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <TextBox x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <TextBox x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
+            <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+            
+            <TextBox x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblLastNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+            
+            <TextBox x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+            
+            <TextBox x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+        
         </StackPanel>
         
-
         <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,5" Height="40"/>
     </Grid>
 </Window>
