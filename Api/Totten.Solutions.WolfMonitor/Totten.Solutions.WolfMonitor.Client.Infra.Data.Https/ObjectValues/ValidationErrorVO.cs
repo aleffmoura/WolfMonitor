@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues
         {
             try
             {
-                _errorClasses = JsonConvert.DeserializeObject<List<ErrorClass>>(msg);
+                _errorClasses = JsonConvert.DeserializeObject<List<ErrorClass>>(msg) ?? new List<ErrorClass>();
             }
             catch
             {

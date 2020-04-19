@@ -20,12 +20,11 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         public UsersController(IMediator mediator)
             => _mediator = mediator;
 
-        [HttpGet("{companyId}")]
-        [ODataQueryOptionsValidate]
+        [HttpGet()]
+        [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Count | AllowedQueryOptions.Skip)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        public async Task<IActionResult> ReadAll([FromRoute]Guid companyId, ODataQueryOptions<User> queryOptions)
-            => await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(companyId)), queryOptions);
-
+        public async Task<IActionResult> ReadAll([FromQuery]ODataQueryOptions<User> queryOptions)
+            => await HandleQueryable<User, UserResumeViewModel>(await _mediator.Send(new UsersCollection.Query(CompanyId)), queryOptions);
 
         [HttpGet("info")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]

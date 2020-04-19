@@ -113,6 +113,7 @@ $Register = @'
 	"Tags": "Register",
 	"connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
 	"authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+	"apiSecret":"usersSuperSecret",
 	"authSettings": {
 		"secret": "IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw",
 		"issuer": "https://localhost:9001/",

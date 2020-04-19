@@ -7,14 +7,20 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Adicionar Agent" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Height="270" Width="500" >
+        Height="290" Width="500" >
     <Grid>
-        <StackPanel VerticalAlignment="Top" Margin="5" Height="230" Width="500" >
-            <TextBox Name="txtName" Text="" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <TextBox Name="txtUser" Text=""  materialDesign:HintAssist.Hint="Usuário" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18"/>
-            <PasswordBox Name="txtPass" Password="" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,5"  FontSize="18"/>
+        <StackPanel VerticalAlignment="Top" Margin="5" Height="230" Width="auto" >
+            <TextBox Name="txtName" Text="" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+
+            <TextBox Name="txtUser" Text=""  materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblUserError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+
+            <PasswordBox Name="txtPass" Password="" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="18"/>
+            <Label x:Name="lblPassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+
         </StackPanel>
 
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0" Height="40"/>
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
     </Grid>
 </Window>

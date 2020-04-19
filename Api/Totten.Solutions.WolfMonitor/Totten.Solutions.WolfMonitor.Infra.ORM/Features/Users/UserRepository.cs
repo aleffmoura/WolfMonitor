@@ -32,10 +32,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         }
 
         public Result<Exception, IQueryable<User>> GetAll(Guid companyId)
-             => Result.Run(() => _context.Users.Where(a => a.CompanyId == companyId && !a.Removed));
+             => Result.Run(() => _context.Users.Include(r => r.Role).Where(a => a.CompanyId == companyId && !a.Removed));
 
         public Result<Exception, IQueryable<User>> GetAll()
-             => Result.Run(() => _context.Users.Where(a => !a.Removed));
+             => Result.Run(() => _context.Users.Include(r => r.Role).Where(a => !a.Removed));
 
         public Result<Exception, IQueryable<User>> GetAllByCompanyId(Guid companyId)
              => Result.Run(() => _context.Users.Where(u => u.CompanyId == companyId));

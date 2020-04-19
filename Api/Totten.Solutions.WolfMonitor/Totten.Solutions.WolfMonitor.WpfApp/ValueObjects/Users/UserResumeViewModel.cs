@@ -9,7 +9,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users
         public string Login { get; set; }
         public string Email { get; set; }
         public string Cpf { get; set; }
-        public string Role { get; set; }
+        public string RoleName { get; set; }
         public string LastLogin { get; set; }
     }
 }

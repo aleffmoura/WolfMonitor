@@ -47,6 +47,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                 if (userType.Equals("Agent", StringComparison.InvariantCultureIgnoreCase))
                 {
                     var agentCallback = await _agentRepository.Authentication(companCallback.Success.Id, login, context.Password);
+                    
                     if (agentCallback.IsSuccess)
                     {
                         List<Claim> claims = MakeClaims(RoleLevelEnum.Agent,
@@ -64,6 +65,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                 else
                 {
                     var userCallback = await _repository.GetByCredentials(companCallback.Success.Id, login, context.Password);
+                    
                     if (userCallback.IsSuccess)
                     {
 
@@ -73,6 +75,9 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
                                                         userId: userCallback.Success.Id);
 
                         context.Result = new GrantValidationResult(userCallback.Success.Id.ToString(), "password", claims, "local", null);
+                        userCallback.Success.LastLogin = DateTime.Now;
+
+                        await _repository.UpdateAsync(userCallback.Success);
                     }
                     else
                     {

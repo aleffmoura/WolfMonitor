@@ -30,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 if (task.Result.IsFailure)
                 {
                     if (SetErros(task.Result.Failure.Message))
-                        MessageBox.Show("Falha na atualização de senha", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Falha no cadastro do usuário", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     else
                         MessageBox.Show(task.Result.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -40,7 +40,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                     DialogResult = true;
                 }
 
-                btnAdd.IsEnabled = false;
+                btnAdd.IsEnabled = true;
             }, _currentTaskScheduler);
         }
 
@@ -48,7 +48,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             if (!txtPass.Password.Equals(txtRepass.Password))
             {
-                MessageBox.Show("As senhãs não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("As senhas não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return null;
             }
 

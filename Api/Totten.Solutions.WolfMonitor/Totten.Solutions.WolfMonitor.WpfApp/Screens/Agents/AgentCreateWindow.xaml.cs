@@ -7,9 +7,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 
@@ -20,6 +22,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     /// </summary>
     public partial class AgentCreateWindow : Window
     {
+        private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private AgentService _agentService;
         public AgentCreateWindow(AgentService agentService)
         {
@@ -34,6 +37,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 MessageBox.Show("Todos os campos são obrigatórios.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            btnAdd.IsEnabled = false;
+
             _agentService.Post(new AgentCreateVO
             {
                 DisplayName = txtName.Text,
@@ -42,10 +47,30 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             }).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
+                {
                     MessageBox.Show("Adicionado com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    DialogResult = true;
+                }
                 else
-                    MessageBox.Show("Falha na tentativa de adicionar um agent.", "Falha", MessageBoxButton.OK, MessageBoxImage.Information);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                {
+                    if(SetErros(msg: task.Result.Failure.Message))
+                        MessageBox.Show("Ocorreram falhas", "Falha", MessageBoxButton.OK, MessageBoxImage.Information);
+                    else
+                        MessageBox.Show(task.Result.Failure.Message, "Falha", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                btnAdd.IsEnabled = true;
+            }, _taskScheduler);
+        }
+
+        private bool SetErros(string msg)
+        {
+            ValidationErrorVO errors = new ValidationErrorVO(msg);
+
+            lblNameError.Content = errors["DisplayName"];
+            lblUserError.Content = errors["Login"];
+            lblPassError.Content = errors["Password"];
+
+            return errors.ContainsErros;
         }
     }
 }

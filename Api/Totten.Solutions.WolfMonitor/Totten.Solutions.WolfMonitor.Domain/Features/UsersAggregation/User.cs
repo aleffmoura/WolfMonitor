@@ -19,6 +19,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation
         public string LastName { get; set; }
         public string Language { get; set; }
 
+        public DateTime? LastLogin { get; set; }
 
         public string Token { get; set; }
         public string TokenSolicitationCode { get; set; }

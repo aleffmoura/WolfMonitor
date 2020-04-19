@@ -17,7 +17,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private AgentService _agentService;
         private ItemsMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
-        
+
         private EventHandler _onSwitchControl;
 
         public AgentsUserControl(AgentService agentService,
@@ -66,14 +66,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 else
                     MessageBox.Show("Falha na requisição de agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, TaskScheduler.FromCurrentSynchronizationContext()));
-            
-            loading.ShowDialog();
 
+            loading.ShowDialog();
         }
+
         private void OnEdit(object sender, EventArgs e)
-        {
-            _onSwitchControl?.Invoke(new AgentDetailUC((Guid)sender, _agentService, _itensMonitoringService), new EventArgs());
-        }
+            => _onSwitchControl?.Invoke(new AgentDetailUC((Guid)sender, _agentService, _itensMonitoringService), new EventArgs());
+
         private void OnRemove(object sender, EventArgs e)
         {
             AgentResumeViewModel agentViewModel = sender as AgentResumeViewModel;
@@ -89,9 +88,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                         PopulateByDictionary();
                     }
                     else
-                    {
                         MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
@@ -99,7 +96,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             AgentCreateWindow agentCreateWindow = new AgentCreateWindow(_agentService);
-            agentCreateWindow.ShowDialog();
+            var result = agentCreateWindow.ShowDialog();
+
+            if (result.HasValue && result.Value)
+                Populate();
         }
     }
 }

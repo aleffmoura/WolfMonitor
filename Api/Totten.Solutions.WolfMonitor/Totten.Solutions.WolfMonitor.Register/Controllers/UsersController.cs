@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
+using Totten.Solutions.WolfMonitor.Register.Commands;
 
 namespace Totten.Solutions.WolfMonitor.Register.Controllers
 {
@@ -18,10 +19,13 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
 
         #region HTTP POST
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]UserCreate.Command command)
-        {
-            return HandleCommand(await _mediator.Send(command));
-        }
+        public async Task<IActionResult> Create([FromBody]UserCreateCommand command)
+            => HandleCommand(await _mediator.Send(new UserCreate.Command(
+                                                        CompanyId, command.Email, command.Cpf,
+                                                        command.FirstName, command.LastName,
+                                                        command.Language, command.Login, command.Password
+                                                  )));
+
         #endregion
     }
 }

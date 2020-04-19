@@ -21,15 +21,18 @@
                 </Button>
             </StackPanel>
 
-            <DataGrid x:Name="gridUsers" Margin="0,15" CanUserAddRows="False" Width="auto" Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="gridUsers_SelectionChanged">
+            <DataGrid x:Name="gridUsers" Margin="0,15" Width="auto"
+                      Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False"
+                      SelectionChanged="gridUsers_SelectionChanged"
+                      CanUserDeleteRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="280" Header="Identificador" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Nome completo" Width="250" Binding="{Binding FullName}"  SortDirection="Ascending" />
+                    <DataGridTextColumn Header="Nome completo" Width="200" Binding="{Binding FullName}"  SortDirection="Ascending" />
                     <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
-                    <DataGridTextColumn Header="Email" Width="150" Binding="{Binding Email}" />
-                    <DataGridTextColumn Header="Cpf" Width="100" Binding="{Binding Cpf}" />
-                    <DataGridTextColumn Header="Nível do usuário" Width="150" Binding="{Binding Role}" />
-                    <DataGridTextColumn Header="Último login" Width="100" Binding="{Binding LastLogin}"/>
+                    <DataGridTextColumn Header="Email" Width="220" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Cpf" Width="120" Binding="{Binding Cpf}" />
+                    <DataGridTextColumn Header="Nível do usuário" Width="120" Binding="{Binding RoleName}" />
+                    <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
                 </DataGrid.Columns>
             </DataGrid>
 

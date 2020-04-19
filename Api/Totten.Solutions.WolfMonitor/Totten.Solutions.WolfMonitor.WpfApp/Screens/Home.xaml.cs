@@ -5,9 +5,11 @@ using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies;
 
@@ -87,7 +89,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var company = new CompanyDetailUC();
+            var company = new CompanyDetailUC(new UserService(new UserEndPoint(_customHttpCliente)));
 
             IncludeUserControl(company, new EventArgs());
         }

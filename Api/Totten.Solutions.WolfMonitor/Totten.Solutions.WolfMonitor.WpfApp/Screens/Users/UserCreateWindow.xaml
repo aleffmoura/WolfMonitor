@@ -8,7 +8,7 @@
         Title="Adicionar Usuário" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Height="650" Width="800">
     <Grid>
-        <StackPanel VerticalAlignment="Top" Margin="5" >
+        <StackPanel VerticalAlignment="Top" Margin="0,5,0,0" >
             
             <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
             <TextBox x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
@@ -31,10 +31,10 @@
             <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
             
             <TextBox x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
-            <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+            <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,0" />
         
         </StackPanel>
         
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,5" Height="40"/>
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
     </Grid>
 </Window>

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Users;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
@@ -19,19 +20,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
     /// </summary>
     public partial class CompanyDetailUC : UserControl
     {
-        public CompanyDetailUC()
+        private IUserService _userService;
+
+        public CompanyDetailUC(IUserService userService)
         {
             InitializeComponent();
-        }
+            _userService = userService;
 
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(tabControl.SelectedIndex == 0)
-            {
-                //loading em tbUsers
-                tbUsers.Content = new UsersUserControl();
-                return;
-            }
+
+            tbUsers.Content = new UsersUserControl(_userService);
         }
     }
 }

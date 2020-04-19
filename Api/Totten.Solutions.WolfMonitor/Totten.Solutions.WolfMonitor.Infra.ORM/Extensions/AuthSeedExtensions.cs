@@ -64,6 +64,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Language = "pt-BR",
                 CreatedIn = DateTime.Now,
                 Removed = false,
+                LastLogin = null,
                 UpdatedIn = DateTime.Now,
                 CompanyId = Guid.Parse("c576cf93-370c-4464-21f9-08d763d27d75")
             });

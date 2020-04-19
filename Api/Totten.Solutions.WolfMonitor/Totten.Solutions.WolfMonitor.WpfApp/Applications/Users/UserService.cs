@@ -24,7 +24,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         }
 
         public Task<Result<Exception, Guid>> Post(UserCreateVO user)
-            => _endPoint.Register("register/user", user);
+            => _endPoint.Register("register/users", user);
 
         public async Task<Result<Exception, UserBasicInformationViewModel>> GetInfo()
             => await _endPoint.GetInfo();

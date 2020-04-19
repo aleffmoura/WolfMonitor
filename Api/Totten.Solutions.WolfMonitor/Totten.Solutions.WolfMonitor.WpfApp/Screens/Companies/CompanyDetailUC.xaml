@@ -37,7 +37,7 @@
             </StackPanel>
 
 
-            <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged"  Margin="0" Height="550">
+            <TabControl x:Name="tabControl" Margin="0" Height="550">
                 <TabItem x:Name="tbUsers" Header="Usuários">
                     
                 </TabItem>

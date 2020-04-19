@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using FluentValidation.Resources;
 using FluentValidation.Results;
 using MediatR;
 using System;
@@ -25,10 +26,25 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             public string Login { get; set; }
             public string Password { get; set; }
 
+            public Command(Guid companyId, string email, string cpf,
+                           string firstName, string lastName, string language,
+                           string login, string password)
+            {
+                CompanyId = companyId;
+                Email = email;
+                Cpf = cpf;
+                FirstName = firstName;
+                LastName = lastName;
+                Language = language;
+                Login = login;
+                Password = password;
+            }
+
             public ValidationResult Validate()
             {
                 return new Validator().Validate(this);
             }
+
 
             private class Validator : AbstractValidator<Command>
             {
