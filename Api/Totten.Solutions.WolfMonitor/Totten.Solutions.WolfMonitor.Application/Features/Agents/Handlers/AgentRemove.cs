@@ -61,14 +61,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 if (agentCallback.IsFailure)
                     return agentCallback.Failure;
 
-                var userCallback = await _userRepository.GetByIdAsync(request.UserId);
-
-                if (agentCallback.Success.CompanyId == userCallback.Success.CompanyId)
-                    throw new BusinessException(Domain.Enums.ErrorCodes.NotFound, "Usuário não pertence a empresa do agent informado.");
-
                 agentCallback.Success.Removed = true;
 
-                return await _repository.UpdateAsync(agentCallback.Success);
+                var returned = await _repository.UpdateAsync(agentCallback.Success);
+
+                if (returned.IsFailure)
+                    return returned.Failure;
+
+                return Unit.Successful;
             }
         }
     }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
+using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
+using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Register.Commands;
 
 namespace Totten.Solutions.WolfMonitor.Register.Controllers
@@ -19,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
 
         #region HTTP POST
         [HttpPost]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromBody]UserCreateCommand command)
             => HandleCommand(await _mediator.Send(new UserCreate.Command(
                                                         CompanyId, command.Email, command.Cpf,

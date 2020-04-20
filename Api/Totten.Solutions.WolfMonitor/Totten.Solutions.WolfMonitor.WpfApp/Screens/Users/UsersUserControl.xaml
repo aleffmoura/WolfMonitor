@@ -15,7 +15,7 @@
 
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" TextChanged="txtUser_TextChanged"/>
+                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por Nome ou Login" TextChanged="txtUser_TextChanged"/>
                 <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0" Click="btnSearch_Click">
                     <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                 </Button>
@@ -31,7 +31,7 @@
                     <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
                     <DataGridTextColumn Header="Email" Width="220" Binding="{Binding Email}" />
                     <DataGridTextColumn Header="Cpf" Width="120" Binding="{Binding Cpf}" />
-                    <DataGridTextColumn Header="Nível do usuário" Width="120" Binding="{Binding RoleName}" />
+                    <DataGridTextColumn Header="Nível do usuário" Width="130" Binding="{Binding RoleName}" />
                     <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
                 </DataGrid.Columns>
             </DataGrid>

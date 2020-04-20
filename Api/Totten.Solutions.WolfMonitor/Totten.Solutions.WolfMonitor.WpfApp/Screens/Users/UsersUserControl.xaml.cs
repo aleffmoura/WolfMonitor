@@ -62,12 +62,31 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             var item = (UserResumeViewModel)gridUsers.SelectedItem;
 
-            if(item == null)
+            if (item == null)
             {
                 MessageBox.Show("Selecione um usuário na lista", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            _userService.Delete(item.Id);
+
+            btnDel.IsEnabled = false;
+            gridUsers.IsEnabled = false;
+
+            _userService.Delete(item.Id).ContinueWith(task =>
+            {
+                if (task.Result.IsFailure)
+                    MessageBox.Show(task.Result.Failure.Message, "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                else
+                {
+                    MessageBox.Show("Deletado com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _currentItems.Remove(item);
+                    SetDataOnGrid(_currentItems);
+                }
+
+                btnDel.IsEnabled = true;
+                gridUsers.IsEnabled = true;
+
+            }, _currentTaskScheduler);
+
         }
 
         private void gridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -78,13 +97,17 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 btnDel.IsEnabled = true;
         }
 
+        public void SetDataOnGrid(List<UserResumeViewModel> list)
+            => gridUsers.DataContext = list;
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
-            => gridUsers.DataContext = _currentItems.Where(x => x.FullName.Contains(txtUser.Text));
+            => SetDataOnGrid(_currentItems.Where(x => x.FullName.Contains(txtUser.Text, StringComparison.OrdinalIgnoreCase) ||
+                                                      x.Login.Contains(txtUser.Text, StringComparison.OrdinalIgnoreCase)).ToList());
 
         private void txtUser_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(txtUser.Text))
-                gridUsers.DataContext = _currentItems;
+                SetDataOnGrid(_currentItems);
         }
     }
 }

@@ -39,10 +39,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
             => Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
 
         public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
-            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgot-password", new RecoverSolicitationRequestVO { Login = login, Email = email });
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword", new RecoverSolicitationRequestVO { Login = login, Email = email });
 
         public Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token)
-            => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgot-password/validate-token", new TokenConfirmationRequestVO
+            => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgotPassword/validate-token", new TokenConfirmationRequestVO
             {
                 Login = login,
                 Email = email,
@@ -51,7 +51,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
             });
 
         public Task<Result<Exception, Unit>> ChangePassword(string login, string email, Guid tokenSolicitationCode, Guid recoverSolicitationCode, string password)
-         => _endPoint.Post<Unit, TokenChangePasswordVO>("forgot-password/change-password", new TokenChangePasswordVO
+         => _endPoint.Post<Unit, TokenChangePasswordVO>("forgotPassword/change-password", new TokenChangePasswordVO
          {
              Login = login,
              Email = email,

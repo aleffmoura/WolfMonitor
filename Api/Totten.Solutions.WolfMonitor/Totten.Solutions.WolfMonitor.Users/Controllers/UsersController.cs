@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
-using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers.ForgotPasswords;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
@@ -19,7 +18,7 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
 
         public UsersController(IMediator mediator)
             => _mediator = mediator;
-
+        #region GET
         [HttpGet()]
         [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Count | AllowedQueryOptions.Skip)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
@@ -30,18 +29,13 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadInformations()
             => HandleQuery<User, UserResumeViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
+        #endregion
 
-        [HttpPost("forgot-password")]
-        public async Task<IActionResult> Create([FromBody]UserForgotPasswordCreate.Command command)
-            => HandleCommand(await _mediator.Send(command));
-
-        [HttpPost("forgot-password/validate-token")]
-        public async Task<IActionResult> ValidateToken([FromBody]UserValidateTokenCreate.Command command)
-            => HandleCommand(await _mediator.Send(command));
-
-        [HttpPost("forgot-password/change-password")]
-        public async Task<IActionResult> ChangePasswordByToken([FromBody]UserChangePasswordByTokenCreate.Command command)
-            => HandleCommand(await _mediator.Send(command));
-
+        #region DELETE
+        [HttpDelete("{Id}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> RemoveItem([FromRoute]Guid id)
+            => HandleCommand(await _mediator.Send(new UserRemove.Command(id, CompanyId, UserId)));
+        #endregion
     }
 }
