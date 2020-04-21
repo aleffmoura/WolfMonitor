@@ -47,8 +47,6 @@
                 <TextBlock x:Name="lblUserName" Text="User" VerticalAlignment="Center" FontSize="18"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                     <StackPanel Width="150">
-                        <Button x:Name="btnAccount" Content="Account" />
-                        <Separator/>
                         <Button x:Name="btnLogout" Content="Logout" Click="btnLogout_Click"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
@@ -56,6 +54,10 @@
         </Grid>
 
         <Grid x:Name="gridRoot" Margin="60,60,0,0" Width="auto" Height="auto"  Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="61*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
         </Grid>
 
@@ -92,7 +94,14 @@
                             <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
-                    
+
+                    <ListViewItem x:Name="btnMyAccount"  Height="60" MouseLeftButtonUp="btnMyAccount_MouseLeftButtonUp">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountDetails" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
+                            <TextBlock Text="Minha Conta" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
+                        </StackPanel>
+                    </ListViewItem>
+
                     <ListViewItem x:Name="btnAgentsMenu" Height="60" MouseLeftButtonUp="btnAgentsMenu_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Computer" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
@@ -103,7 +112,7 @@
                     <ListViewItem x:Name="btnCompanyMenu" Height="60" MouseLeftButtonUp="btnCompanyMenu_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Business" Width="25" Height="25" Margin="10"  VerticalAlignment="Center"/>
-                            <TextBlock Text="Empresas" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
+                            <TextBlock Text="Empresa" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
                     </ListViewItem>
                     

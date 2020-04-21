@@ -9,8 +9,8 @@
     <Grid Height="190" Width="220">
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,5,0">
-            <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0" Click="btnDel_Click">
-                <materialDesign:PackIcon Kind="DeleteAlertOutline" VerticalAlignment="Center" Margin="0" Width="auto"/>
+            <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0" Click="btnDel_Click" Background="Red">
+                <materialDesign:PackIcon Kind="DeleteAlertOutline" VerticalAlignment="Center" Margin="0" Width="auto" Background="Red"/>
             </Button>
         </StackPanel>
         

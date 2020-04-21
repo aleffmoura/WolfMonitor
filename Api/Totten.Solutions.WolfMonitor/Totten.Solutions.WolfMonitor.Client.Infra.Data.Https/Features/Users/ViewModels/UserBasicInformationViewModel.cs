@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels
 {
-    public enum UserLevel
+    public enum EUserLevel
     {
         User = 1,
         Admin = 2,

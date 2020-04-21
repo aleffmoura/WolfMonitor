@@ -12,6 +12,7 @@ using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Users;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 {
@@ -19,13 +20,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
     {
         private UserBasicInformationViewModel _userBasicInformation;
         private CustomHttpCliente _customHttpCliente;
+        private AgentService _agentService;
+        private ItemsMonitoringService _itemsMonitoringService;
+        private UserService _userService;
 
         public Home(CustomHttpCliente customHttpCliente,
                     UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _customHttpCliente = customHttpCliente;
+            InstanceServices();
             VerifyPermissionsUser(userBasicInformation);
+        }
+
+        private void InstanceServices()
+        {
+            _agentService = new AgentService(new AgentEndPoint(_customHttpCliente));
+            _itemsMonitoringService = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
+            _userService = new UserService(new UserEndPoint(_customHttpCliente));
         }
 
         private void IncludeUserControl(object sender, EventArgs e)
@@ -42,7 +54,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _userBasicInformation = userBasicInformation;
             this.lblUserName.Text = _userBasicInformation.FullName;
 
-            if (this._userBasicInformation.UserLevel < (int)UserLevel.System)
+            if (this._userBasicInformation.UserLevel < (int)EUserLevel.System)
             {
                 this.btnCompanyMenu.Visibility = Visibility.Collapsed;
             }
@@ -78,10 +90,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnAgentsMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var service = new AgentService(new AgentEndPoint(_customHttpCliente));
-            var monitoringItems = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
-
-            var agentsUserControl = new AgentsUserControl(service, monitoringItems, IncludeUserControl);
+            var agentsUserControl = new AgentsUserControl(_agentService, _itemsMonitoringService, IncludeUserControl, _userBasicInformation);
 
             IncludeUserControl(agentsUserControl, new EventArgs());
             agentsUserControl.Populate();
@@ -89,9 +98,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var company = new CompanyDetailUC(new UserService(new UserEndPoint(_customHttpCliente)));
+            IncludeUserControl(new CompanyDetailUC(_userService, _userBasicInformation), new EventArgs());
+        }
 
-            IncludeUserControl(company, new EventArgs());
+        private void btnMyAccount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            IncludeUserControl(new UserDetailUC( _userBasicInformation), new EventArgs());
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
@@ -17,17 +18,19 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private AgentService _agentService;
         private ItemsMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
-
+        UserBasicInformationViewModel _userBasicInformation;
         private EventHandler _onSwitchControl;
 
         public AgentsUserControl(AgentService agentService,
-                                ItemsMonitoringService itensMonitoringService,
-                                EventHandler onSwitchControl)
+                                 ItemsMonitoringService itensMonitoringService,
+                                 EventHandler onSwitchControl,
+                                 UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _agentService = agentService;
             _onSwitchControl = onSwitchControl;
             _itensMonitoringService = itensMonitoringService;
+            _userBasicInformation = userBasicInformation;
             _indexes = new Dictionary<Guid, AgentUC>();
         }
 
@@ -43,9 +46,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             this.wrapPanel.Children.Clear();
 
             foreach (var agentViewModel in _indexes)
-            {
                 this.wrapPanel.Children.Add(_indexes[agentViewModel.Key]);
-            }
+            
             OnApplyTemplate();
         }
 
@@ -59,7 +61,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 {
                     foreach (AgentResumeViewModel agentViewModel in task.Result.Success.Items)
                     {
-                        _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel));
+                        _indexes.Add(agentViewModel.Id, new AgentUC(OnRemove, OnEdit, agentViewModel, _userBasicInformation));
                     }
                     PopulateByDictionary();
                 }

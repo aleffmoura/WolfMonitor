@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Login" Height="500" Width="350" ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Login" Height="500" Width="350" ResizeMode="NoResize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="pnlRoot">
         <Rectangle Height="280" VerticalAlignment="Top">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

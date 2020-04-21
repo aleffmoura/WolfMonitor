@@ -32,7 +32,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
         }
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            lblForgot.IsEnabled = false;
+            pnlRoot.IsEnabled = false;
 
             try
             {
@@ -48,25 +48,26 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                     home.ShowDialog();
                 }
                 else
-                {
                     MessageBox.Show($"Falha: {userBasic.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                lblForgot.IsEnabled = true;
             }
             catch (Exception ex)
             {
-                lblForgot.IsEnabled = true;
                 MessageBox.Show($"Falha: {ex.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            finally
+            {
+                pnlRoot.IsEnabled = true;
             }
         }
 
         private void lblForgot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            btnLogin.IsEnabled = false;
+            pnlRoot.IsEnabled = false;
+
             InstanceUserService(true);
+
             try
             {
-
                 var recover = new ForgotPasswordWindow(_userService);
                 recover.ShowDialog();
             }
@@ -74,7 +75,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
             {
                 MessageBox.Show("Falha inesperada, por favor contate um administrador de sistema", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            btnLogin.IsEnabled = true;
+            pnlRoot.IsEnabled = true;
         }
     }
 }

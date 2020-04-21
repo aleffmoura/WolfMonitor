@@ -147,7 +147,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             _qtItems = 0;
             btnActualPage.Content = $"{_actualPage}";
             btnPrevPage.IsEnabled = false;
-            btnNextPage.IsEnabled = true;
+            btnNextPage.IsEnabled = false;
 
             if (tabControl.SelectedIndex == 0)
             {
