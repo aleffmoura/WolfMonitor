@@ -21,6 +21,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation
                 .ForMember(dest => dest.LastLogin, opt => opt.MapFrom(src => src.LastLogin.HasValue ? src.LastLogin.Value.ToString("dd/MM/yyyy hh:mm") : "Nunca conectado"))
                 .ForMember(dest => dest.FullName, option => option.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
+            CreateMap<User, UserDetailViewModel>()
+                .ForMember(dest => dest.UserLevel, opt => opt.MapFrom(src => (int)src.Role.Level))
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.LastLogin, opt => opt.MapFrom(src => src.LastLogin.HasValue ? src.LastLogin.Value.ToString("dd/MM/yyyy hh:mm") : "Nunca conectado"))
+                .ForMember(dest => dest.FullName, option => option.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+
+            
             CreateMap<UserResumeViewModel, User>();
         }
     }

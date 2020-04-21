@@ -29,7 +29,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             txtRepass.Password = _userBasicInformation.Password;
 
             txtEmail.Text = _userBasicInformation.Email;
-            txtName.Text = _userBasicInformation.LastName;
+            txtName.Text = _userBasicInformation.FirstName;
             txtLastName.Text = _userBasicInformation.LastName;
             txtCpf.Text = _userBasicInformation.Cpf;
         }
