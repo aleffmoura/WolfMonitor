@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords;
@@ -43,6 +44,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 var userBasic = await _userService.GetInfo();
                 if (userBasic.IsSuccess)
                 {
+                    if(userBasic.Success.UserLevel < (int)EUserLevel.User)
+                    {
+                        MessageBox.Show($"Falha: este tipo de usuário não está permitido a logar no sistema", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     Home home = new Home(_customHttp, userBasic.Success);
                     this.Visibility = Visibility.Hidden;
                     home.ShowDialog();

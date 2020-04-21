@@ -28,8 +28,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
                     UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
+
             _customHttpCliente = customHttpCliente;
+
             InstanceServices();
+
             VerifyPermissionsUser(userBasicInformation);
         }
 
@@ -52,12 +55,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         private void VerifyPermissionsUser(UserBasicInformationViewModel userBasicInformation)
         {
             _userBasicInformation = userBasicInformation;
+
             this.lblUserName.Text = _userBasicInformation.FullName;
 
             if (this._userBasicInformation.UserLevel < (int)EUserLevel.System)
-            {
                 this.btnCompanyMenu.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -97,13 +99,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         }
 
         private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            IncludeUserControl(new CompanyDetailUC(_userService, _userBasicInformation), new EventArgs());
-        }
+            => IncludeUserControl(new CompanyDetailUC(_userService, _userBasicInformation), new EventArgs());
+        
 
         private void btnMyAccount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            IncludeUserControl(new UserDetailUC( _userBasicInformation), new EventArgs());
-        }
+            => IncludeUserControl(new UserDetailUC(_userService, _userBasicInformation), new EventArgs());
     }
 }

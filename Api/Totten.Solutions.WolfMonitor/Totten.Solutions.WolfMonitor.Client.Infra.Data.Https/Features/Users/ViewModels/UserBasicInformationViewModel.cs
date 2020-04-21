@@ -10,12 +10,17 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.Vi
     }
     public class UserBasicInformationViewModel
     {
-        public string Login { get; set; }
-        public string Email { get; set; }
-        public string Cpf { get; set; }
-        public string FullName { get; set; }
-        public int UserLevel { get; set; }
-        public static string Token { get; set; }
+        public string Login { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+        public string Cpf { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+
+        public string FullName { get; set; } = string.Empty;
+        public int UserLevel { get; set; } 
+        public static string Token { get; set; } = string.Empty;
 
         public Guid UserId { get; set; }
     }
