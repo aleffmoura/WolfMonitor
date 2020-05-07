@@ -18,7 +18,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private AgentService _agentService;
         private ItemsMonitoringService _itensMonitoringService;
         private Dictionary<Guid, AgentUC> _indexes;
-        UserBasicInformationViewModel _userBasicInformation;
+
+        private UserBasicInformationViewModel _userBasicInformation;
         private EventHandler _onSwitchControl;
 
         public AgentsUserControl(AgentService agentService,

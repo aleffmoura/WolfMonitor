@@ -99,9 +99,17 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         }
 
         private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-            => IncludeUserControl(new CompanyDetailUC(_userService, _userBasicInformation), new EventArgs());
-        
+        {
+            UserControl control;
 
+            if (_userBasicInformation.UserLevel == (int)EUserLevel.System)
+                control = new CompaniesUserControl(IncludeUserControl, _userBasicInformation);
+            else
+                control = new CompanyDetailUC(_userService, _userBasicInformation);
+
+            IncludeUserControl(control, new EventArgs());
+        }
+           
         private void btnMyAccount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
             => IncludeUserControl(new UserDetailUC(_userService, _userBasicInformation), new EventArgs());
     }

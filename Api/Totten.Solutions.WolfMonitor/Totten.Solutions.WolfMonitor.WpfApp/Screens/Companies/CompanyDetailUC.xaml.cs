@@ -29,9 +29,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
             InitializeComponent();
 
             _userService = userService;
-
             tbUsers.Content = new UsersUserControl(_userService);
-
             this._userBasicInformation = userBasicInformation;
         }
     }

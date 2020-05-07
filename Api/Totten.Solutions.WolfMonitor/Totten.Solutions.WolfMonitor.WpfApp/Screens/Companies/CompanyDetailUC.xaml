@@ -14,22 +14,45 @@
                 <Separator  Width="1240"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Height="120" Margin="5" >
+            <StackPanel Orientation="Horizontal" Height="130" Margin="5" >
                 <StackPanel Width="450">
                     <StackPanel Margin="5" Orientation="Vertical">
-                        
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Identificador:" FontSize="15" Foreground="Black"  FontWeight="Bold" />
+                            <TextBlock Text="FC62CD95-84D8-45B5-81B2-EAB4132E7976" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold" Cursor="Hand"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <TextBlock Text="Razão Social:" FontSize="15" Foreground="Black"/>
                             <TextBlock Text="Aleff Moura da Silva 111.111.111-11" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                         </StackPanel>
-                        
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Inscr. Estadual:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Inscr. Municipal:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Margin="5" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <TextBlock Text="IP:" FontSize="15" Foreground="Black"/>
-                        <TextBlock x:Name="lblIp" Text="Not Connected" FontSize="15" Foreground="Black" Margin="5,0" FontWeight="Bold"/>
+                        <TextBlock Text="Email:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="CNAE:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="Fone:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="Endereço:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                     </StackPanel>
 
                 </StackPanel>
