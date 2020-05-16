@@ -111,7 +111,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
                 control = new CompanyDetailUC(_companyService, _userService, _userBasicInformation);
             else
             {
-                control = new CompaniesUserControl(_companyService, IncludeUserControl, _userBasicInformation);
+                control = new CompaniesUserControl(_companyService, IncludeUserControl, _userService, _userBasicInformation);
                 action = () =>
                 {
                     var companiesControl = control as CompaniesUserControl;

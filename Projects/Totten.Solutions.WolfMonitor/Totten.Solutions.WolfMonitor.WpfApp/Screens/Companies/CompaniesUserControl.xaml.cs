@@ -31,11 +31,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
 
         public CompaniesUserControl(CompanyService companyService,
                                     EventHandler onSwitchControl,
+                                    IUserService userService,
                                     UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _onSwitchControl = onSwitchControl;
             _companyService = companyService;
+            _userService = userService;
             _userBasicInformation = userBasicInformation;
             _indexes = new Dictionary<Guid, CompanyUC>();
         }

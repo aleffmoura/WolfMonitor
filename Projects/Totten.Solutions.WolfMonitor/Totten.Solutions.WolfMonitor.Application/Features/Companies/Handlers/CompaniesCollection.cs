@@ -54,15 +54,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                     if (items.IsFailure)
                         continue;
 
-                    var view = new CompanyResumeViewModel
+                    var listItems = items.Success.ToList();
+
+                    returned.Add(new CompanyResumeViewModel
                     {
                         Id = company.Id,
                         Company = company.FantasyName,
                         QtdAgents = company.Agents.Count,
-                        QtdServices = items.Success.Where(i=>i.Type == Domain.Enums.ETypeItem.SystemService).Count(),
-                        QtdArchives = items.Success.Where(i => i.Type == Domain.Enums.ETypeItem.SystemService).Count(),
+                        QtdServices = listItems.Where(i => i.Type == Domain.Enums.ETypeItem.SystemService).Count(),
+                        QtdArchives = listItems.Where(i => i.Type == Domain.Enums.ETypeItem.SystemService).Count(),
                         QtdUsers = users.Success.Count()
-                    };
+                    });
+
                 }
 
                 return Result<Exception, IQueryable<CompanyResumeViewModel>>.Of(returned.AsQueryable());
