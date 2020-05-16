@@ -12,6 +12,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies
             CreateMap<CompanyCreate.Command, Company>()
                 .ForMember(dest => dest.Removed, opt => opt.MapFrom(src => false));
             CreateMap<Company, CompanyResumeViewModel>();
+            CreateMap<CompanyResumeViewModel, CompanyResumeViewModel>();
         }
     }
 }

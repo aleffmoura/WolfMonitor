@@ -13,6 +13,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         Task<Result<Exception, Unit>> CreateSolicitationAsync(ItemSolicitationHistoric item);
         Task<Result<Exception, Item>> GetByNameWithAgentId(string name, Guid agentId);
         Result<Exception, IQueryable<Item>> GetAll(Guid agentId);
+        Result<Exception, IQueryable<Item>> GetAllByCompanyId(Guid companyId);
         Result<Exception, IQueryable<Item>> GetAll(Guid agentId, ETypeItem type);
         Result<Exception, IQueryable<ItemHistoric>> GetAllHistoric(Guid itemId);
         Result<Exception, IQueryable<ItemSolicitationHistoric>> GetAllSolicitation(Guid itemId);

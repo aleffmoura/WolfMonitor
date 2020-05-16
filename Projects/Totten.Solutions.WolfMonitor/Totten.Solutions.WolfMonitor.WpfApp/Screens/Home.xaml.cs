@@ -4,10 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authentication;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Companies;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Companies;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents;
@@ -23,6 +25,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         private AgentService _agentService;
         private ItemsMonitoringService _itemsMonitoringService;
         private UserService _userService;
+        private CompanyService _companyService;
 
         public Home(CustomHttpCliente customHttpCliente,
                     UserBasicInformationViewModel userBasicInformation)
@@ -41,6 +44,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _agentService = new AgentService(new AgentEndPoint(_customHttpCliente));
             _itemsMonitoringService = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
             _userService = new UserService(new UserEndPoint(_customHttpCliente));
+            _companyService = new CompanyService(new CompanyEndPoint(_customHttpCliente));
         }
 
         private void IncludeUserControl(object sender, EventArgs e)
@@ -101,15 +105,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         private void btnCompanyMenu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             UserControl control;
+            Action action = null;
 
-            if (_userBasicInformation.UserLevel == (int)EUserLevel.System)
-                control = new CompaniesUserControl(IncludeUserControl, _userBasicInformation);
+            if (_userBasicInformation.UserLevel != (int)EUserLevel.System)
+                control = new CompanyDetailUC(_companyService, _userService, _userBasicInformation);
             else
-                control = new CompanyDetailUC(_userService, _userBasicInformation);
+            {
+                control = new CompaniesUserControl(_companyService, IncludeUserControl, _userBasicInformation);
+                action = () =>
+                {
+                    var companiesControl = control as CompaniesUserControl;
+                    companiesControl.Populate();
+                };
+            }
 
             IncludeUserControl(control, new EventArgs());
+            action?.Invoke();
         }
-           
+
         private void btnMyAccount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
             => IncludeUserControl(new UserDetailUC(_userService, _userBasicInformation), new EventArgs());
     }

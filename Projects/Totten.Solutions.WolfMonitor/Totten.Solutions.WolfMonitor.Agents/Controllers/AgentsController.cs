@@ -52,11 +52,11 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]AgentUpdateCommand command)
             => HandleCommand(await _mediator.Send(new AgentUpdate.Command(UserId, command.MachineName, command.LocalIp, command.HostName, command.HostAddress)));
-        
+
         #endregion
 
         #region HTTP GET
-        [ODataQueryOptionsValidate]
+        [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Skip | AllowedQueryOptions.Count)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll(ODataQueryOptions<Agent> queryOptions)
             => await HandleQueryable<Agent, AgentResumeViewModel>(await _mediator.Send(new AgentCollection.Query(CompanyId)), queryOptions);

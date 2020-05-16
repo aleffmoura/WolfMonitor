@@ -30,6 +30,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         ~AgentUC()
         {
             _onRemove = null;
+            _onEditHandler = null;
             _agentResumeViewModel = null;
         }
 

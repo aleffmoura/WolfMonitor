@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
+using Totten.Solutions.WolfMonitor.WpfApp.Applications.Companies;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Companies;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
 {
@@ -23,12 +26,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
         private Dictionary<Guid, CompanyUC> _indexes;
         private EventHandler _onSwitchControl;
         private IUserService _userService;
+        private CompanyService _companyService;
         private UserBasicInformationViewModel _userBasicInformation;
-        public CompaniesUserControl(EventHandler onSwitchControl, UserBasicInformationViewModel userBasicInformation)
+
+        public CompaniesUserControl(CompanyService companyService,
+                                    EventHandler onSwitchControl,
+                                    UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _onSwitchControl = onSwitchControl;
+            _companyService = companyService;
             _userBasicInformation = userBasicInformation;
+            _indexes = new Dictionary<Guid, CompanyUC>();
         }
 
         ~CompaniesUserControl()
@@ -47,27 +56,51 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
             OnApplyTemplate();
         }
 
+
+        public void Populate()
+        {
+            _indexes.Clear();
+
+            this.wrapPanel.Children.Clear();
+
+            var loading = new LoadingWindow(_companyService.GetAll().ContinueWith(task =>
+            {
+                if (task.Result.IsSuccess)
+                {
+                    foreach (CompanyResumeViewModel companyViewModel in task.Result.Success.Items)
+                    {
+                        _indexes.Add(companyViewModel.Id, new CompanyUC(OnRemove, OnEdit, companyViewModel, _userBasicInformation));
+                    }
+                    PopulateByDictionary();
+                }
+                else
+                    MessageBox.Show("Falha na requisição de empresas", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }, TaskScheduler.FromCurrentSynchronizationContext()));
+
+            loading.ShowDialog();
+        }
+
         private void OnEdit(object sender, EventArgs e)
-            => _onSwitchControl?.Invoke(new CompanyDetailUC(_userService, _userBasicInformation), new EventArgs());
+            => _onSwitchControl?.Invoke(new CompanyDetailUC(_companyService, _userService, _userBasicInformation), new EventArgs());
 
         private void OnRemove(object sender, EventArgs e)
         {
-            //AgentResumeViewModel agentViewModel = sender as AgentResumeViewModel;
+           CompanyResumeViewModel companyViewModel = sender as CompanyResumeViewModel;
 
-            //if (MessageBox.Show($"Deseja realmente remover o serviço: {agentViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //{
-            //    _agentService.Delete(agentViewModel.Id).ContinueWith(task =>
-            //    {
-            //        if (task.Result.IsSuccess)
-            //        {
-            //            MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
-            //            _indexes.Remove(agentViewModel.Id);
-            //            PopulateByDictionary();
-            //        }
-            //        else
-            //            MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    }, TaskScheduler.FromCurrentSynchronizationContext());
-            //}
+            if (MessageBox.Show($"Deseja realmente remover a empresa: {companyViewModel.Company}?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _companyService.Delete(companyViewModel.Id).ContinueWith(task =>
+                {
+                    if (task.Result.IsSuccess)
+                    {
+                        MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                        _indexes.Remove(companyViewModel.Id);
+                        PopulateByDictionary();
+                    }
+                    else
+                        MessageBox.Show($"Falha na tentativa de remoção.", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels;
@@ -28,27 +29,23 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
             => HandleCommand(await _mediator.Send(command));
         #endregion
 
-        //#region HTTP PATCH
-        //[HttpPatch]
-        //public async Task<IActionResult> PatchClient([FromBody]AgentUpdate.Command command)
-        //{
-        //    return HandleCommand(await _mediator.Send(command));
-        //}
-        //#endregion
+        #region HTTP PATCH
+        #endregion
 
         #region HTTP GET
         [HttpGet]
-        [ODataQueryOptionsValidate]
+        [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Skip | AllowedQueryOptions.Count)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System)]
-        public async Task<IActionResult> ReadAll(ODataQueryOptions<Company> queryOptions)
+        public async Task<IActionResult> ReadAll(ODataQueryOptions<CompanyResumeViewModel> queryOptions)
         {
-            return await HandleQueryable<Company, CompanyResumeViewModel>(await _mediator.Send(new CompaniesCollection.Query()), queryOptions);
+            return await HandleQueryable<CompanyResumeViewModel, CompanyResumeViewModel>(await _mediator.Send(new CompaniesCollection.Query()), queryOptions);
         }
-        //[HttpGet("mycompany")]
-        //public async Task<IActionResult> ReadById([FromRoute]Guid companyId)
-        //{
-        //    return HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(companyId)));
-        //}
+
+        [HttpGet("{companyId}/resume")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System)]
+        public async Task<IActionResult> ReadAllInfo([FromRoute]Guid companyId)
+            => HandleQuery<Company, CompanyResumeViewModel>(await _mediator.Send(new CompanyResume.Query(companyId, CompanyId, Role)));
+        
         #endregion
 
     }

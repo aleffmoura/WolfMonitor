@@ -30,12 +30,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
 
         public Result<Exception, IQueryable<Company>> GetAll()
         {
-            return Result.Run(() => _context.Companies.Where(a => !a.Removed));
+            return Result.Run(() => _context.Companies.Include(c => c.Agents).AsNoTracking().Where(a => !a.Removed));
         }
 
         public async Task<Result<Exception, Company>> GetByIdAsync(Guid id)
         {
-            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.Id == id);
+            Company company = await _context.Companies.AsNoTracking().FirstOrDefaultAsync(c => !c.Removed && c.Id == id);
 
             if (company == null)
             {

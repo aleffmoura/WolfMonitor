@@ -24,6 +24,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Base
     {
         protected Guid UserId => Guid.Parse(GetClaimValue("UserId"));
         protected Guid CompanyId => Guid.Parse(GetClaimValue("CompanyId"));
+        protected string Role => GetClaimValue("Role");
         #region Handlers    
         protected IActionResult HandleCommand<TFailure, TSuccess>(Result<TFailure, TSuccess> result) where TFailure : Exception
                             => result.IsFailure ? HandleFailure(result.Failure) : Ok(result.Success);

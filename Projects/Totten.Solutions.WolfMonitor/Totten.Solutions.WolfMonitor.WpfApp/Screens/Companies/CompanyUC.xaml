@@ -8,8 +8,9 @@
              mc:Ignorable="d" >
 
     <Grid Height="160" Width="220">
+        
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,5,0">
-            <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0">
+            <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0" Click="btnDel_Click">
                 <materialDesign:PackIcon Kind="DeleteAlertOutline" VerticalAlignment="Center" Margin="0" Width="auto"/>
             </Button>
         </StackPanel>
@@ -51,7 +52,7 @@
                 <Separator Margin="0,10,0,5" Background="LightGray"/>
 
                 <StackPanel >
-                    <Button x:Name="btnEdit" Height="30" Padding="0" Margin="0">
+                    <Button x:Name="btnEdit" Height="30" Padding="0" Margin="0" Click="btnEdit_Click">
                         <materialDesign:PackIcon Kind="OpenInApp"/>
                     </Button>
                 </StackPanel>

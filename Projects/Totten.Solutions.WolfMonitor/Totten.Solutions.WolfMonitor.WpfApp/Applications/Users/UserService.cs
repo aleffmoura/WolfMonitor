@@ -71,7 +71,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
                 { "grant_type", "password"},
                 { "username",  _endPoint.Client.User.Login },
                 { "password",  _endPoint.Client.User.Password},
-                { "scope", "Agents Monitoring Users"}
+                { "scope", "Agents Monitoring Users Companies"}
             });
 
             using (var httpClient = new HttpClient())

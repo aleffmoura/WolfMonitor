@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels
+namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Companies
 {
     public class CompanyResumeViewModel
     {
