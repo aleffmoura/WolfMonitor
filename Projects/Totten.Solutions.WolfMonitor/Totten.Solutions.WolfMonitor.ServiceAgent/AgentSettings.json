@@ -1,5 +1,5 @@
 ﻿{
-  "urlApi": "http://192.168.0.101:15999",
+  "urlApi": "http://192.168.0.102:15999",
   "company": "tottemsolutions",
   "user": {
     "login": "servidor1",

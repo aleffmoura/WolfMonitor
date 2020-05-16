@@ -25,7 +25,8 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base
 
         public HttpRequestMessage CreateRequest(HttpMethod httpMethod, string endPoint)
         {
-            var request = new HttpRequestMessage(httpMethod, Concat(endPoint));
+            var concated = Concat(endPoint);
+            var request = new HttpRequestMessage(httpMethod, concated);
             return request;
         }
     }

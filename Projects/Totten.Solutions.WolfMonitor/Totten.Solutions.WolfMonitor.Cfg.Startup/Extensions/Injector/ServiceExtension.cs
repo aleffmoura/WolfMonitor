@@ -71,7 +71,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
             container.Register(() => configurationRoot, Lifestyle.Scoped);
             container.Register<IHelper>(() => new Helper(configurationRoot), Lifestyle.Scoped);
             container.Register<IRabbitMQ, Rabbit>();
-            container.Register<BrokerReceiver>();
+            //container.Register<BrokerReceiver>();
         }
 
     }

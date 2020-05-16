@@ -36,7 +36,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
             => _endPoint.GetAll<UserResumeViewModel>();
 
         public string GetClientCredentials()
-            => Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
+            => Convert.ToBase64String(Encoding.ASCII.GetBytes($"application:applicationSecret"));
 
         public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
             => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword", new RecoverSolicitationRequestVO { Login = login, Email = email });

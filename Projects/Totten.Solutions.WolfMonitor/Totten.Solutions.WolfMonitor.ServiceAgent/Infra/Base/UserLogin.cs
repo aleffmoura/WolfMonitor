@@ -12,7 +12,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base
 
         public static string GetClientCredentials()
         {
-            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"postman:postmanSecret"));
+            return Convert.ToBase64String(Encoding.ASCII.GetBytes($"agentService:agentServiceSecret"));
         }
     }
 }
