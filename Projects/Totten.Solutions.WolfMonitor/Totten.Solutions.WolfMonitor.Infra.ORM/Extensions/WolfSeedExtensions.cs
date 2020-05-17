@@ -16,7 +16,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
             var company = new Company
             {
                 Id = companyId,
-                Name = "ALEFF MOURA DA SILVA 10685805425",
+                Name = "ALEFF MOURA DA SILVA",
                 FantasyName = "tottemsolutions",
                 Cnpj = "35.344.681/0001-90",
                 Address = "Rua Cicero Lourenço, Mossoró/RN",

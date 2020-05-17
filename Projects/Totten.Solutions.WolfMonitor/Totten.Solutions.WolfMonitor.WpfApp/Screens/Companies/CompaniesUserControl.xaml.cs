@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Companies;
@@ -107,11 +99,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //AgentCreateWindow agentCreateWindow = new AgentCreateWindow(_agentService);
-            //var result = agentCreateWindow.ShowDialog();
+            CompanyCreateWindow createWindow = new CompanyCreateWindow(_companyService);
 
-            //if (result.HasValue && result.Value)
-            //    Populate();
+            var result = createWindow.ShowDialog();
+
+            if (result.HasValue && result.Value)
+                Populate();
         }
 
 
