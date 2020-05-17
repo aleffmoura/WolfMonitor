@@ -17,6 +17,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
             public string Name { get; set; }
             public string FantasyName { get; set; }
             public string Cnpj { get; set; }
+            public string StateRegistration { get; set; }
+            public string MunicipalRegistration { get; set; }
+            public string Cnae { get; set; }
+            public string Email { get; set; }
+            public string Phone { get; set; }
+            public string Address { get; set; }
+
 
             public ValidationResult Validate()
             {
@@ -29,7 +36,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                 {
                     RuleFor(a => a.Name).NotEmpty().Length(4, 200);
                     RuleFor(a => a.FantasyName).NotEmpty().Length(2, 150);
-                    RuleFor(a => a.FantasyName).NotEmpty().Length(2, 150);
+                    RuleFor(a => a.Cnpj).NotEmpty().Length(11, 16);
+                    RuleFor(a => a.StateRegistration).NotEmpty().Length(2, 50);
+                    RuleFor(a => a.MunicipalRegistration).NotEmpty().Length(2, 50);
+                    RuleFor(a => a.Cnae).NotEmpty().Length(2, 50);
+                    RuleFor(a => a.Email).NotEmpty().Length(2, 150);
+                    RuleFor(a => a.Phone).NotEmpty().Length(11, 15);
+                    RuleFor(a => a.Address).NotEmpty().Length(5, 250);
                 }
             }
         }

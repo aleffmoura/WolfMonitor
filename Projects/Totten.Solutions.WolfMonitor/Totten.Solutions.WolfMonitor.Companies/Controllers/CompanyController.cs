@@ -41,10 +41,11 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
             return await HandleQueryable<CompanyResumeViewModel, CompanyResumeViewModel>(await _mediator.Send(new CompaniesCollection.Query()), queryOptions);
         }
 
-        [HttpGet("{companyId}/resume")]
-        [CustomAuthorizeAttributte(RoleLevelEnum.System)]
+
+        [HttpGet("{companyId}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAllInfo([FromRoute]Guid companyId)
-            => HandleQuery<Company, CompanyResumeViewModel>(await _mediator.Send(new CompanyResume.Query(companyId, CompanyId, Role)));
+            => HandleQuery<Company, CompanyDetailViewModel>(await _mediator.Send(new CompanyDetail.Query(companyId, CompanyId, Role)));
         
         #endregion
 

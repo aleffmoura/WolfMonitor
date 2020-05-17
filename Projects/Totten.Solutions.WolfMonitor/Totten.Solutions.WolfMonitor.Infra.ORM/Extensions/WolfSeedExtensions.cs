@@ -19,6 +19,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Name = "ALEFF MOURA DA SILVA 10685805425",
                 FantasyName = "tottemsolutions",
                 Cnpj = "35.344.681/0001-90",
+                Address = "Rua Cicero Lourenço, Mossoró/RN",
+                Phone = "(49) 9 9914-6350",
+                Email = "aleffmds@gmail.com",
+                Cnae = "",
+                MunicipalRegistration = "",
+                StateRegistration = "",
                 CreatedIn = DateTime.Now,
                 Removed = false,
                 UpdatedIn = DateTime.Now

@@ -53,10 +53,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
             #region Create User
             builder.Entity<User>().HasData(new User()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("f91a2366-c469-412a-9197-976a90516272"),
                 Login = "aleffmoura",
                 Email = "aleffmds@gmail.com",
-                Cpf = "10685805425",
+                Cpf = "11111111111",
                 Password = "123456".GenerateHash(),
                 RoleId = idSystem,
                 FirstName = "Aleff",

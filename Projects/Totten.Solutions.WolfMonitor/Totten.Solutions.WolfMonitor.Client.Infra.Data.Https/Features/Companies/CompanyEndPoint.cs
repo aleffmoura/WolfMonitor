@@ -25,7 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Companie
             => await InnerGetAsync<T>($"{_baseEndpoint}/{id}");
 
         public async Task<Result<Exception, T>> GetResume<T>(Guid companyId)
-            => await InnerGetAsync<T>($"{_baseEndpoint}/{companyId}/resume");
+            => await InnerGetAsync<T>($"{_baseEndpoint}/{companyId}");
 
         public Task<Result<Exception, PageResult<T>>> GetAll<T>()
             => InnerGetAsync<PageResult<T>>(_baseEndpoint);

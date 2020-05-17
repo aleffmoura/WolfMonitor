@@ -2,8 +2,6 @@
 using FluentValidation.Results;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
@@ -13,9 +11,8 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
 {
-    public class CompanyResume
+    public class CompanyDetail
     {
-
         public class Query : IRequest<Result<Exception, Company>>
         {
             public Guid Id { get; set; }
@@ -39,6 +36,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                 public Validator()
                 {
                     RuleFor(d => d.Id).NotEqual(Guid.Empty);
+                    RuleFor(d => d.UserCompany).NotEqual(Guid.Empty);
+                    RuleFor(d => d.Role).NotEmpty();
                 }
             }
         }
@@ -56,9 +55,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
             {
                 var roleEnum = Enum.Parse<RoleLevelEnum>(request.Role);
 
-                if(request.Id != request.UserCompany && roleEnum != (RoleLevelEnum.System | RoleLevelEnum.Admin))
+                if (request.Id != request.UserCompany && roleEnum != (RoleLevelEnum.System | RoleLevelEnum.Admin))
                     return new BusinessException(Domain.Enums.ErrorCodes.Unauthorized, "Empresa não permitida ser acessada por seu usuário");
-
 
                 return await _repository.GetByIdAsync(request.Id);
             }

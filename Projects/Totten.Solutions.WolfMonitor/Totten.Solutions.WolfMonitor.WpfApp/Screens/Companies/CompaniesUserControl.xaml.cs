@@ -83,7 +83,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
         }
 
         private void OnEdit(object sender, EventArgs e)
-            => _onSwitchControl?.Invoke(new CompanyDetailUC(_companyService, _userService, _userBasicInformation), new EventArgs());
+            => _onSwitchControl?.Invoke(new CompanyDetailUC(_companyService, _userService, _userBasicInformation, (Guid)sender), new EventArgs());
 
         private void OnRemove(object sender, EventArgs e)
         {

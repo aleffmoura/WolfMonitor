@@ -10,12 +10,12 @@
     <Grid>
         <StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblName" Text="Totem Solutions SA LIMITADA" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
+                <TextBlock x:Name="lblDisplayName" Text="Totem Solutions SA LIMITADA" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
                 <Separator  Width="1240"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Height="130" Margin="5" >
-                <StackPanel Width="450">
+                <StackPanel Width="600">
                     <StackPanel Margin="5" Orientation="Vertical">
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -24,7 +24,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <TextBlock Text="Razão Social:" FontSize="15" Foreground="Black"/>
-                            <TextBlock Name="lblSocialReason" Text="Aleff Moura da Silva 111.111.111-11" FontSize="15" Foreground="Green" Margin="19,0" FontWeight="Bold"/>
+                            <TextBlock Name="lblName" Text="Aleff Moura da Silva 111.111.111-11" FontSize="15" Foreground="Green" Margin="19,0" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <TextBlock Text="Inscr. Estadual:" FontSize="15" Foreground="Black"/>

@@ -20,8 +20,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Companies
         public Task<Result<Exception, PageResult<CompanyResumeViewModel>>> GetAll()
             => _endPoint.GetAll<CompanyResumeViewModel>();
 
-        public async Task<Result<Exception, CompanyResumeViewModel>> GetInfo(Guid companyId)
+        public async Task<Result<Exception, CompanyResumeViewModel>> GetResume(Guid companyId)
             => await _endPoint.GetResume<CompanyResumeViewModel>(companyId);
+
+        public async Task<Result<Exception, CompanyDetailViewModel>> GetDetail(Guid companyId)
+            => await _endPoint.GetResume<CompanyDetailViewModel>(companyId);
 
         public async Task<Result<Exception, Unit>> Delete(Guid companyId)
             => await _endPoint.Delete(companyId);
