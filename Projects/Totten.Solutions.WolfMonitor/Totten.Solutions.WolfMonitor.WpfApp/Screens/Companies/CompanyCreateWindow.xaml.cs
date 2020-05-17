@@ -36,15 +36,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
 
             _companyService.Post(new CompanyCreateVO
             {
-                Name = "",
-                FantasyName = "",
-                Email = "",
-                Cnae = "",
-                Cnpj = "",
-                Address = "",
-                MunicipalRegistration = "",
-                StateRegistration = "",
-                Phone = ""
+                Name = txtName.Text,
+                FantasyName = txtFantasyName.Text,
+                Email = txtEmail.Text,
+                Cnae = txtCnae.Text,
+                Cnpj = txtCnpj.Text,
+                Address = txtAddress.Text,
+                MunicipalRegistration = txtMunicipalRegistration.Text,
+                StateRegistration = txtStateRegistration.Text,
+                Phone = txtPhone.Text
             }).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)

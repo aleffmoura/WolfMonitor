@@ -25,7 +25,7 @@
             <TextBox x:Name="txtMunicipalRegistration" materialDesign:HintAssist.Hint="Inscrição municipal" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblMunicipalRegistrationError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
-            <TextBox x:Name="txtCane" materialDesign:HintAssist.Hint="CNAE" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <TextBox x:Name="txtCnae" materialDesign:HintAssist.Hint="CNAE" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblCnaeError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
             <TextBox x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
