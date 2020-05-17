@@ -13,7 +13,6 @@ using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 namespace Totten.Solutions.WolfMonitor.Companies.Controllers
 {
     [Route("")]
-    [CustomAuthorizeAttributte(RoleLevelEnum.User, RoleLevelEnum.Admin, RoleLevelEnum.System)]
     public class CompanyController : ApiControllerBase
     {
         private IMediator _mediator;
