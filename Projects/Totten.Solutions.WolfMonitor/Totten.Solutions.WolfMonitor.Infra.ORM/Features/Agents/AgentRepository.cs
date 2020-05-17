@@ -74,13 +74,13 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             return agent;
         }
         public Result<Exception, IQueryable<Agent>> GetAll()
-        {
-            return Result.Run(() => _context.Agents.AsNoTracking().Where(a => !a.Removed));
-        }
+            => Result.Run(() => _context.Agents.AsNoTracking().Where(a => !a.Removed));
+        
         public Result<Exception, IQueryable<Agent>> GetAll(Guid companyId)
-        {
-            return Result.Run(() => _context.Agents.Include(a => a.Company).AsNoTracking().Where(a => !a.Removed && a.CompanyId.Equals(companyId)));
-        }
+            => Result.Run(() => _context.Agents.Include(a => a.Company).AsNoTracking().Where(a => !a.Removed && a.CompanyId.Equals(companyId)));
+        
+        public Result<Exception, IQueryable<Agent>> GetAllByUserId(Guid userId)
+            => Result.Run(() => _context.Agents.Include(a => a.Company).AsNoTracking().Where(a => !a.Removed && a.UserWhoCreatedId.Equals(userId)));
 
         public async Task<Result<Exception, Unit>> UpdateAsync(Agent agent)
         {

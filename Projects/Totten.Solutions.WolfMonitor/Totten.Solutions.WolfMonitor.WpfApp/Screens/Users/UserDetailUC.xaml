@@ -47,7 +47,7 @@
                     
                 </TabItem>
 
-                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim">
+                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" >
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,5">
                             <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,10,0" >
@@ -61,11 +61,11 @@
                                   CanUserDeleteRows="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Identificador" Width="250" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Nome" Width="150" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Nome de visualização" Width="190" Binding="{Binding Name}" SortDirection="Ascending" />
+                                <DataGridTextColumn Header="Nome" Width="150" Binding="{Binding MachineName}" />
+                                <DataGridTextColumn Header="Nome de visualização" Width="190" Binding="{Binding DisplayName}" SortDirection="Ascending" />
                                 <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
                                 <DataGridTextColumn Header="Qtd Serviços" Width="100" Binding="{Binding QtdServices}" />
-                                <DataGridTextColumn Header="Qtd Configurações" Width="140" Binding="{Binding QtdConfig}" />
+                                <DataGridTextColumn Header="Qtd Configurações" Width="140" Binding="{Binding QtdConfiguration}" />
                                 <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
                             </DataGrid.Columns>
                         </DataGrid>

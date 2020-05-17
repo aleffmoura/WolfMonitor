@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
@@ -20,6 +22,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             _userService = userService;
 
             SetValues();
+
+            _userService.GetAllAgentsByUser().ContinueWith(task =>
+            {
+                if (task.Result.IsSuccess)
+                    gridAgends.ItemsSource = task.Result.Success.Items;
+                else
+                    MessageBox.Show("Falha na obtenção dos agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void SetValues()
@@ -50,8 +60,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             if (!btnAction.Content.Equals("Editar"))
             {
-
-
                 btnAction.Content = "Editar";
                 btnAction.IsEnabled = true;
                 btnCancel.Visibility = System.Windows.Visibility.Collapsed;
@@ -86,5 +94,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 btnAction.IsEnabled = false;
             }
         }
+
     }
 }

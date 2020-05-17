@@ -40,7 +40,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="280" Header="Identificador" Binding="{Binding Id}"/>
                                     <DataGridTextColumn Header="Valor" Width="100" Binding="{Binding Value}" />
-                                    <DataGridTextColumn Header="Data e Hora"  Width="180" Binding="{Binding MonitoredAt}" SortDirection="Descending" />
+                                    <DataGridTextColumn Header="Data e Hora"  Width="180" Binding="{Binding MonitoredAt}" SortDirection="Ascending" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>

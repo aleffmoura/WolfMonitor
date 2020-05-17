@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
@@ -52,7 +53,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 }
                 else
                 {
-
+                    MessageBox.Show("Falha na obtenção dos dados do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

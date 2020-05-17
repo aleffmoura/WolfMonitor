@@ -2,6 +2,7 @@
 using System;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
+using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
@@ -43,6 +44,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
             CreateMap<Agent, AgentDetailViewModel>()
                 .ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id.ToString()))
                 .ForMember(dest => dest.Configured, option => option.MapFrom(src => src.Configured));
+
+
+            CreateMap<Agent, AgentForUserViewModel>()
+                .ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id.ToString()))
+                .ForMember(dest => dest.LastLogin, option => option.MapFrom(src => src.LastConnection.HasValue ? src.LastConnection.Value.ToString("dd/MM/yyyy hh:mm:ss") : "Nunca conectado")) ;
+
+            CreateMap<AgentForUserViewModel, AgentForUserViewModel>();
 
         }
     }

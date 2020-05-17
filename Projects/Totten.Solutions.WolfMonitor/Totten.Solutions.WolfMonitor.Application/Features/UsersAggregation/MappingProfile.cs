@@ -28,6 +28,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation
                 .ForMember(dest => dest.FullName, option => option.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
 
+
             
             CreateMap<UserResumeViewModel, User>();
         }

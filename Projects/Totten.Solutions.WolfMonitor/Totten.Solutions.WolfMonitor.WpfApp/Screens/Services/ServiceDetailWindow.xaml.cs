@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,8 +50,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                      {
                          _qtItems = int.Parse(result.Success.Count);
 
-                         gridHistoric.DataContext = result.Success.Items;
-
+                         gridHistoric.DataContext = result.Success.Items.OrderBy(x => x.MonitoredAt).ToList();
                          if (result.Success.Items.Count < _take || _skip > _qtItems)
                              btnNextPage.IsEnabled = false;
                          else

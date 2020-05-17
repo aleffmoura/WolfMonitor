@@ -19,6 +19,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users
         public async Task<Result<Exception, PageResult<T>>> GetAll<T>()
             => await InnerGetAsync<PageResult<T>>(_baseEndpoint);
 
+        public async Task<Result<Exception, PageResult<T>>> GetAllAgentsByUser<T>()
+            => await InnerGetAsync<PageResult<T>>($"{_baseEndpoint}/agents");
+
         public async Task<Result<Exception, TReturn>> Post<TReturn, TPost>(string endpoint, TPost item)
             => await InnerAsync<TReturn, TPost>($"{_baseEndpoint}/{endpoint.TrimStart('/')}", item, HttpMethod.Post);
         

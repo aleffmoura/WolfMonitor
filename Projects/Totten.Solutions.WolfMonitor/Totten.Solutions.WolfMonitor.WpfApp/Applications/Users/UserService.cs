@@ -35,6 +35,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         public Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll()
             => _endPoint.GetAll<UserResumeViewModel>();
 
+        public Task<Result<Exception, PageResult<AgentForUserViewModel>>> GetAllAgentsByUser()
+            => _endPoint.GetAllAgentsByUser<AgentForUserViewModel>();
+
         public string GetClientCredentials()
             => Convert.ToBase64String(Encoding.ASCII.GetBytes($"application:applicationSecret"));
 
