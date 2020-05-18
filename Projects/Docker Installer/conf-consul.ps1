@@ -95,15 +95,15 @@ $IdentityServer = @'
       "scopes": [
       		"Agents", "Monitoring"
       ]
-    }
+    },
     {
       "id": "application",
       "secret": "applicationSecret",
       "name": "Application WPF",
       "scopes": [
-      		"Agents", "Monitoring", "Users"
+      		"Agents", "Monitoring", "Users", "Companies"
       ]
-    },
+    }
   ]
 }
 '@
