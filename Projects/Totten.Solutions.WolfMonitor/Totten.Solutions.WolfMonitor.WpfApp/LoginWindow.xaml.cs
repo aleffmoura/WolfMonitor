@@ -23,7 +23,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
         }
         private void InstanceUserService(bool ignoreAuth = false)
         {
-            _customHttp = new CustomHttpCliente("http://192.168.0.102:15999", new UserLogin
+            _customHttp = new CustomHttpCliente("http://10.0.75.1:15999", new UserLogin
             {
                 Login = $"{txtUser.Text}@{txtCompany.Text}#user",
                 Password = txtPass.Password,

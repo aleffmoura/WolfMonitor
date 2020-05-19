@@ -20,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService
             this.configuration = configuration?.GetSection("broker");
             this._helper = helper;
             this._exchangeName = configuration != null ? this.configuration["exchangeName"] : "tottem";
-            this._hostname = configuration != null ? this.configuration["hostname"] : "192.168.0.102";
+            this._hostname = configuration != null ? this.configuration["hostname"] : "10.0.75.1";
         }
 
         /// <summary>
