@@ -80,8 +80,8 @@ $Gateway = @'
 $IdentityServer = @'
 {
   "tags": "Authtentication,JWT,Token",
-  "connectionString": "Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
-  "wolfMonitorConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "connectionString": "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "wolfMonitorConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
   "issuerUri": "http://localhost",
   "agentsApiSecret":"agentSuperSecret",
   "monitoringApiSecret":"monitoringSuperSecret",
@@ -111,8 +111,9 @@ $IdentityServer = @'
 $Register = @'
 {
 	"Tags": "Register",
-	"connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-	"authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+	"connectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+	"authConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+	"monitoringConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
 	"apiSecret":"usersSuperSecret",
 	"authSettings": {
 		"secret": "IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw",
@@ -124,9 +125,9 @@ $Register = @'
 $Agents = @'
 {
   "Tags": "Agents",
-  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
-  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
+  "connectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Agents",
   "apiSecret":"agentsSuperSecret"
 }
@@ -135,8 +136,9 @@ $Agents = @'
 $Users = @'
 {
   "Tags": "Users",
-  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "connectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Users",
   "apiSecret":"usersSuperSecret"
 }
@@ -144,9 +146,9 @@ $Users = @'
 $Monitoring = @'
 {
   "Tags": "Monitoring",
-  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
-  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "connectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Monitoring",
   "apiSecret":"monitoringSuperSecret"
 }
@@ -155,9 +157,9 @@ $Monitoring = @'
 $Companies = @'
 {
   "Tags": "Companies",
-  "connectionString":"Data Source=localhost;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-  "authConnectionString":"Data Source=localhost;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
-  "monitoringConnectionString":"Data Source=localhost;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
+  "connectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
+  "authConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
+  "monitoringConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitoringContext;Persist Security Info=True;Integrated Security=True;",
   "apiName":"Companies",
   "apiSecret":"companiesSuperSecret"
 }

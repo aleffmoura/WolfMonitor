@@ -41,10 +41,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void InstanceServices()
         {
+            var companyEndPoint = new CompanyEndPoint(_customHttpCliente);
             _agentService = new AgentService(new AgentEndPoint(_customHttpCliente));
             _itemsMonitoringService = new ItemsMonitoringService(new ItemsEndPoint(_customHttpCliente));
-            _userService = new UserService(new UserEndPoint(_customHttpCliente));
-            _companyService = new CompanyService(new CompanyEndPoint(_customHttpCliente));
+            _userService = new UserService(new UserEndPoint(_customHttpCliente), companyEndPoint);
+            _companyService = new CompanyService(companyEndPoint);
         }
 
         private void IncludeUserControl(object sender, EventArgs e)
@@ -61,9 +62,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             _userBasicInformation = userBasicInformation;
 
             this.lblUserName.Text = _userBasicInformation.FullName;
-
-            if (this._userBasicInformation.UserLevel < (int)EUserLevel.System)
-                this.btnCompanyMenu.Visibility = Visibility.Collapsed;
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)

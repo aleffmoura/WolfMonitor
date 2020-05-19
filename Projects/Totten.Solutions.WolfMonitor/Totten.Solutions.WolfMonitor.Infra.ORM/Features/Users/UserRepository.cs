@@ -54,9 +54,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         public async Task<Result<Exception, User>> GetByCredentials(Guid companyId, string login, string password)
         {
             User userCallBack = await _context.Users.Include(x => x.Role).FirstOrDefaultAsync(user => user.CompanyId == companyId &&
-                                                                          (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)) &&
-                                                                          user.Password == password.GenerateHash() &&
-                                                                          !user.Removed);
+                                                                            (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)) &&
+                                                                            user.Password == password.GenerateHash() &&
+                                                                            !user.Removed);
             if (userCallBack == null)
                 return new InvalidCredentialsException();
 

@@ -36,10 +36,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                 {
                     RuleFor(a => a.Name).NotEmpty().Length(4, 200);
                     RuleFor(a => a.FantasyName).NotEmpty().Length(2, 150);
-                    RuleFor(a => a.Cnpj).NotEmpty().Length(11, 16);
-                    RuleFor(a => a.StateRegistration).NotEmpty().Length(2, 50);
-                    RuleFor(a => a.MunicipalRegistration).NotEmpty().Length(2, 50);
-                    RuleFor(a => a.Cnae).NotEmpty().Length(2, 50);
+                    RuleFor(a => a.Cnpj).NotEmpty().Length(18);
                     RuleFor(a => a.Email).NotEmpty().Length(2, 150);
                     RuleFor(a => a.Phone).NotEmpty().Length(11, 15);
                     RuleFor(a => a.Address).NotEmpty().Length(5, 250);
@@ -49,18 +46,16 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
 
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
-            private readonly IMapper _mapper;
             private readonly ICompanyRepository _repository;
 
-            public Handler(IMapper mapper, ICompanyRepository repository)
+            public Handler(ICompanyRepository repository)
             {
-                _mapper = mapper;
                 _repository = repository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Company company = _mapper.Map<Command, Company>(request);
+                Company company = Mapper.Map<Command, Company>(request);
 
                 Result<Exception, Company> callback = await _repository.CreateAsync(company);
 

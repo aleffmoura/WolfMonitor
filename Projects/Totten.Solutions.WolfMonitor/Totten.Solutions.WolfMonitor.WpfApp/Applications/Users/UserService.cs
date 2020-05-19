@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Companies;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -17,14 +18,16 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
     public class UserService : IUserService
     {
         private UserEndPoint _endPoint;
+        private CompanyEndPoint _companyEndPoint;
 
-        public UserService(UserEndPoint endPoint)
+        public UserService(UserEndPoint endPoint, CompanyEndPoint companyEndPoint)
         {
             _endPoint = endPoint;
+            _companyEndPoint = companyEndPoint;
         }
 
-        public Task<Result<Exception, Guid>> Post(UserCreateVO user)
-            => _endPoint.Register("register/users", user);
+        public Task<Result<Exception, Guid>> Post(UserCreateVO user, Guid companyId)
+            => _endPoint.Register($"register/users/{companyId}", user);
 
         public async Task<Result<Exception, UserBasicInformationViewModel>> GetInfo()
             => await _endPoint.GetInfo();
@@ -34,6 +37,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
 
         public Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll()
             => _endPoint.GetAll<UserResumeViewModel>();
+
+        public Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll(Guid companyId)
+            => _companyEndPoint.GetAllUsers<UserResumeViewModel>(companyId);
 
         public Task<Result<Exception, PageResult<AgentForUserViewModel>>> GetAllAgentsByUser()
             => _endPoint.GetAllAgentsByUser<AgentForUserViewModel>();

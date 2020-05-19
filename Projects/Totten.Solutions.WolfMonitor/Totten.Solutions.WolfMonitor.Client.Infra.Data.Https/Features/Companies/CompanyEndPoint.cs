@@ -30,6 +30,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Companie
         public Task<Result<Exception, PageResult<T>>> GetAll<T>()
             => InnerGetAsync<PageResult<T>>(_baseEndpoint);
 
+        public Task<Result<Exception, PageResult<T>>> GetAllUsers<T>(Guid companyId)
+            => InnerGetAsync<PageResult<T>>($"{_baseEndpoint}/{companyId}/users");
+
         public async Task<Result<Exception, Unit>> Delete(Guid companyId)
             => await InnerAsync<Unit, object>($"{_baseEndpoint}/{companyId}", null, HttpMethod.Delete);
 

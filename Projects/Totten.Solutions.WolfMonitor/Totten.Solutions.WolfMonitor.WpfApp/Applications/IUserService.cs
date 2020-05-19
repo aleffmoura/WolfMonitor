@@ -9,8 +9,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications
 {
     public interface IUserService
     {
-        Task<Result<Exception, Guid>> Post(UserCreateVO user);
+        Task<Result<Exception, Guid>> Post(UserCreateVO user, Guid companyId);
         Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll();
+        Task<Result<Exception, PageResult<UserResumeViewModel>>> GetAll(Guid companyId);
         Task<Result<Exception, UserBasicInformationViewModel>> GetInfo();
         Task<Result<Exception, Unit>> Delete(Guid userId);
         Task<Result<Exception, Guid>> RecoverPassword(string login, string email);

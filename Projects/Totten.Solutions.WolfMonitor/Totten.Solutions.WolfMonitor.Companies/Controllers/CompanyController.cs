@@ -45,7 +45,7 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAllInfo([FromRoute]Guid companyId)
             => HandleQuery<Company, CompanyDetailViewModel>(await _mediator.Send(new CompanyDetail.Query(companyId, CompanyId, Role)));
-        
+
         #endregion
 
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
@@ -10,9 +11,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
     {
         private IUserService _userService;
         private TaskScheduler _currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        public UserCreateWindow(IUserService userService)
+        private Guid _companyId;
+        public UserCreateWindow(IUserService userService, Guid companyId)
         {
             InitializeComponent();
+            _companyId = companyId;
             _userService = userService;
         }
 
@@ -25,7 +28,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
 
             btnAdd.IsEnabled = false;
 
-            _userService.Post(user).ContinueWith(task =>
+            _userService.Post(user, _companyId).ContinueWith(task =>
             {
                 if (task.Result.IsFailure)
                 {

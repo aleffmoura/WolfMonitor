@@ -7,6 +7,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Vie
     public class UserDetailViewModel
     {
         public Guid Id { get; set; }
+        public Guid CompanyId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string Cpf { get; set; }

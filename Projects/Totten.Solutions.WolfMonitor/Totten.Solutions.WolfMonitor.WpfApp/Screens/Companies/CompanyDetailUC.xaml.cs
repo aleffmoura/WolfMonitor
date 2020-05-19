@@ -19,27 +19,28 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
         private IUserService _userService;
         private CompanyService _companyService;
         private UserBasicInformationViewModel _userBasicInformation;
-
-        public CompanyDetailUC(CompanyService companyService, IUserService userService, UserBasicInformationViewModel userBasicInformation, Guid companyId = default)
+        private Guid _companyId;
+        public CompanyDetailUC(CompanyService companyService,
+                               IUserService userService,
+                               UserBasicInformationViewModel userBasicInformation,
+                               Guid companyId = default)
         {
             InitializeComponent();
 
             _companyService = companyService;
             _userService = userService;
-            tbUsers.Content = new UsersUserControl(_userService);
+
+            _companyId = companyId != default ? companyId : userBasicInformation.CompanyId;
+
+            tbUsers.Content = new UsersUserControl(_userService, userBasicInformation, _companyId);
             this._userBasicInformation = userBasicInformation;
 
-            UsersUserControl usersUserControl = new UsersUserControl(_userService);
-            tbUsers.Content = usersUserControl;
-
-            SetValues(companyId);
+            SetValues();
         }
 
-        private void SetValues(Guid companyId)
+        private void SetValues()
         {
-            var id = companyId != default ? companyId : _userBasicInformation.CompanyId;
-
-            _companyService.GetDetail(companyId).ContinueWith(task =>
+            _companyService.GetDetail(_companyId).ContinueWith(task =>
             {
                 var companyDetail = task.Result;
 

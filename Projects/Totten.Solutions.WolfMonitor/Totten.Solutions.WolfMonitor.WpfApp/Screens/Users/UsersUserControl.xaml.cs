@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users;
 
@@ -25,18 +18,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         private TaskScheduler _currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private IUserService _userService;
         private List<UserResumeViewModel> _currentItems;
+        private UserBasicInformationViewModel _userBasicInformation;
+        private Guid _companyId;
 
-        public UsersUserControl(IUserService userService)
+        public UsersUserControl(IUserService userService,
+                                UserBasicInformationViewModel userBasicInformation,
+                                Guid companyId)
         {
             InitializeComponent();
+            _companyId = companyId;
             _userService = userService;
             _currentItems = new List<UserResumeViewModel>();
+            _userBasicInformation = userBasicInformation;
             LoadUsers();
         }
 
         private void LoadUsers()
         {
-            _userService.GetAll().ContinueWith(task =>
+            _userService.GetAll(_companyId).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
@@ -50,7 +49,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            UserCreateWindow userCreate = new UserCreateWindow(_userService);
+            UserCreateWindow userCreate = new UserCreateWindow(_userService, _companyId);
+
             if (userCreate.ShowDialog() == true)
             {
                 txtUser.Clear();
@@ -65,6 +65,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             if (item == null)
             {
                 MessageBox.Show("Selecione um usuário na lista", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if(item.Id == _userBasicInformation.Id)
+            {
+                MessageBox.Show("Não é possível remover seu próprio usuário", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

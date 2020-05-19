@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Companies;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
@@ -29,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 Password = txtPass.Password,
             }, ignoreAuth);
 
-            _userService = new UserService(new UserEndPoint(_customHttp));
+            _userService = new UserService(new UserEndPoint(_customHttp), new CompanyEndPoint(_customHttp));
         }
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {

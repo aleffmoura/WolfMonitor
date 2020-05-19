@@ -22,7 +22,7 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.Vi
         public int UserLevel { get; set; } 
         public static string Token { get; set; } = string.Empty;
 
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
         public Guid CompanyId { get; set; }
     }
 }

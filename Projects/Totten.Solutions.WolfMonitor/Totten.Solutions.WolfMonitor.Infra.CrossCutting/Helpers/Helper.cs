@@ -21,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers
         public int GenerateRandomPort()
         {
             _ports = _ports ?? new List<string>();
+
             int port;
             do
             {
