@@ -2,7 +2,8 @@
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.Logs
 {
-    public interface ILogMonitoringRepository : IRepository<MonitoringLog>
+    public interface ILogRepository : IRepository<Log>
     {
+
     }
 }

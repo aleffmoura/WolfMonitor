@@ -30,6 +30,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             _userService = userService;
             _currentItems = new List<UserResumeViewModel>();
             _userBasicInformation = userBasicInformation;
+
+            if(_userBasicInformation.UserLevel < 2)
+            {
+                pnlButtons.Visibility = Visibility.Collapsed;
+                pnlButtons.IsEnabled = false;
+            }
+
             LoadUsers();
         }
 

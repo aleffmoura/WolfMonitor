@@ -4,8 +4,10 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Unit = Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs.Unit;
@@ -20,7 +22,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public Guid UserId { get; set; }
             public Guid CompanyId { get; set; }
 
-            public Command(Guid id,Guid companyId, Guid userId)
+            public Command(Guid id, Guid companyId, Guid userId)
             {
                 Id = id;
                 UserId = userId;
@@ -47,11 +49,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
         {
             private readonly IAgentRepository _repository;
             private readonly IUserRepository _userRepository;
+            private readonly ILogRepository _logRepository;
 
-            public Handler(IAgentRepository repository, IUserRepository userRepository)
+            public Handler(IAgentRepository repository,
+                           IUserRepository userRepository,
+                           ILogRepository logRepository)
             {
                 _repository = repository;
                 _userRepository = userRepository;
+                _logRepository = logRepository;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -67,6 +73,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
                 if (returned.IsFailure)
                     return returned.Failure;
+
+                Log log = new Log
+                {
+                    UserId = request.UserId,
+                    UserCompanyId = request.CompanyId,
+                    TargetId = request.Id,
+                    EntityType = ETypeEntity.Agents,
+                    TypeLogMethod = ETypeLogMethod.Remove,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return Unit.Successful;
             }

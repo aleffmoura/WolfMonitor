@@ -5,8 +5,10 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
@@ -60,12 +62,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
         {
             private readonly IAgentRepository _repository;
             private readonly IUserRepository _userRepository;
+            private readonly ILogRepository _logRepository;
 
             public Handler(IAgentRepository repository,
-                           IUserRepository userRepository)
+                           IUserRepository userRepository,
+                           ILogRepository logRepository)
             {
                 _repository = repository;
                 _userRepository = userRepository;
+                _logRepository = logRepository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
@@ -90,6 +95,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 {
                     return callback.Failure;
                 }
+
+                Log log = new Log
+                {
+                    UserId = request.UserWhoCreatedId,
+                    UserCompanyId = request.CompanyId,
+                    TargetId = callback.Success.Id,
+                    EntityType = ETypeEntity.Agents,
+                    TypeLogMethod = ETypeLogMethod.Create,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return callback.Success.Id;
             }

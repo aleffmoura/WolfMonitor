@@ -21,6 +21,13 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
             _mediator = mediator;
         }
 
+        #region Delete
+        [HttpDelete("{agentId}/{Id}")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System)]
+        public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
+            => HandleCommand(await _mediator.Send(new CompanyRemove.Command(id, UserId)));
+        #endregion
+
         #region HTTP POST
         [HttpPost]
         [CustomAuthorizeAttributte(RoleLevelEnum.System)]

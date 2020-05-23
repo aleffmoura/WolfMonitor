@@ -47,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         #region HTTP Delete
 
         [HttpDelete("{agentId}/{Id}")]
-        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
             => HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id)));
 
