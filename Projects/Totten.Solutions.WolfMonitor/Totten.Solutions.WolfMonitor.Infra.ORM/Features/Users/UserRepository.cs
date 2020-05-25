@@ -24,11 +24,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         {
             user.Validate();
 
-            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<User> newPatient = _context.Users.Add(user);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<User> newUser = _context.Users.Add(user);
 
             await _context.SaveChangesAsync();
 
-            return newPatient.Entity;
+            return newUser.Entity;
         }
 
         public Result<Exception, IQueryable<User>> GetAll(Guid companyId)
