@@ -18,6 +18,10 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         public async Task<IActionResult> Create([FromBody]UserForgotPasswordCreate.Command command)
             => HandleCommand(await _mediator.Send(command));
 
+        [HttpPost("token-resend")]
+        public async Task<IActionResult> Send([FromBody]UserTokenReSend.Command command)
+            => HandleCommand(await _mediator.Send(command));
+
         [HttpPost("validate-token")]
         public async Task<IActionResult> ValidateToken([FromBody]UserValidateTokenCreate.Command command)
             => HandleCommand(await _mediator.Send(command));

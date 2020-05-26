@@ -15,6 +15,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications
         Task<Result<Exception, UserBasicInformationViewModel>> GetInfo();
         Task<Result<Exception, Unit>> Delete(Guid userId);
         Task<Result<Exception, Guid>> RecoverPassword(string login, string email);
+        Task<Result<Exception, Guid>> ReSendToken(string login, string email);
         Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token);
         Task<Result<Exception, Unit>> ChangePassword(string login, string email, Guid tokenSolicitationCode, Guid RecoverSolicitationCode, string pass);
     }

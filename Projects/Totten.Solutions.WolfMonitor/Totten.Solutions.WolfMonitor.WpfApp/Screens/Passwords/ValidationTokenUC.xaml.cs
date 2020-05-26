@@ -16,10 +16,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
     {
         private bool _enableNext;
         private IUserService _userService;
+        private object _validationResponse;
 
-        public ValidationTokenUC(IUserService userService)
+        public ValidationTokenUC(IUserService userService, object validationResponse)
         {
             _userService = userService;
+            _validationResponse = validationResponse;
             InitializeComponent();
         }
 
@@ -63,9 +65,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             return param;
         }
 
-        private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Foi enviado o token novamente no email fornecido!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (_validationResponse is TokenSolicitationVO vali)
+            {
+                var callback = await _userService.ReSendToken(vali.Login, vali.Email);
+                MessageBox.Show("Foi enviado o token novamente no email fornecido!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void txtToken_TextChanged(object sender, TextChangedEventArgs e)

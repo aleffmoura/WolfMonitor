@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives.ArchivesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Height="Auto" MinWidth="980" Width="auto">
+    <Grid Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button Margin="10,0,0,0" Content="Adicionar" Width="80" Height="30" Padding="0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0">
+            <Button x:Name="btnRefrash" ToolTip="Recarregar página" Padding="0" Width="50" Height="30">
+                <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <TextBox x:Name="txtServiceName" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">
+                    <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
+                </Button>
+            </StackPanel>
+
+            <ScrollViewer>
+                <WrapPanel x:Name="wrapPanel">
+
+                </WrapPanel>
+            </ScrollViewer>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

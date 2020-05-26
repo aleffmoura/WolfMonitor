@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Infra\" />
+    <Folder Include="Screens\Configurations\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,93 @@
+﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives.ArchiveDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Detalhes do arquivo" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        Width="600" Height="680">
+
+    <Grid>
+
+        <StackPanel Orientation="Vertical" Margin="5,10">
+
+            <TextBlock x:Name="lblDisplayName" Foreground="Black" Text="File SQL SERVER" FontSize="36"/>
+            <Separator Margin="0,5,0,10"/>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Local:" FontSize="13"/>
+                <TextBlock Text="/home/aesir/docs/files" x:Name="lblName" Margin="13,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="FileName:" FontSize="13"/>
+                <TextBlock Text="sql.d" x:Name="lblCurrentValue" Margin="13,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Ultima atualização:" FontSize="13"/>
+                <TextBlock Text="04/10/1994 15:00" x:Name="lblMonitoredAt" Margin="5,0" FontSize="13" FontWeight="Bold"/>
+            </StackPanel>
+
+
+            <TabControl x:Name="tabControl" FontSize="15" Margin="0,10,5,10" >
+                <TabItem Header="Valor Atual">
+                    <StackPanel>
+                        <Button IsEnabled="False" ToolTip="Editar" Margin="0,5" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                            <materialDesign:PackIcon Kind="Edit"/>
+                        </Button>
+                        <TextBox x:Name="txtNotePad" IsEnabled="False" Height="450" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Hidden"/>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Histórico de modificações">
+                    <Grid>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="580" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="250" Header="Identificador" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Valor" Width="150" Binding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Data e Hora"  Width="180" Binding="{Binding MonitoredAt}" SortDirection="Ascending" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Solicitações de usuários">
+                    <Grid>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <DataGrid x:Name="gridSolicitations" CanUserAddRows="False" Width="580" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Nome do usuário" Binding="{Binding User}"/>
+                                    <DataGridTextColumn Header="Email do usuário" Binding="{Binding UserEmail}" />
+                                    <DataGridTextColumn Header="Solicitação" Binding="{Binding SolicitationType}" />
+                                    <DataGridTextColumn Header="Valor" Binding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Data" Width="150" Binding="{Binding CreateAt}" SortDirection="Descending" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+
+            <Grid Margin="0,0,5,5" x:Name="pnlBottom">
+                <Button x:Name="btnPrevPage" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                    <materialDesign:PackIcon Kind="NavigateBefore"/>
+                </Button>
+
+                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" />
+
+                <Button x:Name="btnNextPage" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <materialDesign:PackIcon Kind="NavigateNext"/>
+                </Button>
+            </Grid>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

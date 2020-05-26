@@ -7,7 +7,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects
     public enum ETypeItem
     {
         SystemService = 0,
-        SystemConfig = 1
+        SystemConfig = 1,
+        SystemArchive = 2
     }
     public class Item
     {

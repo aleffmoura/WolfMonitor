@@ -50,6 +50,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
             => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword", new RecoverSolicitationRequestVO { Login = login, Email = email });
 
+        public Task<Result<Exception, Guid>> ReSendToken(string login, string email)
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("token-resend", new RecoverSolicitationRequestVO { Login = login, Email = email });
+
         public Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token)
             => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgotPassword/validate-token", new TokenConfirmationRequestVO
             {

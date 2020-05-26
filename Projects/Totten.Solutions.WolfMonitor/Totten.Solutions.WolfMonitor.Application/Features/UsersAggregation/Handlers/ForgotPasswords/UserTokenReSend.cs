@@ -14,7 +14,7 @@ using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers.ForgotPasswords
 {
-    public class UserForgotPasswordCreate
+    public class UserTokenReSend
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
@@ -61,14 +61,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 if (emailCallback.IsFailure)
                     return emailCallback.Failure;
 
-                callback.Success.Token = Guid.NewGuid().ToString();
-                callback.Success.RecoverSolicitationCode = Guid.NewGuid().ToString();
-
-
-                var updatedCallback = await _repository.UpdateAsync(callback.Success);
-
-                if (updatedCallback.IsFailure)
-                    return new BusinessException(ErrorCodes.ServiceUnavailable, "Serviço indisponivel, contate o administrador");
+                if (string.IsNullOrEmpty(callback.Success.Token) ||
+                    string.IsNullOrEmpty(callback.Success.RecoverSolicitationCode))
+                    return new BusinessException(ErrorCodes.NotAllowed, "Não existe uma solicitação de token valida, contate o administrador");
 
                 try
                 {
