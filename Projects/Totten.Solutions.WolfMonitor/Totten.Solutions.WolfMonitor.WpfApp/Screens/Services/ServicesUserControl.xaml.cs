@@ -77,6 +77,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                     MessageBox.Show("Falha na busca dos serviços do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
         private async void OnRestart(object sender, EventArgs e)
         {
             if (MessageBox.Show("Deseja realmente modificar o status do serviço?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -102,6 +103,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             ServiceDetailWindow serviceDetail = new ServiceDetailWindow((SystemServiceViewModel)sender, _itemsMonitoringService);
             serviceDetail.ShowDialog();
         }
+
         private void OnRemove(object sender, EventArgs e)
         {
             SystemServiceViewModel serviceViewModel = sender as SystemServiceViewModel;
@@ -132,7 +134,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
             if (dialogResult.HasValue && dialogResult.Value)
             {
-                await _itemsMonitoringService.Post(frmItemsAdd.Item);
+                await _itemsMonitoringService.PostService(frmItemsAdd.Item);
             }
         }
 

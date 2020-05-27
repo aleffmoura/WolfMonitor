@@ -4,6 +4,7 @@ using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitorings;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
@@ -16,11 +17,17 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings
         public ItemsMonitoringService(ItemsEndPoint endPoint)
             => _endPoint = endPoint;
 
-        public async Task<Result<Exception, Guid>> Post(Item Item)
-            => await _endPoint.Post<Item>(Item);
+        public async Task<Result<Exception, Guid>> PostService(Item item)
+            => await _endPoint.Post<Item>("services", item);
 
-        public async Task<Result<Exception, PageResult<SystemServiceViewModel>>> GetSystemServices(Guid id)
-            => await _endPoint.GetServicesByAgentId<SystemServiceViewModel>(id);
+        public async Task<Result<Exception, Guid>> PostArchive(Item item)
+            => await _endPoint.Post<Item>("archives", item);
+
+        public async Task<Result<Exception, PageResult<SystemServiceViewModel>>> GetSystemServices(Guid agentId)
+            => await _endPoint.GetServicesByAgentId<SystemServiceViewModel>(agentId);
+
+        public async Task<Result<Exception, PageResult<ArchiveViewModel>>> GetArchives(Guid agentId)
+            => await _endPoint.GetArchivesByAgentId<ArchiveViewModel>(agentId);
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId, Guid id)
             => await _endPoint.Delete(agentId, id);

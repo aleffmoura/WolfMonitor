@@ -55,7 +55,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private void btnRestart_Click(object sender, System.Windows.RoutedEventArgs e)
             => _onRestart?.Invoke(_systemServiceViewModel, new EventArgs());
            
-
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
             => _onEdit?.Invoke(_systemServiceViewModel, new EventArgs());
     }

@@ -55,7 +55,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     if (itemsCallback.IsSuccess)
                     {
                         qtdServices = itemsCallback.Success.Where(item => item.Type == Domain.Enums.ETypeItem.SystemService).Count();
-                        qtdConfigurations = itemsCallback.Success.Where(item => item.Type == Domain.Enums.ETypeItem.SystemConfig).Count();
+                        qtdConfigurations = itemsCallback.Success.Where(item => item.Type == Domain.Enums.ETypeItem.SystemArchive).Count();
                     }
 
                     var viewModel = Mapper.Map<AgentForUserViewModel>(agent);

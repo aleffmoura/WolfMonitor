@@ -37,6 +37,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             _itemsMonitoringService = itemsMonitoringService;
             Populate();
         }
+        
         private Task GetHistoricItems()
         {
             return _itemsMonitoringService.GetItemHistoric(_systemServiceView.Id, $"{_take}", $"{_skip}")
@@ -85,6 +86,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                  }
              }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+        
         private void Populate()
         {
             this.lblDisplayName.Text = _systemServiceView.DisplayName;

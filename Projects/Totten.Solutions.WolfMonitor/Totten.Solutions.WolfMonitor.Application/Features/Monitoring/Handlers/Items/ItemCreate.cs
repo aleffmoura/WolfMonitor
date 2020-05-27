@@ -5,6 +5,7 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
@@ -23,6 +24,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public string DisplayName { get; set; }
             public string Default { get; set; }
             public int Interval { get; set; }
+            public ETypeItem Type { get; set; }
+
 
             public Command(Guid companyId,
                            Guid userIdWhoAdd,
@@ -30,7 +33,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                            string name,
                            string displayName,
                            string defaultValue,
-                           int interval)
+                           int interval,
+                           ETypeItem typeItem)
             {
                 CompanyId = companyId;
                 AgentId = agentId;
@@ -39,6 +43,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 DisplayName = displayName;
                 Default = defaultValue;
                 Interval = interval;
+                Type = typeItem;
             }
 
             public ValidationResult Validate()
@@ -58,6 +63,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                         .WithMessage("Identificador do usuario ao qual esta adicionando o serviço é invalido");
                     RuleFor(a => a.Name).NotEmpty().Length(4, 250);
                     RuleFor(a => a.DisplayName).NotEmpty().Length(4, 250);
+                    RuleFor(a => a.Type).NotNull();
                 }
             }
         }
@@ -77,20 +83,15 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 var agentCallback = await _agentRepository.GetByIdAsync(request.AgentId);
                 if (agentCallback.IsFailure)
-                {
                     return agentCallback.Failure;
-                }
+
                 if (agentCallback.Success.CompanyId != request.CompanyId)
-                {
-                    return new NotAllowedException("Usuário não pode salvar serviços no agent informado, a empresa do usuario e do agent não são iguais");
-                }
+                    return new NotAllowedException("Usuário não pode salvar items no agent informado, a empresa do usuario e do agent não são iguais");
 
                 var ItemVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
 
                 if (ItemVerify.IsSuccess)
-                {
-                    return new DuplicateException("Já existe um Item com esse nome cadastrado nesse agent.");
-                }
+                    return new DuplicateException("Já existe um item com esse nome cadastrado nesse agent.");
 
                 Item Item = Mapper.Map<Command, Item>(request);
 

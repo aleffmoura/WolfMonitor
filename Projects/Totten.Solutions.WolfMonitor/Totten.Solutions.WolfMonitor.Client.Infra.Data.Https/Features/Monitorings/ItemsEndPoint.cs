@@ -9,40 +9,30 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Monitori
     public class ItemsEndPoint : BaseEndPoint
     {
         private string _endpoint = "monitoring/items";
+
         public ItemsEndPoint(CustomHttpCliente customHttpCliente) : base(customHttpCliente)
-        {
+        { }
 
-        }
-
-        public async Task<Result<Exception, Guid>> Post<T>(T Item)
-        {
-            return await InnerAsync<Guid,T>(_endpoint, Item, HttpMethod.Post);
-        }
+        public async Task<Result<Exception, Guid>> Post<T>(string endpoint, T item)
+            => await InnerAsync<Guid,T>($"{_endpoint}/{endpoint}", item, HttpMethod.Post);
 
         public async Task<Result<Exception, PageResult<T>>> GetServicesByAgentId<T>(Guid agentId)
-        {
-            return await InnerGetAsync<PageResult<T>>($"{_endpoint}/services/{agentId}");
-        }
+            => await InnerGetAsync<PageResult<T>>($"{_endpoint}/services/{agentId}");
 
-        public async Task<Result<Exception, PageResult<T>>> GetconfigsByAgentId<T>(Guid agentId)
-        {
-            return await InnerGetAsync<PageResult<T>>($"{_endpoint}/configs/{agentId}");
-        }
+        public async Task<Result<Exception, PageResult<T>>> GetArchivesByAgentId<T>(Guid agentId)
+             => await InnerGetAsync<PageResult<T>>($"{_endpoint}/archives/{agentId}");
+
+        public async Task<Result<Exception, PageResult<T>>> GetConfigsByAgentId<T>(Guid agentId)
+             => await InnerGetAsync<PageResult<T>>($"{_endpoint}/configs/{agentId}");
 
         public async Task<Result<Exception, Unit>> Delete(Guid agentId, Guid id)
-        {
-            return await InnerAsync<Unit, object>($"{_endpoint}/{agentId}/{id}", null, HttpMethod.Delete);
-        }
+             => await InnerAsync<Unit, object>($"{_endpoint}/{agentId}/{id}", null, HttpMethod.Delete);
 
         public async Task<Result<Exception, PageResult<T>>> GetItemHistoric<T>(Guid id, string take, string skip)
-        {
-            return await InnerGetAsync<PageResult<T>>($"{_endpoint}/historic/{id}?$count=true&$top={take}&$skip={skip}");
-        }
+             => await InnerGetAsync<PageResult<T>>($"{_endpoint}/historic/{id}?$count=true&$top={take}&$skip={skip}");
 
         public async Task<Result<Exception, PageResult<T>>> GetSolicitations<T>(Guid id, string take, string skip)
-        {
-            return await InnerGetAsync<PageResult<T>>($"{_endpoint}/solicitations/{id}?$count=true&$take={take}&$skip={skip}");
-        }
+             => await InnerGetAsync<PageResult<T>>($"{_endpoint}/solicitations/{id}?$count=true&$take={take}&$skip={skip}");
 
     }
 }

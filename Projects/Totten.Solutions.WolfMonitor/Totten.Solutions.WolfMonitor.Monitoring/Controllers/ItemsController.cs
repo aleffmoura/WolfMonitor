@@ -26,10 +26,21 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
 
         #region HTTP POST
 
-        [HttpPost]
+        [HttpPost("services")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromBody]ItemCreateVO itemCreate)
-             => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,  itemCreate.Name, itemCreate.DisplayName, itemCreate.Default, itemCreate.Interval)));
+             => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,
+                                                                          itemCreate.Name, itemCreate.DisplayName,
+                                                                          itemCreate.Default, itemCreate.Interval,
+                                                                          ETypeItem.SystemService)));
+
+        [HttpPost("archives")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
+        public async Task<IActionResult> CreateArchive([FromBody]ItemCreateVO itemCreate)
+             => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,
+                                                                          itemCreate.Name, itemCreate.DisplayName,
+                                                                          itemCreate.Default, itemCreate.Interval,
+                                                                          ETypeItem.SystemArchive)));
 
         #endregion
 
@@ -69,11 +80,11 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public async Task<IActionResult> ReadAllServices([FromRoute]Guid agentId, [FromRoute] ODataQueryOptions<Item> queryOptions)
             => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
 
-        [HttpGet("configs/{agentId}")]
+        [HttpGet("archives/{agentId}")]
         [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Skip | AllowedQueryOptions.Count)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAllconfigs([FromRoute]Guid agentId, [FromRoute]ODataQueryOptions<Item> queryOptions)
-            => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemService)), queryOptions);
+            => await HandleQueryable<Item, ItemResumeViewModel>(await _mediator.Send(new ItemCollection.Query(agentId, CompanyId, ETypeItem.SystemArchive)), queryOptions);
         #endregion
 
         [HttpGet("historic/{itemId}")]

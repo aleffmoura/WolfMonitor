@@ -72,7 +72,7 @@
                 <TabItem x:Name="tabSystemServices" Header="Serviços">
                     
                 </TabItem>
-                <TabItem x:Name="tabSystemConfig" Header="Configurações">
+                <TabItem x:Name="tabSystemArchives" Header="Arquivos">
                     
                 </TabItem>
             </TabControl>

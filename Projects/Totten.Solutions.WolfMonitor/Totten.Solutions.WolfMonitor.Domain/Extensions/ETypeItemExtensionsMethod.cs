@@ -15,7 +15,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Extensions
             {
                 case ETypeItem.SystemService:
                     return new SystemService(item);
-                case ETypeItem.SystemConfig:
+                case ETypeItem.SystemArchive:
                     return new SystemConfig(item);
 
                 default:

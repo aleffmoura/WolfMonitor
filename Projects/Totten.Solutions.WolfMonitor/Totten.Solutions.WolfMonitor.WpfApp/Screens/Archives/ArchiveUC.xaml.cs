@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 {
@@ -18,9 +10,30 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
     /// </summary>
     public partial class ArchiveUC : UserControl
     {
-        public ArchiveUC()
+        private ArchiveViewModel _archiveViewModel;
+        private EventHandler _onRemove;
+        private EventHandler _onEdit;
+
+        public ArchiveUC(EventHandler onRemove, EventHandler onEdit,
+                         ArchiveViewModel archiveViewModel)
         {
             InitializeComponent();
+            _onRemove = onRemove;
+            _onEdit = onEdit;
+            SetArchiveValues(archiveViewModel);
         }
+
+        public void SetArchiveValues(ArchiveViewModel archiveViewModel)
+        {
+            _archiveViewModel = archiveViewModel;
+            this.lblDisplayName.Text = _archiveViewModel.DisplayName;
+            this.lblMonitoredAt.Text = _archiveViewModel.MonitoredAt;
+        }
+
+        private void btnDel_Click(object sender, RoutedEventArgs e)
+            => _onRemove?.Invoke(_archiveViewModel, new EventArgs());
+
+        private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+            => _onEdit?.Invoke(_archiveViewModel, new EventArgs());
     }
 }

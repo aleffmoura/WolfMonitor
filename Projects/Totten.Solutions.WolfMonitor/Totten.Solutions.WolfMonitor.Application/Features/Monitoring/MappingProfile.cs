@@ -14,6 +14,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             #region Items
             CreateMap<ItemCreate.Command, Item>()
                 .ForMember(dest => dest.Value, src => src.MapFrom(item => "Não monitorado."))
+                .ForMember(dest => dest.Type, src => src.MapFrom(item => item.Type))
                 .ForMember(dest => dest.CreatedIn, src => src.MapFrom(item => DateTime.Now))
                 .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(item => DateTime.Now));
 

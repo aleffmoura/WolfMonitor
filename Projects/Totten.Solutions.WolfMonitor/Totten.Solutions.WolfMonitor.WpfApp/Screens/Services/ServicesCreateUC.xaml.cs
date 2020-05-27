@@ -29,6 +29,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 return true;
             return false;
         }
+
         public Item GetItem()
         {
             if (Validate())

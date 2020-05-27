@@ -50,7 +50,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                     if (itemsCallback.IsSuccess)
                     {
                         agent.Items.Add((int)ETypeItem.SystemService, itemsCallback.Success.Count(x => x.Type == ETypeItem.SystemService));
-                        agent.Items.Add((int)ETypeItem.SystemConfig, itemsCallback.Success.Count(x => x.Type == ETypeItem.SystemConfig));
+                        agent.Items.Add((int)ETypeItem.SystemArchive, itemsCallback.Success.Count(x => x.Type == ETypeItem.SystemArchive));
                     }
                 }
 

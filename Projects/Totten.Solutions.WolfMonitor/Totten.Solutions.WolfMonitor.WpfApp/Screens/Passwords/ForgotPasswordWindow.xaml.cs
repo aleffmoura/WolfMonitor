@@ -47,10 +47,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             btnNext.IsEnabled = _actualControl.EnableNext;
         }
 
-        private UserControl GetControl(bool isNext, object obj)
+        private UserControl GetControl(bool isNext)
         {
             if (_actualControl.StepRecover == StepRecover.validateUser && isNext)
-                return new ValidationTokenUC(_userService, obj);
+                return new ValidationTokenUC(_userService, _validationObject);
             else if (_actualControl.StepRecover == StepRecover.tokenConfirm)
             {
                 if (isNext)
@@ -58,7 +58,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 return new ValidationUserUC(_userService);
             }
             else if (!isNext)
-                return new ValidationTokenUC(_userService, obj);
+                return new ValidationTokenUC(_userService, _validationObject);
 
             return null;
         }
@@ -78,7 +78,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 if (_actualControl.StepRecover != StepRecover.passwordChange && result != _validationObject)
                 {
                     _validationObject = result;
-                    SwitchPanels(GetControl(true, result));
+                    SwitchPanels(GetControl(true));
                 }
                 else if(_actualControl.StepRecover == StepRecover.passwordChange && bool.TryParse(result.ToString(), out bool resultBool) && resultBool == true)
                     this.Close();

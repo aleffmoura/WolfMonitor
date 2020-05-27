@@ -9,11 +9,11 @@
              Height="Auto" MinWidth="980" Width="auto">
     <Grid Margin="0,10,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button Margin="10,0,0,0" Content="Adicionar" Width="80" Height="30" Padding="0"/>
+            <Button Margin="10,0,0,0" Click="btnAdd_Click" Content="Adicionar" Width="80" Height="30" Padding="0"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,0,0,0">
-            <Button x:Name="btnRefrash" ToolTip="Recarregar página" Padding="0" Width="50" Height="30">
+            <Button x:Name="btnRefrash" Click="btnRefrash_Click" ToolTip="Recarregar página" Padding="0" Width="50" Height="30">
                 <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
             </Button>
         </StackPanel>

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
@@ -22,16 +23,22 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _id = id;
             _itensMonitoringService = itensMonitoringService;
             _agentsService = agentService;
-            Populate();
+            PopulateServices();
+            PopulateArchives();
             InsertAgentDetail();
         }
 
-        private void Populate()
+        private void PopulateServices()
         {
             ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _itensMonitoringService, _agentsService);
             tabSystemServices.Content = servicesUserControl;
         }
 
+        private void PopulateArchives()
+        {
+            ArchivesUserControl archivesUserControl = new ArchivesUserControl(_id, _itensMonitoringService, _agentsService);
+            tabSystemArchives.Content = archivesUserControl;
+        }
 
         private void InsertAgentDetail()
         {
