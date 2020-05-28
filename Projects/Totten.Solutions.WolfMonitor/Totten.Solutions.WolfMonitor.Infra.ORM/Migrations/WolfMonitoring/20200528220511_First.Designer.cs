@@ -10,8 +10,8 @@ using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 {
     [DbContext(typeof(WolfMonitoringContext))]
-    [Migration("20200209200633_AddItemHistoric")]
-    partial class AddItemHistoric
+    [Migration("20200528220511_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,7 +76,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 
                     b.Property<Guid>("ItemId");
 
-                    b.Property<DateTime>("MonitoredAt");
+                    b.Property<string>("MonitoredAt");
 
                     b.Property<bool>("Removed");
 
@@ -93,10 +93,64 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
                     b.ToTable("Historic");
                 });
 
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation.ItemSolicitationHistoric", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AgentId");
+
+                    b.Property<Guid>("CompanyId");
+
+                    b.Property<DateTime>("CreatedIn");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<Guid>("ItemId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<string>("NewValue")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<bool>("Removed");
+
+                    b.Property<int>("SolicitationType");
+
+                    b.Property<DateTime>("UpdatedIn");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SolicitationsHistoric");
+                });
+
             modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation.ItemHistoric", b =>
                 {
                     b.HasOne("Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation.Item")
                         .WithMany("Historic")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation.ItemSolicitationHistoric", b =>
+                {
+                    b.HasOne("Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation.Item")
+                        .WithMany("SolicitationHistoric")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

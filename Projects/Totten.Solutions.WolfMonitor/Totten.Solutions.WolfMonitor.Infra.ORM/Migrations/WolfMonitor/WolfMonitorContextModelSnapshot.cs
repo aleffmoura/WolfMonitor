@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 
-namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
+namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
 {
     [DbContext(typeof(WolfMonitorContext))]
-    [Migration("20200517154749_ModifiedCompany")]
-    partial class ModifiedCompany
+    partial class WolfMonitorContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,16 +74,16 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ff77050f-0f93-41ff-8136-5b8c195a3aa5"),
+                            Id = new Guid("54f96bbb-6621-4434-a196-f52e371ca020"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Configured = false,
-                            CreatedIn = new DateTime(2020, 5, 17, 12, 47, 48, 533, DateTimeKind.Local).AddTicks(6647),
+                            CreatedIn = new DateTime(2020, 5, 28, 19, 4, 13, 646, DateTimeKind.Local).AddTicks(3731),
                             DisplayName = "Servidor BR 1",
                             Login = "servidor1",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
                             Removed = false,
                             UpdatedIn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserWhoCreatedId = new Guid("f91a2366-c469-412a-9197-976a90516272"),
+                            UserWhoCreatedId = new Guid("f75a1881-0fd6-4273-9d23-c59018788201"),
                             UserWhoCreatedName = "Admin"
                         });
                 });
@@ -136,15 +134,15 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                             Address = "Rua Cicero Lourenço, Mossoró/RN",
                             Cnae = "",
                             Cnpj = "35.344.681/0001-90",
-                            CreatedIn = new DateTime(2020, 5, 17, 12, 47, 48, 530, DateTimeKind.Local).AddTicks(5145),
+                            CreatedIn = new DateTime(2020, 5, 28, 19, 4, 13, 643, DateTimeKind.Local).AddTicks(2070),
                             Email = "aleffmds@gmail.com",
                             FantasyName = "tottemsolutions",
                             MunicipalRegistration = "",
-                            Name = "ALEFF MOURA DA SILVA 10685805425",
+                            Name = "ALEFF MOURA DA SILVA",
                             Phone = "(49) 9 9914-6350",
                             Removed = false,
                             StateRegistration = "",
-                            UpdatedIn = new DateTime(2020, 5, 17, 12, 47, 48, 531, DateTimeKind.Local).AddTicks(2180)
+                            UpdatedIn = new DateTime(2020, 5, 28, 19, 4, 13, 644, DateTimeKind.Local).AddTicks(1000)
                         });
                 });
 

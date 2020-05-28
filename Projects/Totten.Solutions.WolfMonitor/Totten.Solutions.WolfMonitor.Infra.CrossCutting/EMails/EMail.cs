@@ -4,12 +4,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.EMails
 {
     public static class EMail
     {
-        public static void Send(string title, string body, string toEmail, string senderName, string myEmail, string myPass)
+        public static void Send(string title, string body, string toEmail, string senderName, string myEmail)
         {
             SmtpClient client = new SmtpClient();
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential(myEmail, myPass);
+            client.Credentials = new System.Net.NetworkCredential(myEmail, "88633251aa@");
             MailMessage mail = new MailMessage();
             mail.Sender = new MailAddress(myEmail, senderName);
             mail.From = new MailAddress(myEmail);

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
+namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
 {
-    public partial class FirstMigrationWolfMonitor : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,13 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                     UpdatedIn = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     FantasyName = table.Column<string>(nullable: false),
-                    Cnpj = table.Column<string>(nullable: false)
+                    Cnpj = table.Column<string>(nullable: false),
+                    StateRegistration = table.Column<string>(nullable: true),
+                    MunicipalRegistration = table.Column<string>(nullable: true),
+                    Cnae = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    Phone = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,13 +66,13 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
 
             migrationBuilder.InsertData(
                 table: "Companies",
-                columns: new[] { "Id", "Cnpj", "CreatedIn", "FantasyName", "Name", "Removed", "UpdatedIn" },
-                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "35.344.681/0001-90", new DateTime(2020, 2, 2, 12, 53, 7, 844, DateTimeKind.Local).AddTicks(9898), "tottemsolutions", "ALEFF MOURA DA SILVA 10685805425", false, new DateTime(2020, 2, 2, 12, 53, 7, 846, DateTimeKind.Local).AddTicks(3793) });
+                columns: new[] { "Id", "Address", "Cnae", "Cnpj", "CreatedIn", "Email", "FantasyName", "MunicipalRegistration", "Name", "Phone", "Removed", "StateRegistration", "UpdatedIn" },
+                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "Rua Cicero Lourenço, Mossoró/RN", "", "35.344.681/0001-90", new DateTime(2020, 5, 28, 19, 4, 13, 643, DateTimeKind.Local).AddTicks(2070), "aleffmds@gmail.com", "tottemsolutions", "", "ALEFF MOURA DA SILVA", "(49) 9 9914-6350", false, "", new DateTime(2020, 5, 28, 19, 4, 13, 644, DateTimeKind.Local).AddTicks(1000) });
 
             migrationBuilder.InsertData(
                 table: "Agents",
                 columns: new[] { "Id", "CompanyId", "Configured", "CreatedIn", "DisplayName", "FirstConnection", "HostAddress", "HostName", "LastConnection", "LastUpload", "LocalIp", "Login", "MachineName", "Password", "Removed", "UpdatedIn", "UserWhoCreatedId", "UserWhoCreatedName" },
-                values: new object[] { new Guid("56159a2a-bbfd-413a-be9c-445bd8bbe894"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 2, 2, 12, 53, 7, 848, DateTimeKind.Local).AddTicks(5113), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "123456", false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f91a2366-c469-412a-9197-976a90516272"), "Admin" });
+                values: new object[] { new Guid("54f96bbb-6621-4434-a196-f52e371ca020"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 5, 28, 19, 4, 13, 646, DateTimeKind.Local).AddTicks(3731), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agents_CompanyId",

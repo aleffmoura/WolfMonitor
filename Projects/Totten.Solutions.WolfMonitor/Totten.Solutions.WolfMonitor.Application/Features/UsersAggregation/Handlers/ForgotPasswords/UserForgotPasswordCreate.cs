@@ -74,7 +74,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 {
                     var body = "Recuperação de senha:<br/> Nome: Totem Solutions<br/> Token : " + callback.Success.Token + " <br/>Mensagem automática, não responda-a";
 
-                    EMail.Send("Recuperação de senha", body, callback.Success.Email, "Totem Solutions", "tottenprogramming@gmail.com", "p@ssw0rd@");
+                    EMail.Send("Recuperação de senha", body, callback.Success.Email, "Totem Solutions", "tottenprogramming@gmail.com");
                 }
                 catch
                 {

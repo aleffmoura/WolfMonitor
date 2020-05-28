@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Id = Guid.NewGuid(),
                 Login = "servidor1",
                 Password = "123456".GenerateHash(),
-                UserWhoCreatedId = Guid.Parse("f91a2366-c469-412a-9197-976a90516272"),
+                UserWhoCreatedId = Guid.Parse("f75a1881-0fd6-4273-9d23-c59018788201"),
                 UserWhoCreatedName = "Admin"
 
             });
