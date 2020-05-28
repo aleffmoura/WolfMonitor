@@ -40,9 +40,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users
         public Result<Exception, IQueryable<User>> GetAllByCompanyId(Guid companyId)
              => Result.Run(() => _context.Users.Where(u => u.CompanyId == companyId));
 
-        public async Task<Result<Exception, User>> GetByLoginAndEmail(string login, string email)
+        public async Task<Result<Exception, User>> GetByLoginAndEmail(Guid companyId, string login, string email)
         {
-            User userCallBack = await _context.Users.FirstOrDefaultAsync(user => user.Email == email &&
+            User userCallBack = await _context.Users.FirstOrDefaultAsync(user =>
+                                                                         user.CompanyId == companyId &&
+                                                                         user.Email == email &&
                                                                          (user.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Email.Equals(login, StringComparison.InvariantCultureIgnoreCase) || user.Cpf.Equals(login)) &&
                                                                          !user.Removed);
             if (userCallBack == null)

@@ -6,9 +6,10 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="350">
+             d:DesignHeight="180" d:DesignWidth="350">
     <Grid>
         <StackPanel Margin="10">
+            <TextBox Name="txtCompany" materialDesign:HintAssist.Hint="Empresa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18" TextChanged="textChanged"/>
             <TextBox Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18" TextChanged="textChanged"/>
             <TextBox Name="txtLogin" materialDesign:HintAssist.Hint="Usuário" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,5" FontSize="18" TextChanged="textChanged"/>
         </StackPanel>

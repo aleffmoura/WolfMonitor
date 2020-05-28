@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Services;
 using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.EMails;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -18,6 +19,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
+            public string Company { get; set; }
             public string Login { get; set; }
             public string Email { get; set; }
 
@@ -40,48 +42,41 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
         {
             private readonly IUserRepository _repository;
             private readonly IEmailService _emailService;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IUserRepository repository, IEmailService emailService)
+            public Handler(IUserRepository repository, IEmailService emailService, ICompanyRepository companyRepository)
             {
+                _companyRepository = companyRepository;
                 _repository = repository;
                 _emailService = emailService;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Result<Exception, User> callback = await _repository.GetByLoginAndEmail(request.Login, request.Email);
+                var companyCallback = await _companyRepository.GetByNameAsync(request.Company);
 
-                if (callback.IsFailure)
-                {
-                    return callback.Failure;
-                }
+                if (companyCallback.IsFailure)
+                    return new BusinessException(ErrorCodes.InvalidObject, "A empresa informada não foi encontrada.");
 
-                var emailCallback = _emailService.Send(callback.Success.Email);
+                Result<Exception, User> userCallback = await _repository.GetByLoginAndEmail(companyCallback.Success.Id, request.Login, request.Email);
+
+                if (userCallback.IsFailure)
+                    return userCallback.Failure;
+
+                var emailCallback = _emailService.Send(userCallback.Success.Email);
 
                 if (emailCallback.IsFailure)
                     return emailCallback.Failure;
 
-                callback.Success.Token = Guid.NewGuid().ToString();
-                callback.Success.RecoverSolicitationCode = Guid.NewGuid().ToString();
+                userCallback.Success.Token = emailCallback.Success.ToString();
+                userCallback.Success.RecoverSolicitationCode = Guid.NewGuid().ToString();
 
-
-                var updatedCallback = await _repository.UpdateAsync(callback.Success);
+                var updatedCallback = await _repository.UpdateAsync(userCallback.Success);
 
                 if (updatedCallback.IsFailure)
                     return new BusinessException(ErrorCodes.ServiceUnavailable, "Serviço indisponivel, contate o administrador");
 
-                try
-                {
-                    var body = "Recuperação de senha:<br/> Nome: Totem Solutions<br/> Token : " + callback.Success.Token + " <br/>Mensagem automática, não responda-a";
-
-                    EMail.Send("Recuperação de senha", body, callback.Success.Email, "Totem Solutions", "tottenprogramming@gmail.com");
-                }
-                catch
-                {
-                    return new BusinessException(ErrorCodes.ServiceUnavailable, "Serviço indisponivel, contact o administrador");
-                }
-
-                return Guid.Parse(callback.Success.RecoverSolicitationCode);
+                return Guid.Parse(userCallback.Success.RecoverSolicitationCode);
             }
         }
     }

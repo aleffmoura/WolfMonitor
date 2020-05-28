@@ -5,7 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.Services;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -17,6 +19,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
     {
         public class Command : IRequest<Result<Exception, Unit>>
         {
+            public string Company { get; set; }
             public string Login { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
@@ -32,6 +35,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
+                    RuleFor(a => a.Company).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Email).NotEmpty().Length(6, 200);
                     RuleFor(a => a.Password).NotEmpty().Length(8, 150);
@@ -44,37 +48,34 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
             private readonly IUserRepository _repository;
-            private readonly IEmailService _emailService;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IUserRepository repository, IEmailService emailService)
+            public Handler(IUserRepository repository, ICompanyRepository companyRepository)
             {
+                _companyRepository = companyRepository;
                 _repository = repository;
-                _emailService = emailService;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Result<Exception, User> callback = await _repository.GetByLoginAndEmail(request.Login, request.Email);
+                var companyCallback = await _companyRepository.GetByNameAsync(request.Company);
 
-                if (callback.IsFailure)
-                    return callback.Failure;
+                if (companyCallback.IsFailure)
+                    return new BusinessException(ErrorCodes.InvalidObject, "A empresa informada não foi encontrada.");
 
-                var emailCallback = _emailService.Send(callback.Success.Email);
+                Result<Exception, User> userCallback = await _repository.GetByLoginAndEmail(companyCallback.Success.Id, request.Login, request.Email);
 
-                if (emailCallback.IsFailure)
-                    return emailCallback.Failure;
-
-                if (!callback.Success.TokenSolicitationCode.Equals(request.TokenSolicitationCode.ToString()))
+                if (!userCallback.Success.TokenSolicitationCode.Equals(request.TokenSolicitationCode.ToString()))
                     return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Token da solicitação não está correto com a requisição, contate um administrador");
-                if (!callback.Success.RecoverSolicitationCode.Equals(request.RecoverSolicitationCode.ToString()))
+                if (!userCallback.Success.RecoverSolicitationCode.Equals(request.RecoverSolicitationCode.ToString()))
                     return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Codigo de recuperação da solicitação não está correto com a requisição, contate um administrador");
 
-                callback.Success.Password = request.Password.GenerateHash();
-                callback.Success.Token = string.Empty;
-                callback.Success.TokenSolicitationCode = string.Empty;
-                callback.Success.RecoverSolicitationCode = string.Empty;
+                userCallback.Success.Password = request.Password.GenerateHash();
+                userCallback.Success.Token = string.Empty;
+                userCallback.Success.TokenSolicitationCode = string.Empty;
+                userCallback.Success.RecoverSolicitationCode = string.Empty;
 
-                await _repository.UpdateAsync(callback.Success);
+                await _repository.UpdateAsync(userCallback.Success);
 
                 return Unit.Successful;
             }

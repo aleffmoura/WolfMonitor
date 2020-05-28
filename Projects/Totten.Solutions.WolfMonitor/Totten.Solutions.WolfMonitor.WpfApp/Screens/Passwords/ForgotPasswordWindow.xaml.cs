@@ -23,6 +23,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         public ForgotPasswordWindow(IUserService userService)
         {
             InitializeComponent();
+            
+            _userService = userService;
 
             SwitchPanels(new ValidationUserUC(_userService));
         }

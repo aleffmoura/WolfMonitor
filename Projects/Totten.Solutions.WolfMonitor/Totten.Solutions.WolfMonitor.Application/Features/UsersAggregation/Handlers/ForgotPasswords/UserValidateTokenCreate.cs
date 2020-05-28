@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
+using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
@@ -14,6 +15,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
+            public string Company { get; set; }
             public string Login { get; set; }
             public string Email { get; set; }
             public Guid Token { get; set; }
@@ -28,6 +30,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
+                    RuleFor(a => a.Company).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100);
                     RuleFor(a => a.Token).NotEmpty().NotEqual(default(Guid));
                     RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)); ;
@@ -38,22 +41,29 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
             private readonly IUserRepository _repository;
+            private readonly ICompanyRepository _companyRepository;
 
-            public Handler(IUserRepository repository)
+            public Handler(IUserRepository repository, ICompanyRepository companyRepository)
             {
+                _companyRepository = companyRepository;
                 _repository = repository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Result<Exception, User> callback = await _repository.GetByLoginAndEmail(request.Login, request.Email);
+                var companyCallback = await _companyRepository.GetByNameAsync(request.Company);
+
+                if (companyCallback.IsFailure)
+                    return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "A empresa informada não foi encontrada.");
+
+                Result<Exception, User> callback = await _repository.GetByLoginAndEmail(companyCallback.Success.Id, request.Login, request.Email);
 
                 if (callback.IsFailure)
                     return callback.Failure;
 
-                if(!callback.Success.Token.Equals(request.Token.ToString()))
-                    return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject,"O Token informado está incorreto");
-                if(!callback.Success.RecoverSolicitationCode.Equals(request.RecoverSolicitationCode.ToString()))
+                if (!callback.Success.Token.Equals(request.Token.ToString()))
+                    return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Token informado está incorreto");
+                if (!callback.Success.RecoverSolicitationCode.Equals(request.RecoverSolicitationCode.ToString()))
                     return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "Solicitação é incorreta, contate um administrador");
 
                 callback.Success.TokenSolicitationCode = Guid.NewGuid().ToString();

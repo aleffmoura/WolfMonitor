@@ -33,6 +33,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _itensMonitoringService = itensMonitoringService;
             _userBasicInformation = userBasicInformation;
             _indexes = new Dictionary<Guid, AgentUC>();
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnAdd.IsEnabled = false;
+                btnAdd.Visibility = Visibility.Hidden;
+            }
         }
 
         ~AgentsUserControl()

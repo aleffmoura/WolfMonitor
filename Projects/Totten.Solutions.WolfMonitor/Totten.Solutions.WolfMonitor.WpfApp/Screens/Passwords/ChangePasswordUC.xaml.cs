@@ -42,7 +42,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                     return param;
                 }
 
-                var callback = await _userService.ChangePassword(validation.Username, validation.Email,
+                var callback = await _userService.ChangePassword(validation.Company, validation.Username, validation.Email,
                                                                  validation.TokenSolicitationCode, validation.RecoverSolicitationCode, txtPass.Password);
 
                 if (callback.IsSuccess)

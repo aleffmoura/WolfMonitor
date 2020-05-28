@@ -39,18 +39,19 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         {
             if (param is TokenSolicitationVO validationResponse)
             {
-                if(!Guid.TryParse(txtToken.Text, out Guid token))
+                if (!Guid.TryParse(txtToken.Text, out Guid token))
                 {
                     MessageBox.Show("O token informado não corresponde a um formato válido.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
                     return param;
                 }
-                var callback = await _userService.TokenConfimation(validationResponse.Login, validationResponse.Email, validationResponse.RecoverSolicitationCode, token);
+                var callback = await _userService.TokenConfimation(validationResponse.Company, validationResponse.Login, validationResponse.Email, validationResponse.RecoverSolicitationCode, token);
 
                 if (callback.IsSuccess)
                 {
                     return new ValidationFullVO
                     {
                         Username = validationResponse.Login,
+                        Company = validationResponse.Company,
                         Email = validationResponse.Email,
                         RecoverSolicitationCode = validationResponse.RecoverSolicitationCode,
                         TokenSolicitationCode = callback.Success
@@ -65,12 +66,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             return param;
         }
 
-        private async void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (_validationResponse is TokenSolicitationVO vali)
             {
-                var callback = await _userService.ReSendToken(vali.Login, vali.Email);
                 MessageBox.Show("Foi enviado o token novamente no email fornecido!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
+                
+                _userService.ReSendToken(vali.Company, vali.Login, vali.Email).ContinueWith(task => {});
             }
         }
 

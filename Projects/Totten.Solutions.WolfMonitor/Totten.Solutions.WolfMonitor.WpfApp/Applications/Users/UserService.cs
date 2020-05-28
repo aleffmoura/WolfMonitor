@@ -47,24 +47,26 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Users
         public string GetClientCredentials()
             => Convert.ToBase64String(Encoding.ASCII.GetBytes($"application:applicationSecret"));
 
-        public Task<Result<Exception, Guid>> RecoverPassword(string login, string email)
-            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword", new RecoverSolicitationRequestVO { Login = login, Email = email });
+        public Task<Result<Exception, Guid>> RecoverPassword(string company, string login, string email)
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword", new RecoverSolicitationRequestVO { Company = company, Login = login, Email = email });
 
-        public Task<Result<Exception, Guid>> ReSendToken(string login, string email)
-            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("token-resend", new RecoverSolicitationRequestVO { Login = login, Email = email });
+        public Task<Result<Exception, Guid>> ReSendToken(string company, string login, string email)
+            => _endPoint.Post<Guid, RecoverSolicitationRequestVO>("forgotPassword/token-resend", new RecoverSolicitationRequestVO { Company = company, Login = login, Email = email });
 
-        public Task<Result<Exception, Guid>> TokenConfimation(string login, string email, Guid recoverSolicitationCode, Guid token)
+        public Task<Result<Exception, Guid>> TokenConfimation(string company, string login, string email, Guid recoverSolicitationCode, Guid token)
             => _endPoint.Post<Guid, TokenConfirmationRequestVO>("forgotPassword/validate-token", new TokenConfirmationRequestVO
             {
+                Company = company,
                 Login = login,
                 Email = email,
                 RecoverSolicitationCode = recoverSolicitationCode,
                 Token = token
             });
 
-        public Task<Result<Exception, Unit>> ChangePassword(string login, string email, Guid tokenSolicitationCode, Guid recoverSolicitationCode, string password)
+        public Task<Result<Exception, Unit>> ChangePassword(string company, string login, string email, Guid tokenSolicitationCode, Guid recoverSolicitationCode, string password)
          => _endPoint.Post<Unit, TokenChangePasswordVO>("forgotPassword/change-password", new TokenChangePasswordVO
          {
+             Company = company,
              Login = login,
              Email = email,
              TokenSolicitationCode = tokenSolicitationCode,

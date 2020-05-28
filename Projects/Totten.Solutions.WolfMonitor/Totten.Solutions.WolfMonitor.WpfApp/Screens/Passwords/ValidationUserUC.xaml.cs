@@ -35,19 +35,20 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         {
             _enableNext = true;
 
-            if (string.IsNullOrEmpty(txtLogin.Text) || string.IsNullOrEmpty(txtEmail.Text))
+            if (string.IsNullOrEmpty(txtLogin.Text) || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtCompany.Text))
             {
                 _enableNext = false;
                 MessageBox.Show("Por favor preencha todos os campos.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
+
             if (!ValidatorHelper.IsValidEmail(txtEmail.Text))
             {
                 MessageBox.Show("Email com formato inválido ou o servidor do email informado não esta respondendo", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
 
-            var callback = await _userService.RecoverPassword(txtLogin.Text, txtEmail.Text);
+            var callback = await _userService.RecoverPassword(txtCompany.Text, txtLogin.Text, txtEmail.Text);
 
             if (callback.IsFailure)
             {
@@ -58,6 +59,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
 
             return new TokenSolicitationVO
             {
+                Company = txtCompany.Text,
                 Login = txtLogin.Text,
                 Email = txtEmail.Text,
                 RecoverSolicitationCode = callback.Success

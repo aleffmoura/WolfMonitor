@@ -2,6 +2,7 @@
 {
     public class RecoverSolicitationRequestVO
     {
+        public string Company { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
     }
