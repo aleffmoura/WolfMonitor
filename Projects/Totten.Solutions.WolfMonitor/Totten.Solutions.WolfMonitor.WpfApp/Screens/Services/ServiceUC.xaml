@@ -34,11 +34,6 @@
                     </StackPanel>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                        <TextBlock Text="Last Status: " Foreground="Black" FontSize="13" />
-                        <TextBlock x:Name="lblLastStatus" Text="running" Foreground="Green" FontSize="13" FontWeight="Bold" Margin="20.5,0,0,0"/>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
                         <TextBlock Text="Service name: " Foreground="Black" FontSize="13"/>
                         <TextBlock x:Name="lblServiceName" Text="running" Foreground="Black" FontSize="13" FontWeight="Bold" Margin="5.5,0,0,0" />
                     </StackPanel>

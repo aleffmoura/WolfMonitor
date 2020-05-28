@@ -135,6 +135,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             if (dialogResult.HasValue && dialogResult.Value)
             {
                 await _itemsMonitoringService.PostService(frmItemsAdd.Item);
+                Populate();
             }
         }
 

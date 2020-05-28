@@ -109,6 +109,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
             if (dialogResult.HasValue && dialogResult.Value)
             {
                 await _itemsMonitoringService.PostArchive(frmItemsAdd.Item);
+                Populate();
             }
         }
 
