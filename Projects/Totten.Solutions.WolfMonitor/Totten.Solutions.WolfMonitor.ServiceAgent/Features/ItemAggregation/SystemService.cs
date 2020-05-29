@@ -14,10 +14,9 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.Id = item.Id;
             this.AgentId = item.AgentId;
             this.Name = item.Name;
-            this.Default = item.Default;
+            this.AboutCurrentValue = item.AboutCurrentValue;
             this.DisplayName = item.DisplayName;
             this.LastValue = item.LastValue;
-            this.Interval = item.Interval;
             this.MonitoredAt = item.MonitoredAt;
             this.Type = item.Type;
             this.Value = item.Value;
@@ -33,15 +32,21 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.LastValue = this.Value;
             this.Value = status;
             this.MonitoredAt = DateTime.Now;
+            this.AboutCurrentValue = "Alterado sistematicamente.";
             return true;
         }
 
-        public override void Change(string newStatus)
+        public override void Change(string newValue)
         {
             if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
                 SystemServicesService.Stop(this.Name, this.DisplayName);
             else
                 SystemServicesService.Start(this.Name, this.DisplayName);
+
+            this.LastValue = this.Value;
+            this.Value = SystemServicesService.GetStatus(this.Name, this.DisplayName);
+            this.MonitoredAt = DateTime.Now;
+            this.AboutCurrentValue = "Alterado por solicitação";
         }
     }
 }

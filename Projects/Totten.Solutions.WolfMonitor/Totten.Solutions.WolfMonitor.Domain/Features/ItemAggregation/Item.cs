@@ -10,8 +10,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public int Interval { get; set; }
-        public string Default { get; set; }
+        public string AboutCurrentValue { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }
@@ -26,7 +25,5 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         public List<ItemSolicitationHistoric> SolicitationHistoric { get; set; }
 
         public override void Validate() {}
-
-        public bool VerifyIfChange(Item item) => !this.Value.Equals(item.Value);
     }
 }

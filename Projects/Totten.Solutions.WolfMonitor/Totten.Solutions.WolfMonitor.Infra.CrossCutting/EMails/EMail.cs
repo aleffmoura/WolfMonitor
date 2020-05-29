@@ -22,7 +22,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.EMails
             {
                 client.Send(mail);
             }
-            catch (System.Exception erro)
+            catch
             {
             }
             finally

@@ -9,8 +9,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModel
         public Guid AgentId { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public int Interval { get; set; }
-        public string Default { get; set; }
+        public string AboutCurrentValue { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }

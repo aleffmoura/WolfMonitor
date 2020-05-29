@@ -31,7 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public async Task<IActionResult> Create([FromBody]ItemCreateVO itemCreate)
              => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,
                                                                           itemCreate.Name, itemCreate.DisplayName,
-                                                                          itemCreate.Default, itemCreate.Interval,
+                                                                          itemCreate.AboutCurrentValue,
                                                                           ETypeItem.SystemService)));
 
         [HttpPost("archives")]
@@ -39,7 +39,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public async Task<IActionResult> CreateArchive([FromBody]ItemCreateVO itemCreate)
              => HandleCommand(await _mediator.Send(new ItemCreate.Command(CompanyId, UserId, itemCreate.AgentId,
                                                                           itemCreate.Name, itemCreate.DisplayName,
-                                                                          itemCreate.Default, itemCreate.Interval,
+                                                                          itemCreate.AboutCurrentValue,
                                                                           ETypeItem.SystemArchive)));
 
         #endregion
@@ -50,7 +50,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]ItemUpdateVO itemUpdate)
-            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.LastValue, itemUpdate.MonitoredAt)));
+            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.AboutCurrentValue, itemUpdate.LastValue, itemUpdate.MonitoredAt)));
 
         #endregion
 

@@ -25,11 +25,11 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         public string Login { get; set; }
         public string Password { get; set; }
         public bool Configured { get; set; }
+        public bool ReadItemsMonitoringByArchive { get; set; }
 
         public DateTime? FirstConnection { get; set; }
         public DateTime? LastConnection { get; set; }
         public DateTime? LastUpload { get; set; }
-        //public List<Item> Items { get; set; }
 
         public virtual Company Company { get; set; }
         public virtual User UserWhoCreated { get; set; }

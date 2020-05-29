@@ -22,8 +22,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public Guid AgentId { get; set; }
             public string Name { get; set; }
             public string DisplayName { get; set; }
-            public string Default { get; set; }
-            public int Interval { get; set; }
+            public string AboutCurrentValue { get; set; }
             public ETypeItem Type { get; set; }
 
 
@@ -32,8 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                            Guid agentId,
                            string name,
                            string displayName,
-                           string defaultValue,
-                           int interval,
+                           string aboutCurrentValue,
                            ETypeItem typeItem)
             {
                 CompanyId = companyId;
@@ -41,8 +39,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 UserIdWhoAdd = userIdWhoAdd;
                 Name = name;
                 DisplayName = displayName;
-                Default = defaultValue;
-                Interval = interval;
+                AboutCurrentValue = aboutCurrentValue;
                 Type = typeItem;
             }
 

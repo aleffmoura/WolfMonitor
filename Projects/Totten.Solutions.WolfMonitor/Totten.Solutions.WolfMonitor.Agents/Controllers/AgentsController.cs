@@ -36,7 +36,9 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [HttpPost]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromBody]AgentCreateCommand command)
-            => HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.DisplayName, command.Login, command.Password)));
+            => HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.DisplayName,
+                                                                            command.Login, command.Password,
+                                                                            command.ReadItemsMonitoringByArchive)));
         
         #endregion
 

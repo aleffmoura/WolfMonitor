@@ -12,9 +12,8 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
             this.Id = item.Id;
             this.Name = item.Name;
             this.DisplayName = item.Name;
-            this.Default = item.Default;
+            this.AboutCurrentValue = item.AboutCurrentValue;
             this.LastValue = item.LastValue;
-            this.Interval = item.Interval;
             this.Type = item.Type;
             this.Value = item.Value;
             this.Removed = item.Removed;

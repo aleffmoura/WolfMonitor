@@ -7,5 +7,6 @@
   },
   "retrySendIfFailInHours": "1",
   "pathFilesIfFailSend": "./Monitoring/Items",
-  "pathFilesExceptions": "./Monitoring/Exceptions"
+  "pathFilesExceptions": "./Monitoring/Exceptions",
+  "ReadItemsMonitoringByArchive": false
 }

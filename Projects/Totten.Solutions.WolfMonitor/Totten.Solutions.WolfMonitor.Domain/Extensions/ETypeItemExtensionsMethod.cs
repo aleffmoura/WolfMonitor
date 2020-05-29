@@ -16,7 +16,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Extensions
                 case ETypeItem.SystemService:
                     return new SystemService(item);
                 case ETypeItem.SystemArchive:
-                    return new SystemConfig(item);
+                    return new SystemArchive(item);
 
                 default:
                     throw new BusinessException(ErrorCodes.InvalidObject, "Não existe um tipo cadastrado que corresponda ao informado.");

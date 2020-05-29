@@ -2,7 +2,7 @@
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 {
-    public class SystemConfigService
+    public class SystemArchivesService
     {
         public static string GetCurrentValue(string path)
         {
@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
             {
                 return File.ReadAllText(path);
             }
-            return "config Not Found";
+            return "Archive Not Found";
         }
     }
 }

@@ -23,7 +23,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         private ItemsMonitoringService _itemsMonitoringService;
         private ArchiveViewModel _archiveViewModel;
 
-        public ArchiveDetailWindow(ArchiveViewModel archiveViewModel, ItemsMonitoringService itemsMonitoringService)
+        public ArchiveDetailWindow(ArchiveViewModel archiveViewModel,
+                                   ItemsMonitoringService itemsMonitoringService)
         {
             _archiveViewModel = archiveViewModel;
             _itemsMonitoringService = itemsMonitoringService;
@@ -33,8 +34,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
         private void Populate()
         {
+            this.lblName.Text = _archiveViewModel.Name;
             this.lblDisplayName.Text = _archiveViewModel.DisplayName;
             this.lblMonitoredAt.Text = _archiveViewModel.MonitoredAt;
+            this.txtNotePad.Text = _archiveViewModel.Value;
             GetHistoricItems();
         }
 

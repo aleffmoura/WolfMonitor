@@ -20,7 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
             builder.Property(item => item.Name).IsRequired().HasMaxLength(250);
             builder.Property(item => item.Value).IsRequired().HasMaxLength(250);
             builder.Property(item => item.DisplayName).IsRequired().HasMaxLength(250);
-            builder.Property(item => item.Interval).IsRequired();
+            builder.Property(item => item.AboutCurrentValue).IsRequired();
             builder.Property(item => item.CreatedIn).IsRequired();
             builder.Property(item => item.UpdatedIn).IsRequired();
             builder.Property(item => item.Type).IsRequired();

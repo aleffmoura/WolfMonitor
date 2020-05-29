@@ -24,18 +24,21 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string DisplayName { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
+            public bool ReadItemsMonitoringByArchive { get; set; }
 
             public Command(Guid companyId,
                            Guid userWhoCreatedId,
                            string displayName,
                            string login,
-                           string password)
+                           string password,
+                           bool readItemsMonitoringByArchive)
             {
                 CompanyId = companyId;
                 UserWhoCreatedId = userWhoCreatedId;
                 DisplayName = displayName;
                 Login = login;
                 Password = password;
+                ReadItemsMonitoringByArchive = readItemsMonitoringByArchive;
             }
 
             public ValidationResult Validate()

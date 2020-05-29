@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -170,7 +171,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         continue;
                     }
 
-                    GetItemsEndVerifyStatus();
+                    GetItems();
 
                     if (_rabbitMQ == null)
                     {
@@ -191,37 +192,43 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         }
 
-        private void GetItemsEndVerifyStatus()
+        private void GetItems()
         {
-            var itemsCallback = _agentService.GetItems();
-
-            if (itemsCallback.IsSuccess)
+            if (_agentSettings.ReadItemsMonitoringByArchive)
             {
-                _items = itemsCallback.Success;
-                for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
-                {
-
-                    var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
-
-                    if (instance.ShouldBeMonitoring())
-                        if (instance.VerifyChanges())
-                        {
-                            try
-                            {
-                                if (_agentService.Send(instance).IsFailure)
-                                    GenerateFile(instance);
-                            }
-                            catch (Exception ex)
-                            {
-                                GenerateFile(instance);
-                                GenerateLogException(ex, instance);
-                            }
-                        }
-                    itemsCallback.Success.Items[i] = instance;
-                }
+                _items = Result<Exception, PageResult<Item>>.Of(new PageResult<Item>());
+                _items.Success.Items = new List<Item>();
             }
             else
-                GenerateLogException(itemsCallback.Failure);
+                _items = _agentService.GetItems();
+
+            if (_items.IsSuccess)
+                VerifyChanges(_items);
+            else
+                GenerateLogException(_items.Failure);
+        }
+
+        private void VerifyChanges(Result<Exception, PageResult<Item>> itemsCallback)
+        {
+            for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
+            {
+                var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
+
+                if (instance.VerifyChanges())
+                {
+                    try
+                    {
+                        if (_agentService.Send(instance).IsFailure)
+                            GenerateFile(instance);
+                    }
+                    catch (Exception ex)
+                    {
+                        GenerateFile(instance);
+                        GenerateLogException(ex, instance);
+                    }
+                }
+                itemsCallback.Success.Items[i] = instance;
+            }
         }
 
         private void ReceivedMessage(object obj)

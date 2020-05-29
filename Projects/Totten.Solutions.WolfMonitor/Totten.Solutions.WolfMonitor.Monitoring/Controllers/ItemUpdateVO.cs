@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
 {
@@ -11,6 +8,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public string Name { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }
+        public string AboutCurrentValue { get; set; }
         public DateTime MonitoredAt { get; set; }
     }
 }

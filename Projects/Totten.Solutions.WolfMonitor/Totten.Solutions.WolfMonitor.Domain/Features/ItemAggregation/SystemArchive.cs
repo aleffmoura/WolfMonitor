@@ -4,17 +4,16 @@ using System.Text;
 
 namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
 {
-    public class SystemConfig : Item
+    public class SystemArchive : Item
     {
-        public SystemConfig() { }
-        public SystemConfig(Item item)
+        public SystemArchive() { }
+        public SystemArchive(Item item)
         {
             this.Id = item.Id;
             this.Name = item.Name;
             this.DisplayName = item.Name;
-            this.Default = item.Default;
+            this.AboutCurrentValue = item.AboutCurrentValue;
             this.LastValue = item.LastValue;
-            this.Interval = item.Interval;
             this.Type = item.Type;
             this.Value = item.Value;
             this.Removed = item.Removed;

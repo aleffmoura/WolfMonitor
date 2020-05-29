@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
                 _item.AgentId = _agentId;
                 _item.Name = txtName.Text;
                 _item.DisplayName = txtDisplayName.Text;
-                _item.Default = txtDefaultValue.Text;
+                _item.AboutCurrentValue = "Item Criado";
                 _item.Type = ETypeItem.SystemService;
                 return _item;
             }
@@ -50,7 +50,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         {
             txtName.Text = item.Name;
             txtDisplayName.Text = item.DisplayName;
-            txtDefaultValue.Text = item.Default;
         }
 
     }

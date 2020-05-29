@@ -51,11 +51,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
                     }
                 }
             }
-            catch (System.ServiceProcess.TimeoutException ex)
-            {
-                return false;
-            }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
@@ -81,7 +77,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
                     }
                     return true;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return false;
                 }

@@ -10,7 +10,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         [Description("Serviço")]
         SystemService = 0,
         [Description("Arquivo")]
-        SystemConfig = 1
+        SystemArchive = 1
     }
     public class Item
     {
@@ -18,19 +18,15 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public Guid AgentId { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public int Interval { get; set; }
         public DateTime? MonitoredAt { get; set; }
         public string Value { get; set; }
-        public string Default { get; set; }
+        public string AboutCurrentValue { get; set; }
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }
 
         public virtual bool VerifyChanges() { return false; }
         public virtual void Change(string newStatus) { }
 
-        public bool ShouldBeMonitoring() => MonitoredAt.HasValue ? MonitoredAt.Value.AddMinutes(Interval) < DateTime.Now : true;
-
-        
     }
     public static class ETypeItemExtensionsMethod
     {
@@ -39,7 +35,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             switch (eTypeItem)
             {
                 case ETypeItem.SystemService: return new SystemService(item);
-                case ETypeItem.SystemConfig: return new SystemConfig(item);
+                case ETypeItem.SystemArchive: return new SystemArchive(item);
                 default: throw new Exception("Não existe um tipo cadastrado que corresponda ao informado.");
             };
         }

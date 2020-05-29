@@ -21,16 +21,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public Guid AgentId { get; set; }
             public string Name { get; set; }
             public string Value { get; set; }
+            public string AboutCurrentValue { get; set; }
             public string LastValue { get; set; }
             public DateTime MonitoredAt { get; set; }
 
 
-            public Command(Guid agentId, string name, string value, string lastValue, DateTime monitoredAt)
+            public Command(Guid agentId, string name, string value, string abountCurrentValue, string lastValue, DateTime monitoredAt)
             {
                 AgentId = agentId;
                 Name = name;
                 Value = value;
                 LastValue = lastValue;
+                AboutCurrentValue = abountCurrentValue;
                 MonitoredAt = monitoredAt;
             }
 
@@ -46,6 +48,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty);
                     RuleFor(a => a.Name).NotEmpty().Length(4, 255);
                     RuleFor(a => a.Value).NotEmpty().Length(4, 20);
+                    RuleFor(a => a.AboutCurrentValue).NotEmpty().Length(4, 150);
                 }
             }
         }
@@ -53,12 +56,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
             private readonly IItemRepository _repository;
-            //private readonly ILogMonitoringRepository _logMonitoringRepository;
 
-            public Handler(IItemRepository repository/*, ILogMonitoringRepository logMonitoringRepository*/)
+            public Handler(IItemRepository repository)
             {
                 _repository = repository;
-                //_logMonitoringRepository = logMonitoringRepository;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -68,38 +69,23 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 Result<Exception, Item> itemCallback = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
 
                 if (itemCallback.IsFailure)
-                {
                     return itemCallback.Failure;
-                }
-
-                MonitoringLog log = new MonitoringLog
-                {
-                    AgentId = request.AgentId,
-                    Date = DateTime.Now,
-                    Action = $"O tentou atualizar seu valor de: {itemCallback.Success.Value} para: {request.Value}",
-                    JsonResult = JsonConvert.SerializeObject(new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "Os valores são iguais."))
-                };
 
                 Item itemToUpdate = itemCallback.Success;
 
-                if (!itemToUpdate.Value.Equals(request.Value))
+                var lastValue = $"{itemToUpdate.Value}";
+
+                var itemHistoric = Mapper.Map<ItemHistoric>(itemCallback.Success);
+
+                Mapper.Map(request, itemToUpdate);
+
+                returned = await _repository.UpdateAsync(itemToUpdate);
+
+                if (!lastValue.Equals(request.Value) && returned.IsSuccess)
                 {
-                    var itemHistoric = Mapper.Map<ItemHistoric>(itemCallback.Success);
-
-                    Mapper.Map(request, itemToUpdate);
-
-                    returned = await _repository.UpdateAsync(itemToUpdate);
-
-                    log.IsSuccess = returned.IsSuccess;
-                    log.JsonResult = returned.IsSuccess ? JsonConvert.SerializeObject(returned.Success) : JsonConvert.SerializeObject(returned.Failure);
-
-
-                    if (returned.IsSuccess)
-                    {
-                        await _repository.CreateHistoricAsync(itemHistoric);
-                    }
+                    await _repository.CreateHistoricAsync(itemHistoric);
                 }
-                
+
                 return returned;
             }
         }
