@@ -17,9 +17,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
         public static void ChangeValue(string path, string newValue)
         {
             if (File.Exists(path))
-            {
                 File.WriteAllText(path, newValue);
-            }
         }
 
     }

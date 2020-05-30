@@ -249,8 +249,13 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         {
                             instance.Change(solicitation.NewValue, solicitation.SolicitationType);
 
-                            if (_agentService.Send(instance).IsFailure)
-                                GenerateFile(instance);
+                            if (instance.Value.Equals(solicitation.NewValue))
+                            {
+                                if (_agentService.Send(instance).IsFailure)
+                                    GenerateFile(instance);
+                            }
+                            else
+                                GenerateLogException(new Exception("Mudança pela solicitação não ocorreu"), instance);
                         }
                         catch (Exception ex)
                         {

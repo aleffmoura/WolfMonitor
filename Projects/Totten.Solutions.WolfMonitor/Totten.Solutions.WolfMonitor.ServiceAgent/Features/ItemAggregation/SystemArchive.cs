@@ -40,12 +40,12 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         {
             if (!string.IsNullOrEmpty(newValue) && !this.Value.Equals(newValue))
             {
+                SystemArchivesService.ChangeValue(this.Name, newValue: newValue);
+
                 this.LastValue = this.Value;
                 this.Value = newValue;
                 this.MonitoredAt = DateTime.Now;
                 this.AboutCurrentValue = solicitationType.ToString();
-
-                SystemArchivesService.ChangeValue(this.Name, newValue: newValue);
             }
         }
     }
