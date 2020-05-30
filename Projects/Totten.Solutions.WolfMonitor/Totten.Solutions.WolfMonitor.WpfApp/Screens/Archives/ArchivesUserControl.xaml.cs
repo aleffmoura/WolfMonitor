@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Items;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 {
@@ -15,22 +17,31 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
     /// </summary>
     public partial class ArchivesUserControl : UserControl
     {
-        private TaskScheduler currentTaskScheduler;
+        private TaskScheduler _currentTaskScheduler;
         private AgentService _agentService;
+        private UserBasicInformationViewModel _userBasicInformation;
         private ItemsMonitoringService _itemsMonitoringService;
         private Dictionary<Guid, ArchiveUC> _indexes;
         private Guid _agentId;
 
         public ArchivesUserControl(Guid agentId,
+                                   UserBasicInformationViewModel userBasicInformation,
                                    ItemsMonitoringService itemsMonitoringService,
                                    AgentService agentService)
         {
             InitializeComponent();
             _agentId = agentId;
+            _userBasicInformation = userBasicInformation;
             _agentService = agentService;
             _itemsMonitoringService = itemsMonitoringService;
             _indexes = new Dictionary<Guid, ArchiveUC>();
-            currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            _currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnAdd.IsEnabled = false;
+                btnAdd.Visibility = Visibility.Collapsed;
+            }
 
             Populate();
         }
@@ -61,20 +72,46 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
             {
                 if (task.Result.IsSuccess)
                 {
-                    foreach (ArchiveViewModel serviceViewModel in task.Result.Success.Items)
-                        _indexes.Add(serviceViewModel.Id, new ArchiveUC(OnRemove, OnEdit, serviceViewModel));
+                    foreach (ArchiveViewModel viewModel in task.Result.Success.Items)
+                        _indexes.Add(viewModel.Id, new ArchiveUC(OnRemove, OnEdit, viewModel));
 
                     PopulateByDictionary();
                 }
                 else
                     MessageBox.Show("Falha na busca dos arquivos do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-            
+
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private async void OnModified(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Deseja realmente modificar o arquivo?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                var view = (ArchiveViewModel)sender;
+
+                var returned = await _agentService.PostSolicitation(new ItemSolicitationVO
+                {
+                    ItemId = view.Id,
+                    AgentId = _agentId,
+                    Name = view.Name,
+                    SolicitationType = SolicitationType.ChangeFile,
+                    DisplayName = view.DisplayName,
+                    NewValue = view.Value
+                });
+                if (returned.IsSuccess)
+                {
+                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Populate();
+                }
+                else
+                    MessageBox.Show($"Falha na solicitação.\nMensagem: {returned.Failure.Message}", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+           
+            }
         }
 
         private void OnEdit(object sender, EventArgs e)
         {
-            var detail = new ArchiveDetailWindow((ArchiveViewModel)sender, _itemsMonitoringService);
+            var detail = new ArchiveDetailWindow(OnModified, (ArchiveViewModel)sender, _itemsMonitoringService, _userBasicInformation);
             detail.ShowDialog();
         }
 
@@ -82,7 +119,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         {
             ArchiveViewModel serviceViewModel = sender as ArchiveViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o serviço: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o arquivo: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id).ContinueWith(task =>
                 {

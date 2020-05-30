@@ -25,7 +25,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents
             => await _endPoint.Post(agent);
 
         public async Task<Result<Exception, Unit>> PostSolicitation(ItemSolicitationVO solicitation)
-            => await _endPoint.Send<Unit, ItemSolicitationVO>("change-service", solicitation, HttpMethod.Patch);
+            => await _endPoint.Send<Unit, ItemSolicitationVO>("item-solicitation", solicitation, HttpMethod.Patch);
 
         public async Task<Result<Exception, AgentDetailViewModel>> GetDetail(Guid id)
             => await _endPoint.GetDetail<AgentDetailViewModel>(id);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
@@ -35,14 +36,16 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
             return false;
         }
-        public override void Change(string newValue)
+        public override void Change(string newValue, SolicitationType solicitationType)
         {
             if (!string.IsNullOrEmpty(newValue) && !this.Value.Equals(newValue))
             {
                 this.LastValue = this.Value;
                 this.Value = newValue;
                 this.MonitoredAt = DateTime.Now;
-                this.AboutCurrentValue = "Alterado por solicitação";
+                this.AboutCurrentValue = solicitationType.ToString();
+
+                SystemArchivesService.ChangeValue(this.Name, newValue: newValue);
             }
         }
     }

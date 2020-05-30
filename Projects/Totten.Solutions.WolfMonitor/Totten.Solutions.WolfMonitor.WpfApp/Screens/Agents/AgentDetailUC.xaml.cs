@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives;
@@ -14,13 +15,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
     {
         private AgentService _agentsService;
         private ItemsMonitoringService _itensMonitoringService;
+        private UserBasicInformationViewModel _userBasicInformation;
         private Guid _id;
 
-        public AgentDetailUC(Guid id, AgentService agentService,
-                            ItemsMonitoringService itensMonitoringService)
+        public AgentDetailUC(Guid id, UserBasicInformationViewModel userBasicInformation,
+                            AgentService agentService, ItemsMonitoringService itensMonitoringService)
         {
             InitializeComponent();
             _id = id;
+            _userBasicInformation = userBasicInformation;
             _itensMonitoringService = itensMonitoringService;
             _agentsService = agentService;
             PopulateServices();
@@ -30,13 +33,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
         private void PopulateServices()
         {
-            ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _itensMonitoringService, _agentsService);
+            ServicesUserControl servicesUserControl = new ServicesUserControl(_id, _userBasicInformation, _itensMonitoringService, _agentsService);
             tabSystemServices.Content = servicesUserControl;
         }
 
         private void PopulateArchives()
         {
-            ArchivesUserControl archivesUserControl = new ArchivesUserControl(_id, _itensMonitoringService, _agentsService);
+            ArchivesUserControl archivesUserControl = new ArchivesUserControl(_id, _userBasicInformation, _itensMonitoringService, _agentsService);
             tabSystemArchives.Content = archivesUserControl;
         }
 

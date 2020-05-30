@@ -52,7 +52,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
                 .ForMember(dest => dest.SolicitationType, src => src.MapFrom(item => item.SolicitationType.ToString()));
 
             CreateMap<ItemSolicitationHistoricCreate.Command, ItemSolicitationHistoric>()
-                .ForMember(dest => dest.NewValue, src => src.MapFrom(item => item.NewStatus))
+                .ForMember(dest => dest.NewValue, src => src.MapFrom(item => item.NewValue))
                 .ForMember(dest => dest.CreatedIn, src => src.MapFrom(item => DateTime.Now))
                 .ForMember(dest => dest.UpdatedIn, src => src.MapFrom(item => DateTime.Now));
             #endregion

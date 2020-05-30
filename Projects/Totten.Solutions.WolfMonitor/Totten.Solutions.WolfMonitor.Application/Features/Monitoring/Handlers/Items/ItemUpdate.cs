@@ -18,6 +18,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
     {
         public class Command : IRequest<Result<Exception, Unit>>
         {
+            public Guid Id { get; set; }
             public Guid AgentId { get; set; }
             public string Name { get; set; }
             public string Value { get; set; }
@@ -26,8 +27,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public DateTime MonitoredAt { get; set; }
 
 
-            public Command(Guid agentId, string name, string value, string abountCurrentValue, string lastValue, DateTime monitoredAt)
+            public Command(Guid id, Guid agentId, string name, string value, string abountCurrentValue, string lastValue, DateTime monitoredAt)
             {
+                Id = id;
                 AgentId = agentId;
                 Name = name;
                 Value = value;
@@ -45,6 +47,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 public Validator()
                 {
+                    RuleFor(a => a.Id).NotEqual(Guid.Empty);
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty);
                     RuleFor(a => a.Name).NotEmpty().Length(4, 255);
                     RuleFor(a => a.Value).NotEmpty().Length(4, 20);
@@ -66,7 +69,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 Result<Exception, Unit> returned = Unit.Successful;
 
-                Result<Exception, Item> itemCallback = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+                Result<Exception, Item> itemCallback = await _repository.GetByIdAsync(request.AgentId, request.Id);
 
                 if (itemCallback.IsFailure)
                     return itemCallback.Failure;
@@ -82,9 +85,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 returned = await _repository.UpdateAsync(itemToUpdate);
 
                 if (!lastValue.Equals(request.Value) && returned.IsSuccess)
-                {
                     await _repository.CreateHistoricAsync(itemHistoric);
-                }
 
                 return returned;
             }

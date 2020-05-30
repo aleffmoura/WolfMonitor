@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
@@ -15,14 +16,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private EventHandler _onRemove;
         private EventHandler _onEdit;
         private EventHandler _onRestart;
+        private UserBasicInformationViewModel _userBasicInformation;
 
         public ServiceUC(EventHandler onRemove, EventHandler onEdit, EventHandler onRestart,
-                         SystemServiceViewModel systemServiceViewModel)
+                         SystemServiceViewModel systemServiceViewModel, UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _onRemove = onRemove;
             _onEdit = onEdit;
             _onRestart = onRestart;
+            _userBasicInformation = userBasicInformation;
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnRestart.IsEnabled = btnDel.IsEnabled = false;
+                btnRestart.Visibility = btnDel.Visibility = Visibility.Collapsed;
+            }
+
             SetServiceValues(systemServiceViewModel);
         }
         public void SetServiceValues(SystemServiceViewModel systemServiceViewModel)
@@ -38,9 +48,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         public void ChangeColorTextBlock(TextBlock textBlock)
         {
-            if(textBlock.Text.Equals("running", StringComparison.InvariantCultureIgnoreCase))
+            if (textBlock.Text.Equals("running", StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Green);
-            else if(textBlock.Text.Equals("stopped", StringComparison.InvariantCultureIgnoreCase))
+            else if (textBlock.Text.Equals("stopped", StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Red);
             else
                 textBlock.Foreground = new SolidColorBrush(Colors.Gold);
@@ -50,9 +60,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private void btnDel_Click(object sender, RoutedEventArgs e)
             => _onRemove?.Invoke(_systemServiceViewModel, new EventArgs());
 
-        private void btnRestart_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnRestart_Click(object sender, RoutedEventArgs e)
             => _onRestart?.Invoke(_systemServiceViewModel, new EventArgs());
-           
+
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
             => _onEdit?.Invoke(_systemServiceViewModel, new EventArgs());
     }

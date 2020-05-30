@@ -10,7 +10,6 @@ using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Item
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
-using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Agents.Controllers
@@ -39,16 +38,16 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
             => HandleCommand(await _mediator.Send(new AgentCreate.Command(CompanyId, UserId, command.DisplayName,
                                                                             command.Login, command.Password,
                                                                             command.ReadItemsMonitoringByArchive)));
-        
+
         #endregion
 
         #region HTTP PATCH
 
-        [HttpPatch("change-service")]
-        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        public async Task<IActionResult> ChangeService([FromBody]ChangeServiceStatusCommand command)
+        [HttpPatch("item-solicitation")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
+        public async Task<IActionResult> ChangeValue([FromBody]SolicitationCommand command)
             => HandleCommand(await _mediator.Send(new ItemSolicitationHistoricCreate.Command(UserId, command.AgentId,
-                             CompanyId, SolicitationType.ChangeStatus, command.Name, command.DisplayName, command.NewStatus)));
+                             CompanyId, command.ItemId, command.SolicitationType, command.Name, command.DisplayName, command.NewValue)));
 
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
@@ -67,7 +66,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadById([FromRoute]Guid agentId)
             => HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, agentId)));
-        
+
         [HttpGet("info")]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> ReadInfoAgent()

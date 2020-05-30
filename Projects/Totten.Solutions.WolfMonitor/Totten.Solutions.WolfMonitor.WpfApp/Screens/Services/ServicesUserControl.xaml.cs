@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Items;
@@ -18,20 +19,29 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private TaskScheduler currentTaskScheduler;
         private AgentService _agentService;
         private ItemsMonitoringService _itemsMonitoringService;
+        private UserBasicInformationViewModel _userBasicInformation;
         private Dictionary<Guid, ServiceUC> _indexes;
         private Guid _agentId;
         private Timer _autoRefresh;
 
         public ServicesUserControl(Guid agentId,
+                                   UserBasicInformationViewModel userBasicInformation,
                                    ItemsMonitoringService itemsMonitoringService,
                                    AgentService agentService)
         {
             InitializeComponent();
             _agentId = agentId;
+            _userBasicInformation = userBasicInformation;
             _agentService = agentService;
             _itemsMonitoringService = itemsMonitoringService;
             _indexes = new Dictionary<Guid, ServiceUC>();
             currentTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnAdd.IsEnabled = false;
+                btnAdd.Visibility = Visibility.Collapsed;
+            }
 
             Populate();
             LoadCombobox();
@@ -69,7 +79,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 if (task.Result.IsSuccess)
                 {
                     foreach (SystemServiceViewModel serviceViewModel in task.Result.Success.Items)
-                        _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, OnRestart, serviceViewModel));
+                        _indexes.Add(serviceViewModel.Id, new ServiceUC(OnRemove, OnEdit, OnRestart, serviceViewModel, _userBasicInformation));
 
                     PopulateByDictionary();
                 }
@@ -86,10 +96,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
                 var returned = await _agentService.PostSolicitation(new ItemSolicitationVO
                 {
+                    ItemId = view.Id,
                     AgentId = _agentId,
                     Name = view.Name,
+                    SolicitationType = SolicitationType.ChangeStatus,
                     DisplayName = view.DisplayName,
-                    NewStatus = "Status"
+                    NewValue = "Status"
                 });
                 if (returned.IsSuccess)
                     MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);

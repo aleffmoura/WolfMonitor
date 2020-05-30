@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
@@ -36,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             return true;
         }
 
-        public override void Change(string newValue)
+        public override void Change(string newValue, SolicitationType solicitationType)
         {
             if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
                 SystemServicesService.Stop(this.Name, this.DisplayName);
@@ -46,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.LastValue = this.Value;
             this.Value = SystemServicesService.GetStatus(this.Name, this.DisplayName);
             this.MonitoredAt = DateTime.Now;
-            this.AboutCurrentValue = "Alterado por solicitação";
+            this.AboutCurrentValue = solicitationType.ToString();
         }
     }
 }

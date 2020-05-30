@@ -11,7 +11,5 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string AboutCurrentValue { get; set; }
-        public int Interval { get; set; }
-
     }
 }

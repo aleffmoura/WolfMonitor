@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Linq;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives;
@@ -19,17 +20,60 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         private int _skip = 0;
         private int _actualPage = 1;
         private int _qtItems;
+        private EventHandler _onModified;
 
         private ItemsMonitoringService _itemsMonitoringService;
         private ArchiveViewModel _archiveViewModel;
+        private UserBasicInformationViewModel _userBasicInformation;
 
-        public ArchiveDetailWindow(ArchiveViewModel archiveViewModel,
-                                   ItemsMonitoringService itemsMonitoringService)
+        public ArchiveDetailWindow(EventHandler modified,
+                                   ArchiveViewModel archiveViewModel,
+                                   ItemsMonitoringService itemsMonitoringService,
+                                   UserBasicInformationViewModel userBasicInformation)
         {
+            _onModified = modified;
             _archiveViewModel = archiveViewModel;
             _itemsMonitoringService = itemsMonitoringService;
+            _userBasicInformation = userBasicInformation;
             InitializeComponent();
             Populate();
+
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnEdit.IsEnabled = false;
+                btnEdit.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void btnModified_Click(object sender, RoutedEventArgs e)
+        {
+            if (kindEdit.Kind != MaterialDesignThemes.Wpf.PackIconKind.ContentSaveEdit)
+            {
+                txtNotePad.IsReadOnly = false;
+                kindEdit.Kind = MaterialDesignThemes.Wpf.PackIconKind.ContentSaveEdit;
+                btnCancel.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (_archiveViewModel.Value.Equals(txtNotePad.Text))
+            {
+                MessageBox.Show("Não foi alterado nenhum valor pois o conteúdo não sofreu mudanças", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                btnCancel_Click(sender, e);
+                return;
+            }
+
+            _archiveViewModel.Value = txtNotePad.Text;
+
+            _onModified?.Invoke(_archiveViewModel, new EventArgs());
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            txtNotePad.Text = _archiveViewModel.Value;
+            txtNotePad.IsReadOnly = true;
+            kindEdit.Kind = MaterialDesignThemes.Wpf.PackIconKind.Edit;
+            btnCancel.Visibility = Visibility.Collapsed;
         }
 
         private void Populate()
@@ -39,6 +83,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
             this.lblMonitoredAt.Text = _archiveViewModel.MonitoredAt;
             this.txtNotePad.Text = _archiveViewModel.Value;
             GetHistoricItems();
+            GetSolicitations();
         }
 
         private Task GetHistoricItems()

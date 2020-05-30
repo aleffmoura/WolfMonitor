@@ -26,23 +26,25 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public SolicitationType SolicitationType { get; set; }
             public string Name { get; set; }
             public string DisplayName { get; set; }
-            public string NewStatus { get; set; }
+            public string NewValue { get; set; }
 
             public Command(Guid userId,
                            Guid agentId,
                            Guid companyId,
+                           Guid itemId,
                            SolicitationType solicitationType,
                            string name,
                            string displayName,
-                           string newStatus)
+                           string newValue)
             {
                 UserId = userId;
                 AgentId = agentId;
                 CompanyId = companyId;
+                ItemId = itemId;
                 SolicitationType = solicitationType;
                 Name = name;
                 DisplayName = displayName;
-                NewStatus = newStatus;
+                NewValue = newValue;
             }
 
             public ValidationResult Validate()
@@ -60,9 +62,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                         .WithMessage("Identificador da empresa é invalido");
                     RuleFor(a => a.UserId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta adicionando o serviço é invalido");
+                    RuleFor(a => a.ItemId).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador do item é invalido");
                     RuleFor(a => a.Name).NotEmpty().Length(4, 250);
                     RuleFor(a => a.DisplayName).NotEmpty().Length(4, 250);
-                    RuleFor(a => a.NewStatus).NotEmpty().Length(1, 250);
+                    RuleFor(a => a.NewValue).NotEmpty().Length(1, 250);
                 }
             }
         }
@@ -103,7 +107,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                 if (userCallback.Success.CompanyId != agentCallback.Success.CompanyId)
                     return new NotAllowedException("Usuário não pode salvar serviços no agent informado, a empresa do usuario e do agent não são iguais");
 
-                var item = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+                var item = await _repository.GetByIdAsync(request.AgentId, request.ItemId);
 
                 if (item.IsFailure)
                     return item.Failure;

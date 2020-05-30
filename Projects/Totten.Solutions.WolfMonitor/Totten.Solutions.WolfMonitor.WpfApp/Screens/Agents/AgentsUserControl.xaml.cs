@@ -37,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
             {
                 btnAdd.IsEnabled = false;
-                btnAdd.Visibility = Visibility.Hidden;
+                btnAdd.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         }
 
         private void OnEdit(object sender, EventArgs e)
-            => _onSwitchControl?.Invoke(new AgentDetailUC((Guid)sender, _agentService, _itensMonitoringService), new EventArgs());
+            => _onSwitchControl?.Invoke(new AgentDetailUC((Guid)sender,_userBasicInformation, _agentService, _itensMonitoringService), new EventArgs());
 
         private void OnRemove(object sender, EventArgs e)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 {
@@ -25,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public ETypeItem Type { get; set; }
 
         public virtual bool VerifyChanges() { return false; }
-        public virtual void Change(string newStatus) { }
+        public virtual void Change(string newValue, SolicitationType solicitationType) { }
 
     }
     public static class ETypeItemExtensionsMethod

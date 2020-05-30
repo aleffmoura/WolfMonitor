@@ -16,6 +16,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             InitializeComponent();
             _userBasicInformation = userBasicInformation;
+
             if (userBasicInformation.UserLevel < (int)EUserLevel.User)
                 tbMyInfo.IsEnabled = false;
 

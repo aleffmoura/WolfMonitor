@@ -235,22 +235,32 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         {
             try
             {
-                var changeStatus = JsonConvert.DeserializeObject<ChangeStatusService>(obj.ToString());
-                if (changeStatus != null)
+                var solicitation = JsonConvert.DeserializeObject<ItemSolicitationVO>(obj.ToString());
+
+                if (solicitation != null)
                 {
-                    var item = _items.Success.Items.FirstOrDefault(x => x.Id == changeStatus.ItemId);
+                    var item = _items.Success.Items.FirstOrDefault(x => x.Id == solicitation.ItemId);
+
                     if (item != null)
                     {
                         var instance = item.Type.GetInstance(item);
-                        instance.Change(changeStatus.NewStatus);
 
-                        if (_agentService.Send(instance).IsFailure)
-                            GenerateFile(instance);
+                        try
+                        {
+                            instance.Change(solicitation.NewValue, solicitation.SolicitationType);
+
+                            if (_agentService.Send(instance).IsFailure)
+                                GenerateFile(instance);
+                        }
+                        catch (Exception ex)
+                        {
+                            GenerateLogException(ex, instance);
+                        }
                     }
                     else
                     {
-                        var msg = $"Não foi encontrado nenhum item com nome: {changeStatus.Name}\n";
-                        msg += $"ou com DisplayName: {changeStatus.DisplayName}\n";
+                        var msg = $"Não foi encontrado nenhum item com nome: {solicitation.Name}\n";
+                        msg += $"ou com DisplayName: {solicitation.DisplayName}\n";
                         GenerateLogException(new Exception(msg));
                     }
                 }
