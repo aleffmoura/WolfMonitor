@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\logo.png" />
+    <Compile Remove="Infra\**" />
+    <EmbeddedResource Remove="Infra\**" />
+    <None Remove="Infra\**" />
+    <Page Remove="Infra\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infra\" />
-    <Folder Include="Screens\Configurations\" />
+    <None Remove="Assets\logo.png" />
   </ItemGroup>
 
   <ItemGroup>

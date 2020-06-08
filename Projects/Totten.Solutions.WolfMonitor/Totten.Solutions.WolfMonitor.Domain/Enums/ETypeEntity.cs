@@ -6,6 +6,7 @@
         Agents = 2,
         Companies = 3,
         Monitoring = 4,
-        Register = 5
+        Register = 5,
+        AgentProfiles = 6,
     }
 }

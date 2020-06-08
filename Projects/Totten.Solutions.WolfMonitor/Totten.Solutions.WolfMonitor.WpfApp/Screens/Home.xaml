@@ -88,12 +88,12 @@
                 
                 <ListView x:Name="viewMenu" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" Foreground="#FF1969DC" SelectionChanged="viewMenu_SelectionChanged">
 
-                    <ListViewItem Height="60" >
+                    <!--<ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
                             <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10" Foreground="White" FontSize="14"/>
                         </StackPanel>
-                    </ListViewItem>
+                    </ListViewItem>-->
 
                     <ListViewItem x:Name="btnMyAccount"  Height="60" MouseLeftButtonUp="btnMyAccount_MouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">

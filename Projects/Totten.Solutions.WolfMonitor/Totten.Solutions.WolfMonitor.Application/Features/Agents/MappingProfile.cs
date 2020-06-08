@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers;
+using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Profiles;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
@@ -51,6 +52,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
                 .ForMember(dest => dest.LastLogin, option => option.MapFrom(src => src.LastConnection.HasValue ? src.LastConnection.Value.ToString("dd/MM/yyyy hh:mm:ss") : "Nunca conectado")) ;
 
             CreateMap<AgentForUserViewModel, AgentForUserViewModel>();
+
+            #region Profiles
+                CreateMap<AgentProfileCreate.Command, Domain.Features.Agents.Profiles.Profile>();
+                CreateMap<Domain.Features.Agents.Profiles.Profile, Domain.Features.Agents.Profiles.Profile>();
+            #endregion
 
         }
     }

@@ -57,6 +57,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         #endregion
 
         #region HTTP GET
+        [HttpGet()]
         [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Skip | AllowedQueryOptions.Count)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll(ODataQueryOptions<Agent> queryOptions)

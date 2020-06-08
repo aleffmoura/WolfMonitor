@@ -68,5 +68,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        private void cbProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cbProfile.SelectedIndex >= 0)
+                btnApplyProfile.IsEnabled = true;
+            else
+                btnApplyProfile.IsEnabled = false;
+
+        }
     }
 }

@@ -37,6 +37,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
             InstanceServices();
 
             VerifyPermissionsUser(userBasicInformation);
+            
+            IncludeUserControl(new UserDetailUC(_userService, _userBasicInformation), new EventArgs());
         }
 
         private void InstanceServices()
