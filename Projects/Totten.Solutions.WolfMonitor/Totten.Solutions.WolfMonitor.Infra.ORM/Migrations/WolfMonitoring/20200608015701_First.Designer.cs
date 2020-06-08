@@ -10,8 +10,8 @@ using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 {
     [DbContext(typeof(WolfMonitoringContext))]
-    [Migration("20200529213618_ChangePropertie")]
-    partial class ChangePropertie
+    [Migration("20200608015701_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

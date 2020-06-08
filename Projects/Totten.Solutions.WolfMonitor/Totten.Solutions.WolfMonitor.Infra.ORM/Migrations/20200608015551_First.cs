@@ -61,16 +61,16 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                 columns: new[] { "Id", "CreatedIn", "Level", "Name", "Removed", "UpdatedIn" },
                 values: new object[,]
                 {
-                    { new Guid("0b17ce07-c0f0-4d30-9a28-e82ff50d0e58"), new DateTime(2020, 5, 28, 19, 3, 31, 637, DateTimeKind.Local).AddTicks(6769), 0, "Agent", false, new DateTime(2020, 5, 28, 19, 3, 31, 638, DateTimeKind.Local).AddTicks(3999) },
-                    { new Guid("435b9712-c523-4118-86f0-095cae7f3336"), new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(804), 1, "User", false, new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(810) },
-                    { new Guid("f91a2366-c469-412a-9197-976a90516272"), new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(933), 2, "Admin", false, new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(934) },
-                    { new Guid("c7d3fdb8-be1e-4b3c-aa49-729dcb12f241"), new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(974), 3, "System", false, new DateTime(2020, 5, 28, 19, 3, 31, 640, DateTimeKind.Local).AddTicks(974) }
+                    { new Guid("f2b6aeb4-9cda-4be0-9237-fc50a0c06b97"), new DateTime(2020, 6, 7, 22, 55, 50, 200, DateTimeKind.Local).AddTicks(2339), 0, "Agent", false, new DateTime(2020, 6, 7, 22, 55, 50, 201, DateTimeKind.Local).AddTicks(1532) },
+                    { new Guid("1f611ece-7649-49f5-a933-e3b5e6f228b8"), new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5471), 1, "User", false, new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5488) },
+                    { new Guid("f91a2366-c469-412a-9197-976a90516272"), new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5630), 2, "Admin", false, new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5632) },
+                    { new Guid("682ba438-61a7-4fc3-99fd-0d343c05d08f"), new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5680), 3, "System", false, new DateTime(2020, 6, 7, 22, 55, 50, 203, DateTimeKind.Local).AddTicks(5681) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CompanyId", "Cpf", "CreatedIn", "Email", "FirstName", "Language", "LastLogin", "LastName", "Login", "Password", "RecoverSolicitationCode", "Removed", "RoleId", "Token", "TokenSolicitationCode", "UpdatedIn" },
-                values: new object[] { new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "11111111111", new DateTime(2020, 5, 28, 19, 3, 31, 658, DateTimeKind.Local).AddTicks(9313), "aleffmds@gmail.com", "Aleff", "pt-BR", null, "Moura da Silva", "aleffmoura", "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", null, false, new Guid("c7d3fdb8-be1e-4b3c-aa49-729dcb12f241"), null, null, new DateTime(2020, 5, 28, 19, 3, 31, 658, DateTimeKind.Local).AddTicks(9848) });
+                values: new object[] { new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "11111111111", new DateTime(2020, 6, 7, 22, 55, 50, 225, DateTimeKind.Local).AddTicks(8803), "aleffmds@gmail.com", "Aleff", "pt-BR", null, "Moura da Silva", "aleffmoura", "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", null, false, new Guid("682ba438-61a7-4fc3-99fd-0d343c05d08f"), null, null, new DateTime(2020, 6, 7, 22, 55, 50, 225, DateTimeKind.Local).AddTicks(9350) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CompanyId",

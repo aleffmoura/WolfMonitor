@@ -18,7 +18,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
             }
         }
 
-        public class QueryHandler : RequestHandler<Query, Result<Exception, IQueryable<Domain.Features.Agents.Profiles.Profile>>>
+        public class QueryHandler : RequestHandler<Query, Result<Exception, IQueryable<Profile>>>
         {
             private readonly IProfileRepository _repository;
 
@@ -29,7 +29,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
             protected override Result<Exception, IQueryable<Profile>> Handle(Query request)
             {
-                return _repository.GetAllByAgentId(request.AgentId);
+                var callback = _repository.GetAllByAgentId(request.AgentId);
+                return callback;
             }
         }
     }

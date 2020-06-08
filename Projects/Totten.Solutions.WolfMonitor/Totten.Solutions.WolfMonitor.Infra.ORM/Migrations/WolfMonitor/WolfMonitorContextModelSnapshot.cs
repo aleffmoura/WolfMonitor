@@ -76,10 +76,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c9a526aa-9ab1-42c7-bce0-d3c818c99bd7"),
+                            Id = new Guid("29e149c8-9635-4127-84b5-d116a9423cee"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Configured = false,
-                            CreatedIn = new DateTime(2020, 5, 29, 18, 37, 30, 2, DateTimeKind.Local).AddTicks(4201),
+                            CreatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 535, DateTimeKind.Local).AddTicks(3212),
                             DisplayName = "Servidor BR 1",
                             Login = "servidor1",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
@@ -89,6 +89,43 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             UserWhoCreatedId = new Guid("f75a1881-0fd6-4273-9d23-c59018788201"),
                             UserWhoCreatedName = "Admin"
                         });
+                });
+
+            modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles.Profile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AgentId");
+
+                    b.Property<Guid>("CompanyId");
+
+                    b.Property<DateTime>("CreatedIn");
+
+                    b.Property<Guid>("ItemId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<Guid>("ProfileIdentifier");
+
+                    b.Property<bool>("Removed");
+
+                    b.Property<DateTime>("UpdatedIn");
+
+                    b.Property<Guid>("UserWhoCreatedId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserWhoCreatedId");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Totten.Solutions.WolfMonitor.Domain.Features.Companies.Company", b =>
@@ -137,7 +174,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Address = "Rua Cicero Lourenço, Mossoró/RN",
                             Cnae = "",
                             Cnpj = "35.344.681/0001-90",
-                            CreatedIn = new DateTime(2020, 5, 29, 18, 37, 29, 999, DateTimeKind.Local).AddTicks(2546),
+                            CreatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 532, DateTimeKind.Local).AddTicks(6947),
                             Email = "aleffmds@gmail.com",
                             FantasyName = "tottemsolutions",
                             MunicipalRegistration = "",
@@ -145,7 +182,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Phone = "(49) 9 9914-6350",
                             Removed = false,
                             StateRegistration = "",
-                            UpdatedIn = new DateTime(2020, 5, 29, 18, 37, 30, 0, DateTimeKind.Local).AddTicks(1415)
+                            UpdatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 533, DateTimeKind.Local).AddTicks(4070)
                         });
                 });
 

@@ -34,9 +34,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents.Profiles
         public Result<Exception, IQueryable<Profile>> GetAllByAgentId(Guid agentId)
             => Result.Run(() => _context.AgentProfiles.AsNoTracking().Where(a => !a.Removed && a.AgentId == agentId));
 
-        public async Task<Result<Exception, Profile>> GetByIdAsync(Guid profileIdentifier)
+        public async Task<Result<Exception, Profile>> GetByIdAsync(Guid id)
         {
-            var entity = await _context.AgentProfiles.AsNoTracking().FirstOrDefaultAsync(a => !a.Removed && a.ProfileIdentifier == profileIdentifier);
+            var entity = await _context.AgentProfiles.AsNoTracking().FirstOrDefaultAsync(a => !a.Removed && a.Id == id);
 
             if (entity == null)
                 return new NotFoundException();

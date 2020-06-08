@@ -31,6 +31,27 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                 });
 
             migrationBuilder.CreateTable(
+                name: "Profiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CreatedIn = table.Column<DateTime>(nullable: false),
+                    UpdatedIn = table.Column<DateTime>(nullable: false),
+                    ProfileIdentifier = table.Column<Guid>(nullable: false),
+                    ItemId = table.Column<Guid>(nullable: false),
+                    AgentId = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
+                    UserWhoCreatedId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Agents",
                 columns: table => new
                 {
@@ -49,6 +70,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     Login = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
                     Configured = table.Column<bool>(nullable: false),
+                    ReadItemsMonitoringByArchive = table.Column<bool>(nullable: false),
                     FirstConnection = table.Column<DateTime>(nullable: true),
                     LastConnection = table.Column<DateTime>(nullable: true),
                     LastUpload = table.Column<DateTime>(nullable: true)
@@ -67,12 +89,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "Id", "Address", "Cnae", "Cnpj", "CreatedIn", "Email", "FantasyName", "MunicipalRegistration", "Name", "Phone", "Removed", "StateRegistration", "UpdatedIn" },
-                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "Rua Cicero Lourenço, Mossoró/RN", "", "35.344.681/0001-90", new DateTime(2020, 5, 28, 19, 4, 13, 643, DateTimeKind.Local).AddTicks(2070), "aleffmds@gmail.com", "tottemsolutions", "", "ALEFF MOURA DA SILVA", "(49) 9 9914-6350", false, "", new DateTime(2020, 5, 28, 19, 4, 13, 644, DateTimeKind.Local).AddTicks(1000) });
+                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "Rua Cicero Lourenço, Mossoró/RN", "", "35.344.681/0001-90", new DateTime(2020, 6, 7, 22, 56, 41, 532, DateTimeKind.Local).AddTicks(6947), "aleffmds@gmail.com", "tottemsolutions", "", "ALEFF MOURA DA SILVA", "(49) 9 9914-6350", false, "", new DateTime(2020, 6, 7, 22, 56, 41, 533, DateTimeKind.Local).AddTicks(4070) });
 
             migrationBuilder.InsertData(
                 table: "Agents",
-                columns: new[] { "Id", "CompanyId", "Configured", "CreatedIn", "DisplayName", "FirstConnection", "HostAddress", "HostName", "LastConnection", "LastUpload", "LocalIp", "Login", "MachineName", "Password", "Removed", "UpdatedIn", "UserWhoCreatedId", "UserWhoCreatedName" },
-                values: new object[] { new Guid("54f96bbb-6621-4434-a196-f52e371ca020"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 5, 28, 19, 4, 13, 646, DateTimeKind.Local).AddTicks(3731), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), "Admin" });
+                columns: new[] { "Id", "CompanyId", "Configured", "CreatedIn", "DisplayName", "FirstConnection", "HostAddress", "HostName", "LastConnection", "LastUpload", "LocalIp", "Login", "MachineName", "Password", "ReadItemsMonitoringByArchive", "Removed", "UpdatedIn", "UserWhoCreatedId", "UserWhoCreatedName" },
+                values: new object[] { new Guid("29e149c8-9635-4127-84b5-d116a9423cee"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 6, 7, 22, 56, 41, 535, DateTimeKind.Local).AddTicks(3212), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", false, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agents_CompanyId",
@@ -83,12 +105,30 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                 name: "IX_Agents_UserWhoCreatedId",
                 table: "Agents",
                 column: "UserWhoCreatedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_AgentId",
+                table: "Profiles",
+                column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_CompanyId",
+                table: "Profiles",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_UserWhoCreatedId",
+                table: "Profiles",
+                column: "UserWhoCreatedId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Agents");
+
+            migrationBuilder.DropTable(
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "Companies");
