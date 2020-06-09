@@ -2,8 +2,6 @@
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Agents.Commands.Profiles;
 using Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Profiles;
@@ -15,21 +13,27 @@ using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Agents.Controllers
 {
-    [Route("")]
-    public class ProfileController : ApiControllerBase
+    [Route("profiles")]
+    public class ProfilesController : ApiControllerBase
     {
         private IMediator _mediator;
 
-        public ProfileController(IMediator mediator)
+        public ProfilesController(IMediator mediator)
             => _mediator = mediator;
 
         #region HTTP POST
         [HttpPost]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
-        public async Task<IActionResult> Create([FromBody]ProfileCreateCommand command)
+        public async Task<IActionResult> CreateProfile([FromBody]ProfileCreateCommand command)
             => HandleCommand(await _mediator.Send(new AgentProfileCreate.Command(command.AgentId, CompanyId, UserId, command.Name)));
 
         #endregion
+
+        [HttpPatch]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
+        public async Task<IActionResult> ApplyProfile([FromBody]ProfileApplyCommand command)
+            => HandleCommand(await _mediator.Send(new ProfileApply.Command(command.ProfileIdentifier, command.AgentId, CompanyId, UserId)));
+
         #region HTTP Delete
 
         //[HttpDelete("{Id}")]
@@ -44,7 +48,7 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [ODataQueryOptionsValidate(AllowedQueryOptions.Top | AllowedQueryOptions.Skip | AllowedQueryOptions.Count)]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadAll([FromRoute]Guid agentId, ODataQueryOptions<Profile> queryOptions)
-            => await HandleQueryable<Profile, ProfileViewModel>(await _mediator.Send(new ProfileCollection.Query(agentId)), queryOptions);
+            => await HandleQueryable<Profile, ProfileViewModel>(await _mediator.Send(new ProfileCollection.Query(UserId, CompanyId, agentId)), queryOptions);
 
         #endregion
     }

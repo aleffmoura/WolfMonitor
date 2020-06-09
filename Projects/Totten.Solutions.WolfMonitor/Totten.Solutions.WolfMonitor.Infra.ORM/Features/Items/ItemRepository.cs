@@ -55,8 +55,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
         public Result<Exception, IQueryable<Item>> GetAll(Guid agentId, ETypeItem eTypeItem)
             => Result.Run(() => _context.Items.AsNoTracking().Where(item => !item.Removed && item.AgentId == agentId && item.Type == eTypeItem));
 
-        public Result<Exception, IQueryable<Item>> GetAllByCompanyId(Guid companyId)
-            => Result.Run(() => _context.Items.AsNoTracking().Where(item => !item.Removed && item.AgentId == companyId));
+        public Result<Exception, IQueryable<Item>> GetAllByCompanyId(Guid agentId)
+            => Result.Run(() => _context.Items.AsNoTracking().Where(item => !item.Removed && item.AgentId == agentId));
 
         public Result<Exception, IQueryable<ItemHistoric>> GetAllHistoric(Guid itemId)
             => Result.Run(() => _context.Historic.AsNoTracking().OrderByDescending(x => x.MonitoredAt).Where(item => !item.Removed && item.ItemId == itemId));

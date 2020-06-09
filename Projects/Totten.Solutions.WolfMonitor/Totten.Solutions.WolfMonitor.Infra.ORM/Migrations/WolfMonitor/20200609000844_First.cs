@@ -73,7 +73,9 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     ReadItemsMonitoringByArchive = table.Column<bool>(nullable: false),
                     FirstConnection = table.Column<DateTime>(nullable: true),
                     LastConnection = table.Column<DateTime>(nullable: true),
-                    LastUpload = table.Column<DateTime>(nullable: true)
+                    LastUpload = table.Column<DateTime>(nullable: true),
+                    ProfileIdentifier = table.Column<Guid>(nullable: false),
+                    ProfileName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,12 +91,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "Id", "Address", "Cnae", "Cnpj", "CreatedIn", "Email", "FantasyName", "MunicipalRegistration", "Name", "Phone", "Removed", "StateRegistration", "UpdatedIn" },
-                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "Rua Cicero Lourenço, Mossoró/RN", "", "35.344.681/0001-90", new DateTime(2020, 6, 7, 22, 56, 41, 532, DateTimeKind.Local).AddTicks(6947), "aleffmds@gmail.com", "tottemsolutions", "", "ALEFF MOURA DA SILVA", "(49) 9 9914-6350", false, "", new DateTime(2020, 6, 7, 22, 56, 41, 533, DateTimeKind.Local).AddTicks(4070) });
+                values: new object[] { new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), "Rua Cicero Lourenço, Mossoró/RN", "", "35.344.681/0001-90", new DateTime(2020, 6, 8, 21, 8, 43, 516, DateTimeKind.Local).AddTicks(4454), "aleffmds@gmail.com", "tottemsolutions", "", "ALEFF MOURA DA SILVA", "(49) 9 9914-6350", false, "", new DateTime(2020, 6, 8, 21, 8, 43, 517, DateTimeKind.Local).AddTicks(3592) });
 
             migrationBuilder.InsertData(
                 table: "Agents",
-                columns: new[] { "Id", "CompanyId", "Configured", "CreatedIn", "DisplayName", "FirstConnection", "HostAddress", "HostName", "LastConnection", "LastUpload", "LocalIp", "Login", "MachineName", "Password", "ReadItemsMonitoringByArchive", "Removed", "UpdatedIn", "UserWhoCreatedId", "UserWhoCreatedName" },
-                values: new object[] { new Guid("29e149c8-9635-4127-84b5-d116a9423cee"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 6, 7, 22, 56, 41, 535, DateTimeKind.Local).AddTicks(3212), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", false, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), "Admin" });
+                columns: new[] { "Id", "CompanyId", "Configured", "CreatedIn", "DisplayName", "FirstConnection", "HostAddress", "HostName", "LastConnection", "LastUpload", "LocalIp", "Login", "MachineName", "Password", "ProfileIdentifier", "ProfileName", "ReadItemsMonitoringByArchive", "Removed", "UpdatedIn", "UserWhoCreatedId", "UserWhoCreatedName" },
+                values: new object[] { new Guid("e1d22895-3795-498d-bb21-29df65804f40"), new Guid("c576cf93-370c-4464-21f9-08d763d27d75"), false, new DateTime(2020, 6, 8, 21, 8, 43, 519, DateTimeKind.Local).AddTicks(7643), "Servidor BR 1", null, null, null, null, null, null, "servidor1", null, "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=", new Guid("00000000-0000-0000-0000-000000000000"), null, false, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f75a1881-0fd6-4273-9d23-c59018788201"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agents_CompanyId",

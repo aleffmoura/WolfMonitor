@@ -37,17 +37,24 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             return true;
         }
 
-        public override void Change(string newValue, SolicitationType solicitationType)
+        public override bool Change(string newValue, SolicitationType solicitationType)
         {
-            if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
-                SystemServicesService.Stop(this.Name, this.DisplayName);
-            else
-                SystemServicesService.Start(this.Name, this.DisplayName);
+            var returned = false;
 
-            this.LastValue = this.Value;
-            this.Value = SystemServicesService.GetStatus(this.Name, this.DisplayName);
-            this.MonitoredAt = DateTime.Now;
-            this.AboutCurrentValue = solicitationType.ToString();
+            if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
+                returned = SystemServicesService.Stop(this.Name, this.DisplayName);
+            else if (ServiceControllerStatus.Stopped.ToString().Equals(this.Value))
+                returned = SystemServicesService.Start(this.Name, this.DisplayName);
+
+            if (returned)
+            {
+                this.LastValue = this.Value;
+                this.Value = SystemServicesService.GetStatus(this.Name, this.DisplayName);
+                this.MonitoredAt = DateTime.Now;
+                this.AboutCurrentValue = solicitationType.ToString();
+            }
+
+            return returned;
         }
     }
 }

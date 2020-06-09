@@ -152,7 +152,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         continue;
                     }
 
-                    if (!_agent.Configured)
+                    if (_agent != null && !_agent.Configured)
                     {
                         AgentUpdateVO agent = new AgentUpdateVO();
                         agent.MachineName = Environment.MachineName;
@@ -173,7 +173,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
                     GetItems();
 
-                    if (_rabbitMQ == null)
+                    if (_rabbitMQ == null && _agent != null)
                     {
                         _rabbitMQ = new Rabbit(null, null);
                         Task.Run(() =>
@@ -213,13 +213,17 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
             for (int i = 0; i < itemsCallback.Success.Items.Count; i++)
             {
                 var instance = itemsCallback.Success.Items[i].Type.GetInstance(itemsCallback.Success.Items[i]);
-
+                
                 if (instance.VerifyChanges())
                 {
                     try
                     {
                         if (_agentService.Send(instance).IsFailure)
                             GenerateFile(instance);
+
+                        if(!string.IsNullOrEmpty(_agent?.ProfileName) && instance.Change(instance.Default, SolicitationType.ChangeContainsProfile))
+                            if (_agentService.Send(instance).IsFailure)
+                                GenerateFile(instance);
                     }
                     catch (Exception ex)
                     {
@@ -239,6 +243,12 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
                 if (solicitation != null)
                 {
+                    if (solicitation.SolicitationType == SolicitationType.ChangeContainsProfile)
+                    {
+                        _agent = null;
+                        return;
+                    }
+
                     var item = _items.Success.Items.FirstOrDefault(x => x.Id == solicitation.ItemId);
 
                     if (item != null)

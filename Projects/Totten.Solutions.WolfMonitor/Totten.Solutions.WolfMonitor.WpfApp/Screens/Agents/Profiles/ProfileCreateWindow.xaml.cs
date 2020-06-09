@@ -1,38 +1,46 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
-using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents.Profiles;
 
-namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
+namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.Profiles
 {
     /// <summary>
-    /// Lógica interna para AgentCreateWindow.xaml
+    /// Lógica interna para ProfileCreateWindow.xaml
     /// </summary>
-    public partial class AgentCreateWindow : Window
+    public partial class ProfileCreateWindow : Window
     {
         private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private AgentService _agentService;
-        public AgentCreateWindow(AgentService agentService)
+        private Guid _agentId;
+
+        public ProfileCreateWindow(AgentService agentService, Guid agentId)
         {
             InitializeComponent();
+            _agentId = agentId;
             _agentService = agentService;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPass.Password))
-            {
-                MessageBox.Show("Todos os campos são obrigatórios.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+
             btnAdd.IsEnabled = false;
 
-            _agentService.Post(new AgentCreateVO
+            _agentService.PostProfile(new ProfileCreateVO
             {
-                DisplayName = txtName.Text,
-                Login = txtUser.Text,
-                Password = txtPass.Password
+                AgentId = _agentId,
+                Name = txtName.Text
             }).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
@@ -42,7 +50,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 }
                 else
                 {
-                    if(SetErros(msg: task.Result.Failure.Message))
+                    if (SetErros(msg: task.Result.Failure.Message))
                         MessageBox.Show("Ocorreram falhas", "Falha", MessageBoxButton.OK, MessageBoxImage.Information);
                     else
                         MessageBox.Show(task.Result.Failure.Message, "Falha", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -55,9 +63,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             ValidationErrorVO errors = new ValidationErrorVO(msg);
 
-            lblNameError.Content = errors["DisplayName"];
-            lblUserError.Content = errors["Login"];
-            lblPassError.Content = errors["Password"];
+            lblNameError.Content = errors["Name"];
 
             return errors.ContainsErros;
         }

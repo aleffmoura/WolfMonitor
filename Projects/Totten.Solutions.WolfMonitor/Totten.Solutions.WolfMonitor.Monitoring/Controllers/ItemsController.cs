@@ -14,7 +14,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
 namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
 {
-    [Route("Items")]
+    [Route("items")]
     public class ItemsController : ApiControllerBase
     {
         private IMediator _mediator;

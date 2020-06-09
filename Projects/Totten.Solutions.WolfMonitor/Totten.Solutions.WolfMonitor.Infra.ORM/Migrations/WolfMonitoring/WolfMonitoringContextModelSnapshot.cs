@@ -31,6 +31,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 
                     b.Property<DateTime>("CreatedIn");
 
+                    b.Property<string>("Default");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(250);

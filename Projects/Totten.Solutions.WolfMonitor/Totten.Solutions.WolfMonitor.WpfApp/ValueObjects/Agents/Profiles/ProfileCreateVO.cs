@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Totten.Solutions.WolfMonitor.Agents.Commands.Profiles
+namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents.Profiles
 {
-    public class ProfileCreateCommand
+    public class ProfileCreateVO
     {
         public Guid AgentId { get; set; }
         public string Name { get; set; }

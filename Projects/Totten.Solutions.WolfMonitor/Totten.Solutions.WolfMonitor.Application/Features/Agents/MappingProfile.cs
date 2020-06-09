@@ -49,13 +49,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
 
             CreateMap<Agent, AgentForUserViewModel>()
                 .ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id.ToString()))
-                .ForMember(dest => dest.LastLogin, option => option.MapFrom(src => src.LastConnection.HasValue ? src.LastConnection.Value.ToString("dd/MM/yyyy hh:mm:ss") : "Nunca conectado")) ;
+                .ForMember(dest => dest.LastLogin, option => option.MapFrom(src => src.LastConnection.HasValue ? src.LastConnection.Value.ToString("dd/MM/yyyy hh:mm:ss") : "Nunca conectado"));
 
             CreateMap<AgentForUserViewModel, AgentForUserViewModel>();
 
             #region Profiles
-                CreateMap<AgentProfileCreate.Command, Domain.Features.Agents.Profiles.Profile>();
-                CreateMap<Domain.Features.Agents.Profiles.Profile, Domain.Features.Agents.Profiles.Profile>();
+            CreateMap<AgentProfileCreate.Command, Domain.Features.Agents.Profiles.Profile>();
+            CreateMap<Domain.Features.Agents.Profiles.Profile, Domain.Features.Agents.Profiles.Profile>();
             #endregion
 
         }

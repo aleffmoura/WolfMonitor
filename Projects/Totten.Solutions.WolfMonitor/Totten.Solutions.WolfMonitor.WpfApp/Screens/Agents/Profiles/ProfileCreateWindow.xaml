@@ -1,0 +1,19 @@
+﻿<Window x:Class="Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.Profiles.ProfileCreateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.Profiles"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Criar novo perfil do agent" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Height="150" Width="300" >
+    <Grid>
+        <StackPanel VerticalAlignment="Top" Margin="5" Height="125" Width="auto" >
+            <TextBox Name="txtName" Text="" materialDesign:HintAssist.Hint="Nome do novo perfil" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
+        </StackPanel>
+
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Criar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
+    </Grid>
+</Window>

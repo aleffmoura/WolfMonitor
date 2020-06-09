@@ -24,9 +24,10 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public string AboutCurrentValue { get; set; }
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }
+        public string Default { get; set; }
 
         public virtual bool VerifyChanges() { return false; }
-        public virtual void Change(string newValue, SolicitationType solicitationType) { }
+        public virtual bool Change(string newValue, SolicitationType solicitationType) { return false; }
 
     }
     public static class ETypeItemExtensionsMethod

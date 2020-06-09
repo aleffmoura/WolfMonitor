@@ -6,8 +6,10 @@ using System.Windows.Media;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
+using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents.Profiles;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 {
@@ -26,6 +28,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _userBasicInformation = userBasicInformation;
             _itensMonitoringService = itensMonitoringService;
             _agentsService = agentService;
+
             PopulateServices();
             PopulateArchives();
             InsertAgentDetail();
@@ -60,6 +63,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                     lblConfigured.Text = task.Result.Success.Configured ? "Sim" : "Não";
 
                     lblConfigured.Foreground = lblConfigured.Text.Equals("Sim") ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+
+                    lblProfile.Text = task.Result.Success.ProfileName;
                 }
                 else
                 {
@@ -70,11 +75,34 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
         private void cbProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cbProfile.SelectedIndex >= 0)
+            if (cbProfile.SelectedIndex >= 0)
                 btnApplyProfile.IsEnabled = true;
             else
                 btnApplyProfile.IsEnabled = false;
 
+        }
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            ProfileCreateWindow profileCreate = new ProfileCreateWindow(_agentsService, _id);
+            profileCreate.ShowDialog();
+        }
+
+        private void btnDelProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var serviceViewModel = cbProfile.SelectedItem as ProfileViewModel;
+
+            if (MessageBox.Show($"Deseja realmente remover o perfil: {serviceViewModel.ProfileViewItem.Name} do agent?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _agentsService.DeleteProfile(_id, serviceViewModel.ProfileIdentifier).ContinueWith(task =>
+                {
+                    if (task.Result.IsSuccess)
+                        MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    else
+                        MessageBox.Show($"Falha na tentativa de remoção, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
     }
 }

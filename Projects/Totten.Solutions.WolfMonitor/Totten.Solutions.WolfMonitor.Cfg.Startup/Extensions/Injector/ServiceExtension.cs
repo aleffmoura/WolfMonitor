@@ -9,16 +9,20 @@ using System.Net.Http;
 using Totten.Solutions.WolfMonitor.Application.Features.Services;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.RabbitMQ;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
+using Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items;
+using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Logs;
 using Totten.Solutions.WolfMonitor.Infra.ORM.Features.Users;
 
 namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
@@ -52,6 +56,11 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
                 var options = new DbContextOptionsBuilder<AuthContext>().UseSqlServer(configuration["authConnectionString"]).Options;
                 return new AuthContext(options);
             }, Lifestyle.Scoped);
+            container.Register(() =>
+            {
+                var options = new DbContextOptionsBuilder<LogContext>().UseSqlServer(configuration["logConnectionString"]).Options;
+                return new LogContext(options);
+            }, Lifestyle.Scoped);
 
 
             RegisterFeatures(container, (IConfigurationRoot)configuration);
@@ -62,6 +71,8 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Injector
         private static void RegisterFeatures(Container container, IConfigurationRoot configurationRoot)
         {
             container.Register<IAgentRepository, AgentRepository>();
+            container.Register<IProfileRepository, ProfileRepository>();
+            container.Register<ILogRepository, LogRepository>();
             container.Register<ICompanyRepository, CompanyRepository>();
             container.Register<IItemRepository, ItemRepository>();
             container.Register<IUserRepository, UserRepository>();

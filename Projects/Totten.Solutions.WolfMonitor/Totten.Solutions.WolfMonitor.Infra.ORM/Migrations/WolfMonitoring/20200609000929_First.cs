@@ -20,6 +20,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
                     AboutCurrentValue = table.Column<string>(nullable: false),
                     Value = table.Column<string>(maxLength: 250, nullable: false),
                     LastValue = table.Column<string>(nullable: true),
+                    Default = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     UserIdWhoAdd = table.Column<Guid>(nullable: false),
                     AgentId = table.Column<Guid>(nullable: false),

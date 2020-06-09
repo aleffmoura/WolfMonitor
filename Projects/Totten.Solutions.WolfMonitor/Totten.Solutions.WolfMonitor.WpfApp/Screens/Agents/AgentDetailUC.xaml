@@ -13,7 +13,7 @@
                 <TextBlock x:Name="lblName" Text="Servidor Brasil 1" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
                 <Separator  Width="1240"/>
             </StackPanel>
-            
+
             <Grid>
 
                 <StackPanel Orientation="Horizontal" Height="120" Margin="5" Width="900"  HorizontalAlignment="Left">
@@ -69,29 +69,33 @@
                     </StackPanel>
 
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Grid Height="120" Width="250" >
-                        <StackPanel Orientation="Horizontal">
+                    <Grid Height="110" Width="250" >
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="5">
                             <TextBlock Text="Perfil: " FontSize="15" Foreground="Black" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-                            <TextBlock Text="Não aplicado" FontSize="15" Foreground="Green" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <TextBlock Text="Não aplicado" x:Name="lblProfile" FontSize="15" Foreground="Green" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
                         </StackPanel>
-
-                        <ComboBox x:Name="cbProfile" Width="150" Height="30" Margin="5,0" materialDesign:HintAssist.Hint="Selecione o perfil" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left" SelectionChanged="cbProfile_SelectionChanged"/>
-                        <Button x:Name="btnApplyProfile" Margin="5,5" IsEnabled="False" Content="Aplicar" Width="80" Height="30" HorizontalAlignment="Right" Padding="0"/>
-
+                        
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                            <ComboBox x:Name="cbProfile" Width="150" Height="30" materialDesign:HintAssist.Hint="Selecione o perfil" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left" VerticalAlignment="Bottom" SelectionChanged="cbProfile_SelectionChanged"/>
+                            <Button x:Name="btnApplyProfile" IsEnabled="False" Content="Aplicar" Margin="5,0,0,0" Width="80" Height="30" HorizontalAlignment="Right" Padding="0"/>
+                        </StackPanel>
+                        
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <Button x:Name="btnCreate" Margin="5,5" Content="Criar" Width="240" Height="30" HorizontalAlignment="Left" Padding="0"/>
+                            <Button x:Name="btnCreate" Click="btnCreate_Click" Margin="5,5" Content="Criar" Width="110" Height="30" HorizontalAlignment="Left" Padding="0"/>
+                            <Button x:Name="btnDelProfile" Click="btnDelProfile_Click" Margin="10,0" Content="Deletar" Width="110" Height="30" HorizontalAlignment="Left" Padding="0"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Grid>
             <TabControl Margin="0" Height="550">
                 <TabItem x:Name="tabSystemServices" Header="Serviços">
-                    
+
                 </TabItem>
                 <TabItem x:Name="tabSystemArchives" Header="Arquivos">
-                    
+
                 </TabItem>
             </TabControl>
         </StackPanel>

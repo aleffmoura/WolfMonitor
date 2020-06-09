@@ -20,6 +20,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             builder.Property(agent => agent.Login).IsRequired().HasMaxLength(100);
             builder.Property(agent => agent.Password).IsRequired().HasMaxLength(100);
             builder.Property(agent => agent.CreatedIn).IsRequired();
+            builder.Property(agent => agent.ProfileIdentifier);
+            builder.Property(agent => agent.ProfileName);
 
             builder.Ignore(agent => agent.UserWhoCreated);
             builder.Ignore(agent => agent.Items);

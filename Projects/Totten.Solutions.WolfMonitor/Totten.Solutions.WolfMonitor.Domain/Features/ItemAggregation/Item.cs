@@ -13,6 +13,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         public string AboutCurrentValue { get; set; }
         public string Value { get; set; }
         public string LastValue { get; set; }
+        public string Default { get; set; }
         public ETypeItem Type { get; set; }
 
         public Guid UserIdWhoAdd { get; set; }

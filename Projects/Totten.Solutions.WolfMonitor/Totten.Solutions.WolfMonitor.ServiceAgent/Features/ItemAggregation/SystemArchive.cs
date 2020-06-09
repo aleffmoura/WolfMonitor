@@ -36,7 +36,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
             return false;
         }
-        public override void Change(string newValue, SolicitationType solicitationType)
+        public override bool Change(string newValue, SolicitationType solicitationType)
         {
             if (!string.IsNullOrEmpty(newValue) && !this.Value.Equals(newValue))
             {
@@ -46,7 +46,9 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
                 this.Value = newValue;
                 this.MonitoredAt = DateTime.Now;
                 this.AboutCurrentValue = solicitationType.ToString();
+                return true;
             }
+            return false;
         }
     }
 }

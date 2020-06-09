@@ -7,6 +7,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents
     public class AgentDetailViewModel
     {
         public string Id { get; set; }
+        public string ProfileName { get; set; }
         public string DisplayName { get; set; }
         public string MachineName { get; set; }
         public string LocalIp { get; set; }

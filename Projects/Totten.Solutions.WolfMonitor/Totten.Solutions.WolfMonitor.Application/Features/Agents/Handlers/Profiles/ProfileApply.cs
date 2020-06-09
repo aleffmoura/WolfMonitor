@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,25 +20,24 @@ using Profile = Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles.Pro
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Profiles
 {
-    public class AgentProfileCreate
+    public class ProfileApply
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
+            public Guid ProfileIdentifier { get; set; }
             public Guid AgentId { get; set; }
             public Guid CompanyId { get; set; }
-            public Guid UserWhoCreatedId { get; set; }
-            public string Name { get; set; }
-            public string Value { get; set; }
+            public Guid UserId { get; set; }
 
-            public Command(Guid agentId,
+            public Command(Guid profileIdentifier,
+                           Guid agentId,
                            Guid companyId,
-                           Guid userWhoCreatedId,
-                           string name)
+                           Guid userId)
             {
+                ProfileIdentifier = profileIdentifier;
                 AgentId = agentId;
                 CompanyId = companyId;
-                UserWhoCreatedId = userWhoCreatedId;
-                Name = name;
+                UserId = userId;
             }
 
             public ValidationResult Validate()
@@ -51,11 +51,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 {
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador da empresa é invalido");
-                    RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do usuario ao qual esta criando o profile é invalido");
+                    RuleFor(a => a.UserId).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador do usuario ao qual esta aplicando o perfil é invalido");
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do agent ao qual esta criando o profile é invalido");
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 100);
+                        .WithMessage("Identificador do usuario ao qual esta aplicando o perfil é invalido");
+                    RuleFor(a => a.ProfileIdentifier).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador do perfil é invalido");
                 }
             }
         }
@@ -88,49 +89,74 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 if (agentVerify.IsFailure)
                     return new DuplicateException("Agent não encontrado na empresa do usuário.");
 
-                var userCallback = await _userRepository.GetByIdAsync(request.UserWhoCreatedId);
+                var userCallback = await _userRepository.GetByIdAsync(request.UserId);
 
                 if (userCallback.IsFailure)
                     return new NotFoundException("Não foi encontrado um usúario com o id da requisição.");
 
-                Profile profile = Mapper.Map<Command, Profile>(request);
+                var profileCallback = _repository.GetAllByProfileIdentifier(request.AgentId, request.ProfileIdentifier);
 
-                profile.ProfileIdentifier = Guid.NewGuid();
+                if (profileCallback.IsFailure)
+                    return profileCallback.Failure;
 
-                var items = _itemRepository.GetAll(request.AgentId);
+                var items = _itemRepository.GetAllByCompanyId(request.CompanyId);
 
                 if (items.IsFailure)
                     return items.Failure;
 
-                Result<Exception, Profile> callback = new BusinessException(ErrorCodes.ServiceUnavailable, "ocorreram falhas na criação do perfil");
+                #region Atualizando Profile no Agent
+                agentVerify.Success.ProfileIdentifier = request.ProfileIdentifier;
+                agentVerify.Success.ProfileName = profileCallback.Success.FirstOrDefault().Name;
 
-                foreach (var item in items.Success)
+                var updatedAgent = await _agentRepository.UpdateAsync(agentVerify.Success);
+
+                if (updatedAgent.IsFailure)
+                    return updatedAgent.Failure;
+
+                var logProfile = new Log
                 {
-                    var pro = Mapper.Map<Profile, Profile>(profile);
-                    pro.Value = item.Value;
-                    pro.ItemId = item.Id;
-                    
-                    callback = await _repository.CreateAsync(profile);
-                }
-
-                if (callback.IsFailure)
-                    return callback.Failure;
-
-                Log log = new Log
-                {
-                    UserId = request.UserWhoCreatedId,
+                    UserId = request.UserId,
                     UserCompanyId = request.CompanyId,
-                    NewValue = $"{profile.Name}",
-                    OldValue = "Não existe",
-                    TargetId = profile.ProfileIdentifier,
+                    TargetId = agentVerify.Success.Id,
+                    NewValue = $"{profileCallback.Success.FirstOrDefault().ProfileIdentifier}",
+                    OldValue = $"{agentVerify.Success.ProfileIdentifier}",
                     EntityType = ETypeEntity.AgentProfiles,
-                    TypeLogMethod = ETypeLogMethod.Create,
+                    TypeLogMethod = ETypeLogMethod.Apply,
                     CreatedIn = DateTime.Now
                 };
 
-                await _logRepository.CreateAsync(log);
+                await _logRepository.CreateAsync(logProfile);
+                #endregion
 
-                return profile.ProfileIdentifier;
+
+                #region Atualizando Items
+                foreach (var item in items.Success)
+                {
+                    var value = profileCallback.Success.FirstOrDefault(x => x.ItemId == item.Id).Value;
+
+                    item.Default = value;
+
+                    await _itemRepository.UpdateAsync(item);
+
+
+                    Log log = new Log
+                    {
+                        UserId = request.UserId,
+                        UserCompanyId = request.CompanyId,
+                        TargetId = item.Id,
+                        NewValue = value,
+                        OldValue = item.Default,
+                        EntityType = ETypeEntity.AgentProfiles,
+                        TypeLogMethod = ETypeLogMethod.Update,
+                        CreatedIn = DateTime.Now
+                    };
+
+                    await _logRepository.CreateAsync(log);
+                }
+                #endregion
+
+
+                return profileCallback.Success.FirstOrDefault().ProfileIdentifier;
             }
         }
     }

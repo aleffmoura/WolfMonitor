@@ -13,5 +13,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.ViewModel
         public string Value { get; set; }
         public string LastValue { get; set; }
         public ETypeItem Type { get; set; }
+        public string Default { get; set; }
     }
 }

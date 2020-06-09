@@ -55,6 +55,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<Guid>("ProfileIdentifier");
+
+                    b.Property<string>("ProfileName");
+
                     b.Property<bool>("ReadItemsMonitoringByArchive");
 
                     b.Property<bool>("Removed");
@@ -76,13 +80,14 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     b.HasData(
                         new
                         {
-                            Id = new Guid("29e149c8-9635-4127-84b5-d116a9423cee"),
+                            Id = new Guid("e1d22895-3795-498d-bb21-29df65804f40"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Configured = false,
-                            CreatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 535, DateTimeKind.Local).AddTicks(3212),
+                            CreatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 519, DateTimeKind.Local).AddTicks(7643),
                             DisplayName = "Servidor BR 1",
                             Login = "servidor1",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
+                            ProfileIdentifier = new Guid("00000000-0000-0000-0000-000000000000"),
                             ReadItemsMonitoringByArchive = false,
                             Removed = false,
                             UpdatedIn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -174,7 +179,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Address = "Rua Cicero Lourenço, Mossoró/RN",
                             Cnae = "",
                             Cnpj = "35.344.681/0001-90",
-                            CreatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 532, DateTimeKind.Local).AddTicks(6947),
+                            CreatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 516, DateTimeKind.Local).AddTicks(4454),
                             Email = "aleffmds@gmail.com",
                             FantasyName = "tottemsolutions",
                             MunicipalRegistration = "",
@@ -182,7 +187,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Phone = "(49) 9 9914-6350",
                             Removed = false,
                             StateRegistration = "",
-                            UpdatedIn = new DateTime(2020, 6, 7, 22, 56, 41, 533, DateTimeKind.Local).AddTicks(4070)
+                            UpdatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 517, DateTimeKind.Local).AddTicks(3592)
                         });
                 });
 
