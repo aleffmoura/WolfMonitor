@@ -10,6 +10,7 @@ $Global = @'
 {
   "loggingLevel": "Warning",
   "databaseLogging": "User ID=postgres;Password=W01fM0n1t0r;Host=10.0.75.1;Port=5432;Database=logs;",
+  "logConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=LogContext;Persist Security Info=True;Integrated Security=True;",
   "healthCheckIntervalSegs": "10",
   "deregisterCriticalServiceAfterSegs": "10",
   "cors": "localhost:4200",
