@@ -6,7 +6,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.ViewModels.Pr
     {
         public Guid ProfileIdentifier { get; set; }
         public Guid AgentId { get; set; }
-        public Guid ItemId { get; set; }
         public string Name { get; set; }
     }
 }

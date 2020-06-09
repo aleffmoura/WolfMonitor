@@ -68,9 +68,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
             Agent agent = await _context.Agents.AsNoTracking().FirstOrDefaultAsync(a => !a.Removed && a.Id == id && a.CompanyId == companyId);
 
             if (agent == null)
-            {
                 return new NotFoundException();
-            }
+
             return agent;
         }
         public Result<Exception, IQueryable<Agent>> GetAll()

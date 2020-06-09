@@ -110,7 +110,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     pro.Value = item.Value;
                     pro.ItemId = item.Id;
                     
-                    callback = await _repository.CreateAsync(profile);
+                    callback = await _repository.CreateAsync(pro);
                 }
 
                 if (callback.IsFailure)

@@ -14,7 +14,9 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         [Description("Valor de Configuração")]
         ChangeValueFile = 2,
         [Description("Arquivo")]
-        ChangeFile = 3
+        ChangeFile = 3,
+        [Description("Solicitação de mudança de valor por conter profile aplicado")]
+        ChangeContainsProfile = 4
     }
     public class ItemSolicitationHistoric : Entity
     {

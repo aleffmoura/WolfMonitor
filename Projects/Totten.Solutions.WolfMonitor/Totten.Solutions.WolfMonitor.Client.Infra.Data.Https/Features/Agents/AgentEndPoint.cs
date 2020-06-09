@@ -57,6 +57,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Authenti
         public async Task<Result<Exception, T>> GetDetail<T>(Guid id)
             => await InnerGetAsync<T>($"{_baseEndpoint}/{id}");
 
+        public async Task<Result<Exception, PageResult<T>>> GetAllProfiles<T>(Guid agentId)
+            => await InnerGetAsync<PageResult<T>>($"{_baseEndpoint}/profiles/{agentId}");
+
         public async Task<Result<Exception, Unit>> Delete(Guid agentId)
             => await InnerAsync<Unit, object>($"{_baseEndpoint}/{agentId}", null, HttpMethod.Delete);
 

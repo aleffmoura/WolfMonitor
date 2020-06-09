@@ -221,7 +221,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         if (_agentService.Send(instance).IsFailure)
                             GenerateFile(instance);
 
-                        if(!string.IsNullOrEmpty(_agent?.ProfileName) && instance.Change(instance.Default, SolicitationType.ChangeContainsProfile))
+                        if(Guid.TryParse(_agent?.ProfileName, out Guid profileGuid) && profileGuid != Guid.Empty  && instance.Change(instance.Default, SolicitationType.ChangeContainsProfile))
                             if (_agentService.Send(instance).IsFailure)
                                 GenerateFile(instance);
                     }

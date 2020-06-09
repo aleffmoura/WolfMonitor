@@ -78,14 +78,14 @@
                             <TextBlock Text="Não aplicado" x:Name="lblProfile" FontSize="15" Foreground="Green" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
                         </StackPanel>
                         
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
-                            <ComboBox x:Name="cbProfile" Width="150" Height="30" materialDesign:HintAssist.Hint="Selecione o perfil" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left" VerticalAlignment="Bottom" SelectionChanged="cbProfile_SelectionChanged"/>
-                            <Button x:Name="btnApplyProfile" IsEnabled="False" Content="Aplicar" Margin="5,0,0,0" Width="80" Height="30" HorizontalAlignment="Right" Padding="0"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  Margin="5">
+                            <ComboBox x:Name="cbProfile" Foreground="Black" Width="150" Height="30" materialDesign:HintAssist.Hint="Selecione o perfil" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left" VerticalAlignment="Bottom" SelectionChanged="cbProfile_SelectionChanged"/>
+                            <Button x:Name="btnApplyProfile" IsEnabled="False" Content="Aplicar" Margin="5,0,0,0" Width="80" Height="30" HorizontalAlignment="Right" Padding="0" Click="btnApplyProfile_Click"/>
                         </StackPanel>
                         
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                             <Button x:Name="btnCreate" Click="btnCreate_Click" Margin="5,5" Content="Criar" Width="110" Height="30" HorizontalAlignment="Left" Padding="0"/>
-                            <Button x:Name="btnDelProfile" Click="btnDelProfile_Click" Margin="10,0" Content="Deletar" Width="110" Height="30" HorizontalAlignment="Left" Padding="0"/>
+                            <Button x:Name="btnDelProfile" IsEnabled="False" Click="btnDelProfile_Click" Margin="10,0" Content="Deletar" Width="110" Height="30" HorizontalAlignment="Left" Padding="0"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>

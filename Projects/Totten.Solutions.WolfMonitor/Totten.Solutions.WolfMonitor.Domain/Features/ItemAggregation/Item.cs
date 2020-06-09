@@ -17,11 +17,11 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation
         public ETypeItem Type { get; set; }
 
         public Guid UserIdWhoAdd { get; set; }
+        public Guid CompanyId { get; set; }
         public Guid AgentId { get; set; }
-        
+
         public DateTime? MonitoredAt { get; set; }
-
-
+        
         public List<ItemHistoric> Historic { get; set; }
         public List<ItemSolicitationHistoric> SolicitationHistoric { get; set; }
 

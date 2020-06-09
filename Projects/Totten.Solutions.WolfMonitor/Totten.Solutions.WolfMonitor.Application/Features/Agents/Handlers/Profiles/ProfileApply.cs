@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items;
 using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
@@ -15,6 +16,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Profile = Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles.Profile;
 
@@ -68,18 +70,21 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
             private readonly IUserRepository _userRepository;
             private readonly IItemRepository _itemRepository;
             private readonly ILogRepository _logRepository;
+            private readonly IRabbitMQ _rabbitMQ;
 
             public Handler(IProfileRepository repository,
                            IAgentRepository agentRepository,
                            IUserRepository userRepository,
                            IItemRepository itemRepository,
-                           ILogRepository logRepository)
+                           ILogRepository logRepository,
+                           IRabbitMQ rabbitMQ)
             {
                 _repository = repository;
                 _agentRepository = agentRepository;
                 _userRepository = userRepository;
                 _itemRepository = itemRepository;
                 _logRepository = logRepository;
+                _rabbitMQ = rabbitMQ;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
@@ -99,7 +104,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 if (profileCallback.IsFailure)
                     return profileCallback.Failure;
 
-                var items = _itemRepository.GetAllByCompanyId(request.CompanyId);
+                var items = _itemRepository.GetAll(request.AgentId);
 
                 if (items.IsFailure)
                     return items.Failure;
@@ -130,7 +135,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
 
                 #region Atualizando Items
-                foreach (var item in items.Success)
+                foreach (var item in items.Success.ToList())
                 {
                     var value = profileCallback.Success.FirstOrDefault(x => x.ItemId == item.Id).Value;
 
@@ -153,6 +158,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
                     await _logRepository.CreateAsync(log);
                 }
+
+                var command = new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
+                                    profileCallback.Success.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
+
+                var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository,_agentRepository, _userRepository, _rabbitMQ);
+                
+                await handle.Handle(command, cancellationToken);
                 #endregion
 
 

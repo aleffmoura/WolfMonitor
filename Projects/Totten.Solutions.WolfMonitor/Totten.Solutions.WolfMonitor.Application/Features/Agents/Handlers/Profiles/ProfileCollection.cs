@@ -20,8 +20,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
             public Query(Guid userId, Guid companyId, Guid agentId)
             {
-                AgentId = userId;
-                AgentId = companyId;
+                UserId = userId;
+                CompanyId = companyId;
                 AgentId = agentId;
             }
         }

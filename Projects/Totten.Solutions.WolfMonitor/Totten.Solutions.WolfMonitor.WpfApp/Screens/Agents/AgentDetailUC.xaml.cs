@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents;
@@ -9,6 +12,7 @@ using Totten.Solutions.WolfMonitor.WpfApp.Applications.Monitorings;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives;
 using Totten.Solutions.WolfMonitor.WpfApp.Screens.Services;
+using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents.Profiles;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
@@ -18,6 +22,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private AgentService _agentsService;
         private ItemsMonitoringService _itensMonitoringService;
         private UserBasicInformationViewModel _userBasicInformation;
+        private AgentDetailViewModel _agentDetail;
         private Guid _id;
 
         public AgentDetailUC(Guid id, UserBasicInformationViewModel userBasicInformation,
@@ -32,6 +37,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             PopulateServices();
             PopulateArchives();
             InsertAgentDetail();
+            PopulateCbProfile();
         }
 
         private void PopulateServices()
@@ -46,12 +52,58 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             tabSystemArchives.Content = archivesUserControl;
         }
 
+        private void PopulateCbProfile()
+        {
+            _agentsService.GetAllProfiles(_id).ContinueWith(task =>
+            {
+                if (task.Result.IsSuccess)
+                {
+                    var grouped = task.Result.Success.Items.GroupBy(x => x.Name);
+
+                    var source = new List<ProfileViewModel>
+                    {
+                        new ProfileViewModel
+                        {
+                            Name = "Sem perfil",
+                            ProfileViewItem = new List<ProfileViewItem>
+                            {
+                                new ProfileViewItem
+                                {
+                                    AgentId = _id,
+                                    Name = "Sem perfil",
+                                    ProfileIdentifier = Guid.Empty
+                                }
+                            }
+                        }
+                    };
+
+                    foreach (var item in grouped)
+                    {
+                        source.Add(new ProfileViewModel
+                        {
+                            Name = item.Key,
+                            ProfileViewItem = item.ToList()
+                        });
+                    }
+
+                    cbProfile.ItemsSource = source;
+                    cbProfile.DisplayMemberPath = "Name";
+                }
+                else
+                {
+                    MessageBox.Show("Falha na obtenção dos perfis do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
         private void InsertAgentDetail()
         {
             _agentsService.GetDetail(_id).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
+                    _agentDetail = task.Result.Success;
+
                     lblName.Text = task.Result.Success.DisplayName;
                     lblMachineName.Text = task.Result.Success.MachineName;
                     lblIp.Text = task.Result.Success.LocalIp;
@@ -68,7 +120,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 }
                 else
                 {
-                    MessageBox.Show("Falha na obtenção dos dados do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Falha na obtenção do detalhamento do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -79,7 +131,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 btnApplyProfile.IsEnabled = true;
             else
                 btnApplyProfile.IsEnabled = false;
-
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -92,17 +143,43 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             var serviceViewModel = cbProfile.SelectedItem as ProfileViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o perfil: {serviceViewModel.ProfileViewItem.Name} do agent?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o perfil: {serviceViewModel.Name} do agent?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                _agentsService.DeleteProfile(_id, serviceViewModel.ProfileIdentifier).ContinueWith(task =>
+                _agentsService.DeleteProfile(_id, serviceViewModel.ProfileViewItem.FirstOrDefault().ProfileIdentifier).ContinueWith(task =>
                 {
                     if (task.Result.IsSuccess)
                         MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
                     else
                         MessageBox.Show($"Falha na tentativa de remoção, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
 
+                    InsertAgentDetail();
+                    var list = (List<ProfileViewModel>)cbProfile.Items.AsQueryable();
+
+                    cbProfile.SelectedItem = list.FirstOrDefault(x => x.Name.Equals(_agentDetail.ProfileName));
+
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
+
+        }
+
+        private void btnApplyProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var profileView = cbProfile.SelectedItem as ProfileViewModel;
+
+            var profileApply = new ProfileApplyVO
+            {
+                AgentId = _id,
+                ProfileIdentifier = profileView.ProfileViewItem[0].ProfileIdentifier
+            };
+
+            _agentsService.ApplyProfile(profileApply).ContinueWith(task =>
+            {
+                if (task.Result.IsSuccess)
+                    MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show($"Falha na tentativa de remoção, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }
