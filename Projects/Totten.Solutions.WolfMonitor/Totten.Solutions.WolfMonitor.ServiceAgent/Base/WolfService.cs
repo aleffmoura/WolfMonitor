@@ -221,9 +221,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         if (_agentService.Send(instance).IsFailure)
                             GenerateFile(instance);
 
-                        if(Guid.TryParse(_agent?.ProfileName, out Guid profileGuid) && profileGuid != Guid.Empty  && instance.Change(instance.Default, SolicitationType.ChangeContainsProfile))
-                            if (_agentService.Send(instance).IsFailure)
-                                GenerateFile(instance);
+                        VerifyIfProfile(instance);
                     }
                     catch (Exception ex)
                     {
@@ -231,8 +229,17 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         GenerateLogException(ex, instance);
                     }
                 }
+
+                VerifyIfProfile(instance);
                 itemsCallback.Success.Items[i] = instance;
             }
+        }
+
+        private void VerifyIfProfile(Item instance)
+        {
+            if (Guid.TryParse(_agent?.ProfileIdentifier, out Guid profileGuid) && profileGuid != Guid.Empty && instance.Change(instance.Default, SolicitationType.ChangeContainsProfile))
+                if (_agentService.Send(instance).IsFailure)
+                    GenerateFile(instance);
         }
 
         private void ReceivedMessage(object obj)

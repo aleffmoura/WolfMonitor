@@ -40,7 +40,6 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
                 Password = "123456".GenerateHash(),
                 UserWhoCreatedId = Guid.Parse("f75a1881-0fd6-4273-9d23-c59018788201"),
                 UserWhoCreatedName = "Admin"
-
             });
             #endregion
         }

@@ -23,6 +23,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
                     Default = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     UserIdWhoAdd = table.Column<Guid>(nullable: false),
+                    CompanyId = table.Column<Guid>(nullable: false),
                     AgentId = table.Column<Guid>(nullable: false),
                     MonitoredAt = table.Column<DateTime>(nullable: true)
                 },
@@ -91,6 +92,11 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
                 name: "IX_Items_AgentId",
                 table: "Items",
                 column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_CompanyId",
+                table: "Items",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_UserIdWhoAdd",

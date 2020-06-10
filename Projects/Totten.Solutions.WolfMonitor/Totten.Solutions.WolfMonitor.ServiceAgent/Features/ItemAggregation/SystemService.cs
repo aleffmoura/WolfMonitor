@@ -21,15 +21,16 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.MonitoredAt = item.MonitoredAt;
             this.Type = item.Type;
             this.Value = item.Value;
+            this.Default = item.Default;
         }
 
         public override bool VerifyChanges()
         {
             var status = SystemServicesService.GetStatus(this.Name, this.DisplayName);
+
             if (this.Value.Equals(status))
-            {
                 return false;
-            }
+
             this.LastValue = this.Value;
             this.Value = status;
             this.MonitoredAt = DateTime.Now;
@@ -41,9 +42,14 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         {
             var returned = false;
 
-            if (ServiceControllerStatus.Running.ToString().Equals(this.Value))
+            var status = SystemServicesService.GetStatus(this.Name, this.DisplayName);
+
+            if (status.ToString().Equals(newValue))
+                return returned;
+
+            if (ServiceControllerStatus.Stopped.ToString().Equals(newValue))
                 returned = SystemServicesService.Stop(this.Name, this.DisplayName);
-            else if (ServiceControllerStatus.Stopped.ToString().Equals(this.Value))
+            else if (ServiceControllerStatus.Running.ToString().Equals(newValue))
                 returned = SystemServicesService.Start(this.Name, this.DisplayName);
 
             if (returned)

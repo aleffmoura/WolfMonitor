@@ -19,6 +19,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.LastValue = item.LastValue;
             this.Type = item.Type;
             this.Value = item.Value;
+            this.Default = item.Default;
         }
 
         public override bool VerifyChanges()

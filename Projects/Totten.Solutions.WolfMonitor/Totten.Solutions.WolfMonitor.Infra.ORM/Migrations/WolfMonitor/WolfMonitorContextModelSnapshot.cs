@@ -80,10 +80,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e1d22895-3795-498d-bb21-29df65804f40"),
+                            Id = new Guid("e36b2832-e819-4231-b2f3-61f4756db1af"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Configured = false,
-                            CreatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 519, DateTimeKind.Local).AddTicks(7643),
+                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 967, DateTimeKind.Local).AddTicks(6472),
                             DisplayName = "Servidor BR 1",
                             Login = "servidor1",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
@@ -179,7 +179,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Address = "Rua Cicero Lourenço, Mossoró/RN",
                             Cnae = "",
                             Cnpj = "35.344.681/0001-90",
-                            CreatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 516, DateTimeKind.Local).AddTicks(4454),
+                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 963, DateTimeKind.Local).AddTicks(1386),
                             Email = "aleffmds@gmail.com",
                             FantasyName = "tottemsolutions",
                             MunicipalRegistration = "",
@@ -187,7 +187,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Phone = "(49) 9 9914-6350",
                             Removed = false,
                             StateRegistration = "",
-                            UpdatedIn = new DateTime(2020, 6, 8, 21, 8, 43, 517, DateTimeKind.Local).AddTicks(3592)
+                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 963, DateTimeKind.Local).AddTicks(9935)
                         });
                 });
 

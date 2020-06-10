@@ -29,6 +29,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 
                     b.Property<Guid>("AgentId");
 
+                    b.Property<Guid>("CompanyId");
+
                     b.Property<DateTime>("CreatedIn");
 
                     b.Property<string>("Default");
@@ -60,6 +62,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
                     b.HasKey("Id");
 
                     b.HasIndex("AgentId");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("UserIdWhoAdd");
 
