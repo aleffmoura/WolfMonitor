@@ -57,8 +57,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                         .WithMessage("Identificador do usuario ao qual esta aplicando o perfil é invalido");
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta aplicando o perfil é invalido");
-                    RuleFor(a => a.ProfileIdentifier).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do perfil é invalido");
                 }
             }
         }
@@ -111,7 +109,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
                 #region Atualizando Profile no Agent
                 agentVerify.Success.ProfileIdentifier = request.ProfileIdentifier;
-                agentVerify.Success.ProfileName = profileCallback.Success.FirstOrDefault().Name;
+                agentVerify.Success.ProfileName = request.ProfileIdentifier != Guid.Empty ? profileCallback.Success.FirstOrDefault().Name : "Sem perfil";
 
                 var updatedAgent = await _agentRepository.UpdateAsync(agentVerify.Success);
 
@@ -123,7 +121,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     UserId = request.UserId,
                     UserCompanyId = request.CompanyId,
                     TargetId = agentVerify.Success.Id,
-                    NewValue = $"{profileCallback.Success.FirstOrDefault().ProfileIdentifier}",
+                    NewValue = request.ProfileIdentifier != Guid.Empty ? $"{profileCallback.Success.FirstOrDefault().ProfileIdentifier}" : "Sem perfil",
                     OldValue = $"{agentVerify.Success.ProfileIdentifier}",
                     EntityType = ETypeEntity.AgentProfiles,
                     TypeLogMethod = ETypeLogMethod.Apply,
@@ -137,7 +135,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 #region Atualizando Items
                 foreach (var item in items.Success.ToList())
                 {
-                    var value = profileCallback.Success.FirstOrDefault(x => x.ItemId == item.Id).Value;
+                    string value = null;
+
+                    if (request.ProfileIdentifier != Guid.Empty)
+                        value = profileCallback.Success.FirstOrDefault(x => x.ItemId == item.Id).Value;
 
                     item.Default = value;
 
@@ -162,8 +163,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 var command = new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
                                     profileCallback.Success.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
 
-                var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository,_agentRepository, _userRepository, _rabbitMQ);
-                
+                var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository, _agentRepository, _userRepository, _rabbitMQ);
+
                 await handle.Handle(command, cancellationToken);
                 #endregion
 
