@@ -108,8 +108,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     return items.Failure;
 
                 #region Atualizando Profile no Agent
+                var profiles = profileCallback.Success.ToList();
+
                 agentVerify.Success.ProfileIdentifier = request.ProfileIdentifier;
-                agentVerify.Success.ProfileName = request.ProfileIdentifier != Guid.Empty ? profileCallback.Success.FirstOrDefault().Name : "Sem perfil";
+                agentVerify.Success.ProfileName = request.ProfileIdentifier != Guid.Empty ? profiles.FirstOrDefault().Name : "Sem perfil";
 
                 var updatedAgent = await _agentRepository.UpdateAsync(agentVerify.Success);
 
@@ -121,7 +123,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     UserId = request.UserId,
                     UserCompanyId = request.CompanyId,
                     TargetId = agentVerify.Success.Id,
-                    NewValue = request.ProfileIdentifier != Guid.Empty ? $"{profileCallback.Success.FirstOrDefault().ProfileIdentifier}" : "Sem perfil",
+                    NewValue = request.ProfileIdentifier != Guid.Empty ? $"{profiles.FirstOrDefault().ProfileIdentifier}" : "Sem perfil",
                     OldValue = $"{agentVerify.Success.ProfileIdentifier}",
                     EntityType = ETypeEntity.AgentProfiles,
                     TypeLogMethod = ETypeLogMethod.Apply,
@@ -138,12 +140,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     string value = null;
 
                     if (request.ProfileIdentifier != Guid.Empty)
-                        value = profileCallback.Success.FirstOrDefault(x => x.ItemId == item.Id).Value;
+                        value = profiles.FirstOrDefault(x => x.ItemId == item.Id).Value;
 
                     item.Default = value;
 
                     await _itemRepository.UpdateAsync(item);
-
 
                     Log log = new Log
                     {
@@ -161,7 +162,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 }
 
                 var command = new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
-                                    profileCallback.Success.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
+                                    profiles.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
 
                 var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository, _agentRepository, _userRepository, _rabbitMQ);
 
@@ -169,7 +170,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 #endregion
 
 
-                return profileCallback.Success.FirstOrDefault().ProfileIdentifier;
+                return profiles.FirstOrDefault().ProfileIdentifier;
             }
         }
     }

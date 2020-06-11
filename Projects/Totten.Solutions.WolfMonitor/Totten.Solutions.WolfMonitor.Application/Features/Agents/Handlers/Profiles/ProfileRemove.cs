@@ -13,6 +13,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Agents.Profiles;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
 using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.RabbitMQService;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Unit = Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs.Unit;
 
@@ -56,17 +57,23 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
             private readonly IProfileRepository _repository;
             private readonly IAgentRepository _agentRepository;
             private readonly ILogRepository _logRepository;
-            private readonly IMediator _mediator;
+            private readonly IItemRepository _itemRepository;
+            private readonly IUserRepository _userRepository;
+            private readonly IRabbitMQ _rabbitMQ;
 
             public Handler(IAgentRepository agentRepository,
                            IProfileRepository repository,
                            ILogRepository logRepository,
-                           IMediator mediator)
+                           IUserRepository userRepository,
+                           IItemRepository itemRepository,
+                           IRabbitMQ rabbitMQ)
             {
                 _repository = repository;
                 _agentRepository = agentRepository;
+                _itemRepository = itemRepository;
                 _logRepository = logRepository;
-                _mediator = mediator;
+                _userRepository = userRepository;
+                _rabbitMQ = rabbitMQ;
             }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -76,19 +83,20 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 if (agentCallback.IsFailure)
                     return new NotFoundException("Não foi encontrado o agent informado na empresa do usuário");
 
-
                 var profilesCallback = _repository.GetAllByProfileIdentifier(request.AgentId, request.ProfileIdentifier);
 
                 if (profilesCallback.IsFailure)
                     return profilesCallback.Failure;
 
-                foreach (var profile in profilesCallback.Success)
+                var profiles = profilesCallback.Success.ToList();
+
+                foreach (var profile in profiles)
                 {
                     profile.Removed = true;
                     await _repository.UpdateAsync(profile);
                 }
 
-                if (profilesCallback.Success.Count() < 0)
+                if (profiles.Count() < 0)
                     return Unit.Successful;
 
                 Log log = new Log
@@ -105,7 +113,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
 
                 await _logRepository.CreateAsync(log);
 
-                if (agentCallback.Success.ProfileIdentifier.Equals(request.ProfileIdentifier.ToString()))
+                if (request.ProfileIdentifier != Guid.Empty &&
+                    agentCallback.Success.ProfileIdentifier.Equals(request.ProfileIdentifier.ToString()))
                 {
 
                     var logAgent = new Log
@@ -121,14 +130,19 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                     };
 
                     agentCallback.Success.ProfileName = "Sem perfil";
+
                     agentCallback.Success.ProfileIdentifier = Guid.Empty;
 
-                    var updatedAgent = await _agentRepository.UpdateAsync(agentCallback.Success);
+                    await _agentRepository.UpdateAsync(agentCallback.Success);
 
                     await _logRepository.CreateAsync(logAgent);
 
-                    await _mediator.Send(new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
-                                        profilesCallback.Success.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", ""));
+                    var command = new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
+                                        profiles.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
+
+                    var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository, _agentRepository, _userRepository, _rabbitMQ);
+
+                    await handle.Handle(command, cancellationToken);
                 }
 
                 return Unit.Successful;

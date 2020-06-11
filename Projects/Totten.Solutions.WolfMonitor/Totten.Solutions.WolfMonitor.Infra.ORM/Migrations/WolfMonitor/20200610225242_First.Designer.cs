@@ -10,7 +10,7 @@ using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
 {
     [DbContext(typeof(WolfMonitorContext))]
-    [Migration("20200609235726_First")]
+    [Migration("20200610225242_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,10 +82,10 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e36b2832-e819-4231-b2f3-61f4756db1af"),
+                            Id = new Guid("aa22550f-0365-464a-9dc5-1e971a91879d"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Configured = false,
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 967, DateTimeKind.Local).AddTicks(6472),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 41, 498, DateTimeKind.Local).AddTicks(6544),
                             DisplayName = "Servidor BR 1",
                             Login = "servidor1",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
@@ -181,7 +181,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Address = "Rua Cicero Lourenço, Mossoró/RN",
                             Cnae = "",
                             Cnpj = "35.344.681/0001-90",
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 963, DateTimeKind.Local).AddTicks(1386),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 41, 495, DateTimeKind.Local).AddTicks(4607),
                             Email = "aleffmds@gmail.com",
                             FantasyName = "tottemsolutions",
                             MunicipalRegistration = "",
@@ -189,7 +189,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitor
                             Phone = "(49) 9 9914-6350",
                             Removed = false,
                             StateRegistration = "",
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 25, 963, DateTimeKind.Local).AddTicks(9935)
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 41, 496, DateTimeKind.Local).AddTicks(3113)
                         });
                 });
 

@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices
 {
+    public enum EStatusService
+    {
+        Running,
+        Stopped
+    }
 
     public class SystemServiceViewModel
     {

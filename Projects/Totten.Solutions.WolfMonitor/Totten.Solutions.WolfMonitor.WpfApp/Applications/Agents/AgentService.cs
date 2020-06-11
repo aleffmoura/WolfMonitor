@@ -30,7 +30,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Applications.Agents
         public async Task<Result<Exception, Guid>> ApplyProfile(ProfileApplyVO profile)
             => await _endPoint.Send<Guid, ProfileApplyVO>("profiles", profile, HttpMethod.Patch);
         public async Task<Result<Exception, Unit>> DeleteProfile(Guid agentId, Guid profileIdentifier)
-            => await _endPoint.Send<Unit, object>($"{agentId}/profiles/{profileIdentifier}", null, HttpMethod.Delete);
+            => await _endPoint.Send<Unit, object>($"profiles/{agentId}/{profileIdentifier}", null, HttpMethod.Delete);
 
         public async Task<Result<Exception, Unit>> PostSolicitation(ItemSolicitationVO solicitation)
             => await _endPoint.Send<Unit, ItemSolicitationVO>("item-solicitation", solicitation, HttpMethod.Patch);

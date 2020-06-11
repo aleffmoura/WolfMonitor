@@ -10,7 +10,7 @@ using Totten.Solutions.WolfMonitor.Infra.ORM.Contexts;
 namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations.WolfMonitoring
 {
     [DbContext(typeof(WolfMonitoringContext))]
-    [Migration("20200609235741_First")]
+    [Migration("20200610225256_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

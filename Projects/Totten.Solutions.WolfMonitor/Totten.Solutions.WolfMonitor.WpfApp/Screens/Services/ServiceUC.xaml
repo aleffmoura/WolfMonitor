@@ -8,7 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Margin="10,10,10,0">
         <Border x:Name="componentListagem" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
-            <StackPanel Orientation="Horizontal" Height="100" Width="382">
+            <StackPanel Orientation="Horizontal" Height="100" Width="377">
                 <StackPanel Orientation="Vertical" Width="200">
                     <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="190" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"  ToolTip="Nome de exibição"/>
                     

@@ -101,8 +101,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                     Name = view.Name,
                     SolicitationType = SolicitationType.ChangeStatus,
                     DisplayName = view.DisplayName,
-                    NewValue = "Status"
+                    NewValue = view.Value.Equals(EStatusService.Running.ToString()) ? EStatusService.Stopped.ToString() : EStatusService.Running.ToString()
                 });
+
                 if (returned.IsSuccess)
                     MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
                 else

@@ -36,8 +36,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
             PopulateServices();
             PopulateArchives();
-            InsertAgentDetail();
-            PopulateCbProfile();
+            InsertAgentDetail().ContinueWith(task =>
+            {
+                PopulateCbProfile();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void PopulateServices()
@@ -88,6 +90,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
                     cbProfile.ItemsSource = source;
                     cbProfile.DisplayMemberPath = "Name";
+
+                    var profile = source.FirstOrDefault(x => x.Name.Equals(_agentDetail.ProfileName));
+
+                    if (profile != null)
+                        cbProfile.SelectedItem = profile;
                 }
                 else
                 {
@@ -96,9 +103,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void InsertAgentDetail()
+        private Task InsertAgentDetail()
         {
-            _agentsService.GetDetail(_id).ContinueWith(task =>
+            return _agentsService.GetDetail(_id).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
                 {
@@ -127,16 +134,24 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
         private void cbProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbProfile.SelectedIndex >= 0)
+            if (cbProfile.SelectedIndex > 0)
+                btnDelProfile.IsEnabled = btnApplyProfile.IsEnabled = true;
+            else if (cbProfile.SelectedIndex == 0)
+            {
                 btnApplyProfile.IsEnabled = true;
+                btnDelProfile.IsEnabled = false;
+            }
             else
-                btnApplyProfile.IsEnabled = false;
+                btnDelProfile.IsEnabled = btnApplyProfile.IsEnabled = false;
+
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             ProfileCreateWindow profileCreate = new ProfileCreateWindow(_agentsService, _id);
-            profileCreate.ShowDialog();
+            
+            if(profileCreate.ShowDialog() == true)
+                PopulateCbProfile();
         }
 
         private void btnDelProfile_Click(object sender, RoutedEventArgs e)
@@ -148,14 +163,22 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
                 _agentsService.DeleteProfile(_id, serviceViewModel.ProfileViewItem.FirstOrDefault().ProfileIdentifier).ContinueWith(task =>
                 {
                     if (task.Result.IsSuccess)
+                    {
                         MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        var list = cbProfile.ItemsSource as List<ProfileViewModel>;
+
+                        list.Remove(serviceViewModel);
+
+                        if (serviceViewModel.Name.Equals(_agentDetail.ProfileName))
+                        {
+                            cbProfile.SelectedIndex = 0;
+                            _agentDetail.ProfileName = cbProfile.Text;
+                            lblProfile.Text = _agentDetail.ProfileName;
+                        }
+                    }
                     else
                         MessageBox.Show($"Falha na tentativa de remoção, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                    InsertAgentDetail();
-                    var list = (List<ProfileViewModel>)cbProfile.Items.AsQueryable();
-
-                    cbProfile.SelectedItem = list.FirstOrDefault(x => x.Name.Equals(_agentDetail.ProfileName));
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
@@ -175,9 +198,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _agentsService.ApplyProfile(profileApply).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
-                    MessageBox.Show($"Removido com sucesso", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Foi aplicado o perfil com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
-                    MessageBox.Show($"Falha na tentativa de remoção, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Falha na tentativa de aplicar o perfil, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

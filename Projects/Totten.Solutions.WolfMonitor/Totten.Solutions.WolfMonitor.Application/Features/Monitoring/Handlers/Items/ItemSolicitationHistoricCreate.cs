@@ -111,13 +111,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
 
                 if (item.IsFailure)
                     return item.Failure;
-
+                
                 ItemSolicitationHistoric itemSolicitation = Mapper.Map<Command, ItemSolicitationHistoric>(request);
                 itemSolicitation.ItemId = item.Success.Id;
 
-                if (request.SolicitationType == SolicitationType.ChangeStatus)
-                    itemSolicitation.NewValue = item.Success.Value.Equals("Running", StringComparison.OrdinalIgnoreCase) ? "Stopped" : "Running";
-                
                 var callback = await _repository.CreateSolicitationAsync(itemSolicitation);
 
                 if (callback.IsFailure)

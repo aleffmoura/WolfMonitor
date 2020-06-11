@@ -42,39 +42,39 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cedb7efe-3558-4af3-baaf-7236ffeab75e"),
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 372, DateTimeKind.Local).AddTicks(6597),
+                            Id = new Guid("ea70334a-c072-4f19-8ffc-70b50e0caf4a"),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 969, DateTimeKind.Local).AddTicks(3714),
                             Level = 0,
                             Name = "Agent",
                             Removed = false,
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 373, DateTimeKind.Local).AddTicks(3340)
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 970, DateTimeKind.Local).AddTicks(165)
                         },
                         new
                         {
-                            Id = new Guid("9f2d4720-72fc-4a3b-b9ca-b4f939186497"),
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(412),
+                            Id = new Guid("b1ab21fa-8fd9-4b23-bdbe-09cb5e9f5434"),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4629),
                             Level = 1,
                             Name = "User",
                             Removed = false,
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(423)
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4648)
                         },
                         new
                         {
                             Id = new Guid("f91a2366-c469-412a-9197-976a90516272"),
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(535),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4804),
                             Level = 2,
                             Name = "Admin",
                             Removed = false,
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(537)
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4805)
                         },
                         new
                         {
-                            Id = new Guid("4fb7fbac-f766-42e3-bb2a-f3fc4c4577d6"),
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(574),
+                            Id = new Guid("e36d8c0c-7e31-4b7f-9c25-cf5ab0516b6c"),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4851),
                             Level = 3,
                             Name = "System",
                             Removed = false,
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 375, DateTimeKind.Local).AddTicks(575)
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 972, DateTimeKind.Local).AddTicks(4851)
                         });
                 });
 
@@ -134,7 +134,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                             Id = new Guid("f75a1881-0fd6-4273-9d23-c59018788201"),
                             CompanyId = new Guid("c576cf93-370c-4464-21f9-08d763d27d75"),
                             Cpf = "11111111111",
-                            CreatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 405, DateTimeKind.Local).AddTicks(1590),
+                            CreatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 992, DateTimeKind.Local).AddTicks(1994),
                             Email = "aleffmds@gmail.com",
                             FirstName = "Aleff",
                             Language = "pt-BR",
@@ -142,8 +142,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Migrations
                             Login = "aleffmoura",
                             Password = "I2uzfR1PyNB3qujyRKe/fvFvXQzylgU+UUIARcpeLkI=",
                             Removed = false,
-                            RoleId = new Guid("4fb7fbac-f766-42e3-bb2a-f3fc4c4577d6"),
-                            UpdatedIn = new DateTime(2020, 6, 9, 20, 57, 0, 405, DateTimeKind.Local).AddTicks(3125)
+                            RoleId = new Guid("e36d8c0c-7e31-4b7f-9c25-cf5ab0516b6c"),
+                            UpdatedIn = new DateTime(2020, 6, 10, 19, 52, 21, 992, DateTimeKind.Local).AddTicks(2653)
                         });
                 });
 
