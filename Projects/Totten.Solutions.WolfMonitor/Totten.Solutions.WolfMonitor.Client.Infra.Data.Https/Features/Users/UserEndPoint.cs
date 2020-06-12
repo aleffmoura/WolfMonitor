@@ -25,6 +25,9 @@ namespace Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users
         public async Task<Result<Exception, TReturn>> Post<TReturn, TPost>(string endpoint, TPost item)
             => await InnerAsync<TReturn, TPost>($"{_baseEndpoint}/{endpoint.TrimStart('/')}", item, HttpMethod.Post);
         
+        public async Task<Result<Exception, TReturn>> Patch<TReturn, TPost>(string endpoint, TPost item)
+            => await InnerAsync<TReturn, TPost>($"{_baseEndpoint}/{endpoint.TrimStart('/')}", item, HttpMethod.Patch);
+
         public async Task<Result<Exception, Guid>> Register<TPost>(string endpoint, TPost item)
             => await InnerAsync<Guid, TPost>($"{endpoint.TrimStart('/')}", item, HttpMethod.Post);
 

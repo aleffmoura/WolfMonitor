@@ -57,7 +57,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             private readonly IItemRepository _repository;
             private readonly ILogRepository _logRepository;
 
-            public Handler(IItemRepository repository, ILogRepository logRepository*/)
+            public Handler(IItemRepository repository, ILogRepository logRepository)
             {
                 _repository = repository;
                 _logRepository = logRepository;

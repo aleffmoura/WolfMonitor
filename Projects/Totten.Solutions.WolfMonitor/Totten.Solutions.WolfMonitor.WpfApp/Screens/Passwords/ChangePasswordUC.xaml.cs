@@ -61,7 +61,6 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 }
             }
 
-
             MessageBox.Show("Falha interna, por favor contate um administrador.", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
             return param;
         }

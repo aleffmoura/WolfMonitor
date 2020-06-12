@@ -61,15 +61,16 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(a => a.UserCompany).NotEqual(Guid.Empty);
-                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty);
-                    RuleFor(a => a.Email).NotEmpty().Length(6, 200);
-                    RuleFor(a => a.Cpf).NotEmpty().Length(11);
-                    RuleFor(a => a.FirstName).NotEmpty().Length(6, 25);
-                    RuleFor(a => a.LastName).NotEmpty().Length(6, 150);
-                    RuleFor(a => a.Language).NotEmpty().Length(5);
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Password).NotEmpty().Length(8, 150);
+                    RuleFor(a => a.UserId).NotEqual(Guid.Empty).WithMessage("Usuário da solicitação está inválido");
+                    RuleFor(a => a.UserCompany).NotEqual(Guid.Empty).WithMessage("Empresa do usuário está inválida");
+                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty).WithMessage("Empresa da solicitação está inválido");
+                    RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
+                    RuleFor(a => a.Cpf).NotEmpty().Length(11).WithMessage("Cpf deve possuir 11 caracteres");
+                    RuleFor(a => a.FirstName).NotEmpty().Length(3, 25).WithMessage("Nome deve possuir entre 3 e 25 caracteres");
+                    RuleFor(a => a.LastName).NotEmpty().Length(6, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");
+                    RuleFor(a => a.Language).NotEmpty().Length(5).WithMessage("Linguagem  deve possuir 5 caracteres");
+                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Password).NotEmpty().MinimumLength(8).WithMessage("Senha deve possuir no mínimo 8 caracteres");
                 }
             }
         }
@@ -111,13 +112,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     return usersCallback.Failure;
 
                 if (usersCallback.Success.Any(u => u.Cpf.Equals(request.Cpf)))
-                    return new BusinessException(Domain.Enums.ErrorCodes.AlreadyExists, "Já existe um usuário com o cpf informado cadastrado nesta empresa.");
+                    return new BusinessException(ErrorCodes.AlreadyExists, "Já existe um usuário com o cpf informado cadastrado nesta empresa.");
 
                 if (usersCallback.Success.Any(u => u.Email.Equals(request.Email)))
-                    return new BusinessException(Domain.Enums.ErrorCodes.AlreadyExists, "Já existe um usuário com o email informado cadastrado nesta empresa.");
+                    return new BusinessException(ErrorCodes.AlreadyExists, "Já existe um usuário com o email informado cadastrado nesta empresa.");
 
                 if (usersCallback.Success.Any(u => u.Login.Equals(request.Login)))
-                    return new BusinessException(Domain.Enums.ErrorCodes.AlreadyExists, "Já existe um usuário com o login informado cadastrado nesta empresa.");
+                    return new BusinessException(ErrorCodes.AlreadyExists, "Já existe um usuário com o login informado cadastrado nesta empresa.");
                 
                 Result<Exception, Role> role = await _roleRepository.GetRoleAsync(RoleLevelEnum.User);
 

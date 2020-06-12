@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using MediatR;
 using System;
 using System.Linq;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
@@ -20,6 +22,24 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 CompanyId = companyId;
                 UserCompany = userCompany;
                 Role = role;
+            }
+
+            public ValidationResult Validate()
+            {
+                return new Validator().Validate(this);
+            }
+
+            private class Validator : AbstractValidator<Query>
+            {
+                public Validator()
+                {
+                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador da empresa é invalido");
+                    RuleFor(a => a.UserCompany).NotEqual(Guid.Empty)
+                        .WithMessage("Identificador do usuário é invalido");
+                    RuleFor(a => a.Role).NotNull().NotEmpty()
+                        .WithMessage("Não foi possível definir o nível de permissão do usuário");
+                }
             }
         }
 

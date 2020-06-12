@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <Grid Height="800" Width="1240" Margin="10,10,0,0">
-        <StackPanel x:Name="pnlButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
+    <Grid Height="540" Width="1240" >
+        <StackPanel x:Name="pnlButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button x:Name="btnAdd" Margin="8,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
             <Button x:Name="btnDel" Background="Red" Margin="5,0,0,0" Content="Excluir" Width="80" Height="30" Click="btnDel_Click" IsEnabled="False" Padding="0"/>
         </StackPanel>
 
-        <StackPanel>
+        <StackPanel Margin="0,10,0,0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por Nome ou Login" TextChanged="txtUser_TextChanged"/>
                 <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0" Click="btnSearch_Click">
@@ -21,8 +21,9 @@
                 </Button>
             </StackPanel>
 
-            <DataGrid x:Name="gridUsers" Margin="0,15" Width="auto"
-                      Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False"
+            <ScrollViewer VerticalScrollBarVisibility="Visible" Width="1250" Height="500">
+                <DataGrid x:Name="gridUsers" Margin="0,10"
+                      Height="500" ItemsSource="{Binding}" AutoGenerateColumns="False"
                       SelectionChanged="gridUsers_SelectionChanged"
                       CanUserDeleteRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
@@ -34,7 +35,8 @@
                     <DataGridTextColumn Header="Nível do usuário" Width="130" Binding="{Binding RoleName}" />
                     <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+            </ScrollViewer>
 
         </StackPanel>
     </Grid>

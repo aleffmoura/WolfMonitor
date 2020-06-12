@@ -7,14 +7,14 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Background="AliceBlue">
-    
-    <Grid MinWidth="980" Width="auto" Height="800" Margin="20,0,0,0">
-        
+
+    <Grid Height="760" Margin="20,0,0,0">
+
         <StackPanel>
-            <TabControl x:Name="tabControl" Margin="0" Height="740">
-                <TabItem x:Name="tbMyInfo" Header="Minhas Informações">
-                    <StackPanel VerticalAlignment="Top">
-                        <StackPanel x:Name="pnlUserInfo" IsEnabled="False">
+            <TabControl x:Name="tabControl" Margin="0" Height="750">
+                <TabItem x:Name="tbMyInfo" Header="Minhas Informações" >
+                    <StackPanel VerticalAlignment="Top" Width="1180">
+                        <StackPanel x:Name="pnlUserInfo" IsEnabled="False" Height="650">
                             <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
                             <TextBox x:Name="txtLogin" IsEnabled="False" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblLoginError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
@@ -23,8 +23,9 @@
                             <Label x:Name="lblPassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
                             <PasswordBox x:Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0" FontSize="18" PasswordChanged="textChanged"/>
+                            <Label x:Name="lblRePassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <Label Content="Informações" Margin="0,100,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
+                            <Label Content="Informações" Margin="0,60,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
 
                             <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged" />
                             <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
@@ -38,16 +39,16 @@
                             <TextBox x:Name="txtCpf" IsEnabled="False" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,0" />
                         </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="5,20">
+
+                        <StackPanel Orientation="Horizontal" Margin="5,25,0,0">
                             <Button x:Name="btnAction" Content="Editar" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="btnAction_Click" Height="40" Width="100"/>
                             <Button x:Name="btnCancel" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="40" Width="100" Margin="5,0" Visibility="Collapsed" Click="btnCancel_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
                         </StackPanel>
                     </StackPanel>
-                    
+
                 </TabItem>
 
-                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" >
+                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" Height="20" VerticalAlignment="Bottom" >
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,5">
                             <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,10,0" >
@@ -55,27 +56,29 @@
                             </Button>
                             <TextBox x:Name="txtUser" Height="30" Width="300" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por Nome ou Nome de visualização" />
                         </StackPanel>
-                        
-                        <DataGrid x:Name="gridAgends" Width="auto"
-                                  Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="False" IsReadOnly="True">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Identificador" Width="250" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Nome" Width="150" Binding="{Binding MachineName}" />
-                                <DataGridTextColumn Header="Nome de visualização" Width="190" Binding="{Binding DisplayName}" SortDirection="Ascending" />
-                                <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
-                                <DataGridTextColumn Header="Qtd Serviços" Width="100" Binding="{Binding QtdServices}" />
-                                <DataGridTextColumn Header="Qtd Configurações" Width="140" Binding="{Binding QtdConfiguration}" />
-                                <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="1250" Height="680">
+                            <DataGrid x:Name="gridAgends" Width="auto" Height="700"
+                                      ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserDeleteRows="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Identificador" Width="250" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Nome" Width="150" Binding="{Binding MachineName}" />
+                                    <DataGridTextColumn Header="Nome de visualização" Width="190" Binding="{Binding DisplayName}" SortDirection="Ascending" />
+                                    <DataGridTextColumn Header="Login" Width="150" Binding="{Binding Login}" />
+                                    <DataGridTextColumn Header="Qtd Serviços" Width="100" Binding="{Binding QtdServices}" />
+                                    <DataGridTextColumn Header="Qtd Configurações" Width="140" Binding="{Binding QtdConfiguration}" />
+                                    <DataGridTextColumn Header="Último login" Binding="{Binding LastLogin}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
                     </StackPanel>
+                    
                 </TabItem>
-                
+
             </TabControl>
-            
+
         </StackPanel>
-        
+
 
     </Grid>
 </UserControl>

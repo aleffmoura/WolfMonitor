@@ -29,6 +29,11 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadInformations()
             => HandleQuery<User, UserDetailViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
+
+        [HttpPatch("info")]
+        [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
+        public async Task<IActionResult> Update()
+            => HandleQuery<User, UserDetailViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
         #endregion
 
         #region DELETE

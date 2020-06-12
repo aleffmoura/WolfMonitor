@@ -31,7 +31,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(d => d.Id).NotEqual(Guid.Empty);
+                    RuleFor(d => d.Id).NotEqual(Guid.Empty).WithMessage("Id do usuário a ser deletado está invalido");
                 }
             }
         }

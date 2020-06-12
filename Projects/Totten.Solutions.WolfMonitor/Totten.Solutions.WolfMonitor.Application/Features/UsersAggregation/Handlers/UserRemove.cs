@@ -37,9 +37,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(d => d.Id).NotEqual(Guid.Empty);
-                    RuleFor(d => d.UserId).NotEqual(Guid.Empty);
-                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty);
+                    RuleFor(d => d.Id).NotEqual(Guid.Empty).WithMessage("Id do usuário a ser removido está inválido");
+                    RuleFor(d => d.UserId).NotEqual(Guid.Empty).WithMessage("Id do usuário da solicitação está inválido");
+                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty).WithMessage("Id da empresa da solicitação está inválido");
                 }
             }
         }
@@ -63,10 +63,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     return userCallback.Failure;
 
                 if (userCallback.Success.Id == request.UserId)
-                    throw new BusinessException(Domain.Enums.ErrorCodes.NotFound, "Um usuário não pode excluir sua propria conta, contact um administrador.");
+                    throw new BusinessException(ErrorCodes.NotFound, "Um usuário não pode excluir sua propria conta, contact um administrador.");
 
                 if (userCallback.Success.CompanyId != request.CompanyId)
-                    throw new BusinessException(Domain.Enums.ErrorCodes.NotFound, "Usuário não pertence a sua empresa, contact um administrador.");
+                    throw new BusinessException(ErrorCodes.NotFound, "Usuário não pertence a sua empresa, contact um administrador.");
 
                 userCallback.Success.Removed = true;
 
