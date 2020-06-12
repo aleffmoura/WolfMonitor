@@ -10,5 +10,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Companies
         public int QtdServices { get; set; }
         public int QtdArchives { get; set; }
         public int QtdUsers { get; set; }
+
+        public string GetDisplayNameFormated()
+        {
+            if (Company.Length > 15)
+                return $"{Company.Substring(0, 14)}...";
+
+            return Company;
+        }
     }
 }

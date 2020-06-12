@@ -11,7 +11,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Features.Agents
         Result<Exception, IQueryable<Agent>> GetAll(Guid companyId);
         Result<Exception, IQueryable<Agent>> GetAllByUserId(Guid userId);
         Task<Result<Exception, Agent>> GetByIdAsync(Guid companyId, Guid id);
-        Task<Result<Exception, Agent>> GetByLogin(Guid companyId, string login);
+        Task<Result<Exception, Agent>> GetByLoginOrDisplayName(Guid companyId, string login, string displayName);
         Task<Result<Exception, Agent>> Authentication(Guid companyId, string login, string password);
     }
 }

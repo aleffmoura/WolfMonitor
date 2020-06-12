@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -107,6 +108,22 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
                 Populate();
         }
 
+        public void SetDataOnGrid(List<KeyValuePair<Guid, CompanyUC>> list)
+        {
+            this.wrapPanel.Children.Clear();
 
+            foreach (var companyView in list)
+                this.wrapPanel.Children.Add(_indexes[companyView.Key]);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+         => SetDataOnGrid(_indexes.Where(x => x.Value.lblCompanyName.Text.Contains(txtCompanyName.Text, StringComparison.OrdinalIgnoreCase)).ToList());
+
+
+        private void txtCompanyName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtCompanyName.Text))
+                SetDataOnGrid(_indexes.ToList());
+        }
     }
 }

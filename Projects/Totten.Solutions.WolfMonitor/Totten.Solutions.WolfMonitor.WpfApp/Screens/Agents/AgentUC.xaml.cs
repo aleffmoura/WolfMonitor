@@ -24,7 +24,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _onRemove = onRemove;
             _onEditHandler = onEdit;
             _userBasicInformation = userBasicInformation;
-            SetServiceValues();
+            SetAgentValues();
         }
 
         ~AgentUC()
@@ -40,9 +40,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         private void btnEdit_Click(object sender, System.Windows.RoutedEventArgs e)
             => _onEditHandler?.Invoke(_agentResumeViewModel.Id, new EventArgs());
 
-        public void SetServiceValues()
+        public void SetAgentValues()
         {
-            lblDisplayName.Text = _agentResumeViewModel.DisplayName;
+            lblDisplayName.Text = _agentResumeViewModel.GetDisplayNameFormated();
             lblCreatedBy.Text = _agentResumeViewModel.UserWhoCreated;
             lblCreatedIn.Text = _agentResumeViewModel.CreatedIn;
             lblUpdatedIn.Text = _agentResumeViewModel.LastUpdate;

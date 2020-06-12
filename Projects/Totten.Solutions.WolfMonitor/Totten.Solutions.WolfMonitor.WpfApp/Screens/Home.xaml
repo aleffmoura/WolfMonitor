@@ -53,7 +53,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="gridRoot" Margin="60,60,0,0" Width="auto" Height="auto"  Background="AliceBlue">
+        <Grid x:Name="gridRoot" Margin="50,60,0,0" Width="auto" Height="auto"  Background="AliceBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="61*"/>
                 <ColumnDefinition/>

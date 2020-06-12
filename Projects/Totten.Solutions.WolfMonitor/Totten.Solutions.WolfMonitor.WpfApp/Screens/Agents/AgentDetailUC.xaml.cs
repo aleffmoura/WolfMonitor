@@ -34,6 +34,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _itensMonitoringService = itensMonitoringService;
             _agentsService = agentService;
 
+            if(_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+                this.pnlProfile.IsEnabled = false;
+
             PopulateServices();
             PopulateArchives();
             InsertAgentDetail().ContinueWith(task =>

@@ -9,6 +9,7 @@ using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Agents;
 using Totten.Solutions.WolfMonitor.Domain.Features.ItemAggregation;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.Items
@@ -69,34 +70,48 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
         {
             private readonly IAgentRepository _agentRepository;
             private readonly IItemRepository _repository;
+            private readonly ILogRepository _logRepository;
 
-            public Handler(IItemRepository repository, IAgentRepository agentRepository)
+            public Handler(IItemRepository repository, IAgentRepository agentRepository, ILogRepository logRepository)
             {
                 _repository = repository;
                 _agentRepository = agentRepository;
+                _logRepository = logRepository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var agentCallback = await _agentRepository.GetByIdAsync(request.AgentId);
+
                 if (agentCallback.IsFailure)
                     return agentCallback.Failure;
 
                 if (agentCallback.Success.CompanyId != request.CompanyId)
                     return new NotAllowedException("Usuário não pode salvar items no agent informado, a empresa do usuario e do agent não são iguais");
 
-                var ItemVerify = await _repository.GetByNameWithAgentId(request.Name, request.AgentId);
+                var ItemVerify = await _repository.GetByNameOrDisplayNameWithAgentId(request.AgentId, request.Name, request.DisplayName );
 
                 if (ItemVerify.IsSuccess)
-                    return new DuplicateException("Já existe um item com esse nome cadastrado nesse agent.");
+                    return new DuplicateException("Já existe um item com esse nome/nome de exibição cadastrado nesse agent.");
 
                 Item Item = Mapper.Map<Command, Item>(request);
 
                 var callback = await _repository.CreateAsync(Item);
+
                 if (callback.IsFailure)
-                {
                     return callback.Failure;
-                }
+
+                Log log = new Log
+                {
+                    UserId = request.UserIdWhoAdd,
+                    UserCompanyId = request.CompanyId,
+                    TargetId = callback.Success.Id,
+                    EntityType = ETypeEntity.Monitoring,
+                    TypeLogMethod = ETypeLogMethod.Create,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return callback.Success.Id;
             }

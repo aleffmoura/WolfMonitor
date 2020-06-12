@@ -2,8 +2,6 @@
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewModels;

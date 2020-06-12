@@ -27,7 +27,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             public DateTime MonitoredAt { get; set; }
 
 
-            public Command(Guid id, Guid agentId, string name, string value, string abountCurrentValue, string lastValue, DateTime monitoredAt)
+            public Command(Guid id, Guid agentId, string name, string value,
+                            string abountCurrentValue, string lastValue, DateTime monitoredAt)
             {
                 Id = id;
                 AgentId = agentId;

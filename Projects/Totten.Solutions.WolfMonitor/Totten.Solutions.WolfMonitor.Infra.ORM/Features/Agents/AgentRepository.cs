@@ -39,10 +39,12 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Agents
 
             return agent;
         }
-        public async Task<Result<Exception, Agent>> GetByLogin(Guid companyId, string login)
+        public async Task<Result<Exception, Agent>> GetByLoginOrDisplayName(Guid companyId, string login, string displayName)
         {
             Agent agent = await _context.Agents.AsNoTracking()
-                                        .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId && a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase));
+                                        .FirstOrDefaultAsync(a => !a.Removed && a.CompanyId == companyId &&
+                                                            (a.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase) ||
+                                                            a.DisplayName.Equals(login, StringComparison.InvariantCultureIgnoreCase)));
 
             if (agent == null)
             {

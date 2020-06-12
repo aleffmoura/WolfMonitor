@@ -22,7 +22,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
             _onRemove = onRemove;
             _onEditHandler = onEdit;
             _userBasicInformation = userBasicInformation;
-            SetServiceValues();
+            SetCompanyValues();
         }
 
         ~CompanyUC()
@@ -32,9 +32,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
             _companyResumeViewModel = null;
         }
 
-        public void SetServiceValues()
+        public void SetCompanyValues()
         {
-            lblCompanyName.Text = _companyResumeViewModel.Company; 
+            lblCompanyName.Text = _companyResumeViewModel.GetDisplayNameFormated(); 
             lblQtAgents.Text = $"{_companyResumeViewModel.QtdAgents}";
             lblQtServices.Text = $"{_companyResumeViewModel.QtdServices}";
             lblQtArchives.Text = $"{_companyResumeViewModel.QtdArchives}";

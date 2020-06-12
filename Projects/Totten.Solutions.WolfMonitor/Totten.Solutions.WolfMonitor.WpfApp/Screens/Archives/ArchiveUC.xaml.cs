@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
@@ -13,20 +14,29 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         private ArchiveViewModel _archiveViewModel;
         private EventHandler _onRemove;
         private EventHandler _onEdit;
+        private UserBasicInformationViewModel _userBasicInformation;
 
         public ArchiveUC(EventHandler onRemove, EventHandler onEdit,
-                         ArchiveViewModel archiveViewModel)
+                         ArchiveViewModel archiveViewModel, UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
             _onRemove = onRemove;
             _onEdit = onEdit;
+            _userBasicInformation = userBasicInformation;
+
+            if (_userBasicInformation.UserLevel < (int)EUserLevel.Admin)
+            {
+                btnDel.IsEnabled = btnDel.IsEnabled = false;
+                btnDel.Visibility = btnDel.Visibility = Visibility.Collapsed;
+            }
+
             SetArchiveValues(archiveViewModel);
         }
 
         public void SetArchiveValues(ArchiveViewModel archiveViewModel)
         {
             _archiveViewModel = archiveViewModel;
-            this.lblDisplayName.Text = _archiveViewModel.DisplayName;
+            this.lblDisplayName.Text = _archiveViewModel.GetDisplayNameFormated();
             this.lblMonitoredAt.Text = _archiveViewModel.MonitoredAt;
         }
 

@@ -2,14 +2,11 @@
 using FluentValidation.Results;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using User = Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation.User;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers

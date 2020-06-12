@@ -17,5 +17,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Agents
         public string CreatedIn { get; set; }
         public string LastUpdate { get; set; }
         public Dictionary<int, int> Items { get; set; }
+
+        public string GetDisplayNameFormated()
+        {
+            if (DisplayName.Length > 15)
+                return $"{DisplayName.Substring(0, 14)}...";
+
+            return DisplayName;
+        }
     }
 }

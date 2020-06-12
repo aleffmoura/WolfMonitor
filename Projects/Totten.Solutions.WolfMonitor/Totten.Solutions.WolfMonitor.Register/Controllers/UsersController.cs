@@ -25,6 +25,7 @@ namespace Totten.Solutions.WolfMonitor.Register.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> Create([FromRoute]Guid companyId, [FromBody]UserCreateCommand command)
             => HandleCommand(await _mediator.Send(new UserCreate.Command(
+                                                        userId: UserId,
                                                         userCompany: CompanyId,
                                                         companyId,
                                                         command.Email, command.Cpf,

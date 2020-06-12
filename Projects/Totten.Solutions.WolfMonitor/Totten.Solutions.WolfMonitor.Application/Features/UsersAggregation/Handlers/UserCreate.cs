@@ -7,8 +7,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
@@ -19,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
+            public Guid UserId { get; set; }
             public Guid UserCompany { get; set; }
             public Guid CompanyId { get; set; }
             public string Email { get; set; }
@@ -31,10 +34,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
             public string RoleCurrentUser { get; set; }
 
-            public Command(Guid userCompany, Guid companyId, string email, string cpf,
+            public Command(Guid userId, Guid userCompany, Guid companyId, string email, string cpf,
                            string firstName, string lastName, string language,
                            string login, string password, string roleCurrentUser)
             {
+                UserId = userId;
                 UserCompany = userCompany;
                 CompanyId = companyId;
                 Email = email;
@@ -75,14 +79,17 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             private readonly IUserRepository _repository;
             private readonly IRoleRepository _roleRepository;
             private readonly ICompanyRepository _companyRepository;
+            private readonly ILogRepository _logRepository;
 
             public Handler(IUserRepository repository,
                             IRoleRepository roleRepository,
-                            ICompanyRepository companyRepository)
+                            ICompanyRepository companyRepository,
+                            ILogRepository logRepository)
             {
                 _repository = repository;
                 _roleRepository = roleRepository;
                 _companyRepository = companyRepository;
+                _logRepository = logRepository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request,
@@ -120,10 +127,23 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 request.Password = request.Password.GenerateHash();
                 User user = Mapper.Map<Command, User>(request);
                 user.RoleId = role.Success.Id;
+
                 Result<Exception, User> callback = await _repository.CreateAsync(user);
 
                 if (callback.IsFailure)
                     return callback.Failure;
+
+                Log log = new Log
+                {
+                    UserId = request.UserId,
+                    UserCompanyId = request.UserCompany,
+                    TargetId = callback.Success.Id,
+                    EntityType = ETypeEntity.Users,
+                    TypeLogMethod = ETypeLogMethod.Create,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return callback.Success.Id;
             }

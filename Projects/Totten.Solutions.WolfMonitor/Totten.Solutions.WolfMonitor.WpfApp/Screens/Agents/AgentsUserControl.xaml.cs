@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -109,6 +110,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
 
             if (result.HasValue && result.Value)
                 Populate();
+        }
+
+        public void SetDataOnGrid(List<KeyValuePair<Guid, AgentUC>> list)
+        {
+            this.wrapPanel.Children.Clear();
+
+            foreach (var itemViewModel in list)
+                this.wrapPanel.Children.Add(_indexes[itemViewModel.Key]);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        => SetDataOnGrid(_indexes.Where(x => x.Value.lblDisplayName.Text.Contains(txtAgentName.Text, StringComparison.OrdinalIgnoreCase)).ToList());
+
+        private void txtAgentName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtAgentName.Text))
+                SetDataOnGrid(_indexes.ToList());
         }
     }
 }

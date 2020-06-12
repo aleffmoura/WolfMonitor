@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Margin="10,10,10,0">
-        <Border x:Name="componentListagem" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
+    <Grid Margin="3,10,0,0">
+        <Border x:Name="componentListagem" Padding="5" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Height="100" Width="377">
-                <StackPanel Orientation="Vertical" Width="200">
+                <StackPanel Orientation="Vertical" Width="180">
                     <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="190" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"  ToolTip="Nome de exibição"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
@@ -26,7 +26,7 @@
                     
                 </StackPanel>
                 
-                <StackPanel Orientation="Vertical" Width="180">
+                <StackPanel Orientation="Vertical" Width="195">
                     
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Current Status: " Foreground="Black" FontSize="13" />

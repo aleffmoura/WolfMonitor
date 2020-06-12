@@ -9,18 +9,18 @@
     <Grid Height="800" Width="1240" Margin="0,10,0,0">
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="5,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
+            <Button x:Name="btnAdd" Margin="45,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
         </StackPanel>
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtAgentName" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
-                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">
+                <TextBox x:Name="txtAgentName" TextChanged="txtAgentName_TextChanged" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,30,0">
                     <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                 </Button>
             </StackPanel>
             
-            <ScrollViewer Margin="5,10,0,0">
-                <WrapPanel x:Name="wrapPanel" MinHeight="400">
+            <ScrollViewer Margin="5,10,0,0" VerticalScrollBarVisibility="Hidden" Width="1180" Height="650">
+                <WrapPanel x:Name="wrapPanel">
 
                 </WrapPanel>
             </ScrollViewer>

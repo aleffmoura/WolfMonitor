@@ -34,7 +34,7 @@ namespace Totten.Solutions.WolfMonitor.IdentityServer.Configs
             string company = companyData[0];
             string userType = companyData[1];
 
-            var companCallback = await _companyRepository.GetByNameAsync(company);
+            var companCallback = await _companyRepository.GetByFantasyNameAsync(company);
 
             if (companCallback.IsFailure)
             {

@@ -78,10 +78,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Result<Exception, Agent> agentVerify = await _repository.GetByLogin(request.CompanyId, request.Login);
+                Result<Exception, Agent> agentVerify = await _repository.GetByLoginOrDisplayName(request.CompanyId, request.Login, request.DisplayName);
 
                 if (agentVerify.IsSuccess)
-                    return new DuplicateException("Já existe um agente com esse login cadastrado.");
+                    return new DuplicateException("Já existe um agente com esse login/nome cadastrado.");
 
                 var userCallback = await _userRepository.GetByIdAsync(request.UserWhoCreatedId);
 

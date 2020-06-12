@@ -4,7 +4,9 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
 using Totten.Solutions.WolfMonitor.Domain.Exceptions;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Unit = Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs.Unit;
@@ -44,10 +46,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
+            private readonly ILogRepository _logRepository;
             private readonly IUserRepository _repository;
 
-            public Handler( IUserRepository repository)
-                => _repository = repository;
+            public Handler( IUserRepository repository, ILogRepository logRepository)
+            {
+                _repository = repository;
+                _logRepository = logRepository;
+            }
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
@@ -68,6 +74,18 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
                 if (updatedCallBack.IsFailure)
                     return updatedCallBack.Failure;
+
+                Log log = new Log
+                {
+                    UserId = request.UserId,
+                    UserCompanyId = request.CompanyId,
+                    TargetId = request.Id,
+                    EntityType = ETypeEntity.Users,
+                    TypeLogMethod = ETypeLogMethod.Remove,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return Unit.Successful;
             }

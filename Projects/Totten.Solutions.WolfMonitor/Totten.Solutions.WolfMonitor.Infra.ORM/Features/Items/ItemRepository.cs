@@ -69,9 +69,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
             Item Item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(item => !item.Removed && item.Id == id);
 
             if (Item == null)
-            {
                 return new NotFoundException("Não foi encontrado um item com o identificador informado.");
-            }
+
             return Item;
         }
 
@@ -81,21 +80,20 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Items
                                              .FirstOrDefaultAsync(item => !item.Removed && item.AgentId == agentId && item.Id == id);
 
             if (Item == null)
-            {
                 return new NotFoundException("Não foi encontrado um item com o identificador informado.");
-            }
+
             return Item;
         }
 
-        public async Task<Result<Exception, Item>> GetByNameWithAgentId(string name, Guid agentId)
+        public async Task<Result<Exception, Item>> GetByNameOrDisplayNameWithAgentId(Guid agentId, string name, string displayName )
         {
             Item Item = await _context.Items.AsNoTracking()
-                                            .FirstOrDefaultAsync(item => !item.Removed && item.Name.Equals(name) && item.AgentId == agentId);
+                                            .FirstOrDefaultAsync(item => !item.Removed && item.AgentId == agentId &&
+                                                                         (item.Name.Equals(name) || item.DisplayName.Equals(displayName, StringComparison.OrdinalIgnoreCase)));
 
             if (Item == null)
-            {
                 return new NotFoundException("Não foi encontrado um item com o identificador do agent informado.");
-            }
+
             return Item;
         }
 

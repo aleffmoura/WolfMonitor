@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              Background="AliceBlue">
     
-    <Grid MinWidth="980" Width="auto" Height="800" >
+    <Grid MinWidth="980" Width="auto" Height="800" Margin="20,0,0,0">
         
         <StackPanel>
             <TabControl x:Name="tabControl" Margin="0" Height="740">

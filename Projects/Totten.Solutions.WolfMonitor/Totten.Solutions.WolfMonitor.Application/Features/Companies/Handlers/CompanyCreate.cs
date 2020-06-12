@@ -5,7 +5,10 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Totten.Solutions.WolfMonitor.Domain.Enums;
+using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
+using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
@@ -14,6 +17,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
     {
         public class Command : IRequest<Result<Exception, Guid>>
         {
+            public Guid UserCreatedId { get; set; }
+            public Guid UserCreatedCompanyId { get; set; }
+
             public string Name { get; set; }
             public string FantasyName { get; set; }
             public string Cnpj { get; set; }
@@ -47,22 +53,39 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
         public class Handler : IRequestHandler<Command, Result<Exception, Guid>>
         {
             private readonly ICompanyRepository _repository;
+            private readonly ILogRepository _logRepository;
 
-            public Handler(ICompanyRepository repository)
+            public Handler(ICompanyRepository repository, ILogRepository logRepository)
             {
                 _repository = repository;
+                _logRepository = logRepository;
             }
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var companyCallback = await _repository.GetByNameOrCnpjAsync(request.Name, request.Cnpj);
+
+                if (companyCallback.IsSuccess)
+                    return new DuplicateException("Já existe uma empresa/cnpj cadastrada com esse nome");
+
                 Company company = Mapper.Map<Command, Company>(request);
 
                 Result<Exception, Company> callback = await _repository.CreateAsync(company);
 
                 if (callback.IsFailure)
-                {
                     return callback.Failure;
-                }
+
+                Log log = new Log
+                {
+                    UserId = request.UserCreatedId,
+                    UserCompanyId = request.UserCreatedCompanyId,
+                    TargetId = callback.Success.Id,
+                    EntityType = ETypeEntity.Companies,
+                    TypeLogMethod = ETypeLogMethod.Create,
+                    CreatedIn = DateTime.Now
+                };
+
+                await _logRepository.CreateAsync(log);
 
                 return callback.Success.Id;
             }

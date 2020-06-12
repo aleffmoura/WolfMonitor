@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Height="190" Width="220">
+    <Grid Height="190" Width="220" Margin="8,20,4,0">
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,5,0">
             <Button x:Name="btnDel" FontSize="11" Height="25"  Width="25" Margin="0" Padding="0" Click="btnDel_Click" Background="Red">

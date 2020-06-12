@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
@@ -217,6 +218,25 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                 else
                     MessageBox.Show("Falha na busca dos serviços do agent", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, currentTaskScheduler);
+        }
+
+
+        public void SetDataOnGrid(List<KeyValuePair<Guid, ServiceUC>> list)
+        {
+            this.wrapPanel.Children.Clear();
+
+            foreach (var itemViewModel in list)
+                this.wrapPanel.Children.Add(_indexes[itemViewModel.Key]);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        => SetDataOnGrid(_indexes.Where(x => x.Value.lblServiceName.Text.Contains(txtServiceName.Text, StringComparison.OrdinalIgnoreCase) ||
+                                                      x.Value.lblDisplayName.Text.Contains(txtServiceName.Text, StringComparison.OrdinalIgnoreCase)).ToList());
+        
+        private void txtServiceName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtServiceName.Text))
+                SetDataOnGrid(_indexes.ToList());
         }
     }
 }

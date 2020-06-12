@@ -50,7 +50,9 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         [HttpPatch]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> PatchClient([FromBody]ItemUpdateVO itemUpdate)
-            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(itemUpdate.Id, UserId, itemUpdate.Name, itemUpdate.Value, itemUpdate.AboutCurrentValue, itemUpdate.LastValue, itemUpdate.MonitoredAt)));
+            => HandleCommand(await _mediator.Send(new ItemUpdate.Command(itemUpdate.Id, UserId, itemUpdate.Name,
+                                                                        itemUpdate.Value, itemUpdate.AboutCurrentValue,
+                                                                        itemUpdate.LastValue, itemUpdate.MonitoredAt)));
 
         #endregion
 
@@ -60,7 +62,7 @@ namespace Totten.Solutions.WolfMonitor.Monitoring.Controllers
         [HttpDelete("{agentId}/{Id}")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin)]
         public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
-            => HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id)));
+            => HandleCommand(await _mediator.Send(new ItemRemove.Command(agentId, id, UserId, CompanyId)));
 
         #endregion
 

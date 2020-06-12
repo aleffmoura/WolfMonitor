@@ -4,7 +4,7 @@ namespace Totten.Solutions.WolfMonitor.Domain.Exceptions
 {
     public class ForbiddenException : BusinessException
     {
-        public ForbiddenException() : base(ErrorCodes.Forbidden, "Não autorizado")
+        public ForbiddenException(string msg = "Não autorizado") : base(ErrorCodes.Forbidden, msg)
         {
         }
     }

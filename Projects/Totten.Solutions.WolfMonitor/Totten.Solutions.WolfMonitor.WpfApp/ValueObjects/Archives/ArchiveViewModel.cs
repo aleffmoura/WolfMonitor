@@ -10,5 +10,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives
         public string AboutCurrentValue { get; set; }
         public string DisplayName { get; set; }
         public string MonitoredAt { get; set; }
+
+
+        public string GetDisplayNameFormated()
+        {
+            if (DisplayName.Length > 18)
+                return $"{DisplayName.Substring(0, 18)}...";
+
+            return DisplayName;
+        }
     }
 }

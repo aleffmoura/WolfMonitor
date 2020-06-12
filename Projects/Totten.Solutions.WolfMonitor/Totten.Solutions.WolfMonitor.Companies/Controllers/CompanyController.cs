@@ -7,6 +7,7 @@ using Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers;
 using Totten.Solutions.WolfMonitor.Application.Features.Companies.ViewModels;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
+using Totten.Solutions.WolfMonitor.Companies.Commands;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 
@@ -25,14 +26,26 @@ namespace Totten.Solutions.WolfMonitor.Companies.Controllers
         [HttpDelete("{agentId}/{Id}")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System)]
         public async Task<IActionResult> RemoveItem([FromRoute]Guid agentId, [FromRoute]Guid id)
-            => HandleCommand(await _mediator.Send(new CompanyRemove.Command(id, UserId)));
+            => HandleCommand(await _mediator.Send(new CompanyRemove.Command(id, UserId, CompanyId)));
         #endregion
 
         #region HTTP POST
         [HttpPost]
         [CustomAuthorizeAttributte(RoleLevelEnum.System)]
-        public async Task<IActionResult> Create([FromBody]CompanyCreate.Command command)
-            => HandleCommand(await _mediator.Send(command));
+        public async Task<IActionResult> Create([FromBody]CompanyCreateCommand command)
+            => HandleCommand(await _mediator.Send(new CompanyCreate.Command {
+                                                        Address= command.Address,
+                                                        Cnae = command.Cnae,
+                                                        Cnpj = command.Cnpj,
+                                                        Email = command.Email,
+                                                        FantasyName = command.FantasyName,
+                                                        MunicipalRegistration = command.MunicipalRegistration,
+                                                        Name = command.Name,
+                                                        Phone = command.Phone,
+                                                        StateRegistration = command.StateRegistration,
+                                                        UserCreatedCompanyId = CompanyId,
+                                                        UserCreatedId = UserId
+                                                   }));
         #endregion
 
         #region HTTP PATCH

@@ -29,29 +29,35 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Features.Companies
         }
 
         public Result<Exception, IQueryable<Company>> GetAll()
-        {
-            return Result.Run(() => _context.Companies.Include(c => c.Agents).AsNoTracking().Where(a => !a.Removed));
-        }
+            => Result.Run(() => _context.Companies.Include(c => c.Agents).AsNoTracking().Where(a => !a.Removed));
 
         public async Task<Result<Exception, Company>> GetByIdAsync(Guid id)
         {
             Company company = await _context.Companies.AsNoTracking().FirstOrDefaultAsync(c => !c.Removed && c.Id == id);
 
             if (company == null)
-            {
-                return new NotFoundException("Company not found");
-            }
+                return new NotFoundException("Empresa não encontrada");
+
             return company;
         }
 
-        public async Task<Result<Exception, Company>> GetByNameAsync(string fantasyName)
+        public async Task<Result<Exception, Company>> GetByFantasyNameAsync(string fantasyName)
         {
             Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && c.FantasyName.Equals(fantasyName, StringComparison.InvariantCultureIgnoreCase));
 
             if (company == null)
-            {
-                return new NotFoundException("Company not found");
-            }
+                return new NotFoundException("Empresa não encontrada");
+
+            return company;
+        }
+
+        public async Task<Result<Exception, Company>> GetByNameOrCnpjAsync(string name, string cnpj)
+        {
+            Company company = await _context.Companies.FirstOrDefaultAsync(c => !c.Removed && (c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                                                                                                c.Cnpj.Equals(cnpj, StringComparison.InvariantCultureIgnoreCase)));
+
+            if (company == null)
+                return new NotFoundException("Empresa não encontrada");
 
             return company;
         }

@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              MinWidth="980" Width="auto" Height="auto">
-    <Grid>
+    <Grid Margin="30,0,0,0">
         <StackPanel>
             <StackPanel>
                 <TextBlock x:Name="lblName" Text="Servidor Brasil 1" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
@@ -71,8 +71,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Grid Height="110" Width="250" >
-
+                    <Grid Height="110" Width="250" x:Name="pnlProfile">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="5">
                             <TextBlock Text="Perfil: " FontSize="15" Foreground="Black" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
                             <TextBlock Text="Não aplicado" x:Name="lblProfile" FontSize="15" Foreground="Green" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>

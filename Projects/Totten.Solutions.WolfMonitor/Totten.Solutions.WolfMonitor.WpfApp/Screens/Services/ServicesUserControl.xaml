@@ -7,17 +7,17 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Height="Auto" MinWidth="980" Width="auto">
-    <Grid Margin="0,10,0,0">
+    <Grid Margin="10,20,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="10,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
+            <Button x:Name="btnAdd" Margin="8,0,0,0" Content="Adicionar" Width="80" Height="30" Click="btnAdd_Click" Padding="0"/>
 
             <Button x:Name="btnRefrash" Margin="10,0,0,0" ToolTip="Recarregar página" Padding="0" Width="50" Height="30" Click="btnRefrash_Click">
                 <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
             </Button>
         </StackPanel>
         
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,365,0">
-            <Label>Recarregar automaticamente:</Label>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,405,0">
+            <Label>Reload automatico:</Label>
             <TextBox x:Name="txtValueRefresh" materialDesign:HintAssist.Hint="Valor" Width="50" Margin="5,0,5,0" Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="txtValueRefresh_PreviewTextInput"/>
             <ComboBox x:Name="cbTimeRefesh" Width="150" Height="30" materialDesign:HintAssist.Hint="Tempo" Style="{StaticResource MaterialDesignComboBox}" />
             <Button x:Name="btnApplyTimer" Height="30" Width="50" Margin="5,0,0,0" Click="btnApplyTimer_Click">
@@ -27,13 +27,13 @@
         
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtServiceName" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
-                <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0">
+                <TextBox x:Name="txtServiceName" TextChanged="txtServiceName_TextChanged" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,15,0">
                     <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                 </Button>
             </StackPanel>
-            
-            <ScrollViewer>
+
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Width="1180" Height="480">
                 <WrapPanel x:Name="wrapPanel">
 
                 </WrapPanel>

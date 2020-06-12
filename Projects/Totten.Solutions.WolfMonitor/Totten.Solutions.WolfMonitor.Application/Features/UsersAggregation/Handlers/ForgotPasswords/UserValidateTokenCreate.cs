@@ -51,7 +51,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
 
             public async Task<Result<Exception, Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var companyCallback = await _companyRepository.GetByNameAsync(request.Company);
+                var companyCallback = await _companyRepository.GetByFantasyNameAsync(request.Company);
 
                 if (companyCallback.IsFailure)
                     return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "A empresa informada não foi encontrada.");

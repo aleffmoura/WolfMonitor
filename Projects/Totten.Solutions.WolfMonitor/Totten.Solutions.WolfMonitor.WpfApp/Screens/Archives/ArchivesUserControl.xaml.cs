@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,7 +74,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
                 if (task.Result.IsSuccess)
                 {
                     foreach (ArchiveViewModel viewModel in task.Result.Success.Items)
-                        _indexes.Add(viewModel.Id, new ArchiveUC(OnRemove, OnEdit, viewModel));
+                        _indexes.Add(viewModel.Id, new ArchiveUC(OnRemove, OnEdit, viewModel, _userBasicInformation));
 
                     PopulateByDictionary();
                 }
@@ -152,5 +153,23 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
         private void btnRefrash_Click(object sender, RoutedEventArgs e)
            => Populate();
+
+        public void SetDataOnGrid(List<KeyValuePair<Guid, ArchiveUC>> list)
+        {
+            this.wrapPanel.Children.Clear();
+
+            foreach (var itemViewModel in list)
+                this.wrapPanel.Children.Add(_indexes[itemViewModel.Key]);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        => SetDataOnGrid(_indexes.Where(x => x.Value.lblDisplayName.Text.Contains(txtArchiveName.Text, StringComparison.OrdinalIgnoreCase)).ToList());
+
+
+        private void txtArchiveName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtArchiveName.Text))
+                SetDataOnGrid(_indexes.ToList());
+        }
     }
 }
