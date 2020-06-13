@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Topshelf;
+using Topshelf.Runtime.DotNetCore;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Helpers;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Interfaces;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Base;
@@ -17,7 +19,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
     {
         static void Main(string[] args)
         {
-            var agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText(".\\AgentSettings.json")) ?? new AgentSettings
+            var agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText("./AgentSettings.json")) ?? new AgentSettings
             {
                 User = new Infra.Base.UserLogin(),
                 Company = "Error",
@@ -36,11 +38,17 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent
 
             HostFactory.Run(service =>
             {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    service.UseEnvironmentBuilder(new Topshelf.HostConfigurators.EnvironmentBuilderFactory(c => {
+                        return new DotNetCoreEnvironmentBuilder(c);
+                    }));
+                }
                 service.Service(() => new TopShelfService(serviceProvider.GetService<WolfService>()));
                 service.EnableServiceRecovery(conf => conf.RestartService(TimeSpan.FromSeconds(10)));
-                service.SetServiceName("Totem.Solutions.WolfMonitor.Agent");
+                service.SetServiceName("WolfMonitor.Agent.Service");
                 service.SetDisplayName("Totem Solutions - Wolf Monitor");
-                service.RunAsLocalService();
+                service.RunAsLocalSystem();
                 service.StartAutomatically();
             });
         }

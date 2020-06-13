@@ -11,7 +11,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Base
 
         public string UrlApi => _uriBaseApi;
         public HttpClient HttpClient { get; private set; }
-        public UserLogin User => JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText(".\\AgentSettings.json")).User;
+        public UserLogin User => JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText("./AgentSettings.json")).User;
 
         public CustomHttpCliente(string uriBaseApi)
         {

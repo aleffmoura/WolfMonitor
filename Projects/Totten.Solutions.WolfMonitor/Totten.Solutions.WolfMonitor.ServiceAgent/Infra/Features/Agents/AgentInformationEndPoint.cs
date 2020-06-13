@@ -21,7 +21,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Agents
         }
         public string Login()
         {
-            _agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText(".\\AgentSettings.json"));
+            _agentSettings = JsonConvert.DeserializeObject<AgentSettings>(File.ReadAllText("./AgentSettings.json"));
 
             var request = base.Client.CreateRequest(HttpMethod.Post, "identityserver/connect/token");
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

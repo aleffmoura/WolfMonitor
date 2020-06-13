@@ -105,6 +105,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         {
             _started = false;
             _cancellationToken.Cancel();
+            ConfigureTimerSendFiles(false);
         }
 
         private void GenerateLogException(Exception ex, Item item = default)
@@ -116,7 +117,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                     Exception = JsonConvert.SerializeObject(ex.Message),
                     Item = item
                 };
-                File.WriteAllText(Path.Combine(_agentSettings.PathFilesExceptions, $"{item?.Name}_{item?.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}_{DateTime.Now.ToString("ddMMyyyyhhmmss")}.mon"),
+                File.WriteAllText(Path.Combine(_agentSettings.PathFilesExceptions, $"{item?.DisplayName}_{item?.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}_{DateTime.Now.ToString("ddMMyyyyhhmmss")}.mon"),
                                   JsonConvert.SerializeObject(obj, Formatting.Indented));
             }
             catch { }
@@ -126,7 +127,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         {
             try
             {
-                File.WriteAllText(Path.Combine(_agentSettings.PathFilesIfFailSend, $"{item.Name}_{item.Type.ToString()}_{item.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}.mon"),
+                File.WriteAllText(Path.Combine(_agentSettings.PathFilesIfFailSend, $"{item.DisplayName}_{item.Type.ToString()}_{item.MonitoredAt.Value.ToString("ddMMyyyyhhmmss")}.mon"),
                                   JsonConvert.SerializeObject(item));
             }
             catch (Exception ex)

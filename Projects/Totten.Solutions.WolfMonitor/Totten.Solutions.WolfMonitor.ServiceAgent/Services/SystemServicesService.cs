@@ -9,6 +9,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
         private static ServiceController GetService(string serviceName, string serviceDisplayName)
         {
             ServiceController serviceController = null;
+
             if (!string.IsNullOrWhiteSpace(serviceName) || !string.IsNullOrWhiteSpace(serviceDisplayName))
             {
                 serviceController = ServiceController.GetServices().FirstOrDefault(s => s.DisplayName.Trim().Equals(serviceDisplayName, StringComparison.InvariantCultureIgnoreCase) ||
