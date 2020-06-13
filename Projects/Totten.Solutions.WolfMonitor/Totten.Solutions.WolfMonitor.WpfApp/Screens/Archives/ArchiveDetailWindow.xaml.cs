@@ -16,6 +16,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
     /// </summary>
     public partial class ArchiveDetailWindow : Window
     {
+        private int _currentTab = 0;
         private int _take = 10;
         private int _skip = 0;
         private int _actualPage = 1;
@@ -181,5 +182,30 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
         }
 
+        private void tabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_currentTab == tabControl.SelectedIndex || tabControl.SelectedIndex == 0)
+            {
+                _currentTab = 0;
+                return;
+            }
+
+            _skip = 0;
+            _actualPage = 1;
+            _qtItems = 0;
+            btnActualPage.Content = $"{_actualPage}";
+            btnPrevPage.IsEnabled = false;
+            btnNextPage.IsEnabled = false;
+
+            _currentTab = tabControl.SelectedIndex;
+
+            if (tabControl.SelectedIndex == 1)
+            {
+                GetHistoricItems();
+                return;
+            }
+
+            GetSolicitations();
+        }
     }
 }

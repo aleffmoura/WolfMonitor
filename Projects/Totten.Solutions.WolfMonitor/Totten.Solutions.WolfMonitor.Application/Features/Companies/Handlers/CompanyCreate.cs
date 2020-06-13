@@ -47,11 +47,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                     RuleFor(a => a.Phone).NotEmpty().Length(11, 15).WithMessage("Telefone deve conter entre 11 e 15 caracteres");
                     RuleFor(a => a.Address).NotEmpty().Length(5, 250);
                 }
-
-                private IValidator<string> validator(Command arg)
-                {
-                    throw new NotImplementedException();
-                }
             }
         }
 

@@ -21,6 +21,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 {
     public partial class ServiceDetailWindow : Window
     {
+        private int _currentTab = 0;
         private int _take = 10;
         private int _skip = 0;
         private int _actualPage = 1;
@@ -144,6 +145,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_currentTab == tabControl.SelectedIndex)
+                return;
+
             _skip = 0;
             _actualPage = 1;
             _qtItems = 0;
@@ -151,11 +155,14 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
             btnPrevPage.IsEnabled = false;
             btnNextPage.IsEnabled = false;
 
+            _currentTab = tabControl.SelectedIndex;
+
             if (tabControl.SelectedIndex == 0)
             {
                 GetHistoricItems();
                 return;
             }
+
             GetSolicitations();
         }
     }

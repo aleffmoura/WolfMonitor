@@ -27,7 +27,7 @@
             </StackPanel>
 
 
-            <TabControl x:Name="tabControl" FontSize="15" Margin="0,10,5,10" >
+            <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" FontSize="15" Margin="0,10,5,10" >
                 <TabItem Header="Valor Atual">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -38,7 +38,7 @@
                                 <materialDesign:PackIcon Kind="FileCancel" />
                             </Button>
                         </StackPanel>
-                        <TextBox x:Name="txtNotePad" IsReadOnly="True" Height="460" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Hidden"/>
+                        <TextBox x:Name="txtNotePad" IsReadOnly="True" Height="470" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Hidden"/>
                     </StackPanel>
                 </TabItem>
 
