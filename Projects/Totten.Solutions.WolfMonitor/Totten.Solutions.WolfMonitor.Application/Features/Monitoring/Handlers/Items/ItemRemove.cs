@@ -44,10 +44,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Id).NotEqual(Guid.Empty);
-                    RuleFor(a => a.AgentId).NotEqual(Guid.Empty);
-                    RuleFor(a => a.UserId).NotEqual(Guid.Empty);
-                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty);
+                    RuleFor(a => a.Id).NotEqual(Guid.Empty).WithMessage("Identificador do item é inválido");
+                    RuleFor(a => a.AgentId).NotEqual(Guid.Empty).WithMessage("Identificador do agent é inválido");
+                    RuleFor(a => a.UserId).NotEqual(Guid.Empty).WithMessage("Identificador do usuário é inválido");
+                    RuleFor(a => a.CompanyId).NotEqual(Guid.Empty).WithMessage("Identificador da empresa é inválido");
                 }
             }
         }

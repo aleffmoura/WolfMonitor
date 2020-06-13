@@ -13,8 +13,8 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Exceptions
         {
             int errorCode;
 
-            if (exception is BusinessException)
-                errorCode = (exception as BusinessException).ErrorCode.GetHashCode();
+            if (exception is BusinessException businessException)
+                errorCode = businessException.ErrorCode.GetHashCode();
             else
                 errorCode = ErrorCodes.Unhandled.GetHashCode();
 

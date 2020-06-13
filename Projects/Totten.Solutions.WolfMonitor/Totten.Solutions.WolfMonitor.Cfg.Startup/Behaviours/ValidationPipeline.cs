@@ -29,9 +29,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Behaviours
                 .ToList();
 
             if (failures.Any())
-            {
                 return new ValidationException(failures);
-            }
 
             return await next();
         }

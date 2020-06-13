@@ -48,15 +48,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Id).NotEqual(Guid.Empty);
-                    RuleFor(a => a.AgentId).NotEqual(Guid.Empty);
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 255);
-                    RuleFor(a => a.Value).NotEmpty().Length(4, 20);
-                    RuleFor(a => a.AboutCurrentValue).NotEmpty().Length(4, 150);
+                    RuleFor(a => a.Id).NotEqual(Guid.Empty).WithMessage("Identificador do item é inválido");
+                    RuleFor(a => a.AgentId).NotEqual(Guid.Empty).WithMessage("Identificador do agent é inválido");
+                    RuleFor(a => a.Name).NotEmpty().Length(4, 255).WithMessage("Nome do agent deve conter entre 4 e 255 caracteres");
+                    RuleFor(a => a.Value).NotEmpty().WithMessage("Valor não pode ser em branco ou nulo");
+                    RuleFor(a => a.AboutCurrentValue).NotEmpty().Length(4, 150).WithMessage("Sobre o valor deve conter entre 4 e 150 caracteres");
                 }
             }
         }
-
         public class Handler : IRequestHandler<Command, Result<Exception, Unit>>
         {
             private readonly IItemRepository _repository;

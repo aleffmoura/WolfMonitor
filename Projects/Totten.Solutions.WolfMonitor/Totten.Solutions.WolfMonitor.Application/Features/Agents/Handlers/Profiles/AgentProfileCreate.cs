@@ -50,12 +50,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 public Validator()
                 {
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador da empresa é invalido");
+                        .WithMessage("Identificador da empresa é inválido");
                     RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do usuario ao qual esta criando o profile é invalido");
+                        .WithMessage("Identificador do usuario ao qual esta criando o profile é inválido");
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do agent ao qual esta criando o profile é invalido");
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 100);
+                        .WithMessage("Identificador do agent ao qual esta criando o profile é inválido");
+                    RuleFor(a => a.Name).NotEmpty().Length(4, 100).WithMessage("Nome deve possuir entre 4 e 100 caracteres.");
                 }
             }
         }

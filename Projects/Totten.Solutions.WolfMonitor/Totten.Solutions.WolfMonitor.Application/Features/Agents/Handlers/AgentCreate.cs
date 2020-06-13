@@ -51,12 +51,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 public Validator()
                 {
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador da empresa é invalido");
+                        .WithMessage("Identificador da empresa é inválido");
                     RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
-                        .WithMessage("Identificador do usuario ao qual esta criando o agente é invalido");
-                    RuleFor(a => a.DisplayName).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Password).NotEmpty().Length(4, 100);
+                        .WithMessage("Identificador do usuario ao qual esta criando o agente é inválido");
+                    RuleFor(a => a.DisplayName).NotEmpty().Length(4, 100).WithMessage("Nome de exibição deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login name deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Password).NotEmpty().Length(4, 100).WithMessage("Senha deve conter entre 4 e 100 caracteres");
                 }
             }
         }
@@ -95,9 +95,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 Result<Exception, Agent> callback = await _repository.CreateAsync(agent);
 
                 if (callback.IsFailure)
-                {
                     return callback.Failure;
-                }
 
                 Log log = new Log
                 {

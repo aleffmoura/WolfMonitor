@@ -66,12 +66,12 @@ namespace Totten.Solutions.WolfMonitor.Agents.Controllers
         [HttpGet("{agentId}")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadById([FromRoute]Guid agentId)
-            => HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, agentId)));
+            => HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(agentId, CompanyId, UserId)));
 
         [HttpGet("info")]
         [CustomAuthorizeAttributte(RoleLevelEnum.Agent)]
         public async Task<IActionResult> ReadInfoAgent()
-            => HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(CompanyId, UserId)));
+            => HandleQuery<Agent, AgentDetailViewModel>(await _mediator.Send(new AgentResume.Query(UserId, CompanyId, UserId)));
         #endregion
     }
 }

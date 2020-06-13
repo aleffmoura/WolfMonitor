@@ -40,11 +40,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Id).NotEqual(Guid.Empty);
-                    RuleFor(a => a.MachineName).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.LocalIp).NotEmpty();
-                    RuleFor(a => a.HostName).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.HostAddress).NotEmpty().Length(4, 100);
+                    RuleFor(a => a.Id).NotEqual(Guid.Empty).WithMessage("Identificador da empresa é inválido");
+                    RuleFor(a => a.MachineName).NotEmpty().Length(4, 100).WithMessage("Nome da maquina deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.LocalIp).NotEmpty().WithMessage("IP não pode ser em branco em nulo");
+                    RuleFor(a => a.HostName).NotEmpty().Length(4, 100).WithMessage("Nome do Host não pode ser em branco ou nulo");
+                    RuleFor(a => a.HostAddress).NotEmpty().Length(4, 100).WithMessage("Endereço do host não pode ser em branco ou nulo");
                 }
             }
         }

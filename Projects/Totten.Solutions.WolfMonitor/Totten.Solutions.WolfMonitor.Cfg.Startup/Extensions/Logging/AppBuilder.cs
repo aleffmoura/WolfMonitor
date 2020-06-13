@@ -119,7 +119,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup.Extensions.Logging
 
                         string bodyReq = new StreamReader(context.Request.Body).ReadToEnd();
                         Log.Logger.Warning(JsonConvert.SerializeObject(
-                            new { /*context.Request.Path,*/ Resultado = ret, context.Request.Method, context.Request.QueryString, BodyRequest = bodyReq })
+                            new { Resultado = ret, context.Request.Method, context.Request.QueryString, BodyRequest = bodyReq })
                         );
                     }
 

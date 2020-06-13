@@ -38,9 +38,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             {
                 public Validator()
                 {
-                    RuleFor(d => d.Id).NotEqual(Guid.Empty);
-                    RuleFor(d => d.UserId).NotEqual(Guid.Empty);
-                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty);
+                    RuleFor(d => d.Id).NotEqual(Guid.Empty).WithMessage("Id do agent é invalido");
+                    RuleFor(d => d.UserId).NotEqual(Guid.Empty).WithMessage("Id do usuário é invalido");
+                    RuleFor(d => d.CompanyId).NotEqual(Guid.Empty).WithMessage("Id da empresa é invalido");
                 }
             }
         }
