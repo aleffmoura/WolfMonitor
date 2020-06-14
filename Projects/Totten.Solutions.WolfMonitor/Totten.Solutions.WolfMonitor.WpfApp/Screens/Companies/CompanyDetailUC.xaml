@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             MinWidth="980" Width="auto" Height="auto">
+             MinWidth="980" Width="auto" Height="auto" FontFamily="Poppins" Foreground="White">
     <Grid Margin="10,0,0,0">
         <StackPanel>
             <StackPanel>
-                <TextBlock x:Name="lblDisplayName" Text="Totem Solutions SA LIMITADA" Foreground="Black" FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
+                <TextBlock x:Name="lblDisplayName" Text="Totem Solutions SA LIMITADA"  FontSize="30" FontWeight="Bold" Margin="10,5,0,0"/>
                 <Separator  Width="1240"/>
             </StackPanel>
 
@@ -19,19 +19,19 @@
                     <StackPanel Margin="5" Orientation="Vertical">
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Identificador:" FontSize="15" Foreground="Black"  FontWeight="Bold" />
+                            <TextBlock Text="Identificador:" FontSize="15"   FontWeight="Bold" />
                             <TextBlock Text="FC62CD95-84D8-45B5-81B2-EAB4132E7976" FontSize="15" Name="lblIdentifier" Foreground="Green" Margin="8,0" FontWeight="Bold" Cursor="Hand"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Razão Social:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Razão Social:" FontSize="15"  />
                             <TextBlock Name="lblName" Text="Aleff Moura da Silva 111.111.111-11" FontSize="15" Foreground="Green" Margin="19,0" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Inscr. Estadual:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Inscr. Estadual:" FontSize="15"  />
                             <TextBlock Name="lblStateRegistration" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="8,0" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Inscr. Municipal:" FontSize="15" Foreground="Black"/>
+                            <TextBlock Text="Inscr. Municipal:" FontSize="15"  />
                             <TextBlock x:Name="lblMunicipalRegistration" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                         </StackPanel>
                     </StackPanel>
@@ -39,19 +39,19 @@
 
                 <StackPanel Margin="5" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <TextBlock Text="Email:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Email:" FontSize="15"  />
                         <TextBlock Name="lblEmail" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <TextBlock Text="CNAE:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="CNAE:" FontSize="15"  />
                         <TextBlock Name="lblCnae" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <TextBlock Text="Fone:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Fone:" FontSize="15"  />
                         <TextBlock Name="lblPhone" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <TextBlock Text="Endereço:" FontSize="15" Foreground="Black"/>
+                        <TextBlock Text="Endereço:" FontSize="15"  />
                         <TextBlock Name="lblAddress" Text="Não cadastrado" FontSize="15" Foreground="Green" Margin="5,0" FontWeight="Bold"/>
                     </StackPanel>
 

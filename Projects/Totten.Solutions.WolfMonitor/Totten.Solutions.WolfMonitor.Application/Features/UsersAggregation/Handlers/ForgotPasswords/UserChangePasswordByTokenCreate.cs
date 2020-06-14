@@ -35,12 +35,12 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Company).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Email).NotEmpty().Length(6, 200);
-                    RuleFor(a => a.Password).NotEmpty().Length(8, 150);
-                    RuleFor(a => a.TokenSolicitationCode).NotEmpty().NotEqual(default(Guid));
-                    RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)); ;
+                    RuleFor(a => a.Company).NotEmpty().Length(4, 100).WithMessage("Empresa deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve conter entre 6 e 100 caracteres");
+                    RuleFor(a => a.Password).NotEmpty().Length(8, 150).WithMessage("Password deve conter entre 6 e 100 caracteres");
+                    RuleFor(a => a.TokenSolicitationCode).NotEmpty().NotEqual(default(Guid)).WithMessage("TokenSolicitationCode está inválido");
+                    RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)).WithMessage("RecoverSolicitationCode está inválido");
                 }
             }
         }
@@ -66,9 +66,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                 Result<Exception, User> userCallback = await _repository.GetByLoginAndEmail(companyCallback.Success.Id, request.Login, request.Email);
 
                 if (!userCallback.Success.TokenSolicitationCode.Equals(request.TokenSolicitationCode.ToString()))
-                    return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Token da solicitação não está correto com a requisição, contate um administrador");
+                    return new BusinessException(ErrorCodes.InvalidObject, "O Token da solicitação não está correto com a requisição, contate um administrador");
                 if (!userCallback.Success.RecoverSolicitationCode.Equals(request.RecoverSolicitationCode.ToString()))
-                    return new BusinessException(Domain.Enums.ErrorCodes.InvalidObject, "O Codigo de recuperação da solicitação não está correto com a requisição, contate um administrador");
+                    return new BusinessException(ErrorCodes.InvalidObject, "O Código de recuperação da solicitação não está correto com a requisição, contate um administrador");
 
                 userCallback.Success.Password = request.Password.GenerateHash();
                 userCallback.Success.Token = string.Empty;

@@ -14,6 +14,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents
         public MappingProfile()
         {
             CreateMap<AgentCreate.Command, Agent>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Empty))
+                .ForMember(dest => dest.ProfileName, opt => opt.MapFrom(src => "Sem Perfil"))
                 .ForMember(dest => dest.CompanyId, opt => opt.MapFrom(src => src.CompanyId))
                 .ForMember(dest => dest.UserWhoCreatedId, opt => opt.MapFrom(src => src.UserWhoCreatedId))
                 .ForMember(dest => dest.UserWhoCreatedName, opt => opt.MapFrom(src => src.UserWhoCreatedName))

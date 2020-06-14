@@ -67,7 +67,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
                     RuleFor(a => a.Cpf).NotEmpty().Length(11).WithMessage("Cpf deve possuir 11 caracteres");
                     RuleFor(a => a.FirstName).NotEmpty().Length(3, 25).WithMessage("Nome deve possuir entre 3 e 25 caracteres");
-                    RuleFor(a => a.LastName).NotEmpty().Length(6, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");
+                    RuleFor(a => a.LastName).NotEmpty().Length(4, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");
                     RuleFor(a => a.Language).NotEmpty().Length(5).WithMessage("Linguagem  deve possuir 5 caracteres");
                     RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
                     RuleFor(a => a.Password).NotEmpty().MinimumLength(8).WithMessage("Senha deve possuir no mínimo 8 caracteres");

@@ -40,7 +40,7 @@
                             <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,0" />
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="5,25,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="5,0">
                             <Button x:Name="btnAction" Content="Editar" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="btnAction_Click" Height="40" Width="100"/>
                             <Button x:Name="btnCancel" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="40" Width="100" Margin="5,0" Visibility="Collapsed" Click="btnCancel_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
                         </StackPanel>
@@ -51,7 +51,7 @@
                 <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" Height="20" VerticalAlignment="Bottom" >
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,5">
-                            <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,10,0" >
+                            <Button x:Name="btnSearch" Height="30" Width="50" Margin="5,0,10,0" >
                                 <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
                             </Button>
                             <TextBox x:Name="txtUser" Height="30" Width="300" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por Nome ou Nome de visualização" />

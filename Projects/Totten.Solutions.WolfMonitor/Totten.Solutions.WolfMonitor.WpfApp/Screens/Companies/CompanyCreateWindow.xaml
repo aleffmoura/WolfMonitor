@@ -7,8 +7,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Adicionar Empresa" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Height="725" Width="800" >
-    <Grid>
+        Height="780" Width="700" FontFamily="Poppins">
+    <Grid Margin="20,10,20,0">
         <StackPanel VerticalAlignment="Top" Margin="5" Height="650" Width="auto" >
             <TextBox x:Name="txtFantasyName" Text="" materialDesign:HintAssist.Hint="Nome fantasia" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblFantasyNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
@@ -39,6 +39,6 @@
 
         </StackPanel>
 
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40" Background="#065FD4" BorderBrush="#065FD4"/>
     </Grid>
 </Window>

@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies"
              mc:Ignorable="d" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" FontFamily="Poppins">
 
     <Grid Height="800" Width="1240" Margin="10,10,0,0">
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="35,0,0,0" Content="Adicionar" Width="80" Height="30" Padding="0" Click="btnAdd_Click"/>
+            <Button x:Name="btnAdd" Margin="35,0,0,0" Content="Adicionar" Width="80" Height="30" Padding="0" Click="btnAdd_Click" Background="#065FD4" BorderBrush="#065FD4"/>
         </StackPanel>
 
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtCompanyName" TextChanged="txtCompanyName_TextChanged" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por nome"/>
-                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,30,0">
-                    <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
+                <TextBox x:Name="txtCompanyName" TextChanged="txtCompanyName_TextChanged" Height="30" Width="265" Foreground="White" materialDesign:HintAssist.Hint="Buscar por nome" />
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,30,0" Background="#065FD4" BorderBrush="#065FD4">
+                    <materialDesign:PackIcon Kind="Search" Foreground="White" />
                 </Button>
             </StackPanel>
 

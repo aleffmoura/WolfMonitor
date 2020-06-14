@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
              mc:Ignorable="d" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" FontFamily="Poppins">
     <Grid >
         <StackPanel VerticalAlignment="Top" Margin="5">
             <TextBox Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontSize="18"/>

@@ -7,13 +7,16 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Criar novo perfil do agent" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Height="150" Width="300" >
+        Height="150" Width="300" FontFamily="Poppins" >
     <Grid>
-        <StackPanel VerticalAlignment="Top" Margin="5" Height="125" Width="auto" >
-            <TextBox Name="txtName" Text="" materialDesign:HintAssist.Hint="Nome do novo perfil" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
-            <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-        </StackPanel>
+        <StackPanel>
 
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Criar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
+            <StackPanel VerticalAlignment="Top" Margin="5" Height="80" Width="auto" >
+                <TextBox Name="txtName" Text="" materialDesign:HintAssist.Hint="Nome do novo perfil" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18" Margin="20,10,20,0"/>
+                <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="20,2,0,5" />
+            </StackPanel>
+
+            <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Criar" Click="btnAdd_Click" Margin="22,0,22,10" Height="40" Background="#065FD4"/>
+        </StackPanel>
     </Grid>
 </Window>

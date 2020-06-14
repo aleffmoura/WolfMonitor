@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Detalhes do serviço" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
-        Width="600" Height="680">
+        Title="Detalhes do serviço" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        Width="600" Height="680" FontFamily="Poppins" Background="Transparent">
     
     <Grid>
         
@@ -67,13 +67,13 @@
             
             
             <Grid Margin="0,0,5,5">
-                <Button x:Name="btnPrevPage" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Click="btnPrevPage_Click">
+                <Button x:Name="btnPrevPage" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Click="btnPrevPage_Click" Background="#065FD4">
                     <materialDesign:PackIcon Kind="NavigateBefore"/>
                 </Button>
 
-                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" />
+                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" Background="#065FD4"/>
 
-                <Button x:Name="btnNextPage" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnNextPage_Click">
+                <Button x:Name="btnNextPage" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnNextPage_Click" Background="#065FD4">
                     <materialDesign:PackIcon Kind="NavigateNext"/>
                 </Button>
             </Grid>

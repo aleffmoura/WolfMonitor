@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Detalhes do arquivo" Background="AliceBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
-        Width="800" Height="680">
+        Title="Detalhes do arquivo" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        Width="900" Height="700" FontFamily="Poppins">
 
     <Grid>
 
@@ -31,10 +31,10 @@
                 <TabItem Header="Valor Atual">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="btnEdit" Margin="5" Click="btnModified_Click" ToolTip="Editar" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                            <Button x:Name="btnEdit" Margin="5" Click="btnModified_Click" ToolTip="Editar" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Background="#065FD4" BorderBrush="#065FD4">
                                 <materialDesign:PackIcon Kind="Edit" x:Name="kindEdit"/>
                             </Button>
-                            <Button Margin="5" x:Name="btnCancel" Click="btnCancel_Click" Visibility="Collapsed" ToolTip="Cancelar edição" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                            <Button Margin="5" x:Name="btnCancel" Click="btnCancel_Click" Visibility="Collapsed" ToolTip="Cancelar edição" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Background="#065FD4" BorderBrush="#065FD4">
                                 <materialDesign:PackIcon Kind="FileCancel" />
                             </Button>
                         </StackPanel>
@@ -58,7 +58,11 @@
 
                 <TabItem Header="Solicitações de usuários">
                     <Grid>
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="39*"/>
+                            <ColumnDefinition Width="740*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2">
                             <DataGrid x:Name="gridSolicitations" CanUserAddRows="False" Width="779" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Id" Width="140" Binding="{Binding Id}"/>
@@ -76,13 +80,13 @@
 
 
             <Grid Margin="0,0,5,5" x:Name="pnlBottom">
-                <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" IsEnabled="False" ToolTip="Página anterior" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Background="#065FD4" BorderBrush="#065FD4">
                     <materialDesign:PackIcon Kind="NavigateBefore"/>
                 </Button>
 
-                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" />
+                <Button x:Name="btnActualPage" ToolTip="Página atual" Content="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="Arrow" Background="#065FD4" BorderBrush="#065FD4"/>
 
-                <Button x:Name="btnNextPage" Click="btnNextPage_Click" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button x:Name="btnNextPage" Click="btnNextPage_Click" ToolTip="Próxima página" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#065FD4" BorderBrush="#065FD4">
                     <materialDesign:PackIcon Kind="NavigateNext"/>
                 </Button>
             </Grid>

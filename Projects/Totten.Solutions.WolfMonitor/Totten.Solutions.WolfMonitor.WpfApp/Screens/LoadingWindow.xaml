@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens"
         mc:Ignorable="d"
         Height="500" Width="500" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        Background="AliceBlue" Loaded="Window_Loaded" ShowInTaskbar="False">
+        Loaded="Window_Loaded" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="Storyboard1" RepeatBehavior="Forever">
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle">

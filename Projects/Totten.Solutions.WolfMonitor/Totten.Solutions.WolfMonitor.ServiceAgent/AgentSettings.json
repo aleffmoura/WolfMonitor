@@ -5,6 +5,7 @@
     "login": "servidor1",
     "password": "123456"
   },
+  "intervalForSearchItens": "1",
   "retrySendIfFailInHours": "1",
   "pathFilesIfFailSend": "./Monitoring/Items",
   "pathFilesExceptions": "./Monitoring/Exceptions",

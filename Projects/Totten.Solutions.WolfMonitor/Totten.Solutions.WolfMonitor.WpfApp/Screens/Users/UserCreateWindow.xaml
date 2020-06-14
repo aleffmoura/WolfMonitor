@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Adicionar Usuário" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="660" Width="800">
+        mc:Ignorable="d" Height="690" Width="800" FontFamily="Poppins">
     <Grid>
-        <StackPanel VerticalAlignment="Top" Margin="10,5,10,0" >
+        <StackPanel VerticalAlignment="Top" Margin="20,5,20,0" >
             
             <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
             <TextBox x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
@@ -34,7 +34,7 @@
             <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,0" />
         
         </StackPanel>
-        
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="0,0,0,5" Height="40"/>
+
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="20,0,20,5" Height="40" Background="#065FD4" BorderBrush="#065FD4"/>
     </Grid>
 </Window>

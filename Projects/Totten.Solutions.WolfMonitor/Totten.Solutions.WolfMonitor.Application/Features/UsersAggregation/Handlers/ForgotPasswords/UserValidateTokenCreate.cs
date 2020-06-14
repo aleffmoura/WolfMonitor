@@ -30,10 +30,10 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Company).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100);
-                    RuleFor(a => a.Token).NotEmpty().NotEqual(default(Guid));
-                    RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)); ;
+                    RuleFor(a => a.Company).NotEmpty().Length(4, 100).WithMessage("Empresa deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Token).NotEmpty().NotEqual(default(Guid)).WithMessage("Token da solicitação está inválido, contate o administrador");
+                    RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)).WithMessage("RecoverSolicitationCode está inválido, contate o administrador");
                 }
             }
         }

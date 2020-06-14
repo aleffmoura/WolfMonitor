@@ -6,22 +6,22 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Height="Auto" MinWidth="980" Width="auto">
+             Height="Auto" MinWidth="980" Width="auto" FontFamily="Poppins">
     <Grid Margin="10,20,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button x:Name="btnAdd" Margin="10,0,0,0" Click="btnAdd_Click" Content="Adicionar" Width="80" Height="30" Padding="0"/>
+            <Button x:Name="btnAdd" Margin="10,0,0,0" Click="btnAdd_Click" Content="Adicionar" Width="80" Height="30" Padding="0" Background="#065FD4" BorderBrush="#065FD4"/>
 
-            <Button x:Name="btnRefrash" Margin="10,0,0,0" Click="btnRefrash_Click" ToolTip="Recarregar página" Padding="0" Width="50" Height="30">
-                <materialDesign:PackIcon Kind="Refresh" Foreground="AliceBlue" />
+            <Button x:Name="btnRefrash" Margin="10,0,0,0" Click="btnRefrash_Click" ToolTip="Recarregar página" Padding="0" Width="50" Height="30"  Background="#065FD4" BorderBrush="#065FD4">
+                <materialDesign:PackIcon Kind="Refresh" Foreground="White" />
             </Button>
             
         </StackPanel>
 
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtArchiveName" TextChanged="txtArchiveName_TextChanged" Height="30" Width="220" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
-                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,50,0">
-                    <materialDesign:PackIcon Kind="Search" Foreground="AliceBlue" />
+                <TextBox x:Name="txtArchiveName" TextChanged="txtArchiveName_TextChanged" Height="30" Width="220" Foreground="White" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,50,0"  Background="#065FD4" BorderBrush="#065FD4">
+                    <materialDesign:PackIcon Kind="Search" Foreground="White" />
                 </Button>
             </StackPanel>
 

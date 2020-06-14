@@ -21,7 +21,6 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
             public string HostName { get; set; }
             public string HostAddress { get; set; }
 
-
             public Command(Guid id, string machineName, string localIp, string hostName, string hostAddress)
             {
                 Id = id;

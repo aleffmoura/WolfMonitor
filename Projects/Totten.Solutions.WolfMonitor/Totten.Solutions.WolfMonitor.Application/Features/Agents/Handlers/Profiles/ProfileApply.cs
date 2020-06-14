@@ -133,10 +133,14 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 await _logRepository.CreateAsync(logProfile);
                 #endregion
 
-
                 #region Atualizando Items
+
+                Guid itemId = Guid.Empty;
+
                 foreach (var item in items.Success.ToList())
                 {
+                    itemId = item.Id;
+
                     string value = null;
 
                     if (request.ProfileIdentifier != Guid.Empty)
@@ -162,7 +166,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 }
 
                 var command = new ItemSolicitationHistoricCreate.Command(request.UserId, request.AgentId, request.CompanyId,
-                                    profiles.FirstOrDefault().ItemId, SolicitationType.ChangeContainsProfile, "", "", "");
+                                    itemId, SolicitationType.ChangeContainsProfile, "", "", "");
 
                 var handle = new ItemSolicitationHistoricCreate.Handler(_itemRepository, _agentRepository, _userRepository, _rabbitMQ);
 
@@ -170,7 +174,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                 #endregion
 
 
-                return profiles.FirstOrDefault().ProfileIdentifier;
+                return request.ProfileIdentifier;
             }
         }
     }
