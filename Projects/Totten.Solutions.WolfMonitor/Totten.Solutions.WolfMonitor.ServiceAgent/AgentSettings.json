@@ -5,9 +5,10 @@
     "login": "servidor1",
     "password": "123456"
   },
-  "intervalForSearchItens": "1",
+  "intervalForSearchItensInHours": "1",
+  "nextMonitoringItemIfGenerateFileInMinutes": "30",
   "retrySendIfFailInHours": "1",
   "pathFilesIfFailSend": "./Monitoring/Items",
   "pathFilesExceptions": "./Monitoring/Exceptions",
-  "ReadItemsMonitoringByArchive": false
+  "readItemsMonitoringByArchive": false
 }

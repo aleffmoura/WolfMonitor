@@ -38,9 +38,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         public void SetServiceValues(SystemServiceViewModel systemServiceViewModel)
         {
             _systemServiceViewModel = systemServiceViewModel;
-            this.lblDisplayName.Text = _systemServiceViewModel.DisplayName;
+            this.lblDisplayName.Text = _systemServiceViewModel.GetDisplayNameFormated();
             this.lblCurrentStatus.Text = _systemServiceViewModel.Value;
-            this.lblServiceName.Text = _systemServiceViewModel.Name;
+            this.lblServiceName.Text = _systemServiceViewModel.GetNameFormated();
             this.lblMonitoredAt.Text = _systemServiceViewModel.MonitoredAt;
 
             ChangeColorTextBlock(this.lblCurrentStatus);

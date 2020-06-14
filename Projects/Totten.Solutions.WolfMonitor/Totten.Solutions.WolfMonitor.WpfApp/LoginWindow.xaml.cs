@@ -53,7 +53,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
 
                     Home home = new Home(_customHttp, userBasic.Success);
                     this.Visibility = Visibility.Hidden;
-                    home.ShowDialog();
+                    if (home.ShowDialog() == true)
+                        this.Visibility = Visibility.Visible;
+                    else
+                        this.Close();
                 }
                 else
                     MessageBox.Show($"Falha: {userBasic.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);

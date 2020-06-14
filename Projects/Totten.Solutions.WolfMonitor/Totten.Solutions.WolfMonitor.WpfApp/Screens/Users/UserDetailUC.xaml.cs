@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users;
 
@@ -13,6 +17,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
     {
         private UserService _userService;
         private UserBasicInformationViewModel _userBasicInformation;
+        private List<AgentForUserViewModel> _agents;
 
         public UserDetailUC(UserService userService, UserBasicInformationViewModel userBasicInformation)
         {
@@ -29,7 +34,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             _userService.GetAllAgentsByUser().ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
+                {
                     gridAgends.ItemsSource = task.Result.Success.Items;
+                    _agents = task.Result.Success.Items;
+                }
                 else
                     MessageBox.Show("Falha na obtenção dos agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -131,5 +139,16 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             }
         }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(txtUser.Text))
+                gridAgends.ItemsSource = _agents.Where(x => x.MachineName.Contains(txtUser.Text) || x.DisplayName.Contains(txtUser.Text)).ToList();
+        }
+
+        private void txtUser_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtUser.Text))
+                gridAgends.ItemsSource = _agents;
+        }
     }
 }

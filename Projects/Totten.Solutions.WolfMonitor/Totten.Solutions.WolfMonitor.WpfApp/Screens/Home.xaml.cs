@@ -67,7 +67,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
-            => Application.Current.Shutdown();
+            => this.DialogResult = true;
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {

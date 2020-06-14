@@ -35,6 +35,6 @@
         
         </StackPanel>
 
-        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="20,0,20,5" Height="40" Background="#065FD4" BorderBrush="#065FD4"/>
+        <Button x:Name="btnAdd" VerticalAlignment="Bottom" Content="Adicionar" Click="btnAdd_Click" Margin="20,0,20,10" Height="40" Background="#065FD4" BorderBrush="#065FD4"/>
     </Grid>
 </Window>

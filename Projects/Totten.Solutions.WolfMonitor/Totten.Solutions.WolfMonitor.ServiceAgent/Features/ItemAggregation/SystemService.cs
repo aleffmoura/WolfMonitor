@@ -26,6 +26,9 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
         public override bool VerifyChanges()
         {
+            if (this.NextMonitoring.HasValue && DateTime.Now < this.NextMonitoring.Value)
+                return false;
+
             var status = SystemServicesController.GetStatus(this.Name, this.DisplayName);
 
             if (this.Value.Equals(status))
@@ -35,11 +38,16 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             this.Value = status;
             this.MonitoredAt = DateTime.Now;
             this.AboutCurrentValue = "Alterado sistematicamente.";
+            this.NextMonitoring = null;
+
             return true;
         }
 
         public override bool Change(string newValue, SolicitationType solicitationType)
         {
+            if (this.NextMonitoring.HasValue && DateTime.Now < this.NextMonitoring.Value)
+                return false;
+
             var returned = false;
 
             var status = SystemServicesController.GetStatus(this.Name, this.DisplayName);
@@ -58,6 +66,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
                 this.Value = SystemServicesController.GetStatus(this.Name, this.DisplayName);
                 this.MonitoredAt = DateTime.Now;
                 this.AboutCurrentValue = solicitationType.ToString();
+                this.NextMonitoring = null;
             }
 
             return returned;

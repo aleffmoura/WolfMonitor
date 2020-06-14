@@ -90,7 +90,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         
         private void Populate()
         {
-            this.lblDisplayName.Text = _systemServiceView.GetDisplayNameFormated();
+            this.lblDisplayName.Text = _systemServiceView.DisplayName;
             this.lblName.Text = _systemServiceView.Name;
             this.lblCurrentValue.Text = _systemServiceView.Value;
             this.lblMonitoredAt.Text = _systemServiceView.MonitoredAt;

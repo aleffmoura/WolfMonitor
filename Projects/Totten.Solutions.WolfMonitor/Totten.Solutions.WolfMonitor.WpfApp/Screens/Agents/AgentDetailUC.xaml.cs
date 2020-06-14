@@ -201,7 +201,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
             _agentsService.ApplyProfile(profileApply).ContinueWith(task =>
             {
                 if (task.Result.IsSuccess)
+                {
                     MessageBox.Show($"Foi aplicado o perfil com sucesso.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    lblProfile.Text = profileView.Name;
+                }
                 else
                     MessageBox.Show($"Falha na tentativa de aplicar o perfil, contate o administrador", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
 

@@ -7,13 +7,13 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Detalhes do arquivo" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
-        Width="900" Height="700" FontFamily="Poppins">
+        Width="900" Height="800" FontFamily="Poppins" Background="Transparent" Foreground="White">
 
     <Grid>
 
         <StackPanel Orientation="Vertical" Margin="5,10">
 
-            <TextBlock x:Name="lblDisplayName" Foreground="Black" Text="File SQL SERVER" FontSize="36"/>
+            <TextBlock x:Name="lblDisplayName" Text="File SQL SERVER" FontSize="36"/>
             <Separator Margin="0,5,0,10"/>
 
             <StackPanel Orientation="Horizontal" >
@@ -38,17 +38,17 @@
                                 <materialDesign:PackIcon Kind="FileCancel" />
                             </Button>
                         </StackPanel>
-                        <TextBox x:Name="txtNotePad" IsReadOnly="True" Height="470" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Hidden"/>
+                        <TextBox x:Name="txtNotePad" IsReadOnly="True" Height="550" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Hidden"/>
                     </StackPanel>
                 </TabItem>
 
                 <TabItem Header="Histórico de modificações">
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="779" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="gridHistoric" CanUserAddRows="False" Width="880" Height="530" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Identificador" Width="250" Binding="{Binding Id}"/>
-                                    <DataGridTextColumn Header="Valor" Width="320" Binding="{Binding Value}" />
+                                    <DataGridTextColumn Header="Valor" Width="340" Binding="{Binding Value}" />
                                     <DataGridTextColumn Header="Data e Hora" Binding="{Binding MonitoredAt}" SortDirection="Ascending" />
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -58,12 +58,8 @@
 
                 <TabItem Header="Solicitações de usuários">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="39*"/>
-                            <ColumnDefinition Width="740*"/>
-                        </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2">
-                            <DataGrid x:Name="gridSolicitations" CanUserAddRows="False" Width="779" Height="420" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="gridSolicitations" CanUserAddRows="False" Width="880" Height="530" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Id" Width="140" Binding="{Binding Id}"/>
                                     <DataGridTextColumn Header="Nome do usuário" Width="130" Binding="{Binding User}"/>

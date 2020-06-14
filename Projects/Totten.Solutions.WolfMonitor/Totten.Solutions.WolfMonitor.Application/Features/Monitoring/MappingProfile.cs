@@ -13,7 +13,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
         {
             #region Items
             CreateMap<ItemCreate.Command, Item>()
-                .ForMember(dest => dest.Value, src => src.MapFrom(item => "Não monitorado."))
+                .ForMember(dest => dest.Value, src => src.MapFrom(item => DateTime.MinValue.ToString("dd/MM/yyyy HH:mm:ss")))
                 .ForMember(dest => dest.AboutCurrentValue, src => src.MapFrom(item => "Item criado."))
                 .ForMember(dest => dest.Type, src => src.MapFrom(item => item.Type))
                 .ForMember(dest => dest.CreatedIn, src => src.MapFrom(item => DateTime.Now))
@@ -26,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
                 .ForMember(dest=>dest.UpdatedIn,src=>src.MapFrom(item=>item.UpdatedIn.ToString("dd/MM/yyyy HH:mm:ss")));
 
             CreateMap<Item, ItemResumeViewModel>()
-                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Não monitorado"));
+                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : "dd/MM/yyyy HH:mm:ss"));
 
             CreateMap<Item, ItemResumeForAgentViewModel>();
             #endregion
@@ -36,7 +36,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring
             CreateMap<Item, ItemHistoric>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(item => Guid.NewGuid()))
                 .ForMember(dest => dest.ItemId, src => src.MapFrom(item => item.Id))
-                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Não monitorado"));
+                .ForMember(dest => dest.MonitoredAt, src => src.MapFrom(item => item.MonitoredAt.HasValue ? item.MonitoredAt.Value.ToString("dd/MM/yyyy HH:mm:ss") : DateTime.MinValue.ToString("dd/MM/yyyy HH:mm:ss")));
 
             CreateMap<ItemHistoric, ItemHistoric>();
             #endregion

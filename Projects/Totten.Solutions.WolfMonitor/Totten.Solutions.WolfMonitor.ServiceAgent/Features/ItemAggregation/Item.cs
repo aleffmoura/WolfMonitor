@@ -20,6 +20,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public DateTime? MonitoredAt { get; set; }
+        public DateTime? NextMonitoring { get; set; }
         public string Value { get; set; }
         public string AboutCurrentValue { get; set; }
         public string LastValue { get; set; }

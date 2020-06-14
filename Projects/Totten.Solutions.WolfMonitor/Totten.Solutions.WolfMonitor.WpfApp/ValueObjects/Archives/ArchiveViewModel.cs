@@ -14,8 +14,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Archives
 
         public string GetDisplayNameFormated()
         {
-            if (DisplayName.Length > 18)
-                return $"{DisplayName.Substring(0, 18)}...";
+            if (DisplayName.Length > 15)
+                return $"{DisplayName.Substring(0, 15)}...";
 
             return DisplayName;
         }

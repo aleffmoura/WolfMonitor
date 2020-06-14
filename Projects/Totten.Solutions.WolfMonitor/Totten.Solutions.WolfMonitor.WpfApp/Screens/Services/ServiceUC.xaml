@@ -6,27 +6,27 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Services"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" FontFamily="Poppins">
-    <Grid Margin="5">
-        <Border x:Name="componentListagem" Padding="5" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
+    <Grid Margin="2,10,0,0" >
+        <Border x:Name="componentListagem" Padding="4" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Height="100" Width="377">
-                <StackPanel Orientation="Vertical" Width="170">
+                <StackPanel Orientation="Vertical" Width="160">
                     <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="165" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"  ToolTip="Nome de exibição"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
                         <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="#065FD4" BorderBrush="#065FD4" ToolTip="Abrir detalhes">
-                            <materialDesign:PackIcon Foreground="AliceBlue" Kind="OpenInApp" />
+                            <materialDesign:PackIcon Foreground="White" Kind="OpenInApp" />
                         </Button>
                         <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30" Background="LimeGreen" BorderBrush="LimeGreen" ToolTip="Alterna status atual" >
-                            <materialDesign:PackIcon Foreground="AliceBlue" Kind="RestartAlert" />
+                            <materialDesign:PackIcon Foreground="White" Kind="RestartAlert" />
                         </Button>
                         <Button x:Name="btnDel" Margin="2" Padding="0"  Click="btnDel_Click" Width="40" Height="30" Background="Tomato" BorderBrush="Tomato" ToolTip="Deletar serviço">
-                            <materialDesign:PackIcon Foreground="AliceBlue" Kind="DeleteAlertOutline"/>
+                            <materialDesign:PackIcon Foreground="White" Kind="DeleteAlertOutline"/>
                         </Button>
                     </StackPanel>
                     
                 </StackPanel>
                 
-                <StackPanel Orientation="Vertical" Width="205" Margin="2,0">
+                <StackPanel Orientation="Vertical" Width="245">
                     
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Current Status: " Foreground="Black" FontSize="13" />

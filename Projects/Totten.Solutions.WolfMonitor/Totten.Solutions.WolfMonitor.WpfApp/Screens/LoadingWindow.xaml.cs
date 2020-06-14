@@ -32,7 +32,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _work.ContinueWith(task => this.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+            if (_work != null)
+                _work.ContinueWith(task => this.Close(), TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

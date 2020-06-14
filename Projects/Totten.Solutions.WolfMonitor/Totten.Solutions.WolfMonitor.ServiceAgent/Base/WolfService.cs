@@ -29,7 +29,8 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
         private AgentSettings _agentSettings;
         private Rabbit _rabbitMQ;
         private CancellationTokenSource _cancellationToken;
-        private Result<Exception, PageResult<Item>> _items;
+        private DateTime _lastSearchItems = default;
+        private Result<Exception, PageResult<Item>> _items = Result<Exception, PageResult<Item>>.Of(new PageResult<Item>());
 
         public WolfService(AgentSettings agentSettings, AgentService agentService, IHelper helper)
         {
@@ -195,13 +196,18 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
 
         private void GetItems()
         {
-            if (_agentSettings.ReadItemsMonitoringByArchive)
+            if (_items.IsSuccess && (_items.Success.Items.Count == 0 || _lastSearchItems < DateTime.Now))
             {
-                _items = Result<Exception, PageResult<Item>>.Of(new PageResult<Item>());
-                _items.Success.Items = new List<Item>();
+                if (_agentSettings.ReadItemsMonitoringByArchive)
+                {
+                    _items = Result<Exception, PageResult<Item>>.Of(new PageResult<Item>());
+                    _items.Success.Items = new List<Item>();
+                }
+                else
+                    _items = _agentService.GetItems();
+
+                _lastSearchItems = DateTime.Now.AddHours(_agentSettings.intervalForSearchItens);
             }
-            else
-                _items = _agentService.GetItems();
 
             if (_items.IsSuccess)
                 VerifyChanges(_items);
@@ -220,9 +226,10 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                     try
                     {
                         if (_agentService.Send(instance).IsFailure)
+                        {
                             GenerateFile(instance);
-
-                        VerifyIfProfile(instance);
+                            instance.NextMonitoring = DateTime.Now.AddMinutes(_agentSettings.NextMonitoringItemIfGenerateFileInMinutes);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -230,9 +237,9 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                         GenerateLogException(ex, instance);
                     }
                 }
-
-                VerifyIfProfile(instance);
                 itemsCallback.Success.Items[i] = instance;
+                
+                VerifyIfProfile(instance);
             }
         }
 

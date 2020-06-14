@@ -184,11 +184,15 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
         private void tabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (_currentTab == tabControl.SelectedIndex || tabControl.SelectedIndex == 0)
+            if (tabControl.SelectedIndex == 0)
             {
                 _currentTab = 0;
+                pnlBottom.Visibility = Visibility.Collapsed;
                 return;
             }
+
+            if (_currentTab == tabControl.SelectedIndex)
+                return;
 
             _skip = 0;
             _actualPage = 1;
@@ -198,6 +202,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
             btnNextPage.IsEnabled = false;
 
             _currentTab = tabControl.SelectedIndex;
+
+            pnlBottom.Visibility = Visibility.Visible;
 
             if (tabControl.SelectedIndex == 1)
             {

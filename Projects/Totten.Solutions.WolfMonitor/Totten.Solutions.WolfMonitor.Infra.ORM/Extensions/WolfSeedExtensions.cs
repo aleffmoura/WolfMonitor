@@ -33,6 +33,8 @@ namespace Totten.Solutions.WolfMonitor.Infra.ORM.Extensions
             builder.Entity<Agent>().HasData(new Agent
             {
                 CompanyId = companyId,
+                ProfileIdentifier = Guid.Empty,
+                ProfileName = "Sem Perfil",
                 CreatedIn = DateTime.Now,
                 DisplayName = "Servidor BR 1",
                 Id = Guid.NewGuid(),
