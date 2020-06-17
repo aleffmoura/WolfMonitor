@@ -40,7 +40,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
                 FantasyName = txtFantasyName.Text,
                 Email = txtEmail.Text,
                 Cnae = txtCnae.Text,
-                Cnpj = txtCnpj.Text,
+                Cnpj = txtCnpj.Text.Replace(".","").Replace("/","").Replace("-",""),
                 Address = txtAddress.Text,
                 MunicipalRegistration = txtMunicipalRegistration.Text,
                 StateRegistration = txtStateRegistration.Text,

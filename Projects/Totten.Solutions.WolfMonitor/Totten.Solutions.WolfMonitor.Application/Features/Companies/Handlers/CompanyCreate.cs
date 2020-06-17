@@ -45,7 +45,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                     RuleFor(a => a.FantasyName).Length(2, 150).WithMessage("Nome fantasia deve conter entre 2 e 100 caracteres");
                     RuleFor(a => a.Cnpj).IsValidCNPJ();
                     RuleFor(a => a.Email).Length(5, 150).WithMessage("Email deve conter entre 5 e 150 caracteres");
-                    RuleFor(a => a.Phone).Length(11, 15).WithMessage("Telefone deve conter entre 11 e 15 caracteres");
+                    RuleFor(a => a.Phone).Length(11, 20).WithMessage("Telefone deve conter entre 11 e 20 caracteres");
                     RuleFor(a => a.Address).MinimumLength(5).WithMessage("Endereço deve conter no minimo 5 caracteres");
                 }
             }

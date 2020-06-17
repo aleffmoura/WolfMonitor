@@ -63,7 +63,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 FirstName = txtName.Text,
                 LastName = txtLastName.Text,
                 Email = txtEmail.Text,
-                Cpf = txtCpf.Text,
+                Cpf = txtCpf.Text.Replace(".","").Replace("-",""),
                 Language = "pt-BR",
             };
         }

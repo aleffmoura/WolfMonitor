@@ -25,7 +25,8 @@
                 <DataGrid x:Name="gridUsers" Margin="0,10"
                       Height="500" ItemsSource="{Binding}" AutoGenerateColumns="False"
                       SelectionChanged="gridUsers_SelectionChanged"
-                      CanUserDeleteRows="False" IsReadOnly="True">
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="280" Header="Identificador" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nome completo" Width="200" Binding="{Binding FullName}"  SortDirection="Ascending" />

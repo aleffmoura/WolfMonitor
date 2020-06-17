@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Adicionar Usuário" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Height="700" Width="800" FontFamily="Poppins" Background="#181818">
@@ -29,9 +30,12 @@
 
             <TextBox Foreground="White" x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-            
-            <TextBox Foreground="White" x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
-            <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,0" />
+
+            <xctk:MaskedTextBox x:Name="txtCpf"
+                                Foreground="White"
+                                Mask="000,000,000-00"
+                                materialDesign:HintAssist.Hint="cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,2,0,0" />
         
         </StackPanel>
 

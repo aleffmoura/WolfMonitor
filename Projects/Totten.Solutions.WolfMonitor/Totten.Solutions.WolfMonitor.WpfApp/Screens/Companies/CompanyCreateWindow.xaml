@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Adicionar Empresa" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Height="780" Width="700" FontFamily="Poppins" Background="#181818">
@@ -16,7 +17,10 @@
             <TextBox Foreground="White" x:Name="txtName" Text=""  materialDesign:HintAssist.Hint="Razão Social" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
-            <TextBox Foreground="White" x:Name="txtCnpj"  materialDesign:HintAssist.Hint="Cnpj" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <xctk:MaskedTextBox x:Name="txtCnpj"
+                                Foreground="White"
+                                Mask="00,000,000/0000-00"
+                                materialDesign:HintAssist.Hint="Cnpj" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblCnpjError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
             <TextBox Foreground="White" x:Name="txtStateRegistration" materialDesign:HintAssist.Hint="Inscrição estadual" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
@@ -31,7 +35,11 @@
             <TextBox Foreground="White" x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
-            <TextBox Foreground="White" x:Name="txtPhone" materialDesign:HintAssist.Hint="Telefone" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <xctk:MaskedTextBox x:Name="txtPhone"
+                                Foreground="White"
+                                Mask="(00) 0 0000-0000"
+                                materialDesign:HintAssist.Hint="Telefone" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+
             <Label x:Name="lblPhoneError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
             <TextBox Foreground="White" x:Name="txtAddress" materialDesign:HintAssist.Hint="Endereço" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
