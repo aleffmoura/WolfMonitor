@@ -10,6 +10,7 @@ using Totten.Solutions.WolfMonitor.Domain.Exceptions;
 using Totten.Solutions.WolfMonitor.Domain.Features.Companies;
 using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Validation.FluentValidations;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
 {
@@ -42,7 +43,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                 {
                     RuleFor(a => a.Name).Length(4, 200).WithMessage("Razão social deve conter entre 4 e 100 caracteres");
                     RuleFor(a => a.FantasyName).Length(2, 150).WithMessage("Nome fantasia deve conter entre 2 e 100 caracteres");
-                    RuleFor(a => a.Cnpj).Length(18).WithMessage("CNPJ é inválido");
+                    RuleFor(a => a.Cnpj).IsValidCNPJ();
                     RuleFor(a => a.Email).Length(5, 150).WithMessage("Email deve conter entre 5 e 150 caracteres");
                     RuleFor(a => a.Phone).Length(11, 15).WithMessage("Telefone deve conter entre 11 e 15 caracteres");
                     RuleFor(a => a.Address).MinimumLength(5).WithMessage("Endereço deve conter no minimo 5 caracteres");

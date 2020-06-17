@@ -15,11 +15,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
     {
         private IUserService _userService;
         private bool _enableNext;
+        public object _validationObject;
 
-        public ChangePasswordUC(IUserService userService)
+        public ChangePasswordUC(IUserService userService, object validationObject)
         {
             InitializeComponent();
             _userService = userService;
+            _validationObject = validationObject;
         }
 
         public EventHandler OnChangeEvent { get; set; }

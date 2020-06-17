@@ -64,9 +64,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Monitoring.Handlers.
                         .WithMessage("Identificador do usuario ao qual esta adicionando o serviço é invalido");
                     RuleFor(a => a.ItemId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do item é invalido");
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 250);
-                    RuleFor(a => a.DisplayName).NotEmpty().Length(4, 250);
-                    RuleFor(a => a.NewValue).NotEmpty().Length(1, 250);
+                    RuleFor(a => a.Name).Length(4, 250).WithMessage("Nome deve conter entre 4 e 250 caracteres");
+                    RuleFor(a => a.DisplayName).Length(4, 250).WithMessage("Nome de exibição deve conter entre 4 e 250 caracteres"); ;
+                    RuleFor(a => a.NewValue).MinimumLength(1).WithMessage("Novo valor deve conter no minimo 1 caracter"); ;
                 }
             }
         }

@@ -54,9 +54,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                         .WithMessage("Identificador da empresa é inválido");
                     RuleFor(a => a.UserWhoCreatedId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuario ao qual esta criando o agente é inválido");
-                    RuleFor(a => a.DisplayName).NotEmpty().Length(4, 100).WithMessage("Nome de exibição deve conter entre 4 e 100 caracteres");
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login name deve conter entre 4 e 100 caracteres");
-                    RuleFor(a => a.Password).NotEmpty().Length(4, 100).WithMessage("Senha deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.DisplayName).Length(4, 100).WithMessage("Nome de exibição deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).Length(4, 100).WithMessage("Login name deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Password).Length(4, 100).WithMessage("Senha deve conter entre 4 e 100 caracteres");
                 }
             }
         }

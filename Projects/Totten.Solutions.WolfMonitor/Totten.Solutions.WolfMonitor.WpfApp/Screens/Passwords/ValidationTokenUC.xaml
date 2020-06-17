@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-        d:DesignHeight="150" d:DesignWidth="350">
+             Height="450" Width="400" Background="#181818">
     <Grid>
         <StackPanel Margin="10" >
-            <TextBox Name="txtToken" materialDesign:HintAssist.Hint="Token"
+            <TextBox Foreground="White" Name="txtToken" materialDesign:HintAssist.Hint="Token"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      Margin="20,40,20,0" FontSize="25" TextChanged="txtToken_TextChanged"/>
-            <Label Content="Não recebeu o token?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="16" Cursor="Hand" MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
+            <Label Content="Não recebeu o token?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="#909090" FontSize="16" Cursor="Hand" MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
 
         </StackPanel>
     </Grid>

@@ -35,11 +35,11 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Company).NotEmpty().Length(4, 100).WithMessage("Empresa deve conter entre 4 e 100 caracteres");
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve conter entre 4 e 100 caracteres");
-                    RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve conter entre 6 e 100 caracteres");
-                    RuleFor(a => a.Password).NotEmpty().Length(8, 150).WithMessage("Password deve conter entre 6 e 100 caracteres");
-                    RuleFor(a => a.TokenSolicitationCode).NotEmpty().NotEqual(default(Guid)).WithMessage("TokenSolicitationCode está inválido");
+                    RuleFor(a => a.Company).Length(4, 100).WithMessage("Empresa deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).Length(4, 100).WithMessage("Login deve conter entre 4 e 100 caracteres");
+                    RuleFor(a => a.Email).Length(6, 200).WithMessage("Email deve conter entre 6 e 100 caracteres");
+                    RuleFor(a => a.Password).Length(8, 150).WithMessage("Password deve conter entre 6 e 100 caracteres");
+                    RuleFor(a => a.TokenSolicitationCode).NotEqual(default(Guid)).WithMessage("TokenSolicitationCode está inválido");
                     RuleFor(a => a.RecoverSolicitationCode).NotEqual(default(Guid)).WithMessage("RecoverSolicitationCode está inválido");
                 }
             }

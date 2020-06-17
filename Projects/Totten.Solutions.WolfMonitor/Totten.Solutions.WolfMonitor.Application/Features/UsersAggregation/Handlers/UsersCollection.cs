@@ -37,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                         .WithMessage("Identificador da empresa é invalido");
                     RuleFor(a => a.UserCompany).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do usuário é invalido");
-                    RuleFor(a => a.Role).NotNull().NotEmpty()
+                    RuleFor(a => a.Role).NotNull()
                         .WithMessage("Não foi possível definir o nível de permissão do usuário");
                 }
             }

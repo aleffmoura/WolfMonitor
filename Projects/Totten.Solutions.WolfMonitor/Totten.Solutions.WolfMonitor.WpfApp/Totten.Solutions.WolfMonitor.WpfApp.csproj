@@ -31,4 +31,8 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validadores\" />
+  </ItemGroup>
+
 </Project>

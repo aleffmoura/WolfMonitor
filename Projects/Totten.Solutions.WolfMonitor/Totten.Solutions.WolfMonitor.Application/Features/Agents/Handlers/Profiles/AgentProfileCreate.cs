@@ -55,7 +55,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers.Prof
                         .WithMessage("Identificador do usuario ao qual esta criando o profile é inválido");
                     RuleFor(a => a.AgentId).NotEqual(Guid.Empty)
                         .WithMessage("Identificador do agent ao qual esta criando o profile é inválido");
-                    RuleFor(a => a.Name).NotEmpty().Length(4, 100).WithMessage("Nome deve possuir entre 4 e 100 caracteres.");
+                    RuleFor(a => a.Name).Length(4, 100).WithMessage("Nome deve possuir entre 4 e 100 caracteres.");
                 }
             }
         }

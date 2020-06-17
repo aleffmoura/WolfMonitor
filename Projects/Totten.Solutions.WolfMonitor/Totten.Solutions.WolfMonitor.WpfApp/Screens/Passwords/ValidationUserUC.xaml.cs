@@ -21,13 +21,22 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
         public bool EnableNext => _enableNext;
         public bool EnablePrev => false;
         public StepRecover StepRecover => StepRecover.validateUser;
+        private object _validationObject;
 
         public string BtnNextName => "Próximo";
 
-        public ValidationUserUC(IUserService userService)
+        public ValidationUserUC(IUserService userService, object validationObject)
         {
             _userService = userService;
             InitializeComponent();
+            _validationObject = validationObject;
+
+            if(_validationObject is TokenSolicitationVO tokenSolicitation)
+            {
+                txtCompany.Text = tokenSolicitation.Company;
+                txtEmail.Text = tokenSolicitation.Email;
+                txtLogin.Text = tokenSolicitation.Login;
+            }
         }
 
 

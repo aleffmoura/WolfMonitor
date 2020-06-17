@@ -26,7 +26,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             
             _userService = userService;
 
-            SwitchPanels(new ValidationUserUC(_userService));
+            SwitchPanels(new ValidationUserUC(_userService, null));
         }
 
         private void SwitchPanels(UserControl userControl)
@@ -56,8 +56,8 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             else if (_actualControl.StepRecover == StepRecover.tokenConfirm)
             {
                 if (isNext)
-                    return new ChangePasswordUC(_userService);
-                return new ValidationUserUC(_userService);
+                    return new ChangePasswordUC(_userService, _validationObject);
+                return new ValidationUserUC(_userService, _validationObject);
             }
             else if (!isNext)
                 return new ValidationTokenUC(_userService, _validationObject);

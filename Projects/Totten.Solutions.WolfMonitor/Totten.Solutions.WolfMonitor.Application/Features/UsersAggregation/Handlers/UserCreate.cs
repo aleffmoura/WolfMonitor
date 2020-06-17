@@ -14,6 +14,7 @@ using Totten.Solutions.WolfMonitor.Domain.Features.Logs;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Extensions;
 using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Structs;
+using Totten.Solutions.WolfMonitor.Infra.CrossCutting.Validation.FluentValidations;
 
 namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Handlers
 {
@@ -64,13 +65,13 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     RuleFor(a => a.UserId).NotEqual(Guid.Empty).WithMessage("Usuário da solicitação está inválido");
                     RuleFor(a => a.UserCompany).NotEqual(Guid.Empty).WithMessage("Empresa do usuário está inválida");
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty).WithMessage("Empresa da solicitação está inválido");
-                    RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
-                    RuleFor(a => a.Cpf).NotEmpty().Length(11).WithMessage("Cpf deve possuir 11 caracteres");
-                    RuleFor(a => a.FirstName).NotEmpty().Length(3, 25).WithMessage("Nome deve possuir entre 3 e 25 caracteres");
-                    RuleFor(a => a.LastName).NotEmpty().Length(4, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");
-                    RuleFor(a => a.Language).NotEmpty().Length(5).WithMessage("Linguagem  deve possuir 5 caracteres");
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
-                    RuleFor(a => a.Password).NotEmpty().MinimumLength(8).WithMessage("Senha deve possuir no mínimo 8 caracteres");
+                    RuleFor(a => a.Email).Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
+                    RuleFor(a => a.Cpf).IsValidCPF();
+                    RuleFor(a => a.FirstName).Length(3, 25).WithMessage("Nome deve possuir entre 3 e 25 caracteres");
+                    RuleFor(a => a.LastName).Length(4, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");
+                    RuleFor(a => a.Language).Length(5).WithMessage("Linguagem  deve possuir 5 caracteres");
+                    RuleFor(a => a.Login).Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Password).MinimumLength(8).WithMessage("Senha deve possuir no mínimo 8 caracteres");
                 }
             }
         }

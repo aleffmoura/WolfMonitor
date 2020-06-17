@@ -32,9 +32,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
             {
                 public Validator()
                 {
-                    RuleFor(a => a.Company).NotEmpty().Length(4, 100).WithMessage("Empresa deve possuir entre 4 e 100 caracteres");
-                    RuleFor(a => a.Login).NotEmpty().Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
-                    RuleFor(a => a.Email).NotEmpty().Length(6, 200).WithMessage("Email deve possuir entre 6 e 100 caracteres");
+                    RuleFor(a => a.Company).Length(4, 100).WithMessage("Empresa deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Login).Length(4, 100).WithMessage("Login deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.Email).Length(6, 200).WithMessage("Email deve possuir entre 6 e 100 caracteres");
                 }
             }
         }

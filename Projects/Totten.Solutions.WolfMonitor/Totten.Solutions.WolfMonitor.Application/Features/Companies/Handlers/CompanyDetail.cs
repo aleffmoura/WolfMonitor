@@ -37,7 +37,7 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Companies.Handlers
                 {
                     RuleFor(d => d.Id).NotEqual(Guid.Empty);
                     RuleFor(d => d.UserCompany).NotEqual(Guid.Empty);
-                    RuleFor(d => d.Role).NotEmpty();
+                    RuleFor(d => d.Role).NotEmpty().WithMessage("Nivel do usuário está incorreto, contate o administrador");
                 }
             }
         }
