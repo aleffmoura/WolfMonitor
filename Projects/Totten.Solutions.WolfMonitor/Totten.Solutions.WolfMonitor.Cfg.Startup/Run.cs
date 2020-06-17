@@ -14,7 +14,7 @@ namespace Totten.Solutions.WolfMonitor.Cfg.Startup
         {
             Helper helper = new Helper(null);
 
-            var address = Environment.GetEnvironmentVariable("ADDRESS")
+            var address = "192.168.0.102"//Environment.GetEnvironmentVariable("ADDRESS")
                             ?? helper.GetLocalIpAddress();
 
             var httpPort = Environment.GetEnvironmentVariable("PORT")

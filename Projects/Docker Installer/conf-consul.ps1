@@ -1,5 +1,5 @@
 ﻿Write-Output "Criando parâmetros de configuração no Consul..."
-$Url = "http://localhost:8500/v1/kv/"
+$Url = "http://192.168.0.102:8500/v1/kv/"
 if($Args[0]) {
 	$Url = $Args[0]
 }
@@ -13,12 +13,12 @@ $Global = @'
   "logConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=LogContext;Persist Security Info=True;Integrated Security=True;",
   "healthCheckIntervalSegs": "10",
   "deregisterCriticalServiceAfterSegs": "10",
-  "cors": "localhost:4200",
+  "cors": "192.168.0.102:4200",
   "broker": {
-    "hostname": "10.0.75.1",
+    "hostname": "192.168.0.102",
     "exchangeName": "tottem"
   },
-  "identityServerAddress": "http://10.0.75.1:16000"
+  "identityServerAddress": "http://192.168.0.102:16000"
 }
 '@
 
@@ -44,7 +44,7 @@ $Gateway = @'
     "GlobalConfiguration": {
         "RequestIdKey": null,
         "ServiceDiscoveryProvider": {
-            "Host": "10.0.75.1",
+            "Host": "192.168.0.102",
             "Port": 8500,
             "Type": "Consul",
             "Token": null,
@@ -83,7 +83,7 @@ $IdentityServer = @'
   "tags": "Authtentication,JWT,Token",
   "connectionString": "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AuthContext;Persist Security Info=True;Integrated Security=True;",
   "wolfMonitorConnectionString":"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=WolfMonitorContext;Persist Security Info=True;Integrated Security=True;",
-  "issuerUri": "http://localhost",
+  "issuerUri": "http://192.168.0.102",
   "agentsApiSecret":"agentSuperSecret",
   "monitoringApiSecret":"monitoringSuperSecret",
   "usersApiSecret":"usersSuperSecret",
@@ -118,7 +118,7 @@ $Register = @'
 	"apiSecret":"usersSuperSecret",
 	"authSettings": {
 		"secret": "IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw",
-		"issuer": "https://localhost:9001/",
+		"issuer": "https://192.168.0.102:9001/",
 		"clientId": "099153c2625149bc8ecb3e85e03f0022"
 	}
 }
