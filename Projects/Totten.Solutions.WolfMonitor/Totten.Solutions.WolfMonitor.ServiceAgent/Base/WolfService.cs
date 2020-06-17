@@ -206,7 +206,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
                 else
                     _items = _agentService.GetItems();
 
-                _lastSearchItems = DateTime.Now.AddHours(_agentSettings.intervalForSearchItens);
+                _lastSearchItems = DateTime.Now.AddSeconds(_agentSettings.IntervalForSearchItensSeconds);
             }
 
             if (_items.IsSuccess)

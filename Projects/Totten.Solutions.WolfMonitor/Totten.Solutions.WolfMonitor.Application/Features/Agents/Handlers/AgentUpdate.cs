@@ -40,9 +40,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
                 public Validator()
                 {
                     RuleFor(a => a.Id).NotEqual(Guid.Empty).WithMessage("Identificador da empresa é inválido");
-                    RuleFor(a => a.MachineName).Length(4, 100).WithMessage("Nome da maquina deve possuir entre 4 e 100 caracteres");
+                    RuleFor(a => a.MachineName).Length(1, 100).WithMessage("Nome da maquina deve possuir entre 1 e 100 caracteres");
                     RuleFor(a => a.LocalIp).NotEmpty().WithMessage("IP não pode ser em branco em nulo");
-                    RuleFor(a => a.HostName).Length(4, 100).WithMessage("Nome do Host não pode ser em branco ou nulo");
+                    RuleFor(a => a.HostName);
                     RuleFor(a => a.HostAddress).Length(4, 100).WithMessage("Endereço do host não pode ser em branco ou nulo");
                 }
             }
@@ -59,6 +59,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.Agents.Handlers
 
             public async Task<Result<Exception, Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                if(string.IsNullOrEmpty(request.HostName))
+                    request.HostName = "Sem hostname";
+
                 Result<Exception, Agent> agentCallback = await _repository.GetByIdAsync(request.Id);
 
 

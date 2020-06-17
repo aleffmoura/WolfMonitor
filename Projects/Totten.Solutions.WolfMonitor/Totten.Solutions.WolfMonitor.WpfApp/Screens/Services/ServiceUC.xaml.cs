@@ -48,9 +48,12 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         public void ChangeColorTextBlock(TextBlock textBlock)
         {
-            if (textBlock.Text.Equals("running", StringComparison.InvariantCultureIgnoreCase))
+            if (textBlock.Text.Equals(EStatusService.Running.ToString(), StringComparison.InvariantCultureIgnoreCase) ||
+                textBlock.Text.Equals(EStatusService.Active.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Green);
-            else if (textBlock.Text.Equals("stopped", StringComparison.InvariantCultureIgnoreCase))
+            else
+                if (textBlock.Text.Equals(EStatusService.Stopped.ToString(), StringComparison.InvariantCultureIgnoreCase) ||
+                    textBlock.Text.Equals(EStatusService.Inactive.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 textBlock.Foreground = new SolidColorBrush(Colors.Red);
             else
                 textBlock.Foreground = new SolidColorBrush(Colors.Gold);

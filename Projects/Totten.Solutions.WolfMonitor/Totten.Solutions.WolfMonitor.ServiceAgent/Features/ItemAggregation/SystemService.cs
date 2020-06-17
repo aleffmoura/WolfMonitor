@@ -46,7 +46,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 
         public override bool Change(string newValue, SolicitationType solicitationType)
         {
-            if (this.NextMonitoring.HasValue && DateTime.Now < this.NextMonitoring.Value)
+            if (this.NextMonitoring.HasValue && DateTime.Now < this.NextMonitoring.Value && solicitationType != SolicitationType.ChangeStatus)
                 return false;
 
             var returned = false;

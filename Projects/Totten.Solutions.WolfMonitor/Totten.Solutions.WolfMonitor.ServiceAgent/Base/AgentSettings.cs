@@ -7,7 +7,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Base
     {
         public string urlApi { get; set; }
         public string Company { get; set; }
-        public int intervalForSearchItens { get; set; }
+        public int IntervalForSearchItensSeconds { get; set; }
         public int NextMonitoringItemIfGenerateFileInMinutes { get; set; }
         public int RetrySendIfFailInHours { get; set; }
         public string PathFilesIfFailSend { get; set; }

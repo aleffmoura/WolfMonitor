@@ -70,26 +70,34 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 
             process.WaitForExit();
 
-            var toReturn = process.StandardOutput.ReadToEnd();
+            try
+            {
+                var toReturn = process.StandardOutput.ReadToEnd();
+                
+                var rows = toReturn.Split("\n");
 
-            var splited = toReturn.Split("\n");
+                var columns = rows[2].Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            var rows = toReturn.Split("\n");
+                var status = columns[1].Trim();
 
-            var columns = rows[2].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                if (status.Equals(StatusLinux.Active.ToString(), StringComparison.OrdinalIgnoreCase))
+                    return StatusLinux.Active.ToString();
+                if (status.Equals(StatusLinux.Inactive.ToString(), StringComparison.OrdinalIgnoreCase))
+                    return StatusLinux.Inactive.ToString();
 
-            var status = columns[2];
-
-            if (status.Equals(StatusLinux.Active.ToString(), StringComparison.OrdinalIgnoreCase))
-                return StatusLinux.Active.ToString();
-            if (status.Equals(StatusLinux.Inactive.ToString(), StringComparison.OrdinalIgnoreCase))
-                return StatusLinux.Inactive.ToString();
-
-            return StatusLinux.Failed.ToString();
+                return StatusLinux.Failed.ToString();
+            }
+            catch (Exception ex)
+            {
+                return StatusLinux.Failed.ToString();
+            }
         }
 
         public static string GetStatus(string name, string displayName)
         {
+            if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
+                return CommandSystemCtl(name, "status");
+
             var realTimeNotSystemCtl = "Failed to enable APR_TCP_DEFER_ACCEPT";
             var returned = "";
 
@@ -100,7 +108,7 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
                 if (Enum.TryParse(typeof(ServiceControllerStatus), returned, out object result))
                     return result.ToString();
 
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             } while (returned.Contains(realTimeNotSystemCtl));
 
             return "Falha";
@@ -134,13 +142,13 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
         {
             if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
             {
-                CommandService(name, "stop");
-                return ServiceControllerStatus.Stopped.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase); ;
+                var status = CommandSystemCtl(name, "stop");
+                return VerifyAndReturnIfTrue(status, "stop");
             }
             else
             {
-                var status = CommandSystemCtl(name, "stop");
-                return VerifyAndReturnIfTrue(status, "stop");
+                CommandService(name, "stop");
+                return ServiceControllerStatus.Stopped.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase); ;
             }
         }
     }

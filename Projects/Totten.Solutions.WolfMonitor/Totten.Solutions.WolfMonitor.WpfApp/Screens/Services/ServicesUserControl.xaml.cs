@@ -97,10 +97,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
                 string value = string.Empty;
 
-                if (Enum.TryParse(typeof(EStatusService), view.Value, out object result))
-                    value = result.ToString();
+                EStatusService statusEnum = (EStatusService)Enum.Parse(typeof(EStatusService), view.Value);
+
+                if (statusEnum == EStatusService.Active || statusEnum == EStatusService.Failed)
+                    value = EStatusService.Inactive.ToString();
+                else if (statusEnum == EStatusService.Inactive)
+                    value = EStatusService.Active.ToString();
+                else if (statusEnum == EStatusService.Running)
+                    value = EStatusService.Stopped.ToString();
+                else if (statusEnum == EStatusService.Stopped)
+                    value = EStatusService.Running.ToString();
                 else
-                    value = "Failed";
+                    value = EStatusService.Running.ToString();
 
                 var returned = await _agentService.PostSolicitation(new ItemSolicitationVO
                 {
