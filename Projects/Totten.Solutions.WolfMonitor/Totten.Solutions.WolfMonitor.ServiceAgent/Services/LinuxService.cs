@@ -70,10 +70,11 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 
             process.WaitForExit();
 
+            var toReturn = process.StandardOutput.ReadToEnd();
+
             try
             {
-                var toReturn = process.StandardOutput.ReadToEnd();
-                
+
                 var rows = toReturn.Split("\n");
 
                 var columns = rows[2].Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -113,20 +114,6 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 
             return "Falha";
         }
-        public static bool Start(string name, string displayName)
-        {
-            if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
-            {
-                var status = CommandSystemCtl(name, "start");
-                return VerifyAndReturnIfTrue(status, "start");
-            }
-            else
-            {
-                CommandService(name, "start");
-                return ServiceControllerStatus.Running.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase);
-            }
-
-        }
 
         private static bool VerifyAndReturnIfTrue(string status, string command)
         {
@@ -137,12 +124,32 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 
             return false;
         }
+        public static bool Start(string name, string displayName)
+        {
+            if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
+            {
+                CommandSystemCtl(name, "start");
+
+                var status = CommandSystemCtl(name, "status");
+
+                return VerifyAndReturnIfTrue(status, "start");
+            }
+            else
+            {
+                CommandService(name, "start");
+                return ServiceControllerStatus.Running.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase);
+            }
+
+        }
 
         public static bool Stop(string name, string displayName)
         {
             if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
             {
-                var status = CommandSystemCtl(name, "stop");
+                CommandSystemCtl(name, "stop");
+
+                var status = CommandSystemCtl(name, "status");
+
                 return VerifyAndReturnIfTrue(status, "stop");
             }
             else

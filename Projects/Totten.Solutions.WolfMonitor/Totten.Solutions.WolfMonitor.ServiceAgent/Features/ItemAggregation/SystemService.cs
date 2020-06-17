@@ -56,14 +56,13 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             if (status.ToString().Equals(newValue))
                 return returned;
 
-            if (ServiceControllerStatus.Stopped.ToString().Equals(newValue) ||
-                StatusLinux.Active.ToString().Equals(newValue))
-                returned = SystemServicesController.Stop(this.Name, this.DisplayName);
-            else if (ServiceControllerStatus.Running.ToString().Equals(newValue) ||
+            if (ServiceControllerStatus.Running.ToString().Equals(newValue) ||
+                StatusLinux.Active.ToString().Equals(newValue) || StatusLinux.Failed.ToString().Equals(newValue))
+                returned = SystemServicesController.Start(this.Name, this.DisplayName);
+
+            else if (ServiceControllerStatus.Stopped.ToString().Equals(newValue) ||
                      StatusLinux.Inactive.ToString().Equals(newValue))
-                returned = SystemServicesController.Start(this.Name, this.DisplayName);
-            else if (StatusLinux.Failed.ToString().Equals(newValue))
-                returned = SystemServicesController.Start(this.Name, this.DisplayName);
+                returned = SystemServicesController.Stop(this.Name, this.DisplayName);
 
             var statusAfterCommand = SystemServicesController.GetStatus(this.Name, this.DisplayName);
 

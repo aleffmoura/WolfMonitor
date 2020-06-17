@@ -8,8 +8,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" FontFamily="Poppins">
     <Grid Width="auto" Margin="20">
         <StackPanel VerticalAlignment="Top" Margin="5">
-            <TextBox Name="txtDisplayName" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontSize="18"/>
-            <TextBox Name="txtName" materialDesign:HintAssist.Hint="Nome completo com extensão" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <TextBox Foreground="White" Name="txtDisplayName" materialDesign:HintAssist.Hint="Nome de exibição" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontSize="18"/>
+            <TextBox Foreground="White" Name="txtName" materialDesign:HintAssist.Hint="Nome completo com extensão" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
         </StackPanel>
 
     </Grid>
