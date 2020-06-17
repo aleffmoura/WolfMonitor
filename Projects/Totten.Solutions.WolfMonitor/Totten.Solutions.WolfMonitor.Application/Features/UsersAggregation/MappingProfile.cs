@@ -15,6 +15,9 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation
                 .ForMember(dest => dest.UpdatedIn, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.Removed, opt => opt.MapFrom(src => false));
 
+            CreateMap<UserUpdate.Command, User>()
+                .ForMember(dest => dest.UpdatedIn, opt => opt.MapFrom(src => DateTime.Now));
+
             CreateMap<User, UserResumeViewModel>()
                 .ForMember(dest => dest.UserLevel, opt => opt.MapFrom(src => (int)src.Role.Level))
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))

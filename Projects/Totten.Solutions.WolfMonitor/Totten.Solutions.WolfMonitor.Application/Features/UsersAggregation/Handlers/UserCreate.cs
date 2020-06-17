@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using FluentValidation.Resources;
 using FluentValidation.Results;
 using MediatR;
 using System;
@@ -65,7 +64,8 @@ namespace Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.Han
                     RuleFor(a => a.UserId).NotEqual(Guid.Empty).WithMessage("Usuário da solicitação está inválido");
                     RuleFor(a => a.UserCompany).NotEqual(Guid.Empty).WithMessage("Empresa do usuário está inválida");
                     RuleFor(a => a.CompanyId).NotEqual(Guid.Empty).WithMessage("Empresa da solicitação está inválido");
-                    RuleFor(a => a.Email).Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
+                    RuleFor(a => a.Email).EmailAddress().WithMessage("Email não é válido")
+                                        .Length(6, 200).WithMessage("Email deve possuir entre 6 e 200 caracteres");
                     RuleFor(a => a.Cpf).IsValidCPF();
                     RuleFor(a => a.FirstName).Length(3, 25).WithMessage("Nome deve possuir entre 3 e 25 caracteres");
                     RuleFor(a => a.LastName).Length(4, 150).WithMessage("Sobrenome deve possuir entre 3 e 25 caracteres");

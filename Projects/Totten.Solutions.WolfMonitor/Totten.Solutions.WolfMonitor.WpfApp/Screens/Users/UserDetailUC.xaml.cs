@@ -19,7 +19,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         private UserService _userService;
         private UserBasicInformationViewModel _userBasicInformation;
         private List<AgentForUserViewModel> _agents;
-
+        private TaskScheduler _taskSchedule = TaskScheduler.FromCurrentSynchronizationContext();
         public UserDetailUC(UserService userService, UserBasicInformationViewModel userBasicInformation)
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 }
                 else
                     MessageBox.Show("Falha na obtenção dos agents", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }, _taskSchedule);
         }
 
         private void SetValues()
@@ -73,10 +73,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             {
                 _userService.UpdateMyInfo(new UserUpdateVO
                 {
+                    Login = txtLogin.Text,
                     Email = txtEmail.Text,
                     FirstName = txtName.Text,
                     LastName = txtLastName.Text,
-                    Password = txtPass.Password
+                    Password = txtPass.Password.Equals("****") ? _userBasicInformation.Password : txtPass.Password
                 }).ContinueWith(task =>
                 {
                     if (task.Result.IsSuccess)
@@ -85,6 +86,18 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                         btnAction.Content = "Editar";
                         btnAction.IsEnabled = true;
                         btnCancel.Visibility = Visibility.Collapsed;
+
+                        _userService.GetInfo().ContinueWith(taskBasic =>
+                        {
+                            if (taskBasic.Result.IsSuccess)
+                            {
+                                _userBasicInformation.Login = taskBasic.Result.Success.Login;
+                                _userBasicInformation.Email = taskBasic.Result.Success.Email;
+                                _userBasicInformation.FirstName = taskBasic.Result.Success.FirstName;
+                                _userBasicInformation.LastName = taskBasic.Result.Success.LastName;
+                                _userBasicInformation.Password = taskBasic.Result.Success.Password;
+                            }
+                        }, _taskSchedule);
                     }
                     else
                     {
@@ -93,7 +106,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                         else
                             MessageBox.Show(task.Result.Failure.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                });
+                }, _taskSchedule);
 
                 return;
             }
@@ -142,7 +155,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrWhiteSpace(txtUser.Text))
+            if (!string.IsNullOrWhiteSpace(txtUser.Text))
                 gridAgends.ItemsSource = _agents.Where(x => x.MachineName.Contains(txtUser.Text) || x.DisplayName.Contains(txtUser.Text)).ToList();
         }
 
@@ -151,7 +164,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
             if (string.IsNullOrWhiteSpace(txtUser.Text))
                 gridAgends.ItemsSource = _agents;
         }
-        
+
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tabControl.Foreground = new SolidColorBrush(Colors.Gold);

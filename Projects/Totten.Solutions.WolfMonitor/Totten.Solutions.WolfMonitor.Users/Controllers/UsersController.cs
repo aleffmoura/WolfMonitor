@@ -8,6 +8,7 @@ using Totten.Solutions.WolfMonitor.Application.Features.UsersAggregation.ViewMod
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Base;
 using Totten.Solutions.WolfMonitor.Cfg.Startup.Filters;
 using Totten.Solutions.WolfMonitor.Domain.Features.UsersAggregation;
+using Totten.Solutions.WolfMonitor.Users.Controllers.Commands;
 
 namespace Totten.Solutions.WolfMonitor.Users.Controllers
 {
@@ -29,12 +30,17 @@ namespace Totten.Solutions.WolfMonitor.Users.Controllers
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
         public async Task<IActionResult> ReadInformations()
             => HandleQuery<User, UserDetailViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
+        #endregion
 
         [HttpPatch("info")]
         [CustomAuthorizeAttributte(RoleLevelEnum.System, RoleLevelEnum.Admin, RoleLevelEnum.User)]
-        public async Task<IActionResult> Update()
-            => HandleQuery<User, UserDetailViewModel>(await _mediator.Send(new UserResume.Query(UserId)));
-        #endregion
+        public async Task<IActionResult> Update([FromBody]UserUpdateCommand command)
+            => HandleCommand(await _mediator.Send(new UserUpdate.Command(UserId, CompanyId,
+                                                                        command.Login,
+                                                                        command.Password,
+                                                                        command.Email,
+                                                                        command.FirstName,
+                                                                        command.LastName)));
 
         #region DELETE
         [HttpDelete("{Id}")]
