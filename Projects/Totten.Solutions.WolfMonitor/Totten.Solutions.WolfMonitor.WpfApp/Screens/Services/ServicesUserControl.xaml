@@ -17,9 +17,9 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,405,0">
-            <Label>Reload automatico:</Label>
-            <TextBox x:Name="txtValueRefresh" materialDesign:HintAssist.Hint="Valor" Width="50" Margin="5,0,5,0" Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="txtValueRefresh_PreviewTextInput" />
-            <ComboBox x:Name="cbTimeRefesh" Width="150" Height="30" materialDesign:HintAssist.Hint="Tempo" Style="{StaticResource MaterialDesignComboBox}" />
+            <Label Foreground="White">Reload automatico:</Label>
+            <TextBox Foreground="White" x:Name="txtValueRefresh" materialDesign:HintAssist.Hint="Valor" Width="50" Margin="5,0,5,0" Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="txtValueRefresh_PreviewTextInput" />
+            <ComboBox Foreground="White" x:Name="cbTimeRefesh" Width="150" Height="30" materialDesign:HintAssist.Hint="Tempo" Style="{StaticResource MaterialDesignComboBox}" />
             <Button x:Name="btnApplyTimer" Height="30" Width="50" Margin="5,0,0,0" Click="btnApplyTimer_Click" Background="#065FD4" BorderBrush="#065FD4">
                 <materialDesign:PackIcon x:Name="kindTimer" Kind="Play" Foreground="White" BorderBrush="#065FD4"/>
             </Button>
@@ -27,8 +27,8 @@
         
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtServiceName" TextChanged="txtServiceName_TextChanged" Height="30" Width="265" Foreground="Black" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
-                <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,15,0" Background="#065FD4" BorderBrush="#065FD4">
+                <TextBox x:Name="txtServiceName" TextChanged="txtServiceName_TextChanged" Height="30" Width="265" Foreground="White" FontWeight="Bold" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,15,0" Background="#065FD4" BorderBrush="#065FD4">
                     <materialDesign:PackIcon Kind="Search" Foreground="White" BorderBrush="#065FD4"/>
                 </Button>
             </StackPanel>

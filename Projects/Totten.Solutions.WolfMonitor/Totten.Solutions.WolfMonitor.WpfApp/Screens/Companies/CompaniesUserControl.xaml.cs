@@ -82,7 +82,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies
         {
            CompanyResumeViewModel companyViewModel = sender as CompanyResumeViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover a empresa: {companyViewModel.Company}?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover a empresa: {companyViewModel.Company}?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _companyService.Delete(companyViewModel.Id).ContinueWith(task =>
                 {

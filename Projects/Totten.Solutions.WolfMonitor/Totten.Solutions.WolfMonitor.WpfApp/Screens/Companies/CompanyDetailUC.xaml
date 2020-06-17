@@ -19,7 +19,7 @@
                     <StackPanel Margin="5" Orientation="Vertical">
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="Identificador:" FontSize="15"   FontWeight="Bold" />
+                            <TextBlock Text="Identificador:" FontSize="15"  />
                             <TextBlock Text="FC62CD95-84D8-45B5-81B2-EAB4132E7976" FontSize="15" Name="lblIdentifier" Foreground="Green" Margin="8,0" FontWeight="Bold" Cursor="Hand"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -60,7 +60,7 @@
             </StackPanel>
 
 
-            <TabControl x:Name="tabControl" Margin="0" Height="550">
+            <TabControl x:Name="tabControl" Margin="0" Height="550" Background="#181818">
                 <TabItem x:Name="tbUsers" Header="Usuários">
                     
                 </TabItem>

@@ -6,37 +6,38 @@
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Background="Transparent" FontFamily="Poppins">
-
+             Background="Transparent" FontFamily="Poppins" Foreground="White">
+    
     <Grid Height="780" Margin="20,0,0,0">
 
         <StackPanel>
-            <TabControl x:Name="tabControl" Margin="0" Height="750">
-                <TabItem x:Name="tbMyInfo" Header="Minhas Informações" >
+            <TabControl x:Name="tabControl" Margin="0" Height="750" Background="#181818" BorderBrush="#181818" SelectionChanged="tabControl_SelectionChanged">
+                <TabItem x:Name="tbMyInfo" Header="Minhas Informações"   >
+                    
                     <StackPanel VerticalAlignment="Top" Width="1180">
                         <StackPanel x:Name="pnlUserInfo" IsEnabled="False" Height="640">
-                            <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
-                            <TextBox x:Name="txtLogin" IsEnabled="False" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
+                            <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+                            <TextBox Foreground="White"  x:Name="txtLogin" IsEnabled="False" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblLoginError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <PasswordBox x:Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0" FontSize="18" PasswordChanged="textChanged"/>
+                            <PasswordBox Foreground="White"  x:Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0" FontSize="18" PasswordChanged="textChanged"/>
                             <Label x:Name="lblPassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <PasswordBox x:Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0" FontSize="18" PasswordChanged="textChanged"/>
+                            <PasswordBox Foreground="White"  x:Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0" FontSize="18" PasswordChanged="textChanged"/>
                             <Label x:Name="lblRePassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <Label Content="Informações" Margin="0,60,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
+                            <Label Content="Informações" Margin="0,60,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
 
-                            <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged" />
+                            <TextBox Foreground="White"  x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged" />
                             <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
-                            <TextBox x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
+                            <TextBox Foreground="White"  x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblLastNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <TextBox x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0"  FontSize="18" TextChanged="textChanged"/>
+                            <TextBox Foreground="White"  x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0"  FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,3" />
 
-                            <TextBox x:Name="txtCpf" IsEnabled="False" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
+                            <TextBox Foreground="White"  x:Name="txtCpf" IsEnabled="False" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0" FontSize="18" TextChanged="textChanged"/>
                             <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="5,1,5,0" />
                         </StackPanel>
 
@@ -48,13 +49,13 @@
 
                 </TabItem>
 
-                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" Height="20" VerticalAlignment="Bottom" >
+                <TabItem x:Name="tbMyAgents" Header="Agents Cadastrados Por Mim" Height="20" VerticalAlignment="Bottom">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,5">
                             <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="5,0,10,0" Background="#065FD4" BorderBrush="#065FD4">
                                 <materialDesign:PackIcon Kind="Search" Foreground="White" />
                             </Button>
-                            <TextBox x:Name="txtUser" TextChanged="txtUser_TextChanged" Height="30" Width="300" Foreground="Black" materialDesign:HintAssist.Hint="Buscar por Nome ou Nome de visualização" />
+                            <TextBox x:Name="txtUser" TextChanged="txtUser_TextChanged" Height="30" Width="300" Foreground="White" FontWeight="Bold" materialDesign:HintAssist.Hint="Buscar por Nome ou Nome de visualização" />
                         </StackPanel>
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Width="1250" Height="680">

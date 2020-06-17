@@ -19,7 +19,7 @@
 
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtArchiveName" TextChanged="txtArchiveName_TextChanged" Height="30" Width="220" Foreground="White" materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
+                <TextBox x:Name="txtArchiveName" TextChanged="txtArchiveName_TextChanged" Height="30" Width="220" Foreground="White" FontWeight="Bold"  materialDesign:HintAssist.Hint="Buscar" Margin="10,0,5,0"/>
                 <Button x:Name="btnSearch" Click="btnSearch_Click" Height="30" Width="50" Margin="0,0,50,0"  Background="#065FD4" BorderBrush="#065FD4">
                     <materialDesign:PackIcon Kind="Search" Foreground="White" />
                 </Button>

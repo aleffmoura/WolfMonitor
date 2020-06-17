@@ -33,9 +33,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                 if (task.Result.IsFailure)
                 {
                     if (SetErros(task.Result.Failure.Message))
-                        MessageBox.Show("Falha no cadastro do usuário", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Falha no cadastro do usuário", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     else
-                        MessageBox.Show(task.Result.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(task.Result.Failure.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             if (!txtPass.Password.Equals(txtRepass.Password))
             {
-                MessageBox.Show("As senhas não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("As senhas não são iguais.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return null;
             }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Base;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.Features.Users.ViewModels;
 using Totten.Solutions.WolfMonitor.Client.Infra.Data.Https.ObjectValues;
@@ -88,9 +89,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                     else
                     {
                         if (SetErrors(task.Result.Failure.Message))
-                            MessageBox.Show("Falha na atualização de senha", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("Falha na atualização de senha", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                         else
-                            MessageBox.Show(task.Result.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(task.Result.Failure.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 });
 
@@ -149,6 +150,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
         {
             if (string.IsNullOrWhiteSpace(txtUser.Text))
                 gridAgends.ItemsSource = _agents;
+        }
+        
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tabControl.Foreground = new SolidColorBrush(Colors.Gold);
         }
     }
 }

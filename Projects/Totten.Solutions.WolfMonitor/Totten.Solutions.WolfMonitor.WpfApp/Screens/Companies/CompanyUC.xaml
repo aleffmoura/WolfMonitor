@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Companies"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" FontFamily="Poppins">
+             mc:Ignorable="d" FontFamily="Poppins" Foreground="White">
 
     <Grid Height="170" Width="220" Margin="0,0,14,0">
         
@@ -19,7 +19,7 @@
             <StackPanel Margin="5">
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock x:Name="lblCompanyName" Text="Totem Solutions SA" Width="180" FontSize="18"  FontWeight="Bold" Foreground="Black"/>
+                    <TextBlock x:Name="lblCompanyName" Text="Totem Solutions SA" Width="180" FontSize="18"  FontWeight="Bold" />
                 </StackPanel>
 
                 <Separator Margin="0,5,0,5" Background="LightGray"/>
@@ -27,22 +27,22 @@
                 <StackPanel Orientation="Vertical">
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Agentes cadastrados:" FontSize="12" Foreground="Black"/>
+                        <TextBlock Text="Agentes cadastrados:" FontSize="12" />
                         <TextBlock x:Name="lblQtAgents" Text="5" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="13,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Serviços monitorados:" FontSize="12" Foreground="Black"/>
+                        <TextBlock Text="Serviços monitorados:" FontSize="12" />
                         <TextBlock x:Name="lblQtServices" Text="500" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="9,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Arquivos monitorados:" FontSize="12" Foreground="Black"/>
+                        <TextBlock Text="Arquivos monitorados:" FontSize="12" />
                         <TextBlock x:Name="lblQtArchives" Text="500" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="5.5,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Usuários cadastrados:" FontSize="12" Foreground="Black"/>
+                        <TextBlock Text="Usuários cadastrados:" FontSize="12" />
                         <TextBlock x:Name="lblQtUsers" Text="500" Foreground="Green" FontWeight="Bold" FontSize="12" Margin="10.7,0" />
                     </StackPanel>
                     

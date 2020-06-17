@@ -86,7 +86,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
         private async void OnModified(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Deseja realmente modificar o arquivo?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Deseja realmente modificar o arquivo?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var view = (ArchiveViewModel)sender;
 
@@ -101,7 +101,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
                 });
                 if (returned.IsSuccess)
                 {
-                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
                     Populate();
                 }
                 else
@@ -120,7 +120,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
         {
             ArchiveViewModel serviceViewModel = sender as ArchiveViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o arquivo: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o arquivo: {serviceViewModel.DisplayName} do monitoramento?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id).ContinueWith(task =>
                 {

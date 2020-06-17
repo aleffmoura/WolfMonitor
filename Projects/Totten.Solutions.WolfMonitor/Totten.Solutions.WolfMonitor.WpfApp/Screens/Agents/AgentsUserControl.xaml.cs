@@ -87,7 +87,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             AgentResumeViewModel agentViewModel = sender as AgentResumeViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o serviço: {agentViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o serviço: {agentViewModel.DisplayName} do monitoramento?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _agentService.Delete(agentViewModel.Id).ContinueWith(task =>
                 {

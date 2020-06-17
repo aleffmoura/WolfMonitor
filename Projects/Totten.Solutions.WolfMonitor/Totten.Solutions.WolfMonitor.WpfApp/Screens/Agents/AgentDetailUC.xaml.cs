@@ -161,7 +161,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             var serviceViewModel = cbProfile.SelectedItem as ProfileViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o perfil: {serviceViewModel.Name} do agent?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o perfil: {serviceViewModel.Name} do agent?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _agentsService.DeleteProfile(_id, serviceViewModel.ProfileViewItem.FirstOrDefault().ProfileIdentifier).ContinueWith(task =>
                 {

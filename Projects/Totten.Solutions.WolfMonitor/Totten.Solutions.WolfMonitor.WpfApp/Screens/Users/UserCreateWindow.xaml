@@ -6,31 +6,31 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Users"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Adicionar Usuário" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="690" Width="800" FontFamily="Poppins">
+        mc:Ignorable="d" Height="690" Width="800" FontFamily="Poppins" Background="#181818">
     <Grid>
         <StackPanel VerticalAlignment="Top" Margin="20,5,20,0" >
-            
-            <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
-            <TextBox x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+
+            <Label Content="Dados de login" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontWeight="Bold" FontSize="18"/>
+            <TextBox Foreground="White" x:Name="txtLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblLoginError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-            
-            <PasswordBox Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="18"/>
+
+            <PasswordBox Foreground="White" Name="txtPass" materialDesign:HintAssist.Hint="Senha" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="18"/>
             <Label x:Name="lblPassError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
 
-            <PasswordBox Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,1,0,3"  FontSize="18"/>
+            <PasswordBox Foreground="White" Name="txtRepass" materialDesign:HintAssist.Hint="Digite a senha novamente" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,1,0,3"  FontSize="18"/>
 
-            <Label Content="Informações do usuário" Margin="0,20,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="18"/>
+            <Label Content="Informações do usuário" Margin="0,20,0,5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontWeight="Bold" FontSize="18"/>
 
-            <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            <TextBox  Foreground="White" x:Name="txtName" materialDesign:HintAssist.Hint="Nome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-            
-            <TextBox x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+
+            <TextBox Foreground="White" x:Name="txtLastName" materialDesign:HintAssist.Hint="Sobrenome" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblLastNameError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-            
-            <TextBox x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+
+            <TextBox Foreground="White" x:Name="txtEmail" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblEmailError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,3" />
-            
-            <TextBox x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+
+            <TextBox Foreground="White" x:Name="txtCpf" materialDesign:HintAssist.Hint="Cpf" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
             <Label x:Name="lblCpfError" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontSize="11" Margin="0,1,0,0" />
         
         </StackPanel>

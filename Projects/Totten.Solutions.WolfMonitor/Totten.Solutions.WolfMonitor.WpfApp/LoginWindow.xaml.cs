@@ -47,7 +47,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                 {
                     if(userBasic.Success.UserLevel < (int)EUserLevel.User)
                     {
-                        MessageBox.Show($"Falha: este tipo de usuário não está permitido a logar no sistema", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show($"Falha: este tipo de usuário não está permitido a logar no sistema", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
 
@@ -59,11 +59,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
                         this.Close();
                 }
                 else
-                    MessageBox.Show($"Falha: {userBasic.Failure.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Falha: {userBasic.Failure.Message}", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Falha: {ex.Message}", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Falha: {ex.Message}", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             finally
             {
@@ -84,7 +84,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp
             }
             catch
             {
-                MessageBox.Show("Falha inesperada, por favor contate um administrador de sistema", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Falha inesperada, por favor contate um administrador de sistema", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             pnlRoot.IsEnabled = true;
         }

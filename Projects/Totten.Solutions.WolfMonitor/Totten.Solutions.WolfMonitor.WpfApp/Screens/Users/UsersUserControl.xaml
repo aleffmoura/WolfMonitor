@@ -15,7 +15,7 @@
 
         <StackPanel Margin="0,10,0,0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="White" materialDesign:HintAssist.Hint="Buscar por Nome ou Login" TextChanged="txtUser_TextChanged"/>
+                <TextBox x:Name="txtUser" Height="30" Width="265" Foreground="White" FontWeight="Bold" materialDesign:HintAssist.Hint="Buscar por Nome ou Login" TextChanged="txtUser_TextChanged"/>
                 <Button x:Name="btnSearch" Height="30" Width="50" Margin="0,0,30,0" Click="btnSearch_Click" Background="#065FD4" BorderBrush="#065FD4">
                     <materialDesign:PackIcon Kind="Search" Foreground="White" />
                 </Button>

@@ -50,7 +50,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
                     gridUsers.DataContext = _currentItems;
                 }
                 else
-                    MessageBox.Show(task.Result.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(task.Result.Failure.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
             }, _currentTaskScheduler);
         }
 
@@ -71,13 +71,13 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Users
 
             if (item == null)
             {
-                MessageBox.Show("Selecione um usuário na lista", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Selecione um usuário na lista", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if(item.Id == _userBasicInformation.Id)
             {
-                MessageBox.Show("Não é possível remover seu próprio usuário", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Não é possível remover seu próprio usuário", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

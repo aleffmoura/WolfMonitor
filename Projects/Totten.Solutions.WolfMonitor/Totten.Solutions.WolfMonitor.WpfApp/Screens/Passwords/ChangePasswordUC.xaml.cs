@@ -38,7 +38,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
             {
                 if (!txtPass.Password.Equals(txtRepass.Password))
                 {
-                    MessageBox.Show("As senhas não são iguais.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("As senhas não são iguais.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return param;
                 }
 
@@ -53,9 +53,9 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords
                 else
                 {
                     if (SetErrors(callback.Failure.Message))
-                        MessageBox.Show("Falha na atualização de senha", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Falha na atualização de senha", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                     else
-                        MessageBox.Show(callback.Failure.Message, "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(callback.Failure.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                     return param;
                 }

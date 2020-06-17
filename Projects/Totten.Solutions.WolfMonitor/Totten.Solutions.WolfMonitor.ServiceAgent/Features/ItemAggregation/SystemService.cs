@@ -2,6 +2,7 @@
 using System.ServiceProcess;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Infra.Features.Monitorings.VOs;
 using Totten.Solutions.WolfMonitor.ServiceAgent.Services;
+using static Totten.Solutions.WolfMonitor.ServiceAgent.Services.LinuxService;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
 {
@@ -55,15 +56,21 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Features.ItemAggregation
             if (status.ToString().Equals(newValue))
                 return returned;
 
-            if (ServiceControllerStatus.Stopped.ToString().Equals(newValue))
+            if (ServiceControllerStatus.Stopped.ToString().Equals(newValue) ||
+                StatusLinux.Active.ToString().Equals(newValue))
                 returned = SystemServicesController.Stop(this.Name, this.DisplayName);
-            else if (ServiceControllerStatus.Running.ToString().Equals(newValue))
+            else if (ServiceControllerStatus.Running.ToString().Equals(newValue) ||
+                     StatusLinux.Inactive.ToString().Equals(newValue))
+                returned = SystemServicesController.Start(this.Name, this.DisplayName);
+            else if (StatusLinux.Failed.ToString().Equals(newValue))
                 returned = SystemServicesController.Start(this.Name, this.DisplayName);
 
-            if (returned)
+            var statusAfterCommand = SystemServicesController.GetStatus(this.Name, this.DisplayName);
+
+            if (returned || !statusAfterCommand.Equals(this.Value))
             {
                 this.LastValue = this.Value;
-                this.Value = SystemServicesController.GetStatus(this.Name, this.DisplayName);
+                this.Value = statusAfterCommand;
                 this.MonitoredAt = DateTime.Now;
                 this.AboutCurrentValue = solicitationType.ToString();
                 this.NextMonitoring = null;

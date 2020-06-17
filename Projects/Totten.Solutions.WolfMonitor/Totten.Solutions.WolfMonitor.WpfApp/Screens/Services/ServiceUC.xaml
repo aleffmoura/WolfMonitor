@@ -10,10 +10,10 @@
         <Border x:Name="componentListagem" Padding="4" CornerRadius="6" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Height="100" Width="377">
                 <StackPanel Orientation="Vertical" Width="160">
-                    <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="Black" FontSize="20" Height="30"  Width="165" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Margin="2"  ToolTip="Nome de exibição"/>
+                    <TextBlock x:Name="lblDisplayName" Text="MSSQL Server" Foreground="White" FontSize="20" Height="30"  Width="165" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2"  ToolTip="Nome de exibição"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
-                        <Button x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="#065FD4" BorderBrush="#065FD4" ToolTip="Abrir detalhes">
+                        <Button  x:Name="btnEdit" Margin="2" Padding="0" Click="btnEdit_Click" Width="40" Height="30" Background="#065FD4" BorderBrush="#065FD4" ToolTip="Abrir detalhes">
                             <materialDesign:PackIcon Foreground="White" Kind="OpenInApp" />
                         </Button>
                         <Button x:Name="btnRestart" Margin="2" Padding="0"  Click="btnRestart_Click" Width="40" Height="30" Background="LimeGreen" BorderBrush="LimeGreen" ToolTip="Alterna status atual" >
@@ -29,18 +29,18 @@
                 <StackPanel Orientation="Vertical" Width="245">
                     
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Current Status: " Foreground="Black" FontSize="13" />
-                        <TextBlock x:Name="lblCurrentStatus" Text="running" Foreground="Green" FontSize="13" FontWeight="Bold"/>
+                        <TextBlock  Text="Current Status: " Foreground="White" FontSize="13" />
+                        <TextBlock x:Name="lblCurrentStatus" Text="running" Foreground="Green" FontSize="13" />
                     </StackPanel>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                        <TextBlock Text="Service name: " Foreground="Black" FontSize="13"/>
-                        <TextBlock x:Name="lblServiceName" Text="running" Foreground="Black" FontSize="13" FontWeight="Bold" Margin="5.5,0,0,0" />
+                        <TextBlock Text="Service name: " Foreground="White" FontSize="13"/>
+                        <TextBlock x:Name="lblServiceName" Text="running" Foreground="White" FontSize="13" Margin="5.5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5,0,0">
-                        <TextBlock Text="Ultimo Monitoramento " Foreground="Black" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="lblMonitoredAt" Text="10/10/2019 15:30:30" Foreground="Black" FontSize="10" FontWeight="Bold" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="Ultimo Monitoramento " Foreground="White" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="lblMonitoredAt" Text="10/10/2019 15:30:30" Foreground="White" FontSize="10"  Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </StackPanel>
                 

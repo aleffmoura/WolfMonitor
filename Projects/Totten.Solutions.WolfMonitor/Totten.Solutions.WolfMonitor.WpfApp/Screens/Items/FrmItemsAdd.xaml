@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:Totten.Solutions.WolfMonitor.WpfApp.Screens.Items"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" ShowInTaskbar="False"
-        Title="Adicionar" Height="180" Width="500" WindowStyle="None" BorderThickness="1" 
-        ResizeMode="NoResize" BorderBrush="LightGray" WindowStartupLocation="CenterScreen" >
-    <Grid Background="AliceBlue">
-        <StackPanel>
-            <StackPanel x:Name="rootPanel" Width="auto" Margin="5,5,5,5" VerticalAlignment="Top" Background="White">
+        Title="Adicionar" Height="200" Width="500" WindowStyle="None" BorderThickness="2" 
+        ResizeMode="NoResize" BorderBrush="#909090" WindowStartupLocation="CenterScreen" >
+    <Grid Background="Transparent">
+        <StackPanel  Background="#181818">
+            <StackPanel x:Name="rootPanel" Width="auto" Margin="5,5,5,5" VerticalAlignment="Top">
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,0">
-                <Button x:Name="btnAdd" Content="Add" Width="50" Height="20" FontSize="12" Click="btnAdd_Click" Padding="0"/>
-                <Button x:Name="btnExit" Content="Exit" Width="50" Height="20" FontSize="12"  Click="btnExit_Click" Padding="0" Margin="5,0,0,0" />
+                <Button x:Name="btnAdd" Content="Adicionar" Width="80" Height="30" FontSize="12" Click="btnAdd_Click" Padding="0" Background="#065FD4" BorderBrush="#065FD4"/>
+                <Button x:Name="btnExit" Content="Sair" Width="80" Height="30" FontSize="12"  Click="btnExit_Click" Padding="0" Margin="5,0,0,0" Background="#065FD4" BorderBrush="#065FD4"/>
             </StackPanel>
         </StackPanel>
     </Grid>

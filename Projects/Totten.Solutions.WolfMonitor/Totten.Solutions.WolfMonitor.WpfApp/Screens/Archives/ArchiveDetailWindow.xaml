@@ -8,22 +8,76 @@
         mc:Ignorable="d"
         Title="Detalhes do arquivo" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
         Width="900" Height="800" FontFamily="Poppins" Background="Transparent" Foreground="White">
+    <Window.Resources>
+        <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
 
+        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+
+        <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border 
+                                Name="Border"
+                                Margin="0,0,-4,0" 
+                                Background="#909090"
+                                BorderBrush="{StaticResource  SolidBorderBrush}" 
+                                BorderThickness="1,1,1,1" 
+                                CornerRadius="2,12,0,0" >
+                                <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="12,2,12,2"
+                                    RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter TargetName="Border" Property="Background" Value="#181818" />
+                                <Setter Property="Foreground" Value="#065FD4" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter TargetName="Border" Property="Background" Value="#000000" />
+                                <Setter Property="Foreground" Value="#909090" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
 
         <StackPanel Orientation="Vertical" Margin="5,10">
 
-            <TextBlock x:Name="lblDisplayName" Text="File SQL SERVER" FontSize="36"/>
+            <TextBlock x:Name="lblDisplayName" Text="File SQL SERVER" FontSize="36" FontWeight="Bold"/>
             <Separator Margin="0,5,0,10"/>
 
             <StackPanel Orientation="Horizontal" >
                 <TextBlock Text="Nome completo:" FontSize="13"/>
-                <TextBlock x:Name="lblName" Text="/home/aesir/docs/files" Margin="13,0" FontSize="13" FontWeight="Bold"/>
+                <TextBlock x:Name="lblName" Text="/home/aesir/docs/files" Margin="13,0" FontSize="13"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" >
                 <TextBlock Text="Ultima atualização:" FontSize="13"/>
-                <TextBlock Text="04/10/1994 15:00" x:Name="lblMonitoredAt" Margin="5,0" FontSize="13" FontWeight="Bold"/>
+                <TextBlock Text="04/10/1994 15:00" x:Name="lblMonitoredAt" Margin="5,0" FontSize="13"/>
             </StackPanel>
 
 

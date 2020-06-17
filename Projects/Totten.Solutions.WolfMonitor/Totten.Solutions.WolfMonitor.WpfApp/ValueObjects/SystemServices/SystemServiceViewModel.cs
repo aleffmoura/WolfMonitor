@@ -5,7 +5,10 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.SystemServices
     public enum EStatusService
     {
         Running,
-        Stopped
+        Stopped,
+        Active,
+        Inactive,
+        Failed
     }
 
     public class SystemServiceViewModel

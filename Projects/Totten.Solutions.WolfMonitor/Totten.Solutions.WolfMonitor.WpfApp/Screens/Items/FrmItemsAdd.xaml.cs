@@ -49,7 +49,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Items
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Deseja cancelar?.", "Atênção",MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if(MessageBox.Show("Deseja cancelar?.", "Atenção",MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 this.Close();
             }

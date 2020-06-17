@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
 
 namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
 {
     public class LinuxService
     {
-        static string Command(string serviceName, string command)
+        public enum StatusLinux
+        {
+            Active,
+            Inactive,
+            Failed
+        }
+
+        static string CommandService(string serviceName, string command)
         {
             var process = new Process()
             {
@@ -44,37 +49,99 @@ namespace Totten.Solutions.WolfMonitor.ServiceAgent.Services
             if (toReturn.Contains("is running", StringComparison.OrdinalIgnoreCase))
                 return ServiceControllerStatus.Running.ToString();
 
-            return "falha";
+            return "Failed";
+        }
+
+        static string CommandSystemCtl(string serviceName, string command)
+        {
+            var process = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = $"-c \"sudo systemctl {command} {serviceName}\"",
+                    UseShellExecute = false,
+                    RedirectStandardError = true,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                }
+            };
+            process.Start();
+
+            process.WaitForExit();
+
+            var toReturn = process.StandardOutput.ReadToEnd();
+
+            var splited = toReturn.Split("\n");
+
+            var rows = toReturn.Split("\n");
+
+            var columns = rows[2].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+            var status = columns[2];
+
+            if (status.Equals(StatusLinux.Active.ToString(), StringComparison.OrdinalIgnoreCase))
+                return StatusLinux.Active.ToString();
+            if (status.Equals(StatusLinux.Inactive.ToString(), StringComparison.OrdinalIgnoreCase))
+                return StatusLinux.Inactive.ToString();
+
+            return StatusLinux.Failed.ToString();
         }
 
         public static string GetStatus(string name, string displayName)
         {
-            var realtime = "Failed to enable APR_TCP_DEFER_ACCEPT";
+            var realTimeNotSystemCtl = "Failed to enable APR_TCP_DEFER_ACCEPT";
             var returned = "";
 
             do
             {
-                returned = Command(name, "status");
+                returned = CommandService(name, "status");
 
                 if (Enum.TryParse(typeof(ServiceControllerStatus), returned, out object result))
                     return result.ToString();
 
                 Thread.Sleep(1000);
-            } while (returned.Contains(realtime));
+            } while (returned.Contains(realTimeNotSystemCtl));
 
             return "Falha";
         }
         public static bool Start(string name, string displayName)
         {
-            Command(name, "start");
+            if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
+            {
+                var status = CommandSystemCtl(name, "start");
+                return VerifyAndReturnIfTrue(status, "start");
+            }
+            else
+            {
+                CommandService(name, "start");
+                return ServiceControllerStatus.Running.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase);
+            }
 
-            return ServiceControllerStatus.Running.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase);
         }
+
+        private static bool VerifyAndReturnIfTrue(string status, string command)
+        {
+            if (Enum.TryParse(typeof(StatusLinux), status, out object result))
+                return command.Equals("start") ?
+                                result.ToString().Equals(StatusLinux.Active) :
+                                result.ToString().Equals(StatusLinux.Inactive);
+
+            return false;
+        }
+
         public static bool Stop(string name, string displayName)
         {
-            Command(name, "stop");
-
-            return ServiceControllerStatus.Stopped.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase); ;
+            if (Microsoft.Extensions.Hosting.Systemd.SystemdHelpers.IsSystemdService())
+            {
+                CommandService(name, "stop");
+                return ServiceControllerStatus.Stopped.ToString().Equals(GetStatus(name, displayName), StringComparison.OrdinalIgnoreCase); ;
+            }
+            else
+            {
+                var status = CommandSystemCtl(name, "stop");
+                return VerifyAndReturnIfTrue(status, "stop");
+            }
         }
     }
 }

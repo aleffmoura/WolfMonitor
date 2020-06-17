@@ -91,9 +91,16 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
 
         private async void OnRestart(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Deseja realmente modificar o status do serviço?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Deseja realmente modificar o status do serviço?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var view = (SystemServiceViewModel)sender;
+
+                string value = string.Empty;
+
+                if (Enum.TryParse(typeof(EStatusService), view.Value, out object result))
+                    value = result.ToString();
+                else
+                    value = "Failed";
 
                 var returned = await _agentService.PostSolicitation(new ItemSolicitationVO
                 {
@@ -102,11 +109,11 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
                     Name = view.Name,
                     SolicitationType = SolicitationType.ChangeStatus,
                     DisplayName = view.DisplayName,
-                    NewValue = view.Value.Equals(EStatusService.Running.ToString()) ? EStatusService.Stopped.ToString() : EStatusService.Running.ToString()
+                    NewValue = value
                 });
 
                 if (returned.IsSuccess)
-                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Foi enviada uma solicitação para o agent.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show($"Falha na solicitação.\nMensagem: {returned.Failure.Message}", "Falha", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -122,7 +129,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         {
             SystemServiceViewModel serviceViewModel = sender as SystemServiceViewModel;
 
-            if (MessageBox.Show($"Deseja realmente remover o serviço: {serviceViewModel.DisplayName} do monitoramento?", "Atênção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Deseja realmente remover o serviço: {serviceViewModel.DisplayName} do monitoramento?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _itemsMonitoringService.Delete(_agentId, serviceViewModel.Id).ContinueWith(task =>
                 {
@@ -232,7 +239,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Services
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         => SetDataOnGrid(_indexes.Where(x => x.Value.lblServiceName.Text.Contains(txtServiceName.Text, StringComparison.OrdinalIgnoreCase) ||
                                                       x.Value.lblDisplayName.Text.Contains(txtServiceName.Text, StringComparison.OrdinalIgnoreCase)).ToList());
-        
+
         private void txtServiceName_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(txtServiceName.Text))

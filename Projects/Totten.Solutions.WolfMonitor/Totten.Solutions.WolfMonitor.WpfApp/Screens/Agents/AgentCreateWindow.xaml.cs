@@ -23,7 +23,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Agents
         {
             if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPass.Password))
             {
-                MessageBox.Show("Todos os campos são obrigatórios.", "Atênção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Todos os campos são obrigatórios.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             btnAdd.IsEnabled = false;

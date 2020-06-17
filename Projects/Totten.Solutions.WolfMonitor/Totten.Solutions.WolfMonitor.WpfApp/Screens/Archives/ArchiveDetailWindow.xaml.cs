@@ -59,7 +59,7 @@ namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Archives
 
             if (_archiveViewModel.Value.Equals(txtNotePad.Text))
             {
-                MessageBox.Show("Não foi alterado nenhum valor pois o conteúdo não sofreu mudanças", "Atênção", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Não foi alterado nenhum valor pois o conteúdo não sofreu mudanças", "Atenção", MessageBoxButton.OK, MessageBoxImage.Information);
                 btnCancel_Click(sender, e);
                 return;
             }
