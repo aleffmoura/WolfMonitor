@@ -9,7 +9,7 @@ namespace Totten.Solutions.WolfMonitor.Infra.CrossCutting.EMails
             SmtpClient client = new SmtpClient();
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential(myEmail, "88633251aa@");
+            client.Credentials = new System.Net.NetworkCredential(myEmail, "");
             MailMessage mail = new MailMessage();
             mail.Sender = new MailAddress(myEmail, senderName);
             mail.From = new MailAddress(myEmail);

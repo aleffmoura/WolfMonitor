@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Totten.Solutions.WolfMonitor.WpfApp.Applications;
-using Totten.Solutions.WolfMonitor.WpfApp.Applications.Users;
 using Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Passwords;
 
 namespace Totten.Solutions.WolfMonitor.WpfApp.Screens.Passwords

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users
+﻿namespace Totten.Solutions.WolfMonitor.WpfApp.ValueObjects.Users
 {
     public class UserUpdateVO
     {
