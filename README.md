@@ -1,4 +1,7 @@
 # WolfMonitor
+# Link para defesa do TCC | NOTA DO TCC: 10
+https://www.facebook.com/aleffmds/videos/1501831676823028
+
 ## TCC para faculdade
 
 Sistema para monitoramento de serviços e arquivos em servidores linux e windows, com o intuito de melhorar na qualidade e na forma em como servidores são monitorados.
